@@ -3,7 +3,7 @@ import Link from "next/link";
 import { ArrowRight, MapPin, Sparkles, Users, Globe2 } from "lucide-react";
 import AnimateIn from "@/components/ui/AnimateIn";
 import Timeline from "@/components/about/Timeline";
-import ProfileImage from "@/components/ui/ProfileImage";
+import ToolOrbit from "@/components/ui/ToolOrbit";
 
 export const metadata: Metadata = {
   title: "About — Arjun Basnet",
@@ -111,11 +111,13 @@ export default function About() {
             </AnimateIn>
           </div>
 
-          {/* Profile photo */}
+          {/* Tool orbit */}
           <AnimateIn delay={0.18} direction="left">
             <div className="relative">
-              <ProfileImage src="/arjun-about.jpg" variant="blue" />
-              <div className="absolute -bottom-3 -left-3 w-10 h-10 rounded-full bg-[#E05C2A] border-4 border-[#FAFAF8]" />
+              <ToolOrbit />
+              <p className="text-center mt-4 text-[10px] font-semibold uppercase tracking-widest text-[#737373]">
+                AI · Automation · Project Delivery
+              </p>
             </div>
           </AnimateIn>
         </div>

@@ -5,7 +5,7 @@ import AnimateIn from "@/components/ui/AnimateIn";
 import CountUp from "@/components/ui/CountUp";
 import Marquee from "@/components/ui/Marquee";
 import HeroBackground from "@/components/ui/HeroBackground";
-import ProfileImage from "@/components/ui/ProfileImage";
+import ToolOrbit from "@/components/ui/ToolOrbit";
 
 export const metadata: Metadata = {
   title: "Arjun Basnet — Project Manager & AI Automation Engineer",
@@ -145,13 +145,13 @@ export default function Home() {
               </AnimateIn>
             </div>
 
-            {/* Profile photo column */}
+            {/* Tool orbit */}
             <AnimateIn delay={0.18} direction="left">
               <div className="relative">
-                <ProfileImage src="/arjun-hero.jpg" variant="yellow" />
-                {/* Decorative accent dot */}
-                <div className="absolute -top-3 -right-3 w-10 h-10 rounded-full bg-[#1A3FA8] border-4 border-[#FAFAF8]" />
-                <div className="absolute -bottom-3 -left-3 w-8 h-8 rounded-full bg-[#E05C2A] border-4 border-[#FAFAF8]" />
+                <ToolOrbit />
+                <p className="text-center mt-4 text-[10px] font-semibold uppercase tracking-widest text-[#737373]">
+                  AI · Automation · Project Delivery
+                </p>
               </div>
             </AnimateIn>
           </div>
