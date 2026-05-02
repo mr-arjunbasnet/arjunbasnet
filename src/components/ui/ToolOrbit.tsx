@@ -27,19 +27,15 @@ const outerTools: Tool[] = [
   { name: "GitHub", icon: "logos:github-icon", category: "Code" },
 ];
 
-function ToolBadge({ tool, size = 44 }: { tool: Tool; size?: number }) {
-  const iconSize = Math.round(size * 0.55);
+function ToolBadge({ tool }: { tool: Tool }) {
   return (
-    <div
-      className="relative bg-white rounded-2xl shadow-md border border-[#E2DDD6] flex items-center justify-center hover:scale-110 hover:shadow-xl hover:border-[#1A3FA8] transition-all duration-300 cursor-pointer group"
-      style={{ width: size, height: size }}
-    >
+    <div className="relative bg-white rounded-2xl shadow-md border border-[#E2DDD6] flex items-center justify-center w-9 h-9 sm:w-11 sm:h-11 hover:scale-110 hover:shadow-xl hover:border-[#1A3FA8] transition-all duration-300 cursor-pointer group">
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
         src={`https://api.iconify.design/${tool.icon}.svg${tool.color ? `?color=%23${tool.color}` : ""}`}
         alt={tool.name}
         loading="lazy"
-        style={{ width: iconSize, height: iconSize, objectFit: "contain" }}
+        className="w-5 h-5 sm:w-6 sm:h-6 object-contain"
         onError={(e) => {
           (e.currentTarget as HTMLImageElement).style.display = "none";
         }}
@@ -115,19 +111,18 @@ export default function ToolOrbit() {
           const x = 50 + Math.cos(angle) * radius;
           const y = 50 + Math.sin(angle) * radius;
           return (
-            <motion.div
+            <div
               key={tool.name}
-              className="absolute"
-              style={{
-                left: `${x}%`,
-                top: `${y}%`,
-                transform: "translate(-50%, -50%)",
-              }}
-              animate={{ rotate: -360 }}
-              transition={{ duration: 45, repeat: Infinity, ease: "linear" }}
+              className="absolute -translate-x-1/2 -translate-y-1/2"
+              style={{ left: `${x}%`, top: `${y}%` }}
             >
-              <ToolBadge tool={tool} size={44} />
-            </motion.div>
+              <motion.div
+                animate={{ rotate: -360 }}
+                transition={{ duration: 45, repeat: Infinity, ease: "linear" }}
+              >
+                <ToolBadge tool={tool} />
+              </motion.div>
+            </div>
           );
         })}
       </motion.div>
@@ -144,19 +139,18 @@ export default function ToolOrbit() {
           const x = 50 + Math.cos(angle) * radius;
           const y = 50 + Math.sin(angle) * radius;
           return (
-            <motion.div
+            <div
               key={tool.name}
-              className="absolute"
-              style={{
-                left: `${x}%`,
-                top: `${y}%`,
-                transform: "translate(-50%, -50%)",
-              }}
-              animate={{ rotate: 360 }}
-              transition={{ duration: 65, repeat: Infinity, ease: "linear" }}
+              className="absolute -translate-x-1/2 -translate-y-1/2"
+              style={{ left: `${x}%`, top: `${y}%` }}
             >
-              <ToolBadge tool={tool} size={48} />
-            </motion.div>
+              <motion.div
+                animate={{ rotate: 360 }}
+                transition={{ duration: 65, repeat: Infinity, ease: "linear" }}
+              >
+                <ToolBadge tool={tool} />
+              </motion.div>
+            </div>
           );
         })}
       </motion.div>
