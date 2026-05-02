@@ -3,12 +3,12 @@
 import { motion } from "framer-motion";
 import { Sparkles } from "lucide-react";
 
-type Tool = { name: string; icon: string; category: string };
+type Tool = { name: string; icon: string; category: string; color?: string };
 
 // Inner ring — AI & automation core
 const innerTools: Tool[] = [
   { name: "Claude", icon: "logos:claude", category: "AI" },
-  { name: "n8n", icon: "logos:n8n", category: "Automation" },
+  { name: "n8n", icon: "simple-icons:n8n", color: "EA4B71", category: "Automation" },
   { name: "OpenAI", icon: "logos:openai-icon", category: "AI" },
   { name: "Python", icon: "logos:python", category: "Code" },
   { name: "TensorFlow", icon: "logos:tensorflow", category: "ML" },
@@ -36,7 +36,7 @@ function ToolBadge({ tool, size = 44 }: { tool: Tool; size?: number }) {
     >
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
-        src={`https://api.iconify.design/${tool.icon}.svg`}
+        src={`https://api.iconify.design/${tool.icon}.svg${tool.color ? `?color=%23${tool.color}` : ""}`}
         alt={tool.name}
         loading="lazy"
         style={{ width: iconSize, height: iconSize, objectFit: "contain" }}
