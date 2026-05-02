@@ -1,36 +1,82 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Arjun Basnet — Portfolio
 
-## Getting Started
+Personal portfolio site for **Arjun Basnet** — Project Manager and AI Automation Engineer based in Kathmandu, Nepal.
 
-First, run the development server:
+🌐 Live at [arjun-basnet.com.np](https://arjun-basnet.com.np)
+
+---
+
+## Tech stack
+
+- **Framework:** [Next.js 16](https://nextjs.org) (App Router) + React 19
+- **Styling:** [Tailwind CSS 4](https://tailwindcss.com)
+- **Animations:** [Framer Motion](https://www.framer.com/motion/)
+- **Typography:** DM Serif Display + Geist Sans (via `next/font/google`)
+- **Icons:** [Lucide React](https://lucide.dev)
+- **Email:** [Nodemailer](https://nodemailer.com) over SMTP
+- **Hosting:** [Vercel](https://vercel.com)
+
+## Pages
+
+| Route | Content |
+|-------|---------|
+| `/` | Hero, stats, selected work, recognition, CTA |
+| `/about` | Story, education + work timeline, skills, certifications, leadership |
+| `/work` | Five case studies (Cricket Nepal, LMS, AI workflows, USEF, UWS) |
+| `/research` | Peer-reviewed publication, research interests, open questions |
+| `/contact` | SMTP-backed contact form + profile links |
+
+## Local development
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Environment variables
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+The contact form requires SMTP credentials. Copy the template and fill it in:
 
-## Learn More
+```bash
+cp .env.local.example .env.local
+```
 
-To learn more about Next.js, take a look at the following resources:
+| Variable | Description |
+|---------|-------------|
+| `SMTP_HOST` | SMTP host (default: `smtp.gmail.com`) |
+| `SMTP_PORT` | SMTP port (default: `587`) |
+| `SMTP_SECURE` | `true` for port 465, otherwise `false` |
+| `SMTP_USER` | Sending email address |
+| `SMTP_PASS` | App password (Gmail App Password recommended) |
+| `SMTP_FROM` | "From" address (must match `SMTP_USER` for Gmail) |
+| `SMTP_TO` | Where contact submissions are delivered |
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Profile photos
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Drop two images into `/public/`:
 
-## Deploy on Vercel
+- `arjun-hero.jpg` — Home page hero
+- `arjun-about.jpg` — About page header
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+If they're missing, the site automatically falls back to a styled "AB" gradient placeholder — never broken.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Deployment (Vercel)
+
+1. Push to GitHub
+2. Import the repo into Vercel
+3. Add the SMTP environment variables in Vercel project settings
+4. Vercel auto-detects Next.js — no extra config needed
+
+## Build
+
+```bash
+npm run build   # production build
+npm run start   # serve production build locally
+npm run lint    # ESLint
+```
+
+---
+
+© Arjun Basnet
