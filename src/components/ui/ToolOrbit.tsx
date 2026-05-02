@@ -1,12 +1,13 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { Sparkles } from "lucide-react";
 
 type Tool = { name: string; icon: string; category: string };
 
 // Inner ring — AI & automation core
 const innerTools: Tool[] = [
-  { name: "Claude", icon: "simple-icons:anthropic", category: "AI" },
+  { name: "Claude", icon: "logos:claude", category: "AI" },
   { name: "n8n", icon: "logos:n8n", category: "Automation" },
   { name: "OpenAI", icon: "logos:openai-icon", category: "AI" },
   { name: "Python", icon: "logos:python", category: "Code" },
@@ -21,7 +22,7 @@ const outerTools: Tool[] = [
   { name: "Figma", icon: "logos:figma", category: "Design" },
   { name: "Notion", icon: "logos:notion-icon", category: "PM" },
   { name: "Jira", icon: "logos:jira", category: "PM" },
-  { name: "ClickUp", icon: "logos:clickup-icon", category: "PM" },
+  { name: "Confluence", icon: "logos:confluence", category: "PM" },
   { name: "Slack", icon: "logos:slack-icon", category: "Comms" },
   { name: "GitHub", icon: "logos:github-icon", category: "Code" },
 ];
@@ -80,7 +81,7 @@ export default function ToolOrbit() {
         transition={{ duration: 3.4, repeat: Infinity, ease: "easeOut", delay: 1.7 }}
       />
 
-      {/* Center: AB orb */}
+      {/* Center: AI orb */}
       <motion.div
         className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-20 h-20 rounded-full bg-gradient-to-br from-[#1A3FA8] via-[#2B52CC] to-[#1A3FA8] flex items-center justify-center z-20"
         style={{ boxShadow: "0 12px 40px rgba(26,63,168,0.4), inset 0 -2px 6px rgba(0,0,0,0.2)" }}
@@ -94,12 +95,12 @@ export default function ToolOrbit() {
         }}
         transition={{ duration: 2.4, repeat: Infinity, ease: "easeInOut" }}
       >
-        <span
-          className="text-white text-3xl leading-none"
-          style={{ fontFamily: "var(--font-dm-serif)", letterSpacing: "-1px" }}
+        <motion.div
+          animate={{ rotate: [0, 8, -8, 0], scale: [1, 1.08, 1] }}
+          transition={{ duration: 3.2, repeat: Infinity, ease: "easeInOut" }}
         >
-          AB
-        </span>
+          <Sparkles size={32} className="text-white" strokeWidth={1.8} />
+        </motion.div>
       </motion.div>
 
       {/* Inner ring — clockwise */}
