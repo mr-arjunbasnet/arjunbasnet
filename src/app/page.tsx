@@ -6,11 +6,36 @@ import CountUp from "@/components/ui/CountUp";
 import Marquee from "@/components/ui/Marquee";
 import HeroBackground from "@/components/ui/HeroBackground";
 import ToolOrbit from "@/components/ui/ToolOrbit";
+import JsonLd from "@/components/seo/JsonLd";
 
 export const metadata: Metadata = {
   title: "Arjun Basnet — Project Manager & AI Automation Engineer",
   description:
-    "Arjun Basnet is a Project Manager and AI Automation Engineer in Kathmandu, Nepal, leading EdTech platforms and AI workflow projects at Makura Creations.",
+    "Arjun Basnet — Project Manager and AI Automation Engineer in Kathmandu, Nepal. EdTech platforms, n8n + Claude workflows, business process automation, and digital transformation. 100+ projects delivered, 2× ICC Digital Fan Engagement Award winner.",
+  alternates: { canonical: "/" },
+};
+
+const homeSchema = {
+  "@context": "https://schema.org",
+  "@type": "ProfilePage",
+  url: "https://arjun-basnet.com.np/",
+  name: "Arjun Basnet — Project Manager & AI Automation Engineer",
+  description:
+    "Portfolio homepage of Arjun Basnet, a Kathmandu-based Project Manager and AI Automation Engineer specialising in EdTech, business process automation, and digital transformation.",
+  mainEntity: { "@id": "https://arjun-basnet.com.np/#person" },
+};
+
+const breadcrumbSchema = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    {
+      "@type": "ListItem",
+      position: 1,
+      name: "Home",
+      item: "https://arjun-basnet.com.np/",
+    },
+  ],
 };
 
 const stats = [
@@ -58,6 +83,8 @@ const work = [
 export default function Home() {
   return (
     <>
+      <JsonLd data={homeSchema} id="ld-homepage" />
+      <JsonLd data={breadcrumbSchema} id="ld-breadcrumb-home" />
       {/* ─── Hero ─── */}
       <section className="relative max-w-6xl mx-auto px-6 pt-16 pb-12 md:pt-24 md:pb-20 overflow-hidden">
         <HeroBackground />

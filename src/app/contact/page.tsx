@@ -1,16 +1,48 @@
 import type { Metadata } from "next";
 import { MapPin, Mail, ExternalLink } from "lucide-react";
 import ContactForm from "@/components/contact/ContactForm";
+import JsonLd from "@/components/seo/JsonLd";
 
 export const metadata: Metadata = {
-  title: "Contact — Arjun Basnet",
+  title: "Contact — Hire Arjun Basnet for AI Automation & PM Engagements",
   description:
-    "Get in touch with Arjun Basnet — project enquiries, research collaborations, or conversations about EdTech and AI in Nepal.",
+    "Contact Arjun Basnet for project enquiries, research collaborations, AI automation consulting, EdTech platform development, and business process automation engagements. Based in Kathmandu, Nepal (UTC+5:45). Typical response time within 24 hours.",
+  keywords: [
+    "hire Arjun Basnet",
+    "contact AI automation consultant Nepal",
+    "Project Manager hire Kathmandu",
+    "EdTech consultant contact",
+    "business process automation enquiry",
+    "n8n consultant Nepal",
+    "Claude API consultant",
+  ],
+  alternates: { canonical: "/contact" },
+};
+
+const contactPageSchema = {
+  "@context": "https://schema.org",
+  "@type": "ContactPage",
+  url: "https://arjun-basnet.com.np/contact",
+  name: "Contact Arjun Basnet",
+  description:
+    "Contact page for Arjun Basnet — Project Manager and AI Automation Engineer in Kathmandu, Nepal.",
+  mainEntity: { "@id": "https://arjun-basnet.com.np/#person" },
+};
+
+const breadcrumbSchema = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    { "@type": "ListItem", position: 1, name: "Home", item: "https://arjun-basnet.com.np/" },
+    { "@type": "ListItem", position: 2, name: "Contact", item: "https://arjun-basnet.com.np/contact" },
+  ],
 };
 
 export default function Contact() {
   return (
     <>
+      <JsonLd data={contactPageSchema} id="ld-contact" />
+      <JsonLd data={breadcrumbSchema} id="ld-breadcrumb-contact" />
       {/* Header */}
       <section className="max-w-6xl mx-auto px-6 pt-16 pb-12 md:pt-20 md:pb-16">
         <p className="text-xs font-semibold uppercase tracking-widest text-[#737373] mb-4">

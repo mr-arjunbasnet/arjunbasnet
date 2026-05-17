@@ -2,11 +2,70 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight, ExternalLink } from "lucide-react";
 import AnimateIn from "@/components/ui/AnimateIn";
+import JsonLd from "@/components/seo/JsonLd";
 
 export const metadata: Metadata = {
-  title: "Research — Arjun Basnet",
+  title: "Research & Publications — Computer Vision, EdTech, IS Adoption",
   description:
-    "Research and publications by Arjun Basnet — peer-reviewed work on automated attendance using facial detection, with active interests in AI for EdTech, adaptive learning, and IS adoption in emerging economies.",
+    "Peer-reviewed research by Arjun Basnet — automated attendance using Haar Cascade and LBPH facial detection, published in the Apex Journal of Business and Management (2023). Active research interests across AI in EdTech, adaptive learning analytics, LMS adoption in emerging economies, and responsible educational data governance.",
+  keywords: [
+    "Arjun Basnet research",
+    "facial detection attendance system",
+    "Haar Cascade LBPH publication",
+    "computer vision Nepal",
+    "EdTech research Nepal",
+    "adaptive learning analytics",
+    "LMS adoption emerging economies",
+    "information systems research",
+    "Apex Journal of Business and Management",
+    "AI in education research",
+  ],
+  alternates: { canonical: "/research" },
+};
+
+const scholarlyArticleSchema = {
+  "@context": "https://schema.org",
+  "@type": "ScholarlyArticle",
+  headline:
+    "An Automated Attendance System Using Facial Detection and Recognition Technology",
+  author: [
+    { "@type": "Person", name: "Phul Babu Jha" },
+    { "@type": "Person", name: "Arjun Basnet", "@id": "https://arjun-basnet.com.np/#person" },
+    { "@type": "Person", name: "Bishal Pokhrel" },
+    { "@type": "Person", name: "Bibek Pokhrel" },
+    { "@type": "Person", name: "Gokul Kumar Thakur" },
+    { "@type": "Person", name: "Sajan Chhetri" },
+  ],
+  datePublished: "2023",
+  isPartOf: {
+    "@type": "Periodical",
+    name: "Apex Journal of Business and Management",
+    volumeNumber: "1",
+    issueNumber: "1",
+  },
+  pageStart: "103",
+  pageEnd: "120",
+  about: ["Computer Vision", "Facial Detection", "LBPH", "Haar Cascade", "Educational Technology"],
+  publisher: { "@type": "Organization", name: "Apex Journal of Business and Management" },
+};
+
+const researchPageSchema = {
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  url: "https://arjun-basnet.com.np/research",
+  name: "Research & Publications — Arjun Basnet",
+  description:
+    "Peer-reviewed publication and active research interests of Arjun Basnet across AI in EdTech, adaptive learning, and information-system adoption in emerging economies.",
+  mainEntity: { "@id": "https://arjun-basnet.com.np/#person" },
+};
+
+const breadcrumbSchema = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    { "@type": "ListItem", position: 1, name: "Home", item: "https://arjun-basnet.com.np/" },
+    { "@type": "ListItem", position: 2, name: "Research", item: "https://arjun-basnet.com.np/research" },
+  ],
 };
 
 const researchInterests = [
@@ -45,6 +104,9 @@ const researchInterests = [
 export default function Research() {
   return (
     <>
+      <JsonLd data={scholarlyArticleSchema} id="ld-publication" />
+      <JsonLd data={researchPageSchema} id="ld-research" />
+      <JsonLd data={breadcrumbSchema} id="ld-breadcrumb-research" />
       {/* Header */}
       <section className="max-w-6xl mx-auto px-6 pt-16 pb-12 md:pt-20 md:pb-16">
         <AnimateIn>

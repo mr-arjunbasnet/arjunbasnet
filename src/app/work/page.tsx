@@ -3,11 +3,116 @@ import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import AnimateIn from "@/components/ui/AnimateIn";
 import CountUp from "@/components/ui/CountUp";
+import JsonLd from "@/components/seo/JsonLd";
 
 export const metadata: Metadata = {
-  title: "Work — Arjun Basnet",
+  title: "Work — Case Studies in EdTech, AI Automation & Digital Transformation",
   description:
-    "Portfolio of Arjun Basnet — 100+ delivered projects including Cricket Nepal's ICC Award-winning digital transformation, five LMS platforms for Nepali education, and AI automation workflows at Makura Creations.",
+    "Selected case studies from 100+ delivered projects: Cricket Nepal's ICC Award-winning digital transformation, five K-12 and PSC/TSC Learning Management System platforms across Nepal, seven AI automation workflows in n8n and Claude, USEF Nepal, UWS Nepal. 92% on-time delivery.",
+  keywords: [
+    "Arjun Basnet portfolio",
+    "Cricket Nepal digital transformation",
+    "LMS Nepal case study",
+    "PSC TSC LMS platform",
+    "K-12 LMS Nepal",
+    "n8n workflow case study",
+    "Claude API automation",
+    "business process automation portfolio",
+    "USEF Nepal website",
+    "UWS Nepal project",
+    "Makura Creations projects",
+    "ICC Digital Fan Engagement Award winner",
+  ],
+  alternates: { canonical: "/work" },
+};
+
+const workItemListSchema = {
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  url: "https://arjun-basnet.com.np/work",
+  name: "Work & Case Studies — Arjun Basnet",
+  description:
+    "Selected case studies in EdTech, digital transformation, and AI automation by Arjun Basnet.",
+  mainEntity: {
+    "@type": "ItemList",
+    name: "Selected Case Studies",
+    itemListOrder: "https://schema.org/ItemListOrderAscending",
+    itemListElement: [
+      {
+        "@type": "ListItem",
+        position: 1,
+        item: {
+          "@type": "CreativeWork",
+          name: "Cricket Nepal Digital Transformation",
+          description:
+            "End-to-end digital transformation including web platform, mobile app, and social media — winner of two consecutive ICC Digital Fan Engagement Awards.",
+          url: "https://arjun-basnet.com.np/work#cricket-nepal",
+          author: { "@id": "https://arjun-basnet.com.np/#person" },
+          award: [
+            "ICC Digital Fan Engagement Award 2023",
+            "ICC Digital Fan Engagement Award 2024",
+          ],
+        },
+      },
+      {
+        "@type": "ListItem",
+        position: 2,
+        item: {
+          "@type": "CreativeWork",
+          name: "Learning Management Systems, Nepal",
+          description:
+            "Five LMS platforms for K-12 and PSC/TSC exam preparation candidates across Nepal.",
+          url: "https://arjun-basnet.com.np/work#lms",
+          author: { "@id": "https://arjun-basnet.com.np/#person" },
+        },
+      },
+      {
+        "@type": "ListItem",
+        position: 3,
+        item: {
+          "@type": "CreativeWork",
+          name: "AI Automation Workflows",
+          description:
+            "Seven AI automation workflows in n8n and Claude reducing manual task cycle time from ten hours to two.",
+          url: "https://arjun-basnet.com.np/work#ai-automation",
+          author: { "@id": "https://arjun-basnet.com.np/#person" },
+        },
+      },
+      {
+        "@type": "ListItem",
+        position: 4,
+        item: {
+          "@type": "CreativeWork",
+          name: "USEF Nepal — Fulbright & EducationUSA",
+          description:
+            "Digital systems for the United States Educational Foundation Nepal.",
+          url: "https://arjun-basnet.com.np/work#usef",
+          author: { "@id": "https://arjun-basnet.com.np/#person" },
+        },
+      },
+      {
+        "@type": "ListItem",
+        position: 5,
+        item: {
+          "@type": "CreativeWork",
+          name: "UWS Nepal",
+          description:
+            "Web and enterprise systems for the University of Western Sydney Nepal.",
+          url: "https://arjun-basnet.com.np/work#uws-nepal",
+          author: { "@id": "https://arjun-basnet.com.np/#person" },
+        },
+      },
+    ],
+  },
+};
+
+const breadcrumbSchema = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    { "@type": "ListItem", position: 1, name: "Home", item: "https://arjun-basnet.com.np/" },
+    { "@type": "ListItem", position: 2, name: "Work", item: "https://arjun-basnet.com.np/work" },
+  ],
 };
 
 const projects = [
@@ -128,6 +233,8 @@ const clientList = [
 export default function Work() {
   return (
     <>
+      <JsonLd data={workItemListSchema} id="ld-work" />
+      <JsonLd data={breadcrumbSchema} id="ld-breadcrumb-work" />
       {/* Header */}
       <section className="max-w-6xl mx-auto px-6 pt-16 pb-12 md:pt-20 md:pb-16">
         <AnimateIn>

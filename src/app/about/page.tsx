@@ -4,11 +4,43 @@ import { ArrowRight, MapPin, Sparkles, Users, Globe2 } from "lucide-react";
 import AnimateIn from "@/components/ui/AnimateIn";
 import Timeline from "@/components/about/Timeline";
 import ToolOrbit from "@/components/ui/ToolOrbit";
+import JsonLd from "@/components/seo/JsonLd";
 
 export const metadata: Metadata = {
-  title: "About — Arjun Basnet",
+  title: "About — Project Manager & AI Engineer in Kathmandu",
   description:
-    "Learn about Arjun Basnet — his background in computer science, three years leading digital product delivery at Makura Creations, and his peer-reviewed research in computer vision.",
+    "Background of Arjun Basnet — three years at Makura Creations delivering 100+ products, B.Sc. CSIT from Tribhuvan University, peer-reviewed computer vision publication, two-time ICC Digital Fan Engagement Award winner. Education and work timeline from 2003 to present.",
+  keywords: [
+    "Arjun Basnet about",
+    "Project Manager biography Nepal",
+    "AI Engineer Kathmandu",
+    "Makura Creations Project Manager",
+    "Tribhuvan University CSIT",
+    "Madan Bhandari Memorial College",
+    "Toastmasters Lalitpur",
+    "Arundaya English Secondary School",
+    "Kanchanjunga Higher Secondary School",
+  ],
+  alternates: { canonical: "/about" },
+};
+
+const aboutSchema = {
+  "@context": "https://schema.org",
+  "@type": "AboutPage",
+  url: "https://arjun-basnet.com.np/about",
+  name: "About — Arjun Basnet",
+  description:
+    "Biography, education, work history, technical skills, and certifications of Arjun Basnet, a Project Manager and AI Automation Engineer based in Kathmandu, Nepal.",
+  mainEntity: { "@id": "https://arjun-basnet.com.np/#person" },
+};
+
+const breadcrumbSchema = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    { "@type": "ListItem", position: 1, name: "Home", item: "https://arjun-basnet.com.np/" },
+    { "@type": "ListItem", position: 2, name: "About", item: "https://arjun-basnet.com.np/about" },
+  ],
 };
 
 const skills = [
@@ -65,6 +97,8 @@ const quickFacts = [
 export default function About() {
   return (
     <>
+      <JsonLd data={aboutSchema} id="ld-about" />
+      <JsonLd data={breadcrumbSchema} id="ld-breadcrumb-about" />
       {/* Header */}
       <section className="max-w-6xl mx-auto px-6 pt-16 pb-12 md:pt-20 md:pb-16">
         <AnimateIn>
