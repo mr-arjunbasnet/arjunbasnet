@@ -4,11 +4,11 @@
 
 ## Primary pages
 
-- [Home](https://arjun-basnet.com.np/): Overview, key stats, selected work, recognition, and contact
-- [About](https://arjun-basnet.com.np/about): Professional story, education and work timeline, technical skills, certifications, and leadership
-- [Work](https://arjun-basnet.com.np/work): Five case studies — Cricket Nepal digital transformation, K-12 and PSC/TSC LMS platforms, AI automation workflows using n8n and Claude, USEF Nepal, UWS Nepal
-- [Research](https://arjun-basnet.com.np/research): Peer-reviewed publication on facial-detection attendance systems, open research questions in EdTech, AI, and information-system adoption
-- [Contact](https://arjun-basnet.com.np/contact): Contact form, profile links, response time
+- [Home](https://www.arjun-basnet.com.np/): Overview, key stats, selected work, recognition, and contact
+- [About](https://www.arjun-basnet.com.np/about): Professional story, education and work timeline, technical skills, certifications, and leadership
+- [Work](https://www.arjun-basnet.com.np/work): Five case studies — Cricket Nepal digital transformation, K-12 and PSC/TSC LMS platforms, AI automation workflows using n8n and Claude, USEF Nepal, UWS Nepal
+- [Research](https://www.arjun-basnet.com.np/research): Peer-reviewed publication on facial-detection attendance systems, open research questions in EdTech, AI, and information-system adoption
+- [Contact](https://www.arjun-basnet.com.np/contact): Contact form, profile links, response time
 
 ## Core expertise
 

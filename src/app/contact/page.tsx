@@ -22,19 +22,19 @@ export const metadata: Metadata = {
 const contactPageSchema = {
   "@context": "https://schema.org",
   "@type": "ContactPage",
-  url: "https://arjun-basnet.com.np/contact",
+  url: "https://www.arjun-basnet.com.np/contact",
   name: "Contact Arjun Basnet",
   description:
     "Contact page for Arjun Basnet — Project Manager and AI Automation Engineer in Kathmandu, Nepal.",
-  mainEntity: { "@id": "https://arjun-basnet.com.np/#person" },
+  mainEntity: { "@id": "https://www.arjun-basnet.com.np/#person" },
 };
 
 const breadcrumbSchema = {
   "@context": "https://schema.org",
   "@type": "BreadcrumbList",
   itemListElement: [
-    { "@type": "ListItem", position: 1, name: "Home", item: "https://arjun-basnet.com.np/" },
-    { "@type": "ListItem", position: 2, name: "Contact", item: "https://arjun-basnet.com.np/contact" },
+    { "@type": "ListItem", position: 1, name: "Home", item: "https://www.arjun-basnet.com.np/" },
+    { "@type": "ListItem", position: 2, name: "Contact", item: "https://www.arjun-basnet.com.np/contact" },
   ],
 };
 

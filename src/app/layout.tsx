@@ -22,7 +22,7 @@ const dmSerif = DM_Serif_Display({
   weight: "400",
 });
 
-const siteUrl = "https://arjun-basnet.com.np";
+const siteUrl = "https://www.arjun-basnet.com.np";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),

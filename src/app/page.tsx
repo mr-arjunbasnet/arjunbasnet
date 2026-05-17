@@ -18,11 +18,11 @@ export const metadata: Metadata = {
 const homeSchema = {
   "@context": "https://schema.org",
   "@type": "ProfilePage",
-  url: "https://arjun-basnet.com.np/",
+  url: "https://www.arjun-basnet.com.np/",
   name: "Arjun Basnet — Project Manager & AI Automation Engineer",
   description:
     "Portfolio homepage of Arjun Basnet, a Kathmandu-based Project Manager and AI Automation Engineer specialising in EdTech, business process automation, and digital transformation.",
-  mainEntity: { "@id": "https://arjun-basnet.com.np/#person" },
+  mainEntity: { "@id": "https://www.arjun-basnet.com.np/#person" },
 };
 
 const breadcrumbSchema = {
@@ -33,7 +33,7 @@ const breadcrumbSchema = {
       "@type": "ListItem",
       position: 1,
       name: "Home",
-      item: "https://arjun-basnet.com.np/",
+      item: "https://www.arjun-basnet.com.np/",
     },
   ],
 };
