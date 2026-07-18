@@ -18,7 +18,7 @@ export default function ThemePicker({
       <legend className="mb-2 block text-[10px] font-semibold uppercase tracking-[0.2em] text-[#8A8CA3]">
         Visualizer theme
       </legend>
-      <div className="grid grid-cols-3 gap-2">
+      <div className="grid grid-cols-2 gap-2">
         {THEMES.map((theme) => (
           <button
             key={theme.id}

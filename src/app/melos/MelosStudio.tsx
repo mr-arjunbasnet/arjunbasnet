@@ -29,12 +29,12 @@ export default function MelosStudio() {
   const rootRef = useRef<HTMLDivElement | null>(null);
 
   const [mode, setMode] = useState<"landing" | "live" | "review">("landing");
-  const [themeId, setThemeId] = useState<ThemeId>("melos");
+  const [themeId, setThemeId] = useState<ThemeId>("rainbow");
   const [recording, setRecording] = useState<Recording | null>(null);
 
   // The compositor reads through refs so it never needs re-creating.
   // Synced in effects (post-commit) — the next drawn frame picks them up.
-  const themeRef = useRef(getTheme("melos"));
+  const themeRef = useRef(getTheme("rainbow"));
   const camOnRef = useRef(false);
   const fontFamilyRef = useRef("");
 

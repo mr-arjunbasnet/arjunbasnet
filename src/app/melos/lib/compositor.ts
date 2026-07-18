@@ -3,7 +3,6 @@ import type { StudioTheme } from "./themes";
 export const FRAME_W = 1080;
 export const FRAME_H = 1920;
 
-const BAR_COUNT = 24;
 const DRAW_FPS = 30;
 
 // Bar geometry: inset 12% per side, baseline at 78% of frame height so the
@@ -39,6 +38,7 @@ export class Compositor {
   private freq = new Uint8Array(128);
   private wave = new Uint8Array(256);
   private ctx: CanvasRenderingContext2D | null = null;
+  private barRanges = new Map<number, Array<[number, number]>>();
   private glowTop: CanvasGradient | null = null;
   private glowBottom: CanvasGradient | null = null;
   private brandGlow: CanvasGradient | null = null;
@@ -177,22 +177,45 @@ export class Compositor {
     }
   }
 
+  // Log-spaced bin ranges: voice energy lives in the low bins, so a linear
+  // split leaves the right half of the meter dead. Log spacing gives every
+  // bar across the width something to say.
+  private rangesFor(n: number): Array<[number, number]> {
+    const cached = this.barRanges.get(n);
+    if (cached) return cached;
+    const minBin = 1; // skip DC
+    const maxBin = Math.min(this.freq.length - 8, 120); // drop the empty top
+    const ranges: Array<[number, number]> = [];
+    for (let i = 0; i < n; i++) {
+      const a = Math.floor(minBin * Math.pow(maxBin / minBin, i / n));
+      const b = Math.max(
+        a + 1,
+        Math.floor(minBin * Math.pow(maxBin / minBin, (i + 1) / n))
+      );
+      ranges.push([Math.min(a, maxBin - 1), Math.min(b, maxBin)]);
+    }
+    this.barRanges.set(n, ranges);
+    return ranges;
+  }
+
   private drawBars(ctx: CanvasRenderingContext2D) {
     const theme = this.src.getTheme();
-    const slot = (BARS_X1 - BARS_X0) / BAR_COUNT;
-    const barW = slot * 0.62;
-    const perBar = Math.floor(this.freq.length / BAR_COUNT);
+    const n = theme.bars;
+    const ranges = this.rangesFor(n);
+    const slot = (BARS_X1 - BARS_X0) / n;
+    const barW = slot * theme.barWidth;
 
-    for (let i = 0; i < BAR_COUNT; i++) {
+    for (let i = 0; i < n; i++) {
+      const [a, b] = ranges[i];
       let sum = 0;
-      for (let j = i * perBar; j < (i + 1) * perBar; j++) sum += this.freq[j];
-      const amp = Math.pow(sum / (perBar * 255), 1.15);
+      for (let j = a; j < b; j++) sum += this.freq[j];
+      const amp = Math.pow(sum / ((b - a) * 255), 1.15);
       const h = Math.max(barW / 2, amp * BARS_MAX_H);
       const x = BARS_X0 + i * slot + (slot - barW) / 2;
       ctx.fillStyle = theme.barFill({
         ctx,
         i,
-        n: BAR_COUNT,
+        n,
         amp,
         baseY: BARS_BASE_Y,
         maxH: BARS_MAX_H,

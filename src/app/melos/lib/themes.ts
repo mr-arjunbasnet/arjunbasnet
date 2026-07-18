@@ -1,4 +1,4 @@
-export type ThemeId = "melos" | "vu" | "mono";
+export type ThemeId = "rainbow" | "melos" | "vu" | "mono";
 
 export interface BarPaintArgs {
   ctx: CanvasRenderingContext2D;
@@ -20,6 +20,10 @@ export interface StudioTheme {
   chip: string;
   /** stroke style for the time-domain waveform line */
   waveform: string;
+  /** number of bars drawn across the meter area */
+  bars: number;
+  /** bar width as a fraction of its slot (rest is gap) */
+  barWidth: number;
   barFill(args: BarPaintArgs): string | CanvasGradient;
 }
 
@@ -49,11 +53,26 @@ const vuGradients = new WeakMap<CanvasRenderingContext2D, CanvasGradient>();
 
 export const THEMES: StudioTheme[] = [
   {
+    id: "rainbow",
+    name: "Rainbow",
+    tagline: "Full-spectrum thin bars",
+    chip: "linear-gradient(90deg, #FF3B30, #FF9500, #FFCC00, #34C759, #00C7BE, #007AFF, #AF52DE, #FF2D95)",
+    waveform: "rgba(255,255,255,0.35)",
+    bars: 96,
+    barWidth: 0.5,
+    barFill({ i, n, amp }) {
+      const hue = Math.round((i / Math.max(1, n - 1)) * 360);
+      return `hsl(${hue}, 96%, ${52 + amp * 18}%)`;
+    },
+  },
+  {
     id: "melos",
     name: "Melos Spectrum",
     tagline: "The brand gradient, lit by your voice",
     chip: "linear-gradient(135deg, #A24BFF, #33E0FF 55%, #FF3DBE)",
     waveform: "rgba(51,224,255,0.75)",
+    bars: 24,
+    barWidth: 0.62,
     barFill({ i, n, amp }) {
       const t = n <= 1 ? 0 : i / (n - 1);
       const base =
@@ -69,6 +88,8 @@ export const THEMES: StudioTheme[] = [
     tagline: "Green to red, like the old meters",
     chip: "linear-gradient(0deg, #2BE86B, #FFD23F 60%, #FF3B3B)",
     waveform: "rgba(255,210,63,0.7)",
+    bars: 24,
+    barWidth: 0.62,
     barFill({ ctx, baseY, maxH }) {
       let g = vuGradients.get(ctx);
       if (!g) {
@@ -88,6 +109,8 @@ export const THEMES: StudioTheme[] = [
     tagline: "Signal Cyan on Stagelight Black",
     chip: "#33E0FF",
     waveform: "rgba(51,224,255,0.8)",
+    bars: 24,
+    barWidth: 0.62,
     barFill({ amp }) {
       return lift(SIGNAL_CYAN, amp * 0.2);
     },
