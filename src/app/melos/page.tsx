@@ -16,7 +16,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#0A0A14",
+  themeColor: "#FAFAFF",
 };
 
 export default function MelosPage() {

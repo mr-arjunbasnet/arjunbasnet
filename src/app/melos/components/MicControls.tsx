@@ -30,9 +30,9 @@ export default function MicControls({
       <div>
         <label
           htmlFor="melos-mic"
-          className="mb-1.5 block text-[10px] font-semibold uppercase tracking-[0.2em] text-[#8A8CA3]"
+          className="mb-1.5 block text-[10px] font-semibold uppercase tracking-[0.2em] text-[#667085]"
         >
-          Microphone
+          Input device
         </label>
         <select
           id="melos-mic"
@@ -40,7 +40,7 @@ export default function MicControls({
           disabled={disabled || devices.length === 0}
           onChange={(e) => onSelectDevice(e.target.value)}
           className={cn(
-            "w-full rounded-lg border border-white/10 bg-white/5 px-3 py-2 text-sm text-[#E8E9F2] disabled:opacity-40",
+            "w-full rounded-lg border border-black/10 bg-white px-3 py-2 text-sm text-[#16181D] disabled:opacity-40",
             focusRing
           )}
         >
@@ -48,11 +48,7 @@ export default function MicControls({
             <option value="">Default microphone</option>
           )}
           {devices.map((device, i) => (
-            <option
-              key={device.deviceId || i}
-              value={device.deviceId}
-              className="bg-[#10101E] text-[#E8E9F2]"
-            >
+            <option key={device.deviceId || i} value={device.deviceId}>
               {device.label || `Microphone ${i + 1}`}
             </option>
           ))}
@@ -62,7 +58,7 @@ export default function MicControls({
       <div className="space-y-2.5">
         {DSP_OPTIONS.map(({ key, label }) => (
           <div key={key} className="flex items-center justify-between gap-3">
-            <span id={`melos-dsp-${key}`} className="text-sm text-[#E8E9F2]">
+            <span id={`melos-dsp-${key}`} className="text-sm text-[#16181D]">
               {label}
             </span>
             <button
@@ -76,13 +72,13 @@ export default function MicControls({
                 "relative h-6 w-11 shrink-0 rounded-full border transition-colors disabled:opacity-40",
                 dsp[key]
                   ? "border-transparent bg-gradient-to-r from-[#A24BFF] to-[#33E0FF]"
-                  : "border-white/15 bg-white/10",
+                  : "border-black/10 bg-black/10",
                 focusRing
               )}
             >
               <span
                 className={cn(
-                  "absolute top-0.5 h-5 w-5 rounded-full bg-white transition-all",
+                  "absolute top-0.5 h-5 w-5 rounded-full bg-white shadow transition-all",
                   dsp[key] ? "left-[22px]" : "left-0.5"
                 )}
               />
@@ -91,7 +87,7 @@ export default function MicControls({
         ))}
       </div>
 
-      <p className="text-[11px] leading-relaxed text-[#8A8CA3]">
+      <p className="text-[11px] leading-relaxed text-[#667085]">
         Tip: switching these off makes the bars livelier — and the audio rawer.
       </p>
     </div>

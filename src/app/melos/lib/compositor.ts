@@ -40,6 +40,7 @@ export class Compositor {
   private freq = new Uint8Array(512);
   private wave = new Uint8Array(1024);
   private ctx: CanvasRenderingContext2D | null = null;
+  private cameraLive = false;
   private barRanges = new Map<number, Array<[number, number]>>();
   private directColors = new Map<string, (string | CanvasGradient)[]>();
   private glowTop: CanvasGradient | null = null;
@@ -75,23 +76,23 @@ export class Compositor {
       FRAME_W * 0.2, FRAME_H * 0.12, 0,
       FRAME_W * 0.2, FRAME_H * 0.12, FRAME_H * 0.55
     );
-    this.glowTop.addColorStop(0, "rgba(162,75,255,0.12)");
+    this.glowTop.addColorStop(0, "rgba(162,75,255,0.10)");
     this.glowTop.addColorStop(1, "rgba(162,75,255,0)");
 
     this.glowBottom = ctx.createRadialGradient(
       FRAME_W * 0.85, FRAME_H * 0.92, 0,
       FRAME_W * 0.85, FRAME_H * 0.92, FRAME_H * 0.5
     );
-    this.glowBottom.addColorStop(0, "rgba(51,224,255,0.08)");
+    this.glowBottom.addColorStop(0, "rgba(51,224,255,0.10)");
     this.glowBottom.addColorStop(1, "rgba(51,224,255,0)");
 
     this.brandGlow = ctx.createRadialGradient(
       FRAME_W / 2, FRAME_H * 0.42, 0,
       FRAME_W / 2, FRAME_H * 0.42, FRAME_W * 0.85
     );
-    this.brandGlow.addColorStop(0, "rgba(162,75,255,0.18)");
-    this.brandGlow.addColorStop(0.55, "rgba(51,224,255,0.06)");
-    this.brandGlow.addColorStop(1, "rgba(51,224,255,0)");
+    this.brandGlow.addColorStop(0, "rgba(162,75,255,0.12)");
+    this.brandGlow.addColorStop(0.55, "rgba(51,224,255,0.07)");
+    this.brandGlow.addColorStop(1, "rgba(255,61,190,0)");
 
     this.cameraScrim = ctx.createLinearGradient(0, FRAME_H * 0.5, 0, FRAME_H);
     this.cameraScrim.addColorStop(0, "rgba(10,10,20,0)");
@@ -134,7 +135,7 @@ export class Compositor {
   }
 
   private drawBackdrop(ctx: CanvasRenderingContext2D) {
-    ctx.fillStyle = "#0A0A14";
+    ctx.fillStyle = "#FFFFFF";
     ctx.fillRect(0, 0, FRAME_W, FRAME_H);
     if (this.glowTop) {
       ctx.fillStyle = this.glowTop;
@@ -155,6 +156,7 @@ export class Compositor {
       video !== null &&
       video.readyState >= 2 &&
       video.videoWidth > 0;
+    this.cameraLive = cameraLive;
 
     if (cameraLive) {
       // Cover-fit crop: fill the 9:16 frame without stretching.
@@ -313,7 +315,10 @@ export class Compositor {
     const x = (FRAME_W - total) / 2;
     const y = WM_BASELINE_Y;
 
-    ctx.fillStyle = "rgba(232,233,242,0.92)";
+    // Dark ink on the light brand background, light over camera footage.
+    ctx.fillStyle = this.cameraLive
+      ? "rgba(255,255,255,0.92)"
+      : "rgba(22,24,29,0.88)";
     ctx.fillText("me", x, y);
     ctx.fillText("os", x + meW + gap + barW + gap, y);
 
@@ -326,7 +331,9 @@ export class Compositor {
     }
 
     ctx.font = `500 26px ${family}`;
-    ctx.fillStyle = "rgba(138,140,163,0.8)";
+    ctx.fillStyle = this.cameraLive
+      ? "rgba(255,255,255,0.75)"
+      : "rgba(102,112,128,0.85)";
     ctx.textAlign = "center";
     ctx.fillText("arjun-basnet.com.np", FRAME_W / 2, y + 44);
     ctx.textAlign = "left";

@@ -108,7 +108,7 @@ export default function ExportPanel({
     <div>
       <div className="mb-4 flex items-baseline justify-between gap-3">
         <h2
-          className="text-xl font-semibold text-[#E8E9F2]"
+          className="text-xl font-semibold text-[#16181D]"
           style={{
             fontFamily:
               "var(--font-space-grotesk), var(--font-geist-sans), sans-serif",
@@ -116,7 +116,7 @@ export default function ExportPanel({
         >
           Your take
         </h2>
-        <p className="text-xs text-[#8A8CA3]">
+        <p className="text-xs text-[#667085]">
           {isMp4 ? "MP4" : "WebM"} · {formatTime(rec.duration)} · 1080×1920
         </p>
       </div>
@@ -125,19 +125,19 @@ export default function ExportPanel({
         controls
         playsInline
         src={url}
-        className="mx-auto max-h-[46vh] w-auto rounded-xl border border-white/10 bg-black"
+        className="mx-auto max-h-[46vh] w-auto rounded-xl border border-black/10 bg-black"
       />
 
       {busy && (
         <div className="mt-4">
-          <div className="h-1.5 overflow-hidden rounded-full bg-white/10">
+          <div className="h-1.5 overflow-hidden rounded-full bg-black/10">
             <div
               className="h-full rounded-full bg-gradient-to-r from-[#A24BFF] via-[#33E0FF] to-[#FF3DBE] transition-all"
               style={{ width: `${Math.round((progress ?? 0) * 100)}%` }}
             />
           </div>
           <div className="mt-2 flex items-center justify-between gap-3">
-            <p className="text-[11px] text-[#8A8CA3]">
+            <p className="text-[11px] text-[#667085]">
               {isMp4 ? "Fixing MP4 metadata" : "Converting to MP4"} in your
               browser… {Math.round((progress ?? 0) * 100)}%
             </p>
@@ -145,7 +145,7 @@ export default function ExportPanel({
               type="button"
               onClick={onSkipOptimize}
               className={cn(
-                "shrink-0 text-[11px] font-medium text-[#33E0FF] hover:underline",
+                "shrink-0 text-[11px] font-medium text-[#7C3AED] hover:underline",
                 focusRing
               )}
             >
@@ -155,7 +155,7 @@ export default function ExportPanel({
         </div>
       )}
 
-      {note && <p className="mt-3 text-xs text-[#FF3DBE]">{note}</p>}
+      {note && <p className="mt-3 text-xs text-[#B01D7E]">{note}</p>}
 
       <div className="mt-5 flex flex-wrap items-center gap-3">
         <button
@@ -163,7 +163,7 @@ export default function ExportPanel({
           onClick={onRerecord}
           disabled={busy}
           className={cn(
-            "flex items-center gap-2 rounded-full border border-white/15 px-4 py-2.5 text-sm font-medium text-[#E8E9F2] transition-colors hover:border-white/35 disabled:opacity-40",
+            "flex items-center gap-2 rounded-full border border-black/15 px-4 py-2.5 text-sm font-medium text-[#16181D] transition-colors hover:border-black/40 disabled:opacity-40",
             focusRing
           )}
         >
@@ -174,7 +174,7 @@ export default function ExportPanel({
           onClick={onDownload}
           disabled={busy}
           className={cn(
-            "flex items-center gap-2 rounded-full bg-[#E8E9F2] px-4 py-2.5 text-sm font-semibold text-[#0A0A14] transition-colors hover:bg-white disabled:opacity-40",
+            "flex items-center gap-2 rounded-full bg-[#16181D] px-4 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-black disabled:opacity-40",
             focusRing
           )}
         >
@@ -186,7 +186,7 @@ export default function ExportPanel({
             onClick={onShare}
             disabled={busy}
             className={cn(
-              "flex items-center gap-2 rounded-full bg-gradient-to-r from-[#A24BFF] via-[#33E0FF] to-[#FF3DBE] px-4 py-2.5 text-sm font-semibold text-[#0A0A14] transition-opacity hover:opacity-90 disabled:opacity-40",
+              "flex items-center gap-2 rounded-full bg-gradient-to-r from-[#A24BFF] via-[#33E0FF] to-[#FF3DBE] px-4 py-2.5 text-sm font-semibold text-white transition-opacity hover:opacity-90 disabled:opacity-40",
               focusRing
             )}
           >
@@ -195,7 +195,7 @@ export default function ExportPanel({
         )}
       </div>
 
-      <p className="mt-4 text-[11px] leading-relaxed text-[#8A8CA3]">
+      <p className="mt-4 text-[11px] leading-relaxed text-[#667085]">
         On phones, Share opens the native sheet with TikTok, Instagram and
         WhatsApp as targets. Nothing ever leaves your device until you post it.
       </p>

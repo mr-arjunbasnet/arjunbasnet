@@ -86,7 +86,8 @@ export const THEMES: StudioTheme[] = [
         t < 0.5
           ? mix(MELOS_VIOLET, SIGNAL_CYAN, t * 2)
           : mix(SIGNAL_CYAN, HOT_MAGENTA, (t - 0.5) * 2);
-      return lift(base, amp * 0.35);
+      // Small lift only — the composition background is white now.
+      return lift(base, amp * 0.15);
     },
   },
   {
@@ -114,14 +115,14 @@ export const THEMES: StudioTheme[] = [
   {
     id: "mono",
     name: "Mono",
-    tagline: "Signal Cyan on Stagelight Black",
+    tagline: "Signal Cyan, minimal",
     chip: "#33E0FF",
     waveform: "rgba(51,224,255,0.8)",
     bars: 24,
     barWidth: 0.62,
     binMapping: "log",
     barFill({ amp }) {
-      return lift(SIGNAL_CYAN, amp * 0.2);
+      return lift(SIGNAL_CYAN, amp * 0.1);
     },
   },
 ];
