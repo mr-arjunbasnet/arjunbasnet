@@ -63,8 +63,8 @@ export const THEMES: StudioTheme[] = [
     tagline: "One bar per frequency, instant response",
     chip: "linear-gradient(90deg, #FF3B30, #FF9500, #FFCC00, #34C759, #00C7BE, #007AFF, #AF52DE, #FF2D95)",
     waveform: "",
-    bars: 100,
-    barWidth: 1 / 3,
+    bars: 64,
+    barWidth: 0.5,
     binMapping: "direct",
     barFill({ i, n }) {
       // mictests.com's palette: full hue sweep, fixed saturation/lightness.
@@ -77,7 +77,7 @@ export const THEMES: StudioTheme[] = [
     tagline: "The brand gradient, lit by your voice",
     chip: "linear-gradient(135deg, #A24BFF, #33E0FF 55%, #FF3DBE)",
     waveform: "rgba(51,224,255,0.75)",
-    bars: 24,
+    bars: 32,
     barWidth: 0.62,
     binMapping: "log",
     barFill({ i, n, amp }) {
@@ -96,7 +96,7 @@ export const THEMES: StudioTheme[] = [
     tagline: "Green to red, like the old meters",
     chip: "linear-gradient(0deg, #2BE86B, #FFD23F 60%, #FF3B3B)",
     waveform: "rgba(255,210,63,0.7)",
-    bars: 24,
+    bars: 32,
     barWidth: 0.62,
     binMapping: "log",
     barFill({ ctx, baseY, maxH }) {
@@ -118,7 +118,7 @@ export const THEMES: StudioTheme[] = [
     tagline: "Signal Cyan, minimal",
     chip: "#33E0FF",
     waveform: "rgba(51,224,255,0.8)",
-    bars: 24,
+    bars: 32,
     barWidth: 0.62,
     binMapping: "log",
     barFill({ amp }) {
