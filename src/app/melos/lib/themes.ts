@@ -18,12 +18,17 @@ export interface StudioTheme {
   tagline: string;
   /** CSS background for the picker swatch */
   chip: string;
-  /** stroke style for the time-domain waveform line */
+  /** stroke style for the time-domain waveform line; empty string = no line */
   waveform: string;
   /** number of bars drawn across the meter area */
   bars: number;
   /** bar width as a fraction of its slot (rest is gap) */
   barWidth: number;
+  /**
+   * "direct": one FFT bin per bar with auto-gain normalization
+   * (the mictests.com behavior). "log": log-spaced bin grouping.
+   */
+  binMapping: "direct" | "log";
   barFill(args: BarPaintArgs): string | CanvasGradient;
 }
 
@@ -55,14 +60,15 @@ export const THEMES: StudioTheme[] = [
   {
     id: "rainbow",
     name: "Rainbow",
-    tagline: "Full-spectrum thin bars",
+    tagline: "One bar per frequency, instant response",
     chip: "linear-gradient(90deg, #FF3B30, #FF9500, #FFCC00, #34C759, #00C7BE, #007AFF, #AF52DE, #FF2D95)",
-    waveform: "rgba(255,255,255,0.35)",
-    bars: 96,
-    barWidth: 0.5,
-    barFill({ i, n, amp }) {
-      const hue = Math.round((i / Math.max(1, n - 1)) * 360);
-      return `hsl(${hue}, 96%, ${52 + amp * 18}%)`;
+    waveform: "",
+    bars: 100,
+    barWidth: 1 / 3,
+    binMapping: "direct",
+    barFill({ i, n }) {
+      // mictests.com's palette: full hue sweep, fixed saturation/lightness.
+      return `hsl(${Math.round((i / n) * 360)}, 100%, 50%)`;
     },
   },
   {
@@ -73,6 +79,7 @@ export const THEMES: StudioTheme[] = [
     waveform: "rgba(51,224,255,0.75)",
     bars: 24,
     barWidth: 0.62,
+    binMapping: "log",
     barFill({ i, n, amp }) {
       const t = n <= 1 ? 0 : i / (n - 1);
       const base =
@@ -90,6 +97,7 @@ export const THEMES: StudioTheme[] = [
     waveform: "rgba(255,210,63,0.7)",
     bars: 24,
     barWidth: 0.62,
+    binMapping: "log",
     barFill({ ctx, baseY, maxH }) {
       let g = vuGradients.get(ctx);
       if (!g) {
@@ -111,6 +119,7 @@ export const THEMES: StudioTheme[] = [
     waveform: "rgba(51,224,255,0.8)",
     bars: 24,
     barWidth: 0.62,
+    binMapping: "log",
     barFill({ amp }) {
       return lift(SIGNAL_CYAN, amp * 0.2);
     },

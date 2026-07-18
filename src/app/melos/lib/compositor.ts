@@ -3,7 +3,10 @@ import type { StudioTheme } from "./themes";
 export const FRAME_W = 1080;
 export const FRAME_H = 1920;
 
-const DRAW_FPS = 30;
+// mictests.com's auto-gain reference: a bin value at/above this hits full
+// height (visually amplifying quiet input); anything louder is normalized
+// down so the meter never clips. 150 is their canvas-height threshold.
+const AUTOGAIN_REF = 150;
 
 // Bar geometry: inset 12% per side, baseline at 78% of frame height so the
 // equalizer clears TikTok's bottom-20% UI safe zone.
@@ -34,11 +37,11 @@ export interface CompositorSources {
  */
 export class Compositor {
   private rafId = 0;
-  private lastDraw = 0;
-  private freq = new Uint8Array(128);
-  private wave = new Uint8Array(256);
+  private freq = new Uint8Array(512);
+  private wave = new Uint8Array(1024);
   private ctx: CanvasRenderingContext2D | null = null;
   private barRanges = new Map<number, Array<[number, number]>>();
+  private directColors = new Map<string, (string | CanvasGradient)[]>();
   private glowTop: CanvasGradient | null = null;
   private glowBottom: CanvasGradient | null = null;
   private brandGlow: CanvasGradient | null = null;
@@ -49,10 +52,9 @@ export class Compositor {
 
   start() {
     if (this.rafId) return;
-    const loop = (t: number) => {
+    // Full-rate rAF: throttling the draw loop reads as input lag.
+    const loop = () => {
       this.rafId = requestAnimationFrame(loop);
-      if (t - this.lastDraw < 1000 / DRAW_FPS) return;
-      this.lastDraw = t;
       this.draw();
     };
     this.rafId = requestAnimationFrame(loop);
@@ -112,6 +114,11 @@ export class Compositor {
 
     const analyser = this.src.getAnalyser();
     if (analyser) {
+      if (this.freq.length !== analyser.frequencyBinCount) {
+        this.freq = new Uint8Array(analyser.frequencyBinCount);
+        this.wave = new Uint8Array(analyser.fftSize);
+        this.barRanges.clear();
+      }
       analyser.getByteFrequencyData(this.freq);
       analyser.getByteTimeDomainData(this.wave);
     } else {
@@ -198,8 +205,55 @@ export class Compositor {
     return ranges;
   }
 
+  // Faithful port of mictests.com's meter: bar i IS FFT bin i (~47 Hz each,
+  // so ~100 bars cover the voice band), heights auto-gain-normalized, drawn
+  // as plain 1:3 width:slot rects with fixed-hue colors.
+  private drawBarsDirect(ctx: CanvasRenderingContext2D) {
+    const theme = this.src.getTheme();
+    const n = theme.bars;
+    const slot = (BARS_X1 - BARS_X0) / n;
+    const barW = slot * theme.barWidth;
+
+    let colors = this.directColors.get(theme.id);
+    if (!colors || colors.length !== n) {
+      colors = [];
+      for (let i = 0; i < n; i++) {
+        colors.push(
+          theme.barFill({
+            ctx,
+            i,
+            n,
+            amp: 1,
+            baseY: BARS_BASE_Y,
+            maxH: BARS_MAX_H,
+          })
+        );
+      }
+      this.directColors.set(theme.id, colors);
+    }
+
+    let max = 0;
+    for (let j = 0; j < this.freq.length; j++) {
+      if (this.freq[j] > max) max = this.freq[j];
+    }
+    const scale =
+      (max > AUTOGAIN_REF ? AUTOGAIN_REF / max : 1) *
+      (BARS_MAX_H / AUTOGAIN_REF);
+
+    for (let i = 0; i < n; i++) {
+      const h = this.freq[i] * scale;
+      if (h <= 0) continue;
+      ctx.fillStyle = colors[i];
+      ctx.fillRect(BARS_X0 + i * slot, BARS_BASE_Y - h, barW, h);
+    }
+  }
+
   private drawBars(ctx: CanvasRenderingContext2D) {
     const theme = this.src.getTheme();
+    if (theme.binMapping === "direct") {
+      this.drawBarsDirect(ctx);
+      return;
+    }
     const n = theme.bars;
     const ranges = this.rangesFor(n);
     const slot = (BARS_X1 - BARS_X0) / n;
@@ -228,10 +282,13 @@ export class Compositor {
 
   private drawWave(ctx: CanvasRenderingContext2D) {
     const theme = this.src.getTheme();
+    if (!theme.waveform) return;
     ctx.beginPath();
     const span = BARS_X1 - BARS_X0;
-    for (let i = 0; i < this.wave.length; i++) {
-      const x = BARS_X0 + (i / (this.wave.length - 1)) * span;
+    const step = Math.max(1, Math.floor(this.wave.length / 256));
+    const last = this.wave.length - 1;
+    for (let i = 0; i <= last; i += step) {
+      const x = BARS_X0 + (i / last) * span;
       const y = WAVE_Y + ((this.wave[i] - 128) / 128) * WAVE_AMP;
       if (i === 0) ctx.moveTo(x, y);
       else ctx.lineTo(x, y);

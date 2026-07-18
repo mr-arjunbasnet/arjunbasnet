@@ -133,7 +133,11 @@ export function useMicAnalyser() {
         const bus = ctx.createGain(); // effectsBus — pass-through until Phase 2
         bus.gain.value = 1;
         const analyser = ctx.createAnalyser();
-        analyser.fftSize = 256;
+        // Tuned to match mictests.com's meter: high bin resolution and a
+        // -85..-10 dB window so quiet voices register visibly.
+        analyser.fftSize = 1024;
+        analyser.minDecibels = -85;
+        analyser.maxDecibels = -10;
         analyser.smoothingTimeConstant = 0.85;
         const dest = ctx.createMediaStreamDestination();
         bus.connect(analyser);
