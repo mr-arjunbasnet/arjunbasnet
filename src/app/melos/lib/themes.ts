@@ -1,0 +1,99 @@
+export type ThemeId = "melos" | "vu" | "mono";
+
+export interface BarPaintArgs {
+  ctx: CanvasRenderingContext2D;
+  i: number;
+  n: number;
+  /** 0..1 amplitude of this bar, post-curve */
+  amp: number;
+  /** baseline y of the bars, in frame pixels */
+  baseY: number;
+  /** max bar height, in frame pixels */
+  maxH: number;
+}
+
+export interface StudioTheme {
+  id: ThemeId;
+  name: string;
+  tagline: string;
+  /** CSS background for the picker swatch */
+  chip: string;
+  /** stroke style for the time-domain waveform line */
+  waveform: string;
+  barFill(args: BarPaintArgs): string | CanvasGradient;
+}
+
+type Rgb = [number, number, number];
+
+const MELOS_VIOLET: Rgb = [162, 75, 255]; // #A24BFF
+const SIGNAL_CYAN: Rgb = [51, 224, 255]; // #33E0FF
+const HOT_MAGENTA: Rgb = [255, 61, 190]; // #FF3DBE
+
+function mix(a: Rgb, b: Rgb, t: number): Rgb {
+  return [
+    Math.round(a[0] + (b[0] - a[0]) * t),
+    Math.round(a[1] + (b[1] - a[1]) * t),
+    Math.round(a[2] + (b[2] - a[2]) * t),
+  ];
+}
+
+// Lift toward white — amplitude brightens the bar without shifting its hue.
+function lift(c: Rgb, t: number): string {
+  return `rgb(${Math.round(c[0] + (255 - c[0]) * t)},${Math.round(
+    c[1] + (255 - c[1]) * t
+  )},${Math.round(c[2] + (255 - c[2]) * t)})`;
+}
+
+// The VU gradient is fixed in frame coordinates, so cache one per context.
+const vuGradients = new WeakMap<CanvasRenderingContext2D, CanvasGradient>();
+
+export const THEMES: StudioTheme[] = [
+  {
+    id: "melos",
+    name: "Melos Spectrum",
+    tagline: "The brand gradient, lit by your voice",
+    chip: "linear-gradient(135deg, #A24BFF, #33E0FF 55%, #FF3DBE)",
+    waveform: "rgba(51,224,255,0.75)",
+    barFill({ i, n, amp }) {
+      const t = n <= 1 ? 0 : i / (n - 1);
+      const base =
+        t < 0.5
+          ? mix(MELOS_VIOLET, SIGNAL_CYAN, t * 2)
+          : mix(SIGNAL_CYAN, HOT_MAGENTA, (t - 0.5) * 2);
+      return lift(base, amp * 0.35);
+    },
+  },
+  {
+    id: "vu",
+    name: "VU Classic",
+    tagline: "Green to red, like the old meters",
+    chip: "linear-gradient(0deg, #2BE86B, #FFD23F 60%, #FF3B3B)",
+    waveform: "rgba(255,210,63,0.7)",
+    barFill({ ctx, baseY, maxH }) {
+      let g = vuGradients.get(ctx);
+      if (!g) {
+        g = ctx.createLinearGradient(0, baseY, 0, baseY - maxH);
+        g.addColorStop(0, "#2BE86B");
+        g.addColorStop(0.55, "#FFD23F");
+        g.addColorStop(0.8, "#FF7A3D");
+        g.addColorStop(1, "#FF3B3B");
+        vuGradients.set(ctx, g);
+      }
+      return g;
+    },
+  },
+  {
+    id: "mono",
+    name: "Mono",
+    tagline: "Signal Cyan on Stagelight Black",
+    chip: "#33E0FF",
+    waveform: "rgba(51,224,255,0.8)",
+    barFill({ amp }) {
+      return lift(SIGNAL_CYAN, amp * 0.2);
+    },
+  },
+];
+
+export function getTheme(id: ThemeId): StudioTheme {
+  return THEMES.find((t) => t.id === id) ?? THEMES[0];
+}

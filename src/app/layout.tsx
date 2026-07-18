@@ -3,6 +3,7 @@ import { Geist, Geist_Mono, DM_Serif_Display } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
+import SiteChrome from "@/components/layout/SiteChrome";
 import ScrollProgress from "@/components/ui/ScrollProgress";
 import JsonLd from "@/components/seo/JsonLd";
 
@@ -181,10 +182,14 @@ export default function RootLayout({
       <body className="min-h-full flex flex-col bg-[#FAFAF8] text-[#111111]">
         <JsonLd data={personSchema} id="ld-person" />
         <JsonLd data={websiteSchema} id="ld-website" />
-        <ScrollProgress />
-        <Navbar />
+        <SiteChrome>
+          <ScrollProgress />
+          <Navbar />
+        </SiteChrome>
         <main className="flex-1 pt-16">{children}</main>
-        <Footer />
+        <SiteChrome>
+          <Footer />
+        </SiteChrome>
       </body>
     </html>
   );
