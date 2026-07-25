@@ -71,42 +71,40 @@ export default function Home() {
         <Container>
           <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-[1.15fr_1fr]">
             <div>
-              <AnimateIn>
-                <div className="mb-6 flex flex-wrap items-center gap-x-5 gap-y-2 text-xs font-medium text-muted">
-                  <span className="inline-flex items-center gap-1.5">
-                    <MapPin size={13} aria-hidden />
-                    {SITE.address.locality}, Nepal
-                  </span>
-                  <span className="inline-flex items-center gap-1.5">
-                    <Award size={13} aria-hidden />
-                    ICC Digital Award 2023 &amp; 2024
-                  </span>
-                  <span>100+ projects delivered</span>
-                </div>
+              <div className="mb-6 flex flex-wrap items-center gap-x-5 gap-y-2 text-xs font-medium text-muted">
+                <span className="inline-flex items-center gap-1.5">
+                  <MapPin size={13} aria-hidden />
+                  {SITE.address.locality}, Nepal
+                </span>
+                <span className="inline-flex items-center gap-1.5">
+                  <Award size={13} aria-hidden />
+                  ICC Digital Award 2023 &amp; 2024
+                </span>
+                <span>100+ projects delivered</span>
+              </div>
 
-                <Heading level={1} className="mb-6">
-                  I fix digital
-                  <br />
-                  problems for
-                  <br />
-                  businesses.
-                </Heading>
+              <Heading level={1} className="mb-6">
+                I fix digital
+                <br />
+                problems for
+                <br />
+                businesses.
+              </Heading>
 
-                <p className="mb-8 max-w-xl text-lg leading-relaxed text-muted">
-                  Search visibility, AI automation, websites, apps, and custom
-                  software — built for how businesses in Nepal actually operate.
-                  Three years and 100+ delivered projects, at a 92% on-time rate.
-                </p>
+              <p className="mb-8 max-w-xl text-lg leading-relaxed text-muted">
+                Search visibility, AI automation, websites, apps, and custom
+                software — built for how businesses in Nepal actually operate.
+                Three years and 100+ delivered projects, at a 92% on-time rate.
+              </p>
 
-                <div className="flex flex-wrap gap-3">
-                  <Button href="/services" size="lg" icon={<ArrowRight size={16} />}>
-                    See what I do
-                  </Button>
-                  <Button href="/contact" size="lg" variant="secondary">
-                    Start a conversation
-                  </Button>
-                </div>
-              </AnimateIn>
+              <div className="flex flex-wrap gap-3">
+                <Button href="/services" size="lg" icon={<ArrowRight size={16} />}>
+                  See what I do
+                </Button>
+                <Button href="/contact" size="lg" variant="secondary">
+                  Start a conversation
+                </Button>
+              </div>
             </div>
 
             <AnimateIn delay={0.15} className="hidden lg:block">

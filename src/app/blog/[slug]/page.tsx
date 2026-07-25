@@ -105,47 +105,45 @@ export default async function BlogPostPage({
       <article>
         <section className="pt-12 pb-8 md:pt-16 md:pb-10">
           <Container width="reading">
-            <AnimateIn>
-              <Link
-                href="/blog"
-                className="mb-7 inline-flex items-center gap-1.5 text-sm text-muted transition-colors hover:text-primary"
-              >
-                <ArrowLeft size={14} aria-hidden />
-                All posts
-              </Link>
+            <Link
+              href="/blog"
+              className="mb-7 inline-flex items-center gap-1.5 text-sm text-muted transition-colors hover:text-primary"
+            >
+              <ArrowLeft size={14} aria-hidden />
+              All posts
+            </Link>
 
-              {cluster && (
-                <Eyebrow className="mb-4">
-                  <Link
-                    href={`/blog/topic/${cluster.id}`}
-                    className="hover:text-primary"
-                  >
-                    {cluster.label}
-                  </Link>
-                </Eyebrow>
-              )}
+            {cluster && (
+              <Eyebrow className="mb-4">
+                <Link
+                  href={`/blog/topic/${cluster.id}`}
+                  className="hover:text-primary"
+                >
+                  {cluster.label}
+                </Link>
+              </Eyebrow>
+            )}
 
-              <Heading level={1} size="xl" className="mb-5">
-                {meta.title}
-              </Heading>
+            <Heading level={1} size="xl" className="mb-5">
+              {meta.title}
+            </Heading>
 
-              <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-muted">
-                <span>Arjun Basnet</span>
-                <span aria-hidden>·</span>
-                <time dateTime={meta.publishedAt}>
-                  {new Date(meta.publishedAt).toLocaleDateString("en-GB", {
-                    day: "numeric",
-                    month: "long",
-                    year: "numeric",
-                  })}
-                </time>
-                <span aria-hidden>·</span>
-                <span className="inline-flex items-center gap-1.5">
-                  <Clock size={13} aria-hidden />
-                  {meta.readingMinutes} min read
-                </span>
-              </div>
-            </AnimateIn>
+            <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-muted">
+              <span>Arjun Basnet</span>
+              <span aria-hidden>·</span>
+              <time dateTime={meta.publishedAt}>
+                {new Date(meta.publishedAt).toLocaleDateString("en-GB", {
+                  day: "numeric",
+                  month: "long",
+                  year: "numeric",
+                })}
+              </time>
+              <span aria-hidden>·</span>
+              <span className="inline-flex items-center gap-1.5">
+                <Clock size={13} aria-hidden />
+                {meta.readingMinutes} min read
+              </span>
+            </div>
           </Container>
         </section>
 

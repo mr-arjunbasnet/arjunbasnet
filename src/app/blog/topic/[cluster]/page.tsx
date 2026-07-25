@@ -89,15 +89,13 @@ export default async function ClusterPage({
 
       <section className="pt-16 pb-10 md:pt-24 md:pb-12">
         <Container>
-          <AnimateIn>
-            <Eyebrow className="mb-4">Topic</Eyebrow>
-            <Heading level={1} size="xl" className="mb-5 max-w-3xl">
-              {cluster.label}
-            </Heading>
-            <p className="max-w-2xl text-lg leading-relaxed text-muted">
-              {cluster.description}
-            </p>
-          </AnimateIn>
+          <Eyebrow className="mb-4">Topic</Eyebrow>
+          <Heading level={1} size="xl" className="mb-5 max-w-3xl">
+            {cluster.label}
+          </Heading>
+          <p className="max-w-2xl text-lg leading-relaxed text-muted">
+            {cluster.description}
+          </p>
         </Container>
       </section>
 

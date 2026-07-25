@@ -74,19 +74,17 @@ export default function ServicesPage() {
       <section className="relative overflow-hidden pt-16 pb-12 md:pt-24 md:pb-16">
         <HeroBackground />
         <Container>
-          <AnimateIn>
-            <Eyebrow className="mb-4">Services</Eyebrow>
-            <Heading level={1} className="mb-6 max-w-3xl">
-              Nine ways I help businesses
-              <br />
-              solve digital problems.
-            </Heading>
-            <p className="max-w-2xl text-lg leading-relaxed text-muted">
-              Every engagement starts the same way: a conversation about the
-              problem, not the solution. If I am not the right person for it, I
-              will say so and point you somewhere better.
-            </p>
-          </AnimateIn>
+          <Eyebrow className="mb-4">Services</Eyebrow>
+          <Heading level={1} className="mb-6 max-w-3xl">
+            Nine ways I help businesses
+            <br />
+            solve digital problems.
+          </Heading>
+          <p className="max-w-2xl text-lg leading-relaxed text-muted">
+            Every engagement starts the same way: a conversation about the
+            problem, not the solution. If I am not the right person for it, I
+            will say so and point you somewhere better.
+          </p>
         </Container>
       </section>
 

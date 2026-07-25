@@ -51,19 +51,17 @@ export default function FaqPage() {
 
       <section className="pt-16 pb-10 md:pt-24 md:pb-14">
         <Container>
-          <AnimateIn>
-            <Eyebrow className="mb-4">FAQ</Eyebrow>
-            <Heading level={1} size="xl" className="mb-6 max-w-3xl">
-              Questions people actually ask
-              <br />
-              before they hire me.
-            </Heading>
-            <p className="max-w-2xl text-lg leading-relaxed text-muted">
-              Prices, timelines, and what happens if it goes wrong. Where the
-              honest answer is &ldquo;it depends&rdquo;, that is what it says,
-              along with what it depends on.
-            </p>
-          </AnimateIn>
+          <Eyebrow className="mb-4">FAQ</Eyebrow>
+          <Heading level={1} size="xl" className="mb-6 max-w-3xl">
+            Questions people actually ask
+            <br />
+            before they hire me.
+          </Heading>
+          <p className="max-w-2xl text-lg leading-relaxed text-muted">
+            Prices, timelines, and what happens if it goes wrong. Where the
+            honest answer is &ldquo;it depends&rdquo;, that is what it says,
+            along with what it depends on.
+          </p>
         </Container>
       </section>
 

@@ -94,7 +94,7 @@ export default function CTA({
         )}
       </div>
       {variant === "band" && (
-        <p className="text-primary-fg/60 text-sm mt-6">
+        <p className="text-primary-fg/75 text-sm mt-6">
           {SITE.address.locality}, Nepal · {SITE.timezone} · Typically replies
           within 24 hours
         </p>

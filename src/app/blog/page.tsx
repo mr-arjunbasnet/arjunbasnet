@@ -69,19 +69,17 @@ export default function BlogIndex() {
 
       <section className="pt-16 pb-10 md:pt-24 md:pb-14">
         <Container>
-          <AnimateIn>
-            <Eyebrow className="mb-4">Blog</Eyebrow>
-            <Heading level={1} size="xl" className="mb-6 max-w-3xl">
-              Notes from delivering
-              <br />
-              digital work in Nepal.
-            </Heading>
-            <p className="max-w-2xl text-lg leading-relaxed text-muted">
-              What actually works, what wastes money, and where the two get
-              confused. Written from projects I have delivered, not from a
-              content calendar.
-            </p>
-          </AnimateIn>
+          <Eyebrow className="mb-4">Blog</Eyebrow>
+          <Heading level={1} size="xl" className="mb-6 max-w-3xl">
+            Notes from delivering
+            <br />
+            digital work in Nepal.
+          </Heading>
+          <p className="max-w-2xl text-lg leading-relaxed text-muted">
+            What actually works, what wastes money, and where the two get
+            confused. Written from projects I have delivered, not from a
+            content calendar.
+          </p>
         </Container>
       </section>
 

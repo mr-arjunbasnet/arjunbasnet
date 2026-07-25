@@ -25,14 +25,17 @@
   --color-fg: #111111;
   --color-primary: #1A3FA8;
   --color-primary-light: #2B52CC;
-  --color-accent: #E05C2A;
-  --color-muted: #737373;
+  /* Darkened from #E05C2A: 3.50:1 as text on the page background, and
+     3.66:1 behind white button text. Both now clear 4.5:1. */
+  --color-accent: #C14F24;
+  /* Darkened from #737373, which was 4.10:1 on the surface tint. */
+  --color-muted: #6C6C6C;
   --color-border: #E2DDD6;
   --color-surface: #F2EEE8;
   --color-surface-2: #E8E3DA;
 
   /* Semantic aliases consumed by the primitives */
-  --color-fg-muted: #737373;
+  --color-fg-muted: #6C6C6C;
   --color-primary-fg: #FFFFFF;
   --color-hairline: #C8C2BA;
 
@@ -170,6 +173,74 @@
     border: none;
     border-top: 1px solid var(--color-border);
     margin: 2.5em 0;
+  }
+}
+
+/*
+ * WhatsApp FAB motion.
+ *
+ * Every animation here touches only transform and opacity, so they run on the
+ * compositor and trigger neither layout nor paint. That matters because this
+ * element is on every page and animates continuously.
+ */
+@keyframes wa-ripple {
+  0% {
+    transform: scale(1);
+    opacity: 0.45;
+  }
+  70% {
+    opacity: 0;
+  }
+  100% {
+    transform: scale(2.1);
+    opacity: 0;
+  }
+}
+
+@keyframes wa-nudge {
+  0%,
+  88%,
+  100% {
+    transform: scale(1);
+  }
+  92% {
+    transform: scale(1.08) rotate(-6deg);
+  }
+  96% {
+    transform: scale(1.08) rotate(6deg);
+  }
+}
+
+@keyframes wa-bubble-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px) scale(0.94);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.wa-ripple {
+  animation: wa-ripple 2.6s cubic-bezier(0.22, 0.61, 0.36, 1) infinite;
+}
+
+.wa-nudge {
+  animation: wa-nudge 6s ease-in-out infinite;
+}
+
+.wa-bubble {
+  animation: wa-bubble-in 0.32s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+/* A pulsing button is a distraction for anyone who has asked for less motion.
+   The element stays fully visible and usable — only the movement stops. */
+@media (prefers-reduced-motion: reduce) {
+  .wa-ripple,
+  .wa-nudge,
+  .wa-bubble {
+    animation: none;
   }
 }
 

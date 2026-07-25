@@ -92,37 +92,35 @@ export default async function ServicePage({
       <section className="relative overflow-hidden pt-16 pb-12 md:pt-24 md:pb-16">
         <HeroBackground />
         <Container>
-          <AnimateIn>
-            <div className="mb-5 flex items-center gap-3">
-              <span className="inline-flex h-10 w-10 items-center justify-center rounded-card bg-primary/5 text-primary">
-                <ServiceIcon name={service.icon} />
-              </span>
-              <Eyebrow>{service.name}</Eyebrow>
-            </div>
-            <Heading level={1} size="xl" className="mb-5 max-w-3xl">
-              {service.heading}
-            </Heading>
-            <p className="mb-8 max-w-2xl text-lg leading-relaxed text-muted">
-              {service.tagline}
+          <div className="mb-5 flex items-center gap-3">
+            <span className="inline-flex h-10 w-10 items-center justify-center rounded-card bg-primary/5 text-primary">
+              <ServiceIcon name={service.icon} />
+            </span>
+            <Eyebrow>{service.name}</Eyebrow>
+          </div>
+          <Heading level={1} size="xl" className="mb-5 max-w-3xl">
+            {service.heading}
+          </Heading>
+          <p className="mb-8 max-w-2xl text-lg leading-relaxed text-muted">
+            {service.tagline}
+          </p>
+          <div className="flex flex-wrap items-center gap-3">
+            <Button
+              href={`/contact?service=${service.slug}`}
+              size="lg"
+              icon={<ArrowRight size={16} />}
+            >
+              Request a quote
+            </Button>
+            <p className="text-sm text-muted">
+              Starting from{" "}
+              <span className="font-medium text-fg">
+                {formatNpr()}
+              </span>{" "}
+              <span className="text-[#BBBBBB]">/</span>{" "}
+              <span className="font-medium text-fg">{formatUsd()}</span>
             </p>
-            <div className="flex flex-wrap items-center gap-3">
-              <Button
-                href={`/contact?service=${service.slug}`}
-                size="lg"
-                icon={<ArrowRight size={16} />}
-              >
-                Request a quote
-              </Button>
-              <p className="text-sm text-muted">
-                Starting from{" "}
-                <span className="font-medium text-fg">
-                  {formatNpr()}
-                </span>{" "}
-                <span className="text-[#BBBBBB]">/</span>{" "}
-                <span className="font-medium text-fg">{formatUsd()}</span>
-              </p>
-            </div>
-          </AnimateIn>
+          </div>
         </Container>
       </section>
 
@@ -154,9 +152,11 @@ export default async function ServicePage({
       {/* ─── Process → also emitted as HowTo schema ─── */}
       <Section border="top" size="md" label="How it works">
         <ol className="space-y-0">
-          {service.process.map((step, i) => (
-            <AnimateIn key={step.step} delay={i * 0.05}>
-              <li className="grid grid-cols-[2.5rem_1fr] gap-5 border-b border-border py-6 last:border-b-0">
+          {service.process.map((step) => (
+            <li
+              key={step.step}
+              className="grid grid-cols-[2.5rem_1fr] gap-5 border-b border-border py-6 last:border-b-0"
+            >
                 <span className="font-display text-2xl text-accent">
                   {String(step.step).padStart(2, "0")}
                 </span>
@@ -171,8 +171,7 @@ export default async function ServicePage({
                     {step.description}
                   </p>
                 </div>
-              </li>
-            </AnimateIn>
+            </li>
           ))}
         </ol>
       </Section>
