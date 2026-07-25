@@ -30,7 +30,7 @@ const scholarlyArticleSchema = {
     "An Automated Attendance System Using Facial Detection and Recognition Technology",
   author: [
     { "@type": "Person", name: "Phul Babu Jha" },
-    { "@type": "Person", name: "Arjun Basnet", "@id": "https://www.arjun-basnet.com.np/#person" },
+    { "@type": "Person", name: "Arjun Basnet", "@id": "https://arjun-basnet.com.np/#person" },
     { "@type": "Person", name: "Bishal Pokhrel" },
     { "@type": "Person", name: "Bibek Pokhrel" },
     { "@type": "Person", name: "Gokul Kumar Thakur" },
@@ -52,19 +52,19 @@ const scholarlyArticleSchema = {
 const researchPageSchema = {
   "@context": "https://schema.org",
   "@type": "CollectionPage",
-  url: "https://www.arjun-basnet.com.np/research",
+  url: "https://arjun-basnet.com.np/research",
   name: "Research & Publications — Arjun Basnet",
   description:
     "Peer-reviewed publication and active research interests of Arjun Basnet across AI in EdTech, adaptive learning, and information-system adoption in emerging economies.",
-  mainEntity: { "@id": "https://www.arjun-basnet.com.np/#person" },
+  mainEntity: { "@id": "https://arjun-basnet.com.np/#person" },
 };
 
 const breadcrumbSchema = {
   "@context": "https://schema.org",
   "@type": "BreadcrumbList",
   itemListElement: [
-    { "@type": "ListItem", position: 1, name: "Home", item: "https://www.arjun-basnet.com.np/" },
-    { "@type": "ListItem", position: 2, name: "Research", item: "https://www.arjun-basnet.com.np/research" },
+    { "@type": "ListItem", position: 1, name: "Home", item: "https://arjun-basnet.com.np/" },
+    { "@type": "ListItem", position: 2, name: "Research", item: "https://arjun-basnet.com.np/research" },
   ],
 };
 

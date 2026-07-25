@@ -8,8 +8,19 @@
  */
 
 export const SITE = {
-  /** Canonical host. The `www.` prefix is deliberate — it matches the Vercel deployment. */
-  url: "https://www.arjun-basnet.com.np",
+  /**
+   * Canonical host: the apex, without `www.`
+   *
+   * This must match where the server actually serves the site. In production
+   * `www.arjun-basnet.com.np` 301-redirects to the apex, so pointing canonical
+   * tags, sitemap entries, and schema @ids at `www.` would declare a canonical
+   * URL that immediately redirects — a mixed signal to search engines and a
+   * sitemap where every entry is a redirect.
+   *
+   * If the redirect direction is ever reversed at the DNS/CDN layer, change it
+   * here and everything else follows.
+   */
+  url: "https://arjun-basnet.com.np",
 
   name: "Arjun Basnet",
   brand: "Arjun Basnet — Digital & AI Consultant",

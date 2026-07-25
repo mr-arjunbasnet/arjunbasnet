@@ -29,7 +29,7 @@ export const metadata: Metadata = {
 const workItemListSchema = {
   "@context": "https://schema.org",
   "@type": "CollectionPage",
-  url: "https://www.arjun-basnet.com.np/work",
+  url: "https://arjun-basnet.com.np/work",
   name: "Work & Case Studies — Arjun Basnet",
   description:
     "Selected case studies in EdTech, digital transformation, and AI automation by Arjun Basnet.",
@@ -46,8 +46,8 @@ const workItemListSchema = {
           name: "Cricket Nepal Digital Transformation",
           description:
             "End-to-end digital transformation including web platform, mobile app, and social media — winner of two consecutive ICC Digital Fan Engagement Awards.",
-          url: "https://www.arjun-basnet.com.np/work#cricket-nepal",
-          author: { "@id": "https://www.arjun-basnet.com.np/#person" },
+          url: "https://arjun-basnet.com.np/work#cricket-nepal",
+          author: { "@id": "https://arjun-basnet.com.np/#person" },
           award: [
             "ICC Digital Fan Engagement Award 2023",
             "ICC Digital Fan Engagement Award 2024",
@@ -62,8 +62,8 @@ const workItemListSchema = {
           name: "Learning Management Systems, Nepal",
           description:
             "Five LMS platforms for K-12 and PSC/TSC exam preparation candidates across Nepal.",
-          url: "https://www.arjun-basnet.com.np/work#lms",
-          author: { "@id": "https://www.arjun-basnet.com.np/#person" },
+          url: "https://arjun-basnet.com.np/work#lms",
+          author: { "@id": "https://arjun-basnet.com.np/#person" },
         },
       },
       {
@@ -74,8 +74,8 @@ const workItemListSchema = {
           name: "AI Automation Workflows",
           description:
             "Seven AI automation workflows in n8n and Claude reducing manual task cycle time from ten hours to two.",
-          url: "https://www.arjun-basnet.com.np/work#ai-automation",
-          author: { "@id": "https://www.arjun-basnet.com.np/#person" },
+          url: "https://arjun-basnet.com.np/work#ai-automation",
+          author: { "@id": "https://arjun-basnet.com.np/#person" },
         },
       },
       {
@@ -86,8 +86,8 @@ const workItemListSchema = {
           name: "USEF Nepal — Fulbright & EducationUSA",
           description:
             "Digital systems for the United States Educational Foundation Nepal.",
-          url: "https://www.arjun-basnet.com.np/work#usef",
-          author: { "@id": "https://www.arjun-basnet.com.np/#person" },
+          url: "https://arjun-basnet.com.np/work#usef",
+          author: { "@id": "https://arjun-basnet.com.np/#person" },
         },
       },
       {
@@ -98,8 +98,8 @@ const workItemListSchema = {
           name: "UWS Nepal",
           description:
             "Web and enterprise systems for the University of Western Sydney Nepal.",
-          url: "https://www.arjun-basnet.com.np/work#uws-nepal",
-          author: { "@id": "https://www.arjun-basnet.com.np/#person" },
+          url: "https://arjun-basnet.com.np/work#uws-nepal",
+          author: { "@id": "https://arjun-basnet.com.np/#person" },
         },
       },
     ],
@@ -110,8 +110,8 @@ const breadcrumbSchema = {
   "@context": "https://schema.org",
   "@type": "BreadcrumbList",
   itemListElement: [
-    { "@type": "ListItem", position: 1, name: "Home", item: "https://www.arjun-basnet.com.np/" },
-    { "@type": "ListItem", position: 2, name: "Work", item: "https://www.arjun-basnet.com.np/work" },
+    { "@type": "ListItem", position: 1, name: "Home", item: "https://arjun-basnet.com.np/" },
+    { "@type": "ListItem", position: 2, name: "Work", item: "https://arjun-basnet.com.np/work" },
   ],
 };
 
