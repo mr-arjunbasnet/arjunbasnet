@@ -1,47 +1,39 @@
-import { MetadataRoute } from "next";
+import type { MetadataRoute } from "next";
+import { SITE, absoluteUrl } from "@/content/site";
 
-const siteUrl = "https://www.arjun-basnet.com.np";
+/**
+ * AI crawlers are explicitly allowed.
+ *
+ * For a services business whose content exists to generate enquiries, blocking
+ * these guarantees absence from answers competitors appear in. A publisher
+ * whose product is the content itself would reasonably choose the opposite.
+ */
+const AI_CRAWLERS = [
+  "GPTBot",
+  "ChatGPT-User",
+  "OAI-SearchBot",
+  "ClaudeBot",
+  "Claude-Web",
+  "anthropic-ai",
+  "PerplexityBot",
+  "Google-Extended",
+  "Applebot-Extended",
+  "Meta-ExternalAgent",
+  "Amazonbot",
+  "cohere-ai",
+  "YouBot",
+  "Diffbot",
+];
 
 export default function robots(): MetadataRoute.Robots {
   return {
     rules: [
-      {
-        userAgent: "*",
-        allow: "/",
-        disallow: ["/api/"],
-      },
-      {
-        userAgent: "Googlebot",
-        allow: "/",
-        disallow: ["/api/"],
-      },
-      {
-        userAgent: "Bingbot",
-        allow: "/",
-        disallow: ["/api/"],
-      },
-      {
-        userAgent: "GPTBot",
-        allow: "/",
-      },
-      {
-        userAgent: "ChatGPT-User",
-        allow: "/",
-      },
-      {
-        userAgent: "ClaudeBot",
-        allow: "/",
-      },
-      {
-        userAgent: "Claude-Web",
-        allow: "/",
-      },
-      {
-        userAgent: "PerplexityBot",
-        allow: "/",
-      },
+      { userAgent: "*", allow: "/", disallow: ["/api/"] },
+      { userAgent: "Googlebot", allow: "/", disallow: ["/api/"] },
+      { userAgent: "Bingbot", allow: "/", disallow: ["/api/"] },
+      ...AI_CRAWLERS.map((userAgent) => ({ userAgent, allow: "/" })),
     ],
-    sitemap: `${siteUrl}/sitemap.xml`,
-    host: siteUrl,
+    sitemap: absoluteUrl("/sitemap.xml"),
+    host: SITE.url,
   };
 }

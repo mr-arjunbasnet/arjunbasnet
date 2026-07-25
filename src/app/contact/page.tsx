@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Suspense } from "react";
 import { MapPin, Mail, ExternalLink } from "lucide-react";
 import ContactForm from "@/components/contact/ContactForm";
 import JsonLd from "@/components/seo/JsonLd";
@@ -77,7 +78,16 @@ export default function Contact() {
             <p className="text-xs font-semibold uppercase tracking-widest text-[#737373] mb-8">
               Send a Message
             </p>
-            <ContactForm />
+            {/* ContactForm reads ?service= via useSearchParams to prefill the
+                dropdown. Without this boundary the whole page bails out of
+                static prerendering. */}
+            <Suspense
+              fallback={
+                <div className="h-[560px] animate-pulse rounded-card bg-surface" />
+              }
+            >
+              <ContactForm />
+            </Suspense>
           </div>
 
           {/* Info */}

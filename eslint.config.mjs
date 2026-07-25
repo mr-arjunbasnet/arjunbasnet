@@ -12,6 +12,9 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // Personal files that happen to live inside the repo. Gitignored, never
+    // deployed, and not this project's code.
+    "Downloads/**",
   ]),
 ]);
 

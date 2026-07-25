@@ -1,5 +1,21 @@
 @import "tailwindcss";
 
+/*
+ * Tailwind v4 CSS-first theme.
+ *
+ * Every custom property here becomes a utility: --color-primary yields
+ * bg-primary / text-primary / border-primary / ring-primary / from-primary,
+ * --radius-card yields rounded-card, --container-site yields max-w-site.
+ * @theme MERGES with Tailwind's defaults, so text-red-600 and friends still
+ * work — this block only adds.
+ *
+ * Components should use these tokens, never raw hex. `npm run check:tokens`
+ * enforces that, with three deliberate exemptions: the ImageResponse files
+ * (opengraph-image/icon/apple-icon — satori resolves a CSS subset and cannot
+ * read theme variables), the HTML email template in api/contact (email clients
+ * do not support custom properties), and app/melos/** (self-contained tool with
+ * its own palette in melos/lib/themes.ts).
+ */
 @theme {
   --font-display: var(--font-dm-serif);
   --font-sans: var(--font-geist-sans);
@@ -14,6 +30,147 @@
   --color-border: #E2DDD6;
   --color-surface: #F2EEE8;
   --color-surface-2: #E8E3DA;
+
+  /* Semantic aliases consumed by the primitives */
+  --color-fg-muted: #737373;
+  --color-primary-fg: #FFFFFF;
+  --color-hairline: #C8C2BA;
+
+  /* Scale tokens */
+  --radius-card: 0.75rem;
+  --radius-pill: 9999px;
+  --shadow-card: 0 1px 2px rgb(17 17 17 / 0.04);
+  --shadow-card-hover: 0 8px 24px rgb(17 17 17 / 0.08);
+
+  /* 72rem is byte-identical to the max-w-6xl used across every page today,
+     so swapping max-w-6xl -> max-w-site is a zero-visual-diff refactor. */
+  --container-site: 72rem;
+  --container-reading: 44rem;
+
+  --text-display: 3.5rem;
+  --tracking-label: 0.1em;
+}
+
+/*
+ * Typography for rendered markdown.
+ *
+ * Hand-rolled rather than installing @tailwindcss/typography: that plugin has
+ * strong opinions that fight the serif/sans mix used everywhere else, and this
+ * is ~40 lines against a fifth dependency.
+ */
+@utility prose-site {
+  color: var(--color-fg);
+  line-height: 1.75;
+
+  & > * + * {
+    margin-top: 1.25em;
+  }
+
+  & h2 {
+    font-family: var(--font-display);
+    font-size: 1.75rem;
+    line-height: 1.25;
+    margin-top: 2.25em;
+    margin-bottom: 0.6em;
+  }
+
+  & h3 {
+    font-weight: 600;
+    font-size: 1.2rem;
+    margin-top: 1.9em;
+    margin-bottom: 0.5em;
+  }
+
+  & p {
+    color: color-mix(in oklab, var(--color-fg) 85%, transparent);
+  }
+
+  & a {
+    color: var(--color-primary);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+
+  & a:hover {
+    color: var(--color-primary-light);
+  }
+
+  & strong {
+    font-weight: 600;
+    color: var(--color-fg);
+  }
+
+  & ul,
+  & ol {
+    padding-left: 1.3em;
+    color: color-mix(in oklab, var(--color-fg) 85%, transparent);
+  }
+
+  & ul {
+    list-style: disc;
+  }
+
+  & ol {
+    list-style: decimal;
+  }
+
+  & li + li {
+    margin-top: 0.5em;
+  }
+
+  & blockquote {
+    border-left: 2px solid var(--color-accent);
+    padding-left: 1.1em;
+    font-style: italic;
+    color: var(--color-muted);
+  }
+
+  & code {
+    font-family: var(--font-mono);
+    font-size: 0.875em;
+    background: var(--color-surface);
+    padding: 0.15em 0.4em;
+    border-radius: 4px;
+  }
+
+  & pre {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-card);
+    padding: 1.1em;
+    overflow-x: auto;
+  }
+
+  & pre code {
+    background: none;
+    padding: 0;
+  }
+
+  & table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9375rem;
+    display: block;
+    overflow-x: auto;
+  }
+
+  & th,
+  & td {
+    border: 1px solid var(--color-border);
+    padding: 0.6em 0.8em;
+    text-align: left;
+  }
+
+  & th {
+    background: var(--color-surface);
+    font-weight: 600;
+  }
+
+  & hr {
+    border: none;
+    border-top: 1px solid var(--color-border);
+    margin: 2.5em 0;
+  }
 }
 
 :root {

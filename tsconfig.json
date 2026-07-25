@@ -11,6 +11,10 @@
     "moduleResolution": "bundler",
     "resolveJsonModule": true,
     "isolatedModules": true,
+    // Content modules and scripts/ carry explicit .ts extensions so Node's
+    // native TypeScript stripping can run validate-content.ts directly with no
+    // build step. Safe here because noEmit is true.
+    "allowImportingTsExtensions": true,
     "jsx": "react-jsx",
     "incremental": true,
     "plugins": [

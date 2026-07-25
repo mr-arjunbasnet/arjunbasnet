@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
+import { NAV_LINKS } from "@/content/nav";
 
 export default function NotFound() {
   return (
@@ -17,13 +18,7 @@ export default function NotFound() {
         This page doesn&apos;t exist. You might be looking for one of these:
       </p>
       <div className="flex flex-wrap justify-center gap-3">
-        {[
-          { href: "/", label: "Home" },
-          { href: "/about", label: "About" },
-          { href: "/work", label: "Work" },
-          { href: "/research", label: "Research" },
-          { href: "/contact", label: "Contact" },
-        ].map((l) => (
+        {[{ href: "/" as const, label: "Home" }, ...NAV_LINKS].map((l) => (
           <Link
             key={l.href}
             href={l.href}

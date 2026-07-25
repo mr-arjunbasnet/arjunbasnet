@@ -1,11 +1,20 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono, DM_Serif_Display } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import SiteChrome from "@/components/layout/SiteChrome";
 import ScrollProgress from "@/components/ui/ScrollProgress";
+import WhatsAppFab from "@/components/lead/WhatsAppFab";
 import JsonLd from "@/components/seo/JsonLd";
+import { GoogleAnalytics } from "@next/third-parties/google";
+import { SITE } from "@/content/site";
+import { SERVICES } from "@/content/services/index";
+import {
+  personSchema,
+  professionalServiceSchema,
+  websiteSchema,
+} from "@/lib/schema";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -23,7 +32,12 @@ const dmSerif = DM_Serif_Display({
   weight: "400",
 });
 
-const siteUrl = "https://www.arjun-basnet.com.np";
+const siteUrl = SITE.url;
+
+export const viewport: Viewport = {
+  themeColor: "#1A3FA8",
+  colorScheme: "light",
+};
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
@@ -84,111 +98,35 @@ export const metadata: Metadata = {
   },
 };
 
-const personSchema = {
-  "@context": "https://schema.org",
-  "@type": "Person",
-  "@id": `${siteUrl}/#person`,
-  name: "Arjun Basnet",
-  givenName: "Arjun",
-  familyName: "Basnet",
-  url: siteUrl,
-  image: `${siteUrl}/opengraph-image`,
-  jobTitle: "Project Manager & AI Automation Engineer",
-  description:
-    "Project Manager and AI Automation Engineer in Kathmandu, Nepal. Specialises in EdTech platforms, business process automation, AI workflow orchestration, and digital transformation.",
-  email: "mailto:mr.arjunbasnet@gmail.com",
-  telephone: "+977-9862694813",
-  nationality: "Nepali",
-  address: {
-    "@type": "PostalAddress",
-    addressLocality: "Kathmandu",
-    addressCountry: "NP",
-  },
-  worksFor: {
-    "@type": "Organization",
-    name: "Makura Creations Pvt. Ltd.",
-    url: "https://makuracreations.com",
-  },
-  alumniOf: [
-    {
-      "@type": "CollegeOrUniversity",
-      name: "Tribhuvan University",
-      url: "https://tu.edu.np",
-    },
-    {
-      "@type": "CollegeOrUniversity",
-      name: "Madan Bhandari Memorial College",
-    },
-  ],
-  sameAs: [
-    "https://np.linkedin.com/in/mrarjunbasnet",
-    "https://github.com/mr-arjunbasnet",
-    "https://scholar.google.com/citations?user=UTzpgdYAAAAJ&hl=en",
-    "https://www.researchgate.net/profile/Arjun-Basnet-11",
-  ],
-  knowsAbout: [
-    "Project Management",
-    "AI Automation",
-    "Business Process Automation",
-    "Educational Technology",
-    "Learning Management Systems",
-    "Digital Transformation",
-    "n8n Workflow Automation",
-    "Claude API",
-    "LLM Workflow Orchestration",
-    "Prompt Engineering",
-    "Computer Vision",
-    "Information Systems",
-    "Agile Methodology",
-    "Scrum",
-    "Stakeholder Management",
-    "Adaptive Learning Analytics",
-    "TensorFlow",
-    "PyTorch",
-    "Python",
-    "Next.js",
-    "React",
-  ],
-  knowsLanguage: ["English", "Nepali"],
-  award: [
-    "ICC Digital Fan Engagement Award 2023",
-    "ICC Digital Fan Engagement Award 2024",
-    "Tribhuvan University 60% Merit Scholarship (2018)",
-    "Best Table Topics Speaker — Lalitpur Toastmasters Club (3× recipient)",
-  ],
-};
-
-const websiteSchema = {
-  "@context": "https://schema.org",
-  "@type": "WebSite",
-  "@id": `${siteUrl}/#website`,
-  name: "Arjun Basnet — Project Manager & AI Automation Engineer",
-  url: siteUrl,
-  description:
-    "Portfolio of Arjun Basnet — Project Manager and AI Automation Engineer in Kathmandu, Nepal.",
-  inLanguage: "en",
-  author: { "@id": `${siteUrl}/#person` },
-  publisher: { "@id": `${siteUrl}/#person` },
-};
-
 export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html
       lang="en"
+      // globals.css sets `scroll-behavior: smooth`. Next 16 only honours that
+      // for route transitions when this attribute is present — without it,
+      // navigating to a new page slow-scrolls to the top instead of jumping.
+      data-scroll-behavior="smooth"
       className={`${geistSans.variable} ${geistMono.variable} ${dmSerif.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col bg-[#FAFAF8] text-[#111111]">
-        <JsonLd data={personSchema} id="ld-person" />
-        <JsonLd data={websiteSchema} id="ld-website" />
+      <body className="min-h-full flex flex-col bg-bg text-fg">
+        <JsonLd data={personSchema()} id="ld-person" />
+        <JsonLd data={websiteSchema()} id="ld-website" />
+        <JsonLd data={professionalServiceSchema(SERVICES)} id="ld-business" />
         <SiteChrome>
           <ScrollProgress />
           <Navbar />
         </SiteChrome>
         <main className="flex-1 pt-16">{children}</main>
+        {/* GA4. Loaded via @next/third-parties so the script is deferred and
+            does not block first paint. Only src/lib/analytics.ts sends events. */}
+        <GoogleAnalytics gaId={SITE.gaId} />
         <SiteChrome>
           <Footer />
+          {/* Inside SiteChrome so it auto-hides on /melos, which already has
+              its own full-screen UI. */}
+          <WhatsAppFab />
         </SiteChrome>
       </body>
     </html>

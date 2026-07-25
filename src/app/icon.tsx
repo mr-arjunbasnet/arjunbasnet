@@ -22,7 +22,7 @@ export default function Icon() {
           letterSpacing: "-1px",
         }}
       >
-        AB
+        A
       </div>
     ),
     { ...size }

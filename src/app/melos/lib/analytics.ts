@@ -1,19 +1,4 @@
-type StudioEvent =
-  | "studio_open"
-  | "mic_granted"
-  | "camera_granted"
-  | "record_start"
-  | "record_complete"
-  | "export_download"
-  | "export_share";
-
-// The site has no analytics provider wired in yet. This stub keeps every
-// event visible in dev and gives a single seam to route to a real provider.
-export function track(
-  event: StudioEvent,
-  props?: Record<string, string | number | boolean>
-) {
-  if (process.env.NODE_ENV !== "production") {
-    console.debug(`[melos] ${event}`, props ?? {});
-  }
-}
+// Melos now uses the site-wide analytics seam. Kept as a re-export so nothing
+// under src/app/melos/ needed to change when a real provider was wired in.
+export { track } from "@/lib/analytics";
+export type { AnalyticsEvent } from "@/lib/analytics";

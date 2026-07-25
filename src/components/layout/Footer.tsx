@@ -1,18 +1,9 @@
 import Link from "next/link";
-
-const footerLinks = [
-  { href: "/about", label: "About" },
-  { href: "/work", label: "Work" },
-  { href: "/research", label: "Research" },
-  { href: "/contact", label: "Contact" },
-];
-
-const social = [
-  { href: "https://np.linkedin.com/in/mrarjunbasnet", label: "LinkedIn" },
-  { href: "https://github.com/mr-arjunbasnet", label: "GitHub" },
-  { href: "https://scholar.google.com/citations?user=UTzpgdYAAAAJ&hl=en", label: "Google Scholar" },
-  { href: "https://www.researchgate.net/profile/Arjun-Basnet-11", label: "ResearchGate" },
-];
+import {
+  NAV_LINKS as footerLinks,
+  SOCIAL_LINKS as social,
+} from "@/content/nav";
+import CurrentYear from "./CurrentYear";
 
 export default function Footer() {
   return (
@@ -67,7 +58,7 @@ export default function Footer() {
 
         <div className="border-t border-[#E2DDD6] pt-8 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
           <p className="text-xs text-[#737373]">
-            © {new Date().getFullYear()} Arjun Basnet. All rights reserved.
+            © <CurrentYear /> Arjun Basnet. All rights reserved.
           </p>
           <a
             href="mailto:mr.arjunbasnet@gmail.com"

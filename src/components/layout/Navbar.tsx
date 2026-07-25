@@ -5,13 +5,11 @@ import { usePathname } from "next/navigation";
 import { useState, useEffect } from "react";
 import { Menu, X } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { NAV_LINKS } from "@/content/nav";
+import LogoMark from "@/components/ui/LogoMark";
 
-const links = [
-  { href: "/about", label: "About" },
-  { href: "/work", label: "Work" },
-  { href: "/research", label: "Research" },
-  { href: "/contact", label: "Contact" },
-];
+// The header stays short; footerOnly entries appear in the footer only.
+const links = NAV_LINKS.filter((l) => !l.footerOnly);
 
 export default function Navbar() {
   const pathname = usePathname();
@@ -24,9 +22,13 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  useEffect(() => {
-    setOpen(false);
-  }, [pathname]);
+  // The mobile menu closes on navigation. Deriving that from the pathname
+  // instead of setting state in an effect avoids a cascading re-render.
+  const [menuPath, setMenuPath] = useState(pathname);
+  if (menuPath !== pathname) {
+    setMenuPath(pathname);
+    if (open) setOpen(false);
+  }
 
   return (
     <header
@@ -40,8 +42,10 @@ export default function Navbar() {
       <nav className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
         <Link
           href="/"
-          className="font-semibold text-[#111111] tracking-tight text-lg hover:text-[#1A3FA8] transition-colors"
+          aria-label="Arjun Basnet — home"
+          className="group flex items-center gap-2.5 text-lg font-semibold tracking-tight text-fg transition-colors hover:text-primary"
         >
+          <LogoMark size={28} />
           Arjun Basnet
         </Link>
 
