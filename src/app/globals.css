@@ -55,6 +55,46 @@
 }
 
 /*
+ * Cool variant, currently scoped to /services.
+ *
+ * This works because `@theme` (not `@theme inline`) emits the palette as real
+ * custom properties and every utility compiles to `var(--color-…)`. Redeclaring
+ * those properties on an ancestor therefore recolours the whole subtree without
+ * touching a single component. Switching to `@theme inline` would silently
+ * break this.
+ *
+ * The brand colours are untouched — `--color-primary` and `--color-accent` are
+ * the same values the rest of the site uses. What changes is the neutrals: the
+ * warm beige surfaces move to cool grey so blue reads as the lead colour and
+ * orange lands as a highlight rather than a second theme.
+ *
+ * Contrast measured against the live warm palette; every pair improves:
+ *
+ *   pair                 warm    cool
+ *   muted on bg          5.02 →  5.74
+ *   muted on surface     4.54 →  5.38
+ *   muted on surface-2   4.11 →  4.88   (was below AA, now clears)
+ *   accent on bg         4.56 →  4.61
+ *   accent on surface    4.12 →  4.32   graphics only; AA-large bar is 3.0
+ *   primary on surface   7.83 →  8.22
+ *   fg on surface       16.34 → 17.15
+ *
+ * Accent text must not sit on `surface` — at 4.32 it clears the 3.0 non-text
+ * bar for illustration fills but not the 4.5 body-text bar.
+ */
+.svc-cool {
+  --color-bg: #FBFBFD;
+  --color-surface: #F2F4F8;
+  --color-surface-2: #E6E9F0;
+  --color-border: #DFE3EB;
+  --color-hairline: #BFC5D2;
+  --color-muted: #5E6472;
+  --color-fg-muted: #5E6472;
+
+  background-color: var(--color-bg);
+}
+
+/*
  * Typography for rendered markdown.
  *
  * Hand-rolled rather than installing @tailwindcss/typography: that plugin has
@@ -240,6 +280,352 @@
   .wa-ripple,
   .wa-nudge,
   .wa-bubble {
+    animation: none;
+  }
+}
+
+/*
+ * Hero illustration motion (`ab-` = above-the-fold art).
+ *
+ * These live in CSS rather than framer-motion on purpose. The hero must not
+ * contain anything that starts invisible and waits for hydration to appear —
+ * that pattern cost 4.9s of mobile render delay on the homepage once already.
+ * Every rule below animates only `transform` and `opacity`, so the work stays
+ * on the compositor and never triggers layout or paint.
+ *
+ * Nothing here begins at `opacity: 0`: the scene is fully painted on the first
+ * frame and the motion is an embellishment on top of it. Disabling every rule
+ * in this block changes nothing about what is visible.
+ */
+@keyframes ab-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-9px);
+  }
+}
+
+@keyframes ab-float-soft {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-4px);
+  }
+}
+
+@keyframes ab-orbit {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes ab-orbit-rev {
+  to {
+    transform: rotate(-360deg);
+  }
+}
+
+@keyframes ab-pulse {
+  0%,
+  100% {
+    opacity: 0.4;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.95;
+    transform: scale(1.25);
+  }
+}
+
+/* The chart keeps measuring rather than settling once and going dead. */
+@keyframes ab-bar {
+  0%,
+  100% {
+    transform: scaleY(0.58);
+  }
+  50% {
+    transform: scaleY(1);
+  }
+}
+
+/* A read-head crossing the dashboard, as though the panel were refreshing. */
+@keyframes ab-sweep {
+  0% {
+    transform: translateX(0);
+    opacity: 0;
+  }
+  12%,
+  72% {
+    opacity: 0.5;
+  }
+  100% {
+    transform: translateX(224px);
+    opacity: 0;
+  }
+}
+
+@keyframes ab-blink {
+  0%,
+  46% {
+    opacity: 1;
+  }
+  54%,
+  100% {
+    opacity: 0.1;
+  }
+}
+
+@keyframes ab-type {
+  0% {
+    transform: scaleX(0.05);
+  }
+  60%,
+  100% {
+    transform: scaleX(1);
+  }
+}
+
+.ab-float,
+.ab-float-soft,
+.ab-pulse,
+.ab-bar,
+.ab-blink,
+.ab-type {
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+.ab-float {
+  animation: ab-float 7s ease-in-out infinite;
+}
+.ab-float-soft {
+  animation: ab-float-soft 9s ease-in-out infinite;
+}
+.ab-orbit {
+  animation: ab-orbit 90s linear infinite;
+}
+.ab-orbit-rev {
+  animation: ab-orbit-rev 26s linear infinite;
+}
+.ab-pulse {
+  animation: ab-pulse 3.2s ease-in-out infinite;
+}
+.ab-bar {
+  transform-origin: bottom;
+  animation: ab-bar 3.6s ease-in-out infinite;
+}
+.ab-sweep {
+  animation: ab-sweep 6s cubic-bezier(0.45, 0, 0.55, 1) infinite;
+}
+.ab-blink {
+  animation: ab-blink 2.2s steps(1, end) infinite;
+}
+.ab-type {
+  transform-origin: left;
+  animation: ab-type 5s ease-in-out infinite;
+}
+
+/* Stagger helpers — offset siblings so the scene breathes unevenly. */
+.ab-d1 {
+  animation-delay: 0.3s;
+}
+.ab-d2 {
+  animation-delay: 0.6s;
+}
+.ab-d3 {
+  animation-delay: 0.9s;
+}
+.ab-d4 {
+  animation-delay: 1.2s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ab-float,
+  .ab-float-soft,
+  .ab-orbit,
+  .ab-orbit-rev,
+  .ab-pulse,
+  .ab-bar,
+  .ab-sweep,
+  .ab-blink,
+  .ab-type {
+    animation: none;
+  }
+}
+
+/*
+ * Service card illustration motion (`sa-` = service art).
+ *
+ * Each card should read as mid-task rather than as a static icon — bars
+ * measuring, text typing, a gear turning, packets moving down a wire. Nine of
+ * these run at once, so every rule is deliberately cheap: transform and opacity
+ * only, no `stroke-dashoffset` (that repaints), few elements per card, and long
+ * durations so nothing demands attention while you are reading the copy.
+ */
+@keyframes sa-scan {
+  0%,
+  100% {
+    transform: translateX(-5px);
+  }
+  50% {
+    transform: translateX(5px);
+  }
+}
+
+@keyframes sa-bar {
+  0%,
+  100% {
+    transform: scaleY(0.62);
+  }
+  50% {
+    transform: scaleY(1);
+  }
+}
+
+@keyframes sa-blink {
+  0%,
+  46% {
+    opacity: 1;
+  }
+  54%,
+  100% {
+    opacity: 0.15;
+  }
+}
+
+@keyframes sa-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes sa-wave {
+  0% {
+    transform: scale(0.72);
+    opacity: 0.85;
+  }
+  100% {
+    transform: scale(1.45);
+    opacity: 0;
+  }
+}
+
+@keyframes sa-bob {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-4px);
+  }
+}
+
+@keyframes sa-ping {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 0.45;
+  }
+  50% {
+    transform: scale(1.35);
+    opacity: 1;
+  }
+}
+
+/* scaleX from the left edge reads as text being typed, without touching width. */
+@keyframes sa-type {
+  0% {
+    transform: scaleX(0.04);
+  }
+  55%,
+  100% {
+    transform: scaleX(1);
+  }
+}
+
+@keyframes sa-glow {
+  0%,
+  100% {
+    opacity: 0.5;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+.sa-scan,
+.sa-bar,
+.sa-blink,
+.sa-spin,
+.sa-bob,
+.sa-ping,
+.sa-type,
+.sa-glow {
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+.sa-scan {
+  animation: sa-scan 5.5s ease-in-out infinite;
+}
+.sa-bar {
+  transform-origin: bottom;
+  animation: sa-bar 3.2s ease-in-out infinite;
+}
+.sa-blink {
+  animation: sa-blink 2.4s steps(1, end) infinite;
+}
+.sa-spin {
+  animation: sa-spin 9s linear infinite;
+}
+.sa-bob {
+  animation: sa-bob 4.5s ease-in-out infinite;
+}
+.sa-ping {
+  animation: sa-ping 2.8s ease-in-out infinite;
+}
+.sa-type {
+  transform-origin: left;
+  animation: sa-type 4.2s ease-in-out infinite;
+}
+.sa-glow {
+  animation: sa-glow 3s ease-in-out infinite;
+}
+
+/* Waves radiate from a point in the drawing, so origin is set per element. */
+.sa-wave {
+  transform-box: view-box;
+  animation: sa-wave 2.8s ease-out infinite;
+}
+
+/* Stagger helpers, shared with the hero art above. */
+.sa-d1 {
+  animation-delay: 0.35s;
+}
+.sa-d2 {
+  animation-delay: 0.7s;
+}
+.sa-d3 {
+  animation-delay: 1.05s;
+}
+.sa-d4 {
+  animation-delay: 1.4s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sa-scan,
+  .sa-bar,
+  .sa-blink,
+  .sa-spin,
+  .sa-bob,
+  .sa-ping,
+  .sa-type,
+  .sa-glow,
+  .sa-wave {
     animation: none;
   }
 }

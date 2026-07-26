@@ -256,7 +256,7 @@ Untouched by design: `/about`, `/work`, `/research`, `/melos`.
 
 ### Open items
 
-1. **Cloudflare is still blocking AI crawlers** — see §10. Highest priority.
+1. ~~**Cloudflare is blocking AI crawlers**~~ — **resolved 2026-07-26**, see §10.
 2. **SMTP env vars on Vercel** — `.env.local` is gitignored so they did not
    deploy. Without them `/api/contact` 500s. Untested in production.
 3. **Search Console** — submit `https://arjun-basnet.com.np/sitemap.xml` on the
@@ -268,12 +268,34 @@ Untouched by design: `/about`, `/work`, `/research`, `/melos`.
    "24-hour response"). Never reviewed by him.
 6. `profile.jpg` and the source WhatsApp `.avif` sit in the repo root,
    deliberately uncommitted. `public/PHOTOS_README.txt` is obsolete.
+7. **Citable client list** — the `/services` design calls for a "Trusted by"
+   row and it was left out rather than invented. Needs names Arjun confirms he
+   can publish, with permission. Note Makura is his *employer*, not a client.
 
 ---
 
-## 10. Cloudflare — blocking AI crawlers (unresolved)
+## 10. Cloudflare — AI crawler block (RESOLVED 2026-07-26)
 
-`robots.txt` still serves a Cloudflare-managed block **before** our rules:
+**Fixed.** `robots.txt` now serves only our own rules — every AI crawler group
+reads `Allow: /`, and both the `Content-Signal: ai-train=no` line and the
+`# BEGIN Cloudflare Managed content` header are gone. Confirmed on a
+cache-busted fetch (`age: 0`, `cf-cache-status: MISS`, `last-modified:
+Sun, 26 Jul 2026 08:06:30 GMT`). The GEO strategy is no longer being defeated.
+
+Re-check any time with:
+
+```bash
+curl -s "https://arjun-basnet.com.np/robots.txt?cb=$RANDOM" -H 'Cache-Control: no-cache' \
+  | grep -iE "cloudflare|content-signal|disallow: /$"
+```
+
+No output means healthy. If it regresses, suspect a Cloudflare-side policy
+default being re-applied — `robots.txt` is generated from `src/` and did not
+change across the original incident.
+
+<details><summary>What the block looked like (2026-07-25, for reference)</summary>
+
+`robots.txt` served a Cloudflare-managed block **before** our rules:
 
 ```
 # BEGIN Cloudflare Managed content
@@ -286,36 +308,75 @@ User-agent: Applebot-Extended  Disallow: /
 User-agent: Amazonbot / CCBot / Bytespider / meta-externalagent   Disallow: /
 ```
 
-Our `Allow: /` rules for the same agents come *after*. Two conflicting groups
+Our `Allow: /` rules for the same agents came *after*. Two conflicting groups
 for one user-agent, restrictive first — most crawlers take the first match.
 
-**This defeats the GEO strategy.** `/services/generative-engine-optimization`,
-`llms.txt`, and `llms-full.txt` all assume these bots can read the site.
+The control was Cloudflare's **managed robots.txt / Content Signals Policy**,
+which is *separate* from the "Block AI bots" WAF toggle — turning off bot
+blocking did not remove it. The dashboard also read as though the change had
+applied a full day before it actually took effect, which is why the lesson is:
+**verify at the edge with curl, never trust the dashboard state.**
 
-Verified fresh, not cached: `age: 0`, `cf-cache-status: REVALIDATED`.
-
-The relevant control is Cloudflare's **managed robots.txt / Content Signals
-Policy**, which is *separate* from the "Block AI bots" WAF toggle. Turning off
-bot blocking does not remove this block. Re-check with:
-
-```bash
-curl -s https://arjun-basnet.com.np/robots.txt | grep -A1 "User-agent: ClaudeBot"
-```
-
-Expected once fixed: no `Disallow: /`, and no `ai-train=no`.
+</details>
 
 ---
 
-## 11. Next session — planned work
+## 11. `/services` redesign — shipped 2026-07-26
 
-**Goal: humanise the service and blog pages, and add imagery.**
+Banner and cards rebuilt from the owner's "Variation 4" reference mockup.
+**Still not saved to the repo** — it was pasted into chat both times it was
+shared. If another visual reference arrives, save it to `docs/reference/` and
+commit it before starting work.
 
-Owner will supply a visual reference. Scope:
+### What was built
 
-1. `/services` listing — warmer layout, imagery
-2. `/services/[slug]` detail — break up the long text runs
-3. `/blog` listing — post imagery
-4. `/blog/[slug]` detail — hero images, in-body imagery
+- **Hero** — eyebrow, H1 with a coloured highlight span, two CTAs, a four-stat
+  trust row, and an animated dashboard illustration
+  (`ServicesHeroArt.tsx`).
+- **Nine card illustrations** (`ServiceArt.tsx`) — inline SVG, one per service,
+  resolved through an explicit slug map like `ServiceIcon` is. Drawn with
+  Tailwind fill/stroke utilities, so there is no hex literal and `check:tokens`
+  stays clean.
+- **Flat 9-card grid**, replacing the growth/build/advisory grouping on this
+  page. `SERVICE_GROUPS` still drives nav.
+- **Cool palette variant** — see below.
+
+### Decisions worth not re-deriving
+
+| Decision | Reasoning |
+|---|---|
+| Hero animation is **CSS keyframes, not framer-motion** | The hero is the one place where waiting on hydration costs measurable render delay (§7). The scene paints with the document; motion is an embellishment on top. Nothing starts at `opacity: 0`. |
+| **`HeroBackground` dropped from this page** | Its decorative rings collided with the illustration's orbit ring, and removing it took a client component out of the fold. |
+| Illustrations are **inline SVG, not image files** | A decorative image must never compete with LCP; the surest way is for it not to be a request. Also scales without `sizes` and recolours from tokens. |
+| Price shows **once under the grid heading**, not on all nine cards | Preserves the pre-qualifying signal (§2) without the density the redesign was meant to remove. |
+| **Orange demoted to a highlight**, blue leads | Owner's call, 2026-07-26. Large orange masses (the gear, the AEO answer box) became blue, each keeping one accent dot as the focal point. |
+| **No "Trusted by" logo row** | The reference shows one (makura, revvvy, H.N Media, ionio, crevvy). A client list is a public factual claim and needs names the owner confirms he can cite, with permission. See open items. |
+| Real stats, not the mockup's | The reference carried placeholder "7+ years / 30+ projects". `proof.ts` has better true numbers. |
+
+### The `.svc-cool` palette variant
+
+`/services` runs cool grey neutrals while the rest of the site stays warm. The
+override lives in `globals.css` and works **only because the project uses
+`@theme`, not `@theme inline`** — utilities compile to `var(--color-…)`, so
+redeclaring those properties on an ancestor recolours the subtree. Switching to
+`@theme inline` would break this silently.
+
+Brand colours are untouched. Contrast was measured against the live warm
+palette and every pair improves; `muted on surface-2` moves from a failing 4.11
+to 4.88. Full table is in the CSS comment. **Accent text must not sit on
+`surface`** — 4.32 clears the 3.0 non-text bar but not 4.5 for body text.
+
+Nav and footer are in the shared layout, so they stay warm. Lifting this to the
+`@theme` block would move the whole site.
+
+### Remaining, same treatment
+
+1. `/services/[slug]` detail — break up the long text runs
+2. `/blog` listing — post imagery
+3. `/blog/[slug]` detail — hero images, in-body imagery
+
+`ServiceArt.tsx` is the pattern to follow for the detail pages — same stage,
+same visual grammar, same `sa-` motion classes.
 
 **Constraints to hold while doing it:**
 

@@ -13,8 +13,13 @@ ChatGPT / Claude / Perplexity / Gemini (GEO).
 
 **Read `docs/PROJECT-CONTEXT.md` before changing content, SEO, or page
 structure.** It records decisions, the content model, and mistakes already paid
-for. What follows is only the set of invariants that are easy to break by
-accident.
+for. §11 holds the active task. What follows is only the set of invariants that
+are easy to break by accident.
+
+**Authoring content? Use the skills, not memory.** `.claude/skills/add-service`
+and `.claude/skills/write-blog-post` carry the full spec for each — the answer
+word bands, the frontmatter contract, the GEO payload, and the decisions not to
+re-litigate.
 
 ## Invariants
 
