@@ -35,7 +35,7 @@ const dmSerif = DM_Serif_Display({
 const siteUrl = SITE.url;
 
 export const viewport: Viewport = {
-  themeColor: "#1A3FA8",
+  themeColor: "#2563EB",
   colorScheme: "light",
 };
 

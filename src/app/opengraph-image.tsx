@@ -1,6 +1,19 @@
 import { ImageResponse } from "next/og";
+import fs from "node:fs";
+import path from "node:path";
+import { SITE } from "@/content/site";
 
-export const alt = "Arjun Basnet — Project Manager & AI Automation Engineer";
+/*
+ * The mark, inlined as a data URI. Satori renders <img> from data URIs but
+ * cannot read theme variables or React components, so the standalone SVG in
+ * public/brand/ is the source here — the same drawing LogoMark.tsx carries.
+ * Read once at module load; this route is generated at build time.
+ */
+const MARK = `data:image/svg+xml;base64,${fs
+  .readFileSync(path.join(process.cwd(), "public/brand/arjun-mark.svg"))
+  .toString("base64")}`;
+
+export const alt = `${SITE.name} — ${SITE.jobTitle}`;
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -13,35 +26,19 @@ export default function OG() {
           height: "100%",
           display: "flex",
           flexDirection: "column",
-          background: "#FAFAF8",
+          background: "#FBFBFD",
           padding: "80px",
           position: "relative",
         }}
       >
-        {/* Decorative ring top-right */}
-        <div
-          style={{
-            position: "absolute",
-            top: "-180px",
-            right: "-180px",
-            width: "520px",
-            height: "520px",
-            borderRadius: "9999px",
-            border: "2px solid #E2DDD6",
-            display: "flex",
-          }}
-        />
-        <div
-          style={{
-            position: "absolute",
-            top: "-80px",
-            right: "-80px",
-            width: "320px",
-            height: "320px",
-            borderRadius: "9999px",
-            border: "2px solid #E2DDD6",
-            display: "flex",
-          }}
+        {/* The mark, top-right. It replaced two decorative concentric rings
+            that had stood in for a logo motif before there was a logo. */}
+        <img
+          src={MARK}
+          alt=""
+          width={340}
+          height={340}
+          style={{ position: "absolute", top: "40px", right: "72px", opacity: 0.95 }}
         />
         {/* Decorative dot accents */}
         <div
@@ -52,7 +49,7 @@ export default function OG() {
             width: "16px",
             height: "16px",
             borderRadius: "9999px",
-            background: "#E05C2A",
+            background: "#7C3AED",
             display: "flex",
           }}
         />
@@ -64,7 +61,7 @@ export default function OG() {
             width: "10px",
             height: "10px",
             borderRadius: "9999px",
-            background: "#1A3FA8",
+            background: "#2563EB",
             display: "flex",
           }}
         />
@@ -75,7 +72,7 @@ export default function OG() {
             display: "flex",
             alignItems: "center",
             gap: "12px",
-            color: "#737373",
+            color: "#5B6178",
             fontSize: 20,
             fontWeight: 600,
             letterSpacing: "3px",
@@ -87,7 +84,7 @@ export default function OG() {
               width: "8px",
               height: "8px",
               borderRadius: "9999px",
-              background: "#E05C2A",
+              background: "#7C3AED",
               display: "flex",
             }}
           />
@@ -96,7 +93,7 @@ export default function OG() {
             style={{
               width: "1px",
               height: "16px",
-              background: "#E2DDD6",
+              background: "#DFE2F0",
               display: "flex",
             }}
           />
@@ -111,7 +108,7 @@ export default function OG() {
           style={{
             fontSize: 180,
             fontWeight: 400,
-            color: "#111111",
+            color: "#10132A",
             lineHeight: 1,
             letterSpacing: "-6px",
             fontFamily: "serif",
@@ -128,7 +125,7 @@ export default function OG() {
           style={{
             width: "100%",
             height: "1px",
-            background: "#E2DDD6",
+            background: "#DFE2F0",
             marginTop: "32px",
             marginBottom: "20px",
             display: "flex",
@@ -146,17 +143,17 @@ export default function OG() {
           <div
             style={{
               fontSize: 28,
-              color: "#111111",
+              color: "#10132A",
               fontWeight: 500,
               display: "flex",
             }}
           >
-            Project Manager &amp; AI Automation Engineer
+            {SITE.jobTitle}
           </div>
           <div
             style={{
               fontSize: 18,
-              color: "#1A3FA8",
+              color: "#2563EB",
               fontWeight: 600,
               letterSpacing: "1px",
               display: "flex",

@@ -43,7 +43,7 @@ export default function AnswerSection({
             <li key={i} className="flex gap-3 text-muted leading-relaxed">
               <span
                 aria-hidden
-                className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-accent"
+                className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-primary"
               />
               <span>{item}</span>
             </li>

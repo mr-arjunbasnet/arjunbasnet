@@ -24,7 +24,7 @@ const TIMELINES = [
 ];
 
 const field =
-  "w-full rounded-lg border border-border bg-bg px-4 py-3 text-sm text-fg placeholder-[#BBBBBB] transition-colors focus:border-primary focus:ring-1 focus:ring-primary focus:outline-none";
+  "w-full rounded-lg border border-border bg-bg px-4 py-3 text-sm text-fg placeholder-muted transition-colors focus:border-primary focus:ring-1 focus:ring-primary focus:outline-none";
 const label =
   "mb-2 block text-xs font-semibold uppercase tracking-label text-muted";
 
@@ -139,7 +139,7 @@ export default function ContactForm() {
       <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
         <div>
           <label htmlFor="name" className={label}>
-            Name <span className="text-accent">*</span>
+            Name <span className="text-primary">*</span>
           </label>
           <input
             id="name"
@@ -154,7 +154,7 @@ export default function ContactForm() {
         </div>
         <div>
           <label htmlFor="email" className={label}>
-            Email <span className="text-accent">*</span>
+            Email <span className="text-primary">*</span>
           </label>
           <input
             id="email"
@@ -172,7 +172,7 @@ export default function ContactForm() {
       <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
         <div>
           <label htmlFor="company" className={label}>
-            Company <span className="normal-case text-[#BBBBBB]">(optional)</span>
+            Company <span className="normal-case text-muted">(optional)</span>
           </label>
           <input
             id="company"
@@ -186,7 +186,7 @@ export default function ContactForm() {
         </div>
         <div>
           <label htmlFor="phone" className={label}>
-            Phone <span className="normal-case text-[#BBBBBB]">(optional)</span>
+            Phone <span className="normal-case text-muted">(optional)</span>
           </label>
           <input
             id="phone"
@@ -225,7 +225,7 @@ export default function ContactForm() {
       <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
         <div>
           <label htmlFor="budget" className={label}>
-            Budget <span className="normal-case text-[#BBBBBB]">(optional)</span>
+            Budget <span className="normal-case text-muted">(optional)</span>
           </label>
           <select
             id="budget"
@@ -243,7 +243,7 @@ export default function ContactForm() {
         </div>
         <div>
           <label htmlFor="timeline" className={label}>
-            Timeline <span className="normal-case text-[#BBBBBB]">(optional)</span>
+            Timeline <span className="normal-case text-muted">(optional)</span>
           </label>
           <select
             id="timeline"
@@ -263,7 +263,7 @@ export default function ContactForm() {
 
       <div>
         <label htmlFor="message" className={label}>
-          Message <span className="text-accent">*</span>
+          Message <span className="text-primary">*</span>
         </label>
         <textarea
           id="message"

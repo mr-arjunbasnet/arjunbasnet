@@ -21,7 +21,7 @@ const paddings = {
 } as const;
 
 /**
- * Replaces the `border border-[#E2DDD6] rounded-xl p-5 hover:shadow-md`
+ * Replaces the `border border-border rounded-xl p-5 hover:shadow-md`
  * markup that was re-declared inline in eight-plus places.
  */
 export default function Card({
@@ -37,7 +37,7 @@ export default function Card({
   const classes = cn(
     "block rounded-card border border-border bg-bg shadow-card",
     paddings[padding],
-    accent && "border-l-2 border-l-accent",
+    accent && "border-l-2 border-l-primary",
     isInteractive &&
       "transition-all hover:border-primary hover:shadow-card-hover",
     className,

@@ -23,7 +23,7 @@ const doubled = [...items, ...items];
 
 export default function Marquee() {
   return (
-    <div className="overflow-hidden border-y border-[#E2DDD6] bg-[#F2EEE8] py-3 select-none">
+    <div className="overflow-hidden border-y border-border bg-surface py-3 select-none">
       <motion.div
         className="flex gap-8 whitespace-nowrap"
         animate={{ x: ["0%", "-50%"] }}
@@ -34,9 +34,9 @@ export default function Marquee() {
         }}
       >
         {doubled.map((item, i) => (
-          <span key={i} className="flex items-center gap-8 text-xs font-medium uppercase tracking-widest text-[#737373]">
+          <span key={i} className="flex items-center gap-8 text-xs font-medium uppercase tracking-widest text-muted">
             {item}
-            <span className="text-[#E05C2A] text-base leading-none">·</span>
+            <span className="text-primary text-base leading-none">·</span>
           </span>
         ))}
       </motion.div>

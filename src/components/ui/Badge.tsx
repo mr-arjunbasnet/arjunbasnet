@@ -12,7 +12,7 @@ interface BadgeProps {
 const tones: Record<Tone, string> = {
   neutral: "border-border text-muted",
   primary: "border-primary/30 text-primary bg-primary/5",
-  accent: "border-accent/30 text-accent bg-accent/5",
+  accent: "border-primary/30 text-primary bg-primary/5",
   surface: "border-transparent bg-surface text-fg",
 };
 

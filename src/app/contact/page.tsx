@@ -46,19 +46,19 @@ export default function Contact() {
       <JsonLd data={breadcrumbSchema} id="ld-breadcrumb-contact" />
       {/* Header */}
       <section className="max-w-6xl mx-auto px-6 pt-16 pb-12 md:pt-20 md:pb-16">
-        <p className="text-xs font-semibold uppercase tracking-widest text-[#737373] mb-4">
+        <p className="text-xs font-semibold uppercase tracking-widest text-muted mb-4">
           Contact
         </p>
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-end">
           <h1
-            className="text-5xl md:text-6xl leading-[0.95] text-[#111111]"
+            className="text-5xl md:text-6xl leading-[0.95] text-fg"
             style={{ fontFamily: "var(--font-dm-serif)" }}
           >
             Let&apos;s work
             <br />
-            <span className="text-[#1A3FA8]">together.</span>
+            <span className="text-primary">together.</span>
           </h1>
-          <p className="text-sm text-[#737373] leading-relaxed max-w-lg">
+          <p className="text-sm text-muted leading-relaxed max-w-lg">
             Open to project enquiries, research collaborations, consulting engagements,
             and conversations about educational technology in emerging economies.
             Response time is typically within 24 hours.
@@ -67,7 +67,7 @@ export default function Contact() {
       </section>
 
       <div className="max-w-6xl mx-auto px-6">
-        <div className="h-px bg-[#E2DDD6]" />
+        <div className="h-px bg-border" />
       </div>
 
       {/* Form + Info */}
@@ -75,7 +75,7 @@ export default function Contact() {
         <div className="grid grid-cols-1 lg:grid-cols-[1fr_360px] gap-16">
           {/* Form */}
           <div>
-            <p className="text-xs font-semibold uppercase tracking-widest text-[#737373] mb-8">
+            <p className="text-xs font-semibold uppercase tracking-widest text-muted mb-8">
               Send a Message
             </p>
             {/* ContactForm reads ?service= via useSearchParams to prefill the
@@ -94,22 +94,22 @@ export default function Contact() {
           <div className="space-y-10">
             {/* Direct */}
             <div>
-              <p className="text-xs font-semibold uppercase tracking-widest text-[#737373] mb-5">
+              <p className="text-xs font-semibold uppercase tracking-widest text-muted mb-5">
                 Direct Contact
               </p>
               <div className="space-y-4">
                 <a
                   href="mailto:mr.arjunbasnet@gmail.com"
-                  className="flex items-center gap-3 text-sm text-[#111111] hover:text-[#1A3FA8] transition-colors group"
+                  className="flex items-center gap-3 text-sm text-fg hover:text-primary transition-colors group"
                 >
-                  <span className="w-8 h-8 flex items-center justify-center rounded-full border border-[#E2DDD6] group-hover:border-[#1A3FA8] group-hover:bg-[#EEF2FF] transition-colors">
-                    <Mail size={14} className="text-[#737373] group-hover:text-[#1A3FA8]" />
+                  <span className="w-8 h-8 flex items-center justify-center rounded-full border border-border group-hover:border-primary group-hover:bg-primary/5 transition-colors">
+                    <Mail size={14} className="text-muted group-hover:text-primary" />
                   </span>
                   mr.arjunbasnet@gmail.com
                 </a>
-                <div className="flex items-center gap-3 text-sm text-[#737373]">
-                  <span className="w-8 h-8 flex items-center justify-center rounded-full border border-[#E2DDD6]">
-                    <MapPin size={14} className="text-[#737373]" />
+                <div className="flex items-center gap-3 text-sm text-muted">
+                  <span className="w-8 h-8 flex items-center justify-center rounded-full border border-border">
+                    <MapPin size={14} className="text-muted" />
                   </span>
                   Kathmandu, Nepal (UTC+5:45)
                 </div>
@@ -118,7 +118,7 @@ export default function Contact() {
 
             {/* Profiles */}
             <div>
-              <p className="text-xs font-semibold uppercase tracking-widest text-[#737373] mb-5">
+              <p className="text-xs font-semibold uppercase tracking-widest text-muted mb-5">
                 Online Profiles
               </p>
               <div className="space-y-3">
@@ -151,17 +151,17 @@ export default function Contact() {
                     rel="noopener noreferrer"
                     className="flex items-center gap-3 group"
                   >
-                    <span className="w-8 h-8 flex items-center justify-center rounded-full border border-[#E2DDD6] group-hover:border-[#1A3FA8] group-hover:bg-[#EEF2FF] transition-colors">
+                    <span className="w-8 h-8 flex items-center justify-center rounded-full border border-border group-hover:border-primary group-hover:bg-primary/5 transition-colors">
                       <ExternalLink
                         size={13}
-                        className="text-[#737373] group-hover:text-[#1A3FA8]"
+                        className="text-muted group-hover:text-primary"
                       />
                     </span>
                     <div>
-                      <p className="text-sm font-medium text-[#111111] group-hover:text-[#1A3FA8] transition-colors leading-none mb-0.5">
+                      <p className="text-sm font-medium text-fg group-hover:text-primary transition-colors leading-none mb-0.5">
                         {s.label}
                       </p>
-                      <p className="text-xs text-[#737373]">{s.sub}</p>
+                      <p className="text-xs text-muted">{s.sub}</p>
                     </div>
                   </a>
                 ))}
@@ -169,14 +169,14 @@ export default function Contact() {
             </div>
 
             {/* Response time */}
-            <div className="bg-[#F2EEE8] border border-[#E2DDD6] rounded-xl p-5">
-              <p className="text-xs font-semibold uppercase tracking-widest text-[#737373] mb-3">
+            <div className="bg-surface border border-border rounded-xl p-5">
+              <p className="text-xs font-semibold uppercase tracking-widest text-muted mb-3">
                 Response Time
               </p>
-              <p className="text-sm font-medium text-[#111111] mb-2">
+              <p className="text-sm font-medium text-fg mb-2">
                 Typically within 24 hours
               </p>
-              <p className="text-xs text-[#737373] leading-relaxed">
+              <p className="text-xs text-muted leading-relaxed">
                 Based in Kathmandu, Nepal (UTC+5:45). Accepting project enquiries,
                 research partnerships, and consulting conversations from clients across
                 Nepal, the US, Australia, Japan, and the UK.

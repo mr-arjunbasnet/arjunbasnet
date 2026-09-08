@@ -107,7 +107,7 @@ export default function CTA({
   }
 
   return (
-    <section className={cn("bg-primary py-16 md:py-20", className)}>
+    <section className={cn("bg-brand py-16 md:py-20", className)}>
       <Container>{inner}</Container>
     </section>
   );

@@ -9,7 +9,7 @@ interface EyebrowProps {
 const tones = {
   muted: "text-muted",
   primary: "text-primary",
-  accent: "text-accent",
+  accent: "text-primary",
 } as const;
 
 /** The small uppercase kicker above section headings, used ~15 times. */

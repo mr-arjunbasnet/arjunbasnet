@@ -110,23 +110,23 @@ export default function Research() {
       {/* Header */}
       <section className="max-w-6xl mx-auto px-6 pt-16 pb-12 md:pt-20 md:pb-16">
         <AnimateIn>
-          <p className="text-xs font-semibold uppercase tracking-widest text-[#737373] mb-4">
+          <p className="text-xs font-semibold uppercase tracking-widest text-muted mb-4">
             Research
           </p>
         </AnimateIn>
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-end">
           <AnimateIn delay={0.1}>
             <h1
-              className="text-5xl md:text-6xl leading-[0.95] text-[#111111]"
+              className="text-5xl md:text-6xl leading-[0.95] text-fg"
               style={{ fontFamily: "var(--font-dm-serif)" }}
             >
               Research &
               <br />
-              <span className="text-[#1A3FA8]">Publications.</span>
+              <span className="text-primary">Publications.</span>
             </h1>
           </AnimateIn>
           <AnimateIn delay={0.2} direction="left">
-            <p className="text-sm text-[#737373] leading-relaxed max-w-lg">
+            <p className="text-sm text-muted leading-relaxed max-w-lg">
               Peer-reviewed publication in computer vision and educational systems.
               Active research interests across AI in EdTech, adaptive learning analytics,
               IS adoption in emerging economies, and responsible governance of educational
@@ -137,49 +137,49 @@ export default function Research() {
       </section>
 
       <div className="max-w-6xl mx-auto px-6">
-        <div className="h-px bg-[#E2DDD6]" />
+        <div className="h-px bg-border" />
       </div>
 
       {/* Publication */}
       <section className="max-w-6xl mx-auto px-6 py-20">
         <div className="grid grid-cols-1 lg:grid-cols-[240px_1fr] gap-12">
           <div className="lg:sticky lg:top-24 h-fit">
-            <p className="text-xs font-semibold uppercase tracking-widest text-[#737373]">
+            <p className="text-xs font-semibold uppercase tracking-widest text-muted">
               Publications
             </p>
           </div>
           <div>
-            <article className="border border-[#E2DDD6] rounded-xl overflow-hidden">
-              <div className="bg-[#F2EEE8] px-6 py-4 border-b border-[#E2DDD6]">
+            <article className="border border-border rounded-xl overflow-hidden">
+              <div className="bg-surface px-6 py-4 border-b border-border">
                 <div className="flex items-center gap-3">
-                  <span className="text-xs font-semibold text-white bg-[#1A3FA8] px-2.5 py-1 rounded-full uppercase tracking-wide">
+                  <span className="text-xs font-semibold text-white bg-primary px-2.5 py-1 rounded-full uppercase tracking-wide">
                     Peer-Reviewed
                   </span>
-                  <span className="text-xs font-medium text-[#737373]">2023</span>
-                  <span className="text-xs text-[#737373]">·</span>
-                  <span className="text-xs text-[#737373]">Computer Vision · EdTech</span>
+                  <span className="text-xs font-medium text-muted">2023</span>
+                  <span className="text-xs text-muted">·</span>
+                  <span className="text-xs text-muted">Computer Vision · EdTech</span>
                 </div>
               </div>
               <div className="px-6 py-8">
                 <h2
-                  className="text-xl md:text-2xl text-[#111111] mb-3 leading-snug"
+                  className="text-xl md:text-2xl text-fg mb-3 leading-snug"
                   style={{ fontFamily: "var(--font-dm-serif)" }}
                 >
                   An Automated Attendance System Using Facial Detection and Recognition Technology
                 </h2>
-                <p className="text-sm text-[#737373] mb-5 leading-relaxed">
-                  <span className="text-[#111111] font-medium">
+                <p className="text-sm text-muted mb-5 leading-relaxed">
+                  <span className="text-fg font-medium">
                     Jha, P. B., Basnet, A., Pokhrel, B., Pokhrel, B., Thakur, G. K., & Chhetri, S.
                   </span>
                   <br />
                   Apex Journal of Business and Management, Vol. 1, No. 1, 2023, pp. 103–120.
                 </p>
 
-                <div className="bg-[#F2EEE8] rounded-lg p-5 mb-6">
-                  <p className="text-xs font-semibold uppercase tracking-widest text-[#737373] mb-3">
+                <div className="bg-surface rounded-lg p-5 mb-6">
+                  <p className="text-xs font-semibold uppercase tracking-widest text-muted mb-3">
                     Abstract
                   </p>
-                  <p className="text-sm text-[#737373] leading-relaxed">
+                  <p className="text-sm text-muted leading-relaxed">
                     This paper presents the design and implementation of a real-time automated
                     attendance system for educational institutions using facial detection and
                     recognition technology. The system integrates Haar Cascade for face
@@ -199,11 +199,11 @@ export default function Research() {
                     { label: "Domain", value: "Computer Vision · Education" },
                     { label: "Journal", value: "Apex Journal of Business and Management" },
                   ].map((d) => (
-                    <div key={d.label} className="border border-[#E2DDD6] rounded-lg p-3">
-                      <p className="text-xs text-[#737373] uppercase tracking-wide font-semibold mb-1">
+                    <div key={d.label} className="border border-border rounded-lg p-3">
+                      <p className="text-xs text-muted uppercase tracking-wide font-semibold mb-1">
                         {d.label}
                       </p>
-                      <p className="text-xs text-[#111111] font-medium">{d.value}</p>
+                      <p className="text-xs text-fg font-medium">{d.value}</p>
                     </div>
                   ))}
                 </div>
@@ -213,7 +213,7 @@ export default function Research() {
                     href="https://scholar.google.com/citations?user=UTzpgdYAAAAJ&hl=en"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center gap-1.5 text-sm font-medium text-[#1A3FA8] hover:underline"
+                    className="flex items-center gap-1.5 text-sm font-medium text-primary hover:underline"
                   >
                     Google Scholar <ExternalLink size={13} />
                   </a>
@@ -221,7 +221,7 @@ export default function Research() {
                     href="https://www.researchgate.net/profile/Arjun-Basnet-11"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center gap-1.5 text-sm font-medium text-[#1A3FA8] hover:underline"
+                    className="flex items-center gap-1.5 text-sm font-medium text-primary hover:underline"
                   >
                     ResearchGate <ExternalLink size={13} />
                   </a>
@@ -233,29 +233,29 @@ export default function Research() {
       </section>
 
       <div className="max-w-6xl mx-auto px-6">
-        <div className="h-px bg-[#E2DDD6]" />
+        <div className="h-px bg-border" />
       </div>
 
       {/* Research Interests */}
       <section className="max-w-6xl mx-auto px-6 py-20">
         <div className="grid grid-cols-1 lg:grid-cols-[240px_1fr] gap-12">
           <div className="lg:sticky lg:top-24 h-fit">
-            <p className="text-xs font-semibold uppercase tracking-widest text-[#737373]">
+            <p className="text-xs font-semibold uppercase tracking-widest text-muted">
               Research Interests
             </p>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
             {researchInterests.map((r, i) => (
-              <div key={r.title} className="border border-[#E2DDD6] rounded-xl p-5">
+              <div key={r.title} className="border border-border rounded-xl p-5">
                 <div className="flex items-start gap-3 mb-3">
-                  <span className="text-xs font-semibold text-[#E05C2A] mt-0.5">
+                  <span className="text-xs font-semibold text-primary mt-0.5">
                     {String(i + 1).padStart(2, "0")}
                   </span>
-                  <h3 className="text-sm font-semibold text-[#111111] leading-snug">
+                  <h3 className="text-sm font-semibold text-fg leading-snug">
                     {r.title}
                   </h3>
                 </div>
-                <p className="text-xs text-[#737373] leading-relaxed pl-7">{r.description}</p>
+                <p className="text-xs text-muted leading-relaxed pl-7">{r.description}</p>
               </div>
             ))}
           </div>
@@ -263,25 +263,25 @@ export default function Research() {
       </section>
 
       <div className="max-w-6xl mx-auto px-6">
-        <div className="h-px bg-[#E2DDD6]" />
+        <div className="h-px bg-border" />
       </div>
 
       {/* Open Research Questions */}
       <section className="max-w-6xl mx-auto px-6 py-20">
         <div className="grid grid-cols-1 lg:grid-cols-[240px_1fr] gap-12">
           <div className="lg:sticky lg:top-24 h-fit">
-            <p className="text-xs font-semibold uppercase tracking-widest text-[#737373]">
+            <p className="text-xs font-semibold uppercase tracking-widest text-muted">
               Open Questions
             </p>
           </div>
           <div>
             <h2
-              className="text-2xl md:text-3xl text-[#111111] mb-6 leading-tight"
+              className="text-2xl md:text-3xl text-fg mb-6 leading-tight"
               style={{ fontFamily: "var(--font-dm-serif)" }}
             >
               The questions I&apos;m working on.
             </h2>
-            <p className="text-sm text-[#737373] leading-relaxed mb-8 max-w-2xl">
+            <p className="text-sm text-muted leading-relaxed mb-8 max-w-2xl">
               These are the open questions that shape my work in EdTech and AI for emerging
               economies. They came out of three years of LMS deployments, AI workflow design,
               and digital transformation projects in Nepal.
@@ -311,17 +311,17 @@ export default function Research() {
               ].map((item, i) => (
                 <div
                   key={i}
-                  className="border border-[#E2DDD6] rounded-xl p-5 bg-[#FAFAF8] hover:shadow-md hover:border-[#1A3FA8] transition-all"
+                  className="border border-border rounded-xl p-5 bg-bg hover:shadow-md hover:border-primary transition-all"
                 >
                   <div className="flex items-start gap-3">
-                    <span className="text-xs font-semibold text-[#E05C2A] mt-1">
+                    <span className="text-xs font-semibold text-primary mt-1">
                       {String(i + 1).padStart(2, "0")}
                     </span>
                     <div className="flex-1">
-                      <p className="text-sm font-medium text-[#111111] leading-snug mb-2">
+                      <p className="text-sm font-medium text-fg leading-snug mb-2">
                         {item.q}
                       </p>
-                      <p className="text-xs text-[#737373] leading-relaxed">
+                      <p className="text-xs text-muted leading-relaxed">
                         {item.context}
                       </p>
                     </div>
@@ -334,17 +334,17 @@ export default function Research() {
       </section>
 
       <div className="max-w-6xl mx-auto px-6">
-        <div className="h-px bg-[#E2DDD6]" />
+        <div className="h-px bg-border" />
       </div>
 
       {/* Academic Profiles */}
       <section className="max-w-6xl mx-auto px-6 py-20">
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
           <div>
-            <p className="text-xs font-semibold uppercase tracking-widest text-[#737373] mb-2">
+            <p className="text-xs font-semibold uppercase tracking-widest text-muted mb-2">
               Academic Profiles
             </p>
-            <p className="text-sm text-[#737373]">
+            <p className="text-sm text-muted">
               Find publications, citations, and research profile on:
             </p>
           </div>
@@ -368,7 +368,7 @@ export default function Research() {
                 href={p.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-1.5 text-sm font-medium px-4 py-2 border border-[#E2DDD6] rounded-full text-[#111111] hover:border-[#1A3FA8] hover:text-[#1A3FA8] transition-colors"
+                className="flex items-center gap-1.5 text-sm font-medium px-4 py-2 border border-border rounded-full text-fg hover:border-primary hover:text-primary transition-colors"
               >
                 {p.label} <ExternalLink size={12} />
               </a>

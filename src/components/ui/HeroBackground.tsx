@@ -32,11 +32,11 @@ export default function HeroBackground() {
       />
 
       {/* Gradient fade — bottom */}
-      <div className="absolute bottom-0 left-0 right-0 h-40 bg-gradient-to-t from-[#FAFAF8] to-transparent" />
+      <div className="absolute bottom-0 left-0 right-0 h-40 bg-gradient-to-t from-bg to-transparent" />
 
       {/* Decorative ring — top right */}
       <motion.div
-        className="absolute -top-32 -right-32 w-[520px] h-[520px] rounded-full border border-[#E2DDD6]"
+        className="absolute -top-32 -right-32 w-[520px] h-[520px] rounded-full border border-border"
         style={{
           x: useSpring(
             useMotionValue(0),
@@ -49,21 +49,21 @@ export default function HeroBackground() {
 
       {/* Inner ring — top right */}
       <motion.div
-        className="absolute -top-16 -right-16 w-[320px] h-[320px] rounded-full border border-[#E2DDD6]/60"
+        className="absolute -top-16 -right-16 w-[320px] h-[320px] rounded-full border border-border/60"
         animate={{ rotate: -360 }}
         transition={{ duration: 55, ease: "linear", repeat: Infinity }}
       />
 
       {/* Floating ring — bottom left */}
       <motion.div
-        className="absolute -bottom-24 -left-24 w-[380px] h-[380px] rounded-full border border-[#E2DDD6]/50"
+        className="absolute -bottom-24 -left-24 w-[380px] h-[380px] rounded-full border border-border/50"
         animate={{ rotate: 360 }}
         transition={{ duration: 70, ease: "linear", repeat: Infinity }}
       />
 
       {/* Parallax accent shape — follows mouse subtly */}
       <motion.div
-        className="absolute top-1/3 right-1/4 w-3 h-3 rounded-full bg-[#E05C2A] opacity-60"
+        className="absolute top-1/3 right-1/4 w-3 h-3 rounded-full bg-primary opacity-60"
         style={{
           x: smoothX,
           y: smoothY,
@@ -72,7 +72,7 @@ export default function HeroBackground() {
         transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
       />
       <motion.div
-        className="absolute top-1/2 left-1/3 w-2 h-2 rounded-full bg-[#1A3FA8] opacity-40"
+        className="absolute top-1/2 left-1/3 w-2 h-2 rounded-full bg-primary opacity-40"
         style={{
           x: useSpring(mouseX, { stiffness: 15, damping: 20 }),
           y: useSpring(mouseY, { stiffness: 15, damping: 20 }),

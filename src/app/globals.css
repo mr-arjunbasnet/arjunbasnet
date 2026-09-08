@@ -21,23 +21,51 @@
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 
-  --color-bg: #FAFAF8;
-  --color-fg: #111111;
-  --color-primary: #1A3FA8;
-  --color-primary-light: #2B52CC;
-  /* Darkened from #E05C2A: 3.50:1 as text on the page background, and
-     3.66:1 behind white button text. Both now clear 4.5:1. */
-  --color-accent: #C14F24;
-  /* Darkened from #737373, which was 4.10:1 on the surface tint. */
-  --color-muted: #6C6C6C;
-  --color-border: #E2DDD6;
-  --color-surface: #F2EEE8;
-  --color-surface-2: #E8E3DA;
+  /*
+   * Palette, 2026-09-08. The brand blue leads and is unchanged. The neutrals
+   * moved from warm cream/beige to cool off-white/grey — the cool set that
+   * shipped on /services as `.svc-cool` on 2026-07-26 is now the site default
+   * — and the terracotta accent is retired. Owner's call: cream plus
+   * terracotta read as another AI company's identity, not this one's.
+   *
+   * Contrast (measured):
+   *   muted on bg         5.74   muted on surface   5.38   muted on surface-2  4.88
+   *   primary on bg       8.22   primary on surface 7.66   white on primary    9.05
+   */
+  --color-bg: #FBFBFD;
+  --color-fg: #10132A;
+  /*
+   * Brand palette, 2026-09-08 — derived from the owner's logo: a ring running
+   * blue → indigo → violet. Primary is the mark's blue at the darkness that
+   * clears 4.5:1 on white; secondary is its violet, likewise text-safe. The
+   * previous navy #1A3FA8 was the old identity.
+   *
+   * Contrast (measured, see PROJECT-CONTEXT §15): every text pair ≥ 4.5:1.
+   */
+  --color-primary: #2563EB;
+  /* Hover/press. Named "light" for historical reasons — it is the darker
+     step, because white text on a lighter blue drops below AA. */
+  --color-primary-light: #1D4ED8;
+  --color-secondary: #7C3AED;
+  /* ARTWORK ONLY — the focal point in each drawn scene. A light violet reads
+     as a glow on the blue masses and a highlight on the canvas. 3.3:1 on
+     white: never text. All text uses of accent route to primary. */
+  --color-accent: #9F7AEA;
+  --color-muted: #5B6178;
+  --color-border: #DFE2F0;
+  --color-surface: #F3F4FA;
+  --color-surface-2: #EEF0F9;
 
   /* Semantic aliases consumed by the primitives */
-  --color-fg-muted: #6C6C6C;
+  --color-fg-muted: #5B6178;
   --color-primary-fg: #FFFFFF;
-  --color-hairline: #C8C2BA;
+  --color-hairline: #BEC3DA;
+
+  /* The brand gradient, as a utility: bg-brand. Both ends keep white text
+     above 5:1, so it is safe under button and band copy. */
+  /* Two stops, not the ring's three: the indigo midpoint drops white text to
+     4.47:1, while a straight blue→violet blend keeps it above 5.7 throughout. */
+  --background-image-brand: linear-gradient(135deg, #2563EB 0%, #7C3AED 100%);
 
   /* Scale tokens */
   --radius-card: 0.75rem;
@@ -55,42 +83,17 @@
 }
 
 /*
- * Cool variant, currently scoped to /services.
+ * `.svc-cool` — retired 2026-09-08.
  *
- * This works because `@theme` (not `@theme inline`) emits the palette as real
- * custom properties and every utility compiles to `var(--color-…)`. Redeclaring
- * those properties on an ancestor therefore recolours the whole subtree without
- * touching a single component. Switching to `@theme inline` would silently
- * break this.
- *
- * The brand colours are untouched — `--color-primary` and `--color-accent` are
- * the same values the rest of the site uses. What changes is the neutrals: the
- * warm beige surfaces move to cool grey so blue reads as the lead colour and
- * orange lands as a highlight rather than a second theme.
- *
- * Contrast measured against the live warm palette; every pair improves:
- *
- *   pair                 warm    cool
- *   muted on bg          5.02 →  5.74
- *   muted on surface     4.54 →  5.38
- *   muted on surface-2   4.11 →  4.88   (was below AA, now clears)
- *   accent on bg         4.56 →  4.61
- *   accent on surface    4.12 →  4.32   graphics only; AA-large bar is 3.0
- *   primary on surface   7.83 →  8.22
- *   fg on surface       16.34 → 17.15
- *
- * Accent text must not sit on `surface` — at 4.32 it clears the 3.0 non-text
- * bar for illustration fills but not the 4.5 body-text bar.
+ * The cool neutrals it scoped to /services became the site-wide palette in
+ * the @theme block above, so the override has nothing left to override.
+ * The class name is still present on /services markup and is harmless; it is
+ * kept so that page needs no edit. If a per-route variant is ever wanted
+ * again, this is the mechanism: redeclare the --color-* properties on an
+ * ancestor. It works only because the project uses `@theme`, not
+ * `@theme inline`.
  */
 .svc-cool {
-  --color-bg: #FBFBFD;
-  --color-surface: #F2F4F8;
-  --color-surface-2: #E6E9F0;
-  --color-border: #DFE3EB;
-  --color-hairline: #BFC5D2;
-  --color-muted: #5E6472;
-  --color-fg-muted: #5E6472;
-
   background-color: var(--color-bg);
 }
 
@@ -645,15 +648,15 @@ html {
 }
 
 body {
-  background-color: #FAFAF8;
-  color: #111111;
+  background-color: #FBFBFD;
+  color: #10132A;
   font-family: var(--font-geist-sans), system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 ::selection {
-  background-color: #1A3FA8;
+  background-color: #2563EB;
   color: #ffffff;
 }
 
@@ -662,12 +665,12 @@ body {
   width: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: #FAFAF8;
+  background: #FBFBFD;
 }
 ::-webkit-scrollbar-thumb {
-  background: #C8C2BA;
+  background: #BFC5D2;
   border-radius: 3px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #1A3FA8;
+  background: #2563EB;
 }

@@ -117,7 +117,7 @@ export default async function ServicePage({
               <span className="font-medium text-fg">
                 {formatNpr()}
               </span>{" "}
-              <span className="text-[#BBBBBB]">/</span>{" "}
+              <span className="text-muted">/</span>{" "}
               <span className="font-medium text-fg">{formatUsd()}</span>
             </p>
           </div>
@@ -157,7 +157,7 @@ export default async function ServicePage({
               key={step.step}
               className="grid grid-cols-[2.5rem_1fr] gap-5 border-b border-border py-6 last:border-b-0"
             >
-                <span className="font-display text-2xl text-accent">
+                <span className="font-display text-2xl text-primary">
                   {String(step.step).padStart(2, "0")}
                 </span>
                 <div>

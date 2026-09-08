@@ -238,25 +238,25 @@ export default function Work() {
       {/* Header */}
       <section className="max-w-6xl mx-auto px-6 pt-16 pb-12 md:pt-20 md:pb-16">
         <AnimateIn>
-          <p className="text-xs font-semibold uppercase tracking-widest text-[#737373] mb-4">
+          <p className="text-xs font-semibold uppercase tracking-widest text-muted mb-4">
             Portfolio
           </p>
         </AnimateIn>
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-end">
           <AnimateIn delay={0.1}>
             <h1
-              className="text-5xl md:text-6xl leading-[0.95] text-[#111111]"
+              className="text-5xl md:text-6xl leading-[0.95] text-fg"
               style={{ fontFamily: "var(--font-dm-serif)" }}
             >
               100+ Projects.
               <br />
-              <span className="text-[#1A3FA8]">Five Industries.</span>
+              <span className="text-primary">Five Industries.</span>
               <br />
               One Standard.
             </h1>
           </AnimateIn>
           <AnimateIn delay={0.2} direction="left">
-            <p className="text-sm text-[#737373] leading-relaxed max-w-lg">
+            <p className="text-sm text-muted leading-relaxed max-w-lg">
               Three years and 100+ delivered products across EdTech, digital transformation,
               AI automation, enterprise systems, and web applications. A 92% on-time delivery
               rate and clients spanning Nepal, the United States, Australia, Japan, and the UK.
@@ -266,7 +266,7 @@ export default function Work() {
       </section>
 
       <div className="max-w-6xl mx-auto px-6">
-        <div className="h-px bg-[#E2DDD6]" />
+        <div className="h-px bg-border" />
       </div>
 
       {/* Stats */}
@@ -279,14 +279,14 @@ export default function Work() {
             { value: "4", label: "Continents of Clients" },
           ].map((s, i) => (
             <AnimateIn key={s.label} delay={i * 0.08}>
-              <div className="text-center py-6 border border-[#E2DDD6] rounded-xl hover:shadow-md hover:-translate-y-0.5 transition-all duration-300">
+              <div className="text-center py-6 border border-border rounded-xl hover:shadow-md hover:-translate-y-0.5 transition-all duration-300">
                 <p
-                  className="text-3xl md:text-4xl font-bold text-[#1A3FA8] mb-1"
+                  className="text-3xl md:text-4xl font-bold text-primary mb-1"
                   style={{ fontFamily: "var(--font-dm-serif)" }}
                 >
                   <CountUp raw={s.value} />
                 </p>
-                <p className="text-xs font-medium uppercase tracking-wide text-[#737373]">
+                <p className="text-xs font-medium uppercase tracking-wide text-muted">
                   {s.label}
                 </p>
               </div>
@@ -296,12 +296,12 @@ export default function Work() {
       </section>
 
       <div className="max-w-6xl mx-auto px-6">
-        <div className="h-px bg-[#E2DDD6]" />
+        <div className="h-px bg-border" />
       </div>
 
       {/* Projects */}
       <section className="max-w-6xl mx-auto px-6 py-20">
-        <p className="text-xs font-semibold uppercase tracking-widest text-[#737373] mb-12">
+        <p className="text-xs font-semibold uppercase tracking-widest text-muted mb-12">
           Selected Case Studies
         </p>
 
@@ -310,41 +310,41 @@ export default function Work() {
             <AnimateIn key={p.id} delay={i * 0.06}>
             <article
               id={p.id}
-              className="border-t border-[#E2DDD6] py-12"
+              className="border-t border-border py-12"
             >
               <div className="grid grid-cols-1 lg:grid-cols-[80px_1fr_280px] gap-6 lg:gap-10">
                 {/* Index */}
                 <div>
-                  <span className="text-sm font-semibold text-[#E05C2A]">{p.index}</span>
+                  <span className="text-sm font-semibold text-primary">{p.index}</span>
                 </div>
 
                 {/* Content */}
                 <div>
                   <div className="flex flex-wrap items-center gap-3 mb-1">
-                    <span className="text-xs font-medium uppercase tracking-wide text-[#737373] bg-[#F2EEE8] px-2.5 py-0.5 rounded-full">
+                    <span className="text-xs font-medium uppercase tracking-wide text-muted bg-surface px-2.5 py-0.5 rounded-full">
                       {p.category}
                     </span>
-                    <span className="text-xs text-[#737373]">{p.period}</span>
+                    <span className="text-xs text-muted">{p.period}</span>
                   </div>
                   <h2
-                    className="text-2xl md:text-3xl text-[#111111] mb-2 leading-tight"
+                    className="text-2xl md:text-3xl text-fg mb-2 leading-tight"
                     style={{ fontFamily: "var(--font-dm-serif)" }}
                   >
                     {p.title}
                   </h2>
-                  <p className="text-xs font-medium text-[#1A3FA8] mb-4">
+                  <p className="text-xs font-medium text-primary mb-4">
                     {p.client} · {p.role}
                   </p>
-                  <p className="text-sm text-[#737373] leading-relaxed mb-5">{p.summary}</p>
-                  <p className="text-xs font-semibold uppercase tracking-widest text-[#737373] mb-2">
+                  <p className="text-sm text-muted leading-relaxed mb-5">{p.summary}</p>
+                  <p className="text-xs font-semibold uppercase tracking-widest text-muted mb-2">
                     Context
                   </p>
-                  <p className="text-sm text-[#737373] leading-relaxed mb-6">{p.context}</p>
+                  <p className="text-sm text-muted leading-relaxed mb-6">{p.context}</p>
                   <div className="flex flex-wrap gap-2">
                     {p.tags.map((tag) => (
                       <span
                         key={tag}
-                        className="text-xs text-[#1A3FA8] bg-[#EEF2FF] px-2.5 py-1 rounded-full"
+                        className="text-xs text-primary bg-primary/5 px-2.5 py-1 rounded-full"
                       >
                         {tag}
                       </span>
@@ -353,15 +353,15 @@ export default function Work() {
                 </div>
 
                 {/* Outcomes */}
-                <div className="bg-[#F2EEE8] rounded-xl p-5 h-fit">
-                  <p className="text-xs font-semibold uppercase tracking-widest text-[#737373] mb-3">
+                <div className="bg-surface rounded-xl p-5 h-fit">
+                  <p className="text-xs font-semibold uppercase tracking-widest text-muted mb-3">
                     Key Outcomes
                   </p>
                   <ul className="space-y-2">
                     {p.outcomes.map((o) => (
                       <li key={o} className="flex items-start gap-2">
-                        <span className="text-[#E05C2A] mt-0.5 flex-shrink-0">→</span>
-                        <span className="text-xs text-[#111111] leading-relaxed">{o}</span>
+                        <span className="text-primary mt-0.5 flex-shrink-0">→</span>
+                        <span className="text-xs text-fg leading-relaxed">{o}</span>
                       </li>
                     ))}
                   </ul>
@@ -370,24 +370,24 @@ export default function Work() {
             </article>
             </AnimateIn>
           ))}
-          <div className="border-t border-[#E2DDD6]" />
+          <div className="border-t border-border" />
         </div>
       </section>
 
       <div className="max-w-6xl mx-auto px-6">
-        <div className="h-px bg-[#E2DDD6]" />
+        <div className="h-px bg-border" />
       </div>
 
       {/* Clients */}
       <section className="max-w-6xl mx-auto px-6 py-20">
-        <p className="text-xs font-semibold uppercase tracking-widest text-[#737373] mb-8">
+        <p className="text-xs font-semibold uppercase tracking-widest text-muted mb-8">
           Selected Clients
         </p>
         <div className="flex flex-wrap gap-3">
           {clientList.map((c) => (
             <span
               key={c}
-              className="text-sm text-[#111111] border border-[#E2DDD6] px-4 py-2 rounded-full bg-[#FAFAF8]"
+              className="text-sm text-fg border border-border px-4 py-2 rounded-full bg-bg"
             >
               {c}
             </span>
@@ -396,7 +396,7 @@ export default function Work() {
       </section>
 
       <div className="max-w-6xl mx-auto px-6">
-        <div className="h-px bg-[#E2DDD6]" />
+        <div className="h-px bg-border" />
       </div>
 
       {/* CTA */}
@@ -404,18 +404,18 @@ export default function Work() {
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
           <div>
             <h2
-              className="text-2xl md:text-3xl text-[#111111] mb-2"
+              className="text-2xl md:text-3xl text-fg mb-2"
               style={{ fontFamily: "var(--font-dm-serif)" }}
             >
               Working on something interesting?
             </h2>
-            <p className="text-sm text-[#737373]">
+            <p className="text-sm text-muted">
               Open to new projects, research partnerships, and consulting engagements.
             </p>
           </div>
           <Link
             href="/contact"
-            className="flex-shrink-0 flex items-center gap-2 px-5 py-2.5 bg-[#1A3FA8] text-white text-sm font-medium rounded-full hover:bg-[#2B52CC] transition-colors"
+            className="flex-shrink-0 flex items-center gap-2 px-5 py-2.5 bg-primary text-white text-sm font-medium rounded-full hover:bg-primary-light transition-colors"
           >
             Get in touch <ArrowRight size={14} />
           </Link>

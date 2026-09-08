@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight, ArrowUpRight, MapPin, Award, Check } from "lucide-react";
 import { buildMetadata } from "@/lib/seo";
+import { cn } from "@/lib/utils";
 import { SITE } from "@/content/site";
 import { SERVICES, SERVICE_GROUPS, getServicesByGroup } from "@/content/services/index";
 import { STATS, FEATURED_WORK } from "@/content/proof";
@@ -15,7 +16,7 @@ import Badge from "@/components/ui/Badge";
 import Button from "@/components/ui/Button";
 import Card from "@/components/ui/Card";
 import CTA from "@/components/ui/CTA";
-import ServiceIcon from "@/components/ui/ServiceIcon";
+import ServiceArt from "@/components/ui/ServiceArt";
 import AnimateIn from "@/components/ui/AnimateIn";
 import CountUp from "@/components/ui/CountUp";
 import HeroBackground from "@/components/ui/HeroBackground";
@@ -97,12 +98,26 @@ export default function Home() {
                 Three years and 100+ delivered projects, at a 92% on-time rate.
               </p>
 
+              {/* The one place the primary gets a glow: a soft brand-coloured
+                  shadow so the hero's action is unmistakably the brightest
+                  thing above the fold. Taller than the standard lg. */}
               <div className="flex flex-wrap gap-3">
-                <Button href="/services" size="lg" icon={<ArrowRight size={16} />}>
-                  See what I do
-                </Button>
-                <Button href="/contact" size="lg" variant="secondary">
+                <Button
+                  href="/contact"
+                  size="lg"
+                  icon={<ArrowRight size={18} />}
+                  className="h-13 px-7 text-base shadow-[0_12px_32px_-10px_var(--color-primary)] hover:shadow-[0_16px_40px_-10px_var(--color-secondary)] transition-shadow"
+                >
                   Start a conversation
+                </Button>
+                <Button
+                  href="/services"
+                  size="lg"
+                  variant="secondary"
+                  icon={<ArrowRight size={16} />}
+                  className="h-13 px-7 text-base"
+                >
+                  See what I do
                 </Button>
               </div>
             </div>
@@ -146,34 +161,68 @@ export default function Home() {
           </p>
         </AnimateIn>
 
-        <div className="space-y-10">
+        {/* Same card anatomy as the /services grid and the AI trainer page:
+            the service's own drawn scene on top, group as a chip, name and
+            tagline, and a visible affordance. The previous version here was an
+            18px icon and two lines of text — nothing for the eye to land on. */}
+        <div className="space-y-12">
           {SERVICE_GROUPS.map((group) => {
             const services = getServicesByGroup(group.id);
             if (!services.length) return null;
             return (
               <div key={group.id}>
-                <p className="mb-4 text-xs font-semibold uppercase tracking-label text-accent">
-                  {group.label}
-                </p>
-                <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
+                <div className="mb-5 flex items-center gap-4">
+                  <p className="text-xs font-semibold uppercase tracking-label text-primary">
+                    {group.label}
+                  </p>
+                  <span aria-hidden className="h-px flex-1 bg-border" />
+                  <span className="text-xs text-muted">
+                    {services.length} {services.length === 1 ? "service" : "services"}
+                  </span>
+                </div>
+                {/* Groups are 4 / 3 / 2 services. A fixed column count leaves an
+                    orphan on one row and a hole on another, so each row takes
+                    its group's size: every row full, the advisory pair wide. */}
+                <div
+                  className={cn(
+                    "grid grid-cols-1 gap-5 sm:grid-cols-2",
+                    services.length >= 4 && "lg:grid-cols-4",
+                    services.length === 3 && "lg:grid-cols-3",
+                    services.length <= 2 && "lg:grid-cols-2",
+                  )}
+                >
                   {services.map((service, i) => (
-                    <AnimateIn key={service.slug} delay={i * 0.05}>
+                    <AnimateIn key={service.slug} delay={(i % 4) * 0.06}>
                       <Card
                         href={`/services/${service.slug}`}
-                        padding="md"
-                        className="h-full"
+                        padding="none"
+                        className="flex h-full flex-col overflow-hidden transition-transform duration-300 hover:-translate-y-0.5"
                       >
-                        <ServiceIcon
-                          name={service.icon}
-                          size={18}
-                          className="mb-3 text-primary"
-                        />
-                        <h3 className="mb-1.5 font-semibold text-fg">
-                          {service.name}
-                        </h3>
-                        <p className="text-sm leading-relaxed text-muted">
-                          {service.tagline}
-                        </p>
+                        <div className="relative border-b border-border bg-surface">
+                          <ServiceArt
+                            slug={service.slug}
+                            className="transition-transform duration-500 group-hover:scale-[1.03]"
+                          />
+                          <span className="absolute top-3 left-3 rounded-pill border border-border bg-bg/90 px-2.5 py-1 text-[11px] font-semibold uppercase tracking-label text-primary backdrop-blur-sm">
+                            {group.label}
+                          </span>
+                        </div>
+                        <div className="flex flex-1 flex-col p-5">
+                          <h3 className="mb-1.5 font-semibold text-fg transition-colors group-hover:text-primary">
+                            {service.name}
+                          </h3>
+                          <p className="text-sm leading-relaxed text-muted">
+                            {service.tagline}
+                          </p>
+                          <span className="mt-auto inline-flex items-center gap-1.5 pt-5 text-sm font-medium text-primary">
+                            Explore
+                            <ArrowRight
+                              size={14}
+                              aria-hidden
+                              className="transition-transform duration-300 group-hover:translate-x-0.5"
+                            />
+                          </span>
+                        </div>
                       </Card>
                     </AnimateIn>
                   ))}
@@ -213,7 +262,7 @@ export default function Home() {
                 className="group -mx-6 block border-t border-border px-6 py-8 transition-colors hover:bg-bg"
               >
                 <div className="grid grid-cols-1 items-start gap-4 md:grid-cols-[70px_1fr_auto] md:gap-8">
-                  <span className="pt-1 font-display text-xl text-accent">
+                  <span className="pt-1 font-display text-xl text-primary">
                     {item.index}
                   </span>
                   <div>

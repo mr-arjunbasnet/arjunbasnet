@@ -89,10 +89,10 @@ function TimelineCard({
       initial={{ opacity: 0, x: isLeft ? -28 : 28 }}
       animate={inView ? { opacity: 1, x: 0 } : {}}
       transition={{ duration: 0.65, delay: 0.08, ease: [0.22, 1, 0.36, 1] }}
-      className={`border border-[#E2DDD6] rounded-xl p-5 bg-[#FAFAF8] hover:shadow-md transition-shadow duration-300 ${
+      className={`border border-border rounded-xl p-5 bg-bg hover:shadow-md transition-shadow duration-300 ${
         isEdu
-          ? "border-l-[3px] border-l-[#1A3FA8]"
-          : "border-l-[3px] border-l-[#E05C2A]"
+          ? "border-l-[3px] border-l-primary"
+          : "border-l-[3px] border-l-primary"
       }`}
     >
       <div className="flex items-start justify-between gap-3 mb-2">
@@ -100,36 +100,36 @@ function TimelineCard({
           <span
             className={`text-[10px] font-semibold uppercase tracking-widest px-2 py-0.5 rounded-full ${
               isEdu
-                ? "bg-[#EEF2FF] text-[#1A3FA8]"
-                : "bg-[#FFF4EE] text-[#E05C2A]"
+                ? "bg-primary/5 text-primary"
+                : "bg-surface text-primary"
             }`}
           >
             {isEdu ? "Education" : "Work"}
           </span>
           {item.badge && (
-            <span className="text-[10px] font-semibold uppercase tracking-widest px-2 py-0.5 rounded-full bg-[#F2EEE8] text-[#737373]">
+            <span className="text-[10px] font-semibold uppercase tracking-widest px-2 py-0.5 rounded-full bg-surface text-muted">
               {item.badge}
             </span>
           )}
         </div>
-        <span className="text-[10px] text-[#737373] whitespace-nowrap font-medium">
+        <span className="text-[10px] text-muted whitespace-nowrap font-medium">
           {item.duration}
         </span>
       </div>
 
-      <h3 className="text-sm font-semibold text-[#111111] leading-snug mb-0.5">
+      <h3 className="text-sm font-semibold text-fg leading-snug mb-0.5">
         {item.title}
       </h3>
       <p
         className={`text-xs font-medium mb-3 ${
-          isEdu ? "text-[#1A3FA8]" : "text-[#E05C2A]"
+          isEdu ? "text-primary" : "text-primary"
         }`}
       >
         {item.org}
       </p>
-      <p className="text-xs text-[#737373] leading-relaxed">{item.description}</p>
+      <p className="text-xs text-muted leading-relaxed">{item.description}</p>
 
-      <p className="text-[10px] text-[#BBBBBB] mt-3 font-medium">{item.period}</p>
+      <p className="text-[10px] text-muted mt-3 font-medium">{item.period}</p>
     </motion.div>
   );
 }
@@ -152,7 +152,7 @@ function TimelineNode({
         animate={inView ? { scale: 1, opacity: 1 } : {}}
         transition={{ duration: 0.4, delay: 0.05, type: "spring", stiffness: 200 }}
         className={`relative w-9 h-9 rounded-full flex items-center justify-center z-10 shadow-md ${
-          isEdu ? "bg-[#1A3FA8]" : "bg-[#E05C2A]"
+          isEdu ? "bg-primary" : "bg-primary"
         }`}
       >
         {isEdu ? (
@@ -164,7 +164,7 @@ function TimelineNode({
         {/* Pulse ring */}
         {index === items.length - 1 && (
           <motion.div
-            className="absolute inset-0 rounded-full bg-[#E05C2A] opacity-40"
+            className="absolute inset-0 rounded-full bg-primary opacity-40"
             animate={{ scale: [1, 1.8], opacity: [0.4, 0] }}
             transition={{ duration: 1.8, repeat: Infinity, ease: "easeOut" }}
           />
@@ -176,7 +176,7 @@ function TimelineNode({
         initial={{ opacity: 0 }}
         animate={inView ? { opacity: 1 } : {}}
         transition={{ duration: 0.4, delay: 0.2 }}
-        className="text-[10px] font-bold text-[#737373] mt-2 tracking-wider"
+        className="text-[10px] font-bold text-muted mt-2 tracking-wider"
       >
         {item.year}
       </motion.span>
@@ -197,7 +197,7 @@ export default function Timeline() {
               <div className="flex flex-col items-center">
                 <div
                   className={`w-7 h-7 rounded-full flex items-center justify-center flex-shrink-0 z-10 ${
-                    isEdu ? "bg-[#1A3FA8]" : "bg-[#E05C2A]"
+                    isEdu ? "bg-primary" : "bg-primary"
                   }`}
                 >
                   {isEdu ? (
@@ -207,7 +207,7 @@ export default function Timeline() {
                   )}
                 </div>
                 {i < items.length - 1 && (
-                  <div className="w-px flex-1 bg-[#E2DDD6] my-2" />
+                  <div className="w-px flex-1 bg-border my-2" />
                 )}
               </div>
 
@@ -223,7 +223,7 @@ export default function Timeline() {
       {/* Desktop: alternating */}
       <div className="hidden md:block">
         {/* Center vertical line */}
-        <div className="absolute left-1/2 top-0 bottom-0 w-px bg-[#E2DDD6] -translate-x-px" />
+        <div className="absolute left-1/2 top-0 bottom-0 w-px bg-border -translate-x-px" />
 
         <div className="space-y-10">
           {items.map((item, i) => {

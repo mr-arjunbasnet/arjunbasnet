@@ -29,7 +29,7 @@ const outerTools: Tool[] = [
 
 function ToolBadge({ tool }: { tool: Tool }) {
   return (
-    <div className="relative bg-white rounded-2xl shadow-md border border-[#E2DDD6] flex items-center justify-center w-9 h-9 sm:w-11 sm:h-11 hover:scale-110 hover:shadow-xl hover:border-[#1A3FA8] transition-all duration-300 cursor-pointer group">
+    <div className="relative bg-white rounded-2xl shadow-md border border-border flex items-center justify-center w-9 h-9 sm:w-11 sm:h-11 hover:scale-110 hover:shadow-xl hover:border-primary transition-all duration-300 cursor-pointer group">
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
         src={`https://api.iconify.design/${tool.icon}.svg${tool.color ? `?color=%23${tool.color}` : ""}`}
@@ -40,7 +40,7 @@ function ToolBadge({ tool }: { tool: Tool }) {
           (e.currentTarget as HTMLImageElement).style.display = "none";
         }}
       />
-      <span className="absolute top-full mt-2 left-1/2 -translate-x-1/2 text-[10px] font-semibold text-[#111111] bg-[#FAFAF8] border border-[#E2DDD6] px-2 py-0.5 rounded-full opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap z-30 pointer-events-none shadow-sm">
+      <span className="absolute top-full mt-2 left-1/2 -translate-x-1/2 text-[10px] font-semibold text-fg bg-bg border border-border px-2 py-0.5 rounded-full opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap z-30 pointer-events-none shadow-sm">
         {tool.name}
       </span>
     </div>
@@ -60,26 +60,26 @@ export default function ToolOrbit() {
       />
 
       {/* Outer dashed ring */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[88%] h-[88%] rounded-full border border-dashed border-[#E2DDD6]/70" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[88%] h-[88%] rounded-full border border-dashed border-border/70" />
 
       {/* Inner dashed ring */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[55%] h-[55%] rounded-full border border-dashed border-[#E2DDD6]" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[55%] h-[55%] rounded-full border border-dashed border-border" />
 
       {/* Pulse rings around center */}
       <motion.div
-        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-24 h-24 rounded-full bg-[#1A3FA8]/10 z-0"
+        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-24 h-24 rounded-full bg-primary/10 z-0"
         animate={{ scale: [1, 1.8, 1], opacity: [0.5, 0, 0.5] }}
         transition={{ duration: 3.4, repeat: Infinity, ease: "easeOut" }}
       />
       <motion.div
-        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-20 h-20 rounded-full bg-[#E05C2A]/10 z-0"
+        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-20 h-20 rounded-full bg-primary/10 z-0"
         animate={{ scale: [1, 2, 1], opacity: [0.4, 0, 0.4] }}
         transition={{ duration: 3.4, repeat: Infinity, ease: "easeOut", delay: 1.7 }}
       />
 
       {/* Center: AI orb */}
       <motion.div
-        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-20 h-20 rounded-full bg-gradient-to-br from-[#1A3FA8] via-[#2B52CC] to-[#1A3FA8] flex items-center justify-center z-20"
+        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-20 h-20 rounded-full bg-gradient-to-br from-primary via-primary-light to-primary flex items-center justify-center z-20"
         style={{ boxShadow: "0 12px 40px rgba(26,63,168,0.4), inset 0 -2px 6px rgba(0,0,0,0.2)" }}
         whileHover={{ scale: 1.08 }}
         animate={{

@@ -29,14 +29,21 @@ type ButtonAsLink = CommonProps & {
 type ButtonProps = ButtonAsButton | ButtonAsLink;
 
 const variants: Record<Variant, string> = {
+  /* The brand gradient at 200% width, slid on hover — the one place the
+     gradient is allowed to move. Both ends keep white text above 5:1. */
   primary:
-    "bg-primary text-primary-fg hover:bg-primary-light border border-transparent",
+    "bg-brand bg-[length:200%_100%] bg-left hover:bg-right text-primary-fg border border-transparent transition-[background-position] duration-500",
+  /* Was border-border, which is a hairline tint that disappears next to the
+     gradient primary. The stronger hairline reads as a real button. */
   secondary:
-    "bg-transparent text-fg border border-border hover:border-primary hover:text-primary",
+    "bg-transparent text-fg border border-hairline hover:border-primary hover:text-primary hover:bg-surface",
   ghost:
     "bg-transparent text-muted border border-transparent hover:text-fg hover:bg-surface",
+  /* Used on the primary-blue bands. The accent token is artwork-only now, so
+     this renders as the inverse of primary — white fill, blue text — which is
+     what keeps it AA (9.05:1) on that ground. */
   accent:
-    "bg-accent text-primary-fg hover:opacity-90 border border-transparent",
+    "bg-primary-fg text-primary hover:bg-surface border border-transparent",
 };
 
 const sizes: Record<Size, string> = {

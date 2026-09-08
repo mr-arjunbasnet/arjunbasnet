@@ -189,7 +189,7 @@ relying on memory.
   downgrades unless configured. `images.localPatterns` *restricts* optimisation
   to listed paths.
 - **`searchParams` is the staticness trap.** Reading it anywhere makes the route
-  dynamic. Blog filtering is `/blog/topic/[cluster]` path segments for this
+  dynamic. (The `/blog/topic/[cluster]` hubs were removed 2026-09-08 — see §14 — and `/blog` groups by cluster statically for this
   reason. `useSearchParams` in a client component needs a Suspense boundary or
   the whole page bails out of prerendering (this bit us on `/contact`).
 - `next lint` is removed. `next build` does not lint.
@@ -400,3 +400,84 @@ same visual grammar, same `sa-` motion classes.
   stray specks. 228KB source → 22KB AVIF delivered.
 - *WhatsApp icon* — flood-fill white **from the border only**, so the enclosed
   white glyph survived. Palette quantisation 27KB → 4.5KB.
+
+## 12. `/ai-trainer-nepal` pillar page — built 2026-09-08
+
+Built from `docs/reference/ai-trainer-nepal-ready-to-build.md`, which **is**
+saved to the repo this time (§11's lesson finally applied). Copy lives in
+`src/content/ai-trainer/index.ts`; the page component holds no prose.
+
+### Decisions worth not re-deriving
+
+| Decision | Reasoning |
+|---|---|
+| URL is `/ai-trainer-nepal`, **with** the geo modifier | Breaks the rule that slugs stay clean and geo lives in the H1. That rule governs the nine service detail pages; this is a top-level pillar and the spec names the URL explicitly. |
+| Not modelled as a tenth `Service` | It needs a bespoke 14-section editorial layout and its own URL. Reusing `AnswerBlock`/`Faq` keeps the AEO discipline without forcing it through the service template. |
+| `validate:content` extended to cover it | The answer-block spec is only worth anything if enforced. The pillar's blocks run through the same `checkAnswer`, sharing the same uniqueness maps, so an id colliding with a service is an error. |
+| One new blog cluster, not four | The spec sketches AI Basics / Tools / Nepal / Business. Four hubs over three posts is four thin pages. `ai-training` covers AI literacy; `ai-automation` keeps the process-wiring content. |
+| Trust strip says 100+ projects, not the spec's "30+" | `proof.ts` is the single source for figures and carries the higher verified number. |
+| No claimed training or speaking record | Nothing in the repo evidences one, and §28 rules out inflated claims. The fifth credibility slot describes how sessions run instead. **If a real record exists, it belongs here.** |
+| No testimonials | §28 again — none exist, and inventing them is fabrication. |
+
+### Photographs — outstanding
+
+The spec (§23) wants eight real photographs. The repo has one: the
+`/arjun-basnet.png` headshot cutout. Two more were supplied on 2026-09-08 but
+arrived as chat attachments and never reached disk.
+
+`src/lib/media.ts` checks `public/` at **build time**, so every photo slot
+renders an editorial fallback until its file exists and upgrades automatically
+once it does. Drop-in instructions and the alt-text rule are in
+`public/media/ai-trainer/README.txt`.
+
+**Do not caption the speaking photograph as an AI training session** unless it
+was one — the event it came from is not recorded anywhere.
+
+## 13. Site-wide palette — 2026-09-08
+
+Owner's call, after the AI trainer page's visual direction was approved: keep
+the brand blue, drop the warm cream and terracotta. His reasoning — cream plus
+terracotta reads as Anthropic/Claude's identity, not this site's.
+
+| Decision | Reasoning |
+|---|---|
+| `.svc-cool` values became the `@theme` defaults | The cool neutral set was already approved on /services on 2026-07-26. Lifting it is the smallest change that removes the "Claude" read. |
+| `--color-accent` is **artwork only**, sky blue `#0EA5E9` | Every SVG scene uses one accent focal point; in primary blue it vanishes into the primary masses. Sky keeps the blue family. At 2.9:1 on white it must never be text — all text/UI uses of accent were routed to primary, and `text-accent` no longer appears in `src/`. |
+| `Button variant="accent"` is white-on-blue | It only appears on primary-blue bands. White on sky blue is 1.9:1; white fill with blue text is 9.05:1. |
+| Old warm hex swept to tokens in 16 files | `check:tokens` had been failing since before 2026-09-07. With the sweep it passes; WhatsAppFab's `#25D366` is a documented exemption (brand mark). |
+| Photos | Two real photographs arrived as files. The "MEET PROGRAM 2022" photo is confirmed by the owner as an AI/tech session he delivered — alt text says so. Two composited PNGs in the same folder are deliberately unused (see `public/media/ai-trainer/README.txt`). |
+
+**Do not lighten `--color-muted` back toward `#6C6C6C`/`#737373`** — `#5E6472` is
+the value that clears 4.5:1 on every band.
+
+## 14. Blog URL structure — 2026-09-08
+
+Owner's decision: the blog is **`/blog` and `/blog/{slug}`, nothing else.** The
+`/blog/topic/{cluster}` hub pages were deleted. They were redundant — `/blog`
+already lists every post grouped by cluster — and they had been in the live
+sitemap, so `next.config.ts` 301s `/blog/topic/:cluster` → `/blog`.
+
+Clusters still exist as a content concept (`BlogCluster`, `CLUSTERS`): they
+group the listing, feed `articleSection` in BlogPosting schema, and section
+`llms-full.txt`. They just have no URL. Do not reintroduce hub pages, and do
+not turn the grouping into a `searchParams` filter (that makes `/blog` dynamic).
+
+## 15. Brand identity — logo and palette, 2026-09-08
+
+The owner supplied a brand sheet (screenshot only, no source files): a mark —
+ring on a blue→violet gradient, bow and string, centre star, a node at each
+pole — with the wordmark **ARJUN** tracked out in a light geometric sans and
+the line *Explore · Learn · Build*.
+
+| Decision | Reasoning |
+|---|---|
+| Mark **redrawn as vector**, not upscaled | A screenshot cannot be upscaled into a logo. `LogoMark.tsx` is the drawing; `public/brand/` holds standalone SVGs and PNG exports (light, on-dark, app-plate). |
+| Logo colours are **literal hex** | The logo is the fixed point the palette derives from and must not re-theme. Documented exemption from tokens-only, like WhatsApp green. |
+| Palette re-derived from the mark | Primary `#2563EB` (the mark's blue at AA darkness), secondary `#7C3AED` (its violet), artwork accent `#A78BFA`. Surfaces carry a faint violet cast. The navy `#1A3FA8` was the old identity. |
+| **Light canvas kept** | The sheet shows the mark on a dark card; the owner approved the light canvas twice and asked for colour, not a dark site. The gradient carries the vibrancy: buttons, CTA bands, scroll bar, trainer frame. |
+| Wordmark in the site face | "Happy with the typography" — ARJUN is set in Geist at weight 300, tracking 0.3em, rather than loading the sheet's typeface. |
+| Favicon / Apple icon are **static files** | `src/app/icon.svg`, `src/app/apple-icon.png` — the mark on a dark plate so it reads on any tab bar. The satori "A" generators were deleted. |
+
+Gradient stops are read off the screenshot, not sampled from a source file. If
+the designer has exact values, replace them in `LogoMark.tsx`, the files in
+`public/brand/`, and `--background-image-brand` in `globals.css`.

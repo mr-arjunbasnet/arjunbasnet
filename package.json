@@ -8,7 +8,7 @@
     "start": "next start",
     "lint": "eslint",
     "typecheck": "next typegen && tsc --noEmit",
-    "check:tokens": "! grep -rn '\\[#' src/components src/app --include=*.tsx | grep -v '/melos/' | grep -v 'opengraph-image\\|icon.tsx\\|apple-icon'",
+    "check:tokens": "! grep -rn '\\[#' src/components src/app --include=*.tsx | grep -v '/melos/' | grep -v 'opengraph-image\\|icon.tsx\\|apple-icon' | grep -v 'WhatsAppFab'",
     "validate:content": "node scripts/validate-content.ts"
   },
   "dependencies": {

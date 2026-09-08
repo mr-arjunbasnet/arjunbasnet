@@ -102,7 +102,7 @@ export default function About() {
       {/* Header */}
       <section className="max-w-6xl mx-auto px-6 pt-16 pb-12 md:pt-20 md:pb-16">
         <AnimateIn>
-          <p className="text-xs font-semibold uppercase tracking-widest text-[#737373] mb-4">
+          <p className="text-xs font-semibold uppercase tracking-widest text-muted mb-4">
             About
           </p>
         </AnimateIn>
@@ -110,22 +110,22 @@ export default function About() {
           <div>
             <AnimateIn delay={0.1}>
               <h1
-                className="text-5xl md:text-6xl lg:text-7xl leading-[0.95] text-[#111111] mb-6"
+                className="text-5xl md:text-6xl lg:text-7xl leading-[0.95] text-fg mb-6"
                 style={{ fontFamily: "var(--font-dm-serif)" }}
               >
                 Project Manager.
                 <br />
-                <span className="text-[#1A3FA8]">Engineer.</span>
+                <span className="text-primary">Engineer.</span>
                 <br />
                 Researcher.
               </h1>
             </AnimateIn>
             <AnimateIn delay={0.2}>
               <div className="flex items-center gap-1.5 mb-3">
-                <MapPin size={13} className="text-[#E05C2A]" />
-                <span className="text-sm text-[#737373]">Kathmandu, Nepal</span>
+                <MapPin size={13} className="text-primary" />
+                <span className="text-sm text-muted">Kathmandu, Nepal</span>
               </div>
-              <p className="text-sm text-[#737373] leading-relaxed mb-4 max-w-xl">
+              <p className="text-sm text-muted leading-relaxed mb-4 max-w-xl">
                 I lead digital product delivery at Makura Creations, where I&apos;ve shipped
                 100+ projects across EdTech, enterprise software, and AI automation. B.Sc. CSIT
                 from Tribhuvan University, a peer-reviewed publication in computer vision,
@@ -134,7 +134,7 @@ export default function About() {
               </p>
               <Link
                 href="/contact"
-                className="group flex items-center gap-1.5 text-sm font-medium text-[#1A3FA8]"
+                className="group flex items-center gap-1.5 text-sm font-medium text-primary"
               >
                 Get in touch{" "}
                 <ArrowRight
@@ -149,7 +149,7 @@ export default function About() {
           <AnimateIn delay={0.18} direction="left">
             <div className="relative">
               <ToolOrbit />
-              <p className="text-center mt-4 text-[10px] font-semibold uppercase tracking-widest text-[#737373]">
+              <p className="text-center mt-4 text-[10px] font-semibold uppercase tracking-widest text-muted">
                 AI · Automation · Project Delivery
               </p>
             </div>
@@ -162,19 +162,19 @@ export default function About() {
             {quickFacts.map((f) => (
               <div
                 key={f.label}
-                className="flex items-start gap-3 border border-[#E2DDD6] rounded-xl p-4 hover:shadow-md hover:border-[#1A3FA8] transition-all"
+                className="flex items-start gap-3 border border-border rounded-xl p-4 hover:shadow-md hover:border-primary transition-all"
               >
-                <span className="w-9 h-9 flex-shrink-0 rounded-lg bg-[#EEF2FF] flex items-center justify-center">
-                  <f.icon size={16} className="text-[#1A3FA8]" />
+                <span className="w-9 h-9 flex-shrink-0 rounded-lg bg-primary/5 flex items-center justify-center">
+                  <f.icon size={16} className="text-primary" />
                 </span>
                 <div>
-                  <p className="text-[10px] font-semibold uppercase tracking-widest text-[#737373] mb-0.5">
+                  <p className="text-[10px] font-semibold uppercase tracking-widest text-muted mb-0.5">
                     {f.label}
                   </p>
-                  <p className="text-sm font-semibold text-[#111111] leading-tight mb-0.5">
+                  <p className="text-sm font-semibold text-fg leading-tight mb-0.5">
                     {f.value}
                   </p>
-                  <p className="text-xs text-[#737373] leading-snug">{f.note}</p>
+                  <p className="text-xs text-muted leading-snug">{f.note}</p>
                 </div>
               </div>
             ))}
@@ -183,14 +183,14 @@ export default function About() {
       </section>
 
       <div className="max-w-6xl mx-auto px-6">
-        <div className="h-px bg-[#E2DDD6]" />
+        <div className="h-px bg-border" />
       </div>
 
       {/* Story */}
       <section className="max-w-6xl mx-auto px-6 py-20">
         <div className="grid grid-cols-1 lg:grid-cols-[240px_1fr] gap-12">
           <AnimateIn>
-            <p className="text-xs font-semibold uppercase tracking-widest text-[#737373] lg:sticky lg:top-24">
+            <p className="text-xs font-semibold uppercase tracking-widest text-muted lg:sticky lg:top-24">
               The Story
             </p>
           </AnimateIn>
@@ -225,13 +225,13 @@ export default function About() {
               <AnimateIn key={chapter.period} delay={i * 0.05}>
                 <div className="grid grid-cols-1 md:grid-cols-[120px_1fr] gap-6">
                   <div className="pt-1">
-                    <span className="text-xs font-semibold text-[#E05C2A] uppercase tracking-wide">
+                    <span className="text-xs font-semibold text-primary uppercase tracking-wide">
                       {chapter.period}
                     </span>
                   </div>
                   <div>
                     <h2
-                      className="text-2xl text-[#111111] mb-4"
+                      className="text-2xl text-fg mb-4"
                       style={{ fontFamily: "var(--font-dm-serif)" }}
                     >
                       {chapter.heading}
@@ -239,7 +239,7 @@ export default function About() {
                     {chapter.body.map((p, j) => (
                       <p
                         key={j}
-                        className="text-sm text-[#737373] leading-relaxed mb-3 last:mb-0"
+                        className="text-sm text-muted leading-relaxed mb-3 last:mb-0"
                       >
                         {p}
                       </p>
@@ -253,7 +253,7 @@ export default function About() {
       </section>
 
       <div className="max-w-6xl mx-auto px-6">
-        <div className="h-px bg-[#E2DDD6]" />
+        <div className="h-px bg-border" />
       </div>
 
       {/* Timeline */}
@@ -261,11 +261,11 @@ export default function About() {
         <div className="grid grid-cols-1 lg:grid-cols-[240px_1fr] gap-12">
           <AnimateIn>
             <div className="lg:sticky lg:top-24 h-fit">
-              <p className="text-xs font-semibold uppercase tracking-widest text-[#737373] mb-2">
+              <p className="text-xs font-semibold uppercase tracking-widest text-muted mb-2">
                 Journey
               </p>
               <p
-                className="text-2xl text-[#111111]"
+                className="text-2xl text-fg"
                 style={{ fontFamily: "var(--font-dm-serif)" }}
               >
                 Education &<br />
@@ -273,12 +273,12 @@ export default function About() {
               </p>
               <div className="mt-5 space-y-2">
                 <div className="flex items-center gap-2">
-                  <span className="w-3 h-3 rounded-full bg-[#1A3FA8]" />
-                  <span className="text-xs text-[#737373]">Education</span>
+                  <span className="w-3 h-3 rounded-full bg-primary" />
+                  <span className="text-xs text-muted">Education</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <span className="w-3 h-3 rounded-full bg-[#E05C2A]" />
-                  <span className="text-xs text-[#737373]">Work Experience</span>
+                  <span className="w-3 h-3 rounded-full bg-primary" />
+                  <span className="text-xs text-muted">Work Experience</span>
                 </div>
               </div>
             </div>
@@ -291,14 +291,14 @@ export default function About() {
       </section>
 
       <div className="max-w-6xl mx-auto px-6">
-        <div className="h-px bg-[#E2DDD6]" />
+        <div className="h-px bg-border" />
       </div>
 
       {/* Skills */}
       <section className="max-w-6xl mx-auto px-6 py-20">
         <div className="grid grid-cols-1 lg:grid-cols-[240px_1fr] gap-12">
           <AnimateIn>
-            <p className="text-xs font-semibold uppercase tracking-widest text-[#737373] lg:sticky lg:top-24">
+            <p className="text-xs font-semibold uppercase tracking-widest text-muted lg:sticky lg:top-24">
               Technical Skills
             </p>
           </AnimateIn>
@@ -306,14 +306,14 @@ export default function About() {
             {skills.map((s, i) => (
               <AnimateIn key={s.category} delay={i * 0.05}>
                 <div>
-                  <p className="text-xs font-semibold uppercase tracking-widest text-[#737373] mb-3">
+                  <p className="text-xs font-semibold uppercase tracking-widest text-muted mb-3">
                     {s.category}
                   </p>
                   <div className="flex flex-wrap gap-2">
                     {s.items.map((item) => (
                       <span
                         key={item}
-                        className="text-xs text-[#111111] bg-[#F2EEE8] border border-[#E2DDD6] px-2.5 py-1 rounded-full hover:border-[#1A3FA8] hover:text-[#1A3FA8] transition-colors cursor-default"
+                        className="text-xs text-fg bg-surface border border-border px-2.5 py-1 rounded-full hover:border-primary hover:text-primary transition-colors cursor-default"
                       >
                         {item}
                       </span>
@@ -327,35 +327,35 @@ export default function About() {
       </section>
 
       <div className="max-w-6xl mx-auto px-6">
-        <div className="h-px bg-[#E2DDD6]" />
+        <div className="h-px bg-border" />
       </div>
 
       {/* Education */}
       <section className="max-w-6xl mx-auto px-6 py-20">
         <div className="grid grid-cols-1 lg:grid-cols-[240px_1fr] gap-12">
           <AnimateIn>
-            <p className="text-xs font-semibold uppercase tracking-widest text-[#737373] lg:sticky lg:top-24">
+            <p className="text-xs font-semibold uppercase tracking-widest text-muted lg:sticky lg:top-24">
               Education
             </p>
           </AnimateIn>
           <div className="space-y-6">
             <AnimateIn delay={0.05}>
-              <div className="border border-[#E2DDD6] rounded-xl p-6 hover:shadow-md transition-shadow">
-                <p className="text-xs font-semibold text-[#E05C2A] uppercase tracking-wide mb-1">
+              <div className="border border-border rounded-xl p-6 hover:shadow-md transition-shadow">
+                <p className="text-xs font-semibold text-primary uppercase tracking-wide mb-1">
                   Nov 2018 — Jun 2023
                 </p>
-                <h3 className="font-semibold text-[#111111] mb-0.5">
+                <h3 className="font-semibold text-fg mb-0.5">
                   B.Sc. Computer Science and Information Technology
                 </h3>
-                <p className="text-sm text-[#1A3FA8] font-medium mb-0.5">
+                <p className="text-sm text-primary font-medium mb-0.5">
                   Madan Bhandari Memorial College, Tribhuvan University
                 </p>
-                <p className="text-xs text-[#737373] mb-3">Kathmandu, Nepal</p>
-                <p className="text-sm text-[#737373] leading-relaxed mb-3">
+                <p className="text-xs text-muted mb-3">Kathmandu, Nepal</p>
+                <p className="text-sm text-muted leading-relaxed mb-3">
                   Accredited by University Grants Commission (UGC) Nepal. Awarded a 60%
                   merit scholarship on entrance examination performance.
                 </p>
-                <p className="text-xs text-[#737373] leading-relaxed">
+                <p className="text-xs text-muted leading-relaxed">
                   Relevant coursework: Database Management Systems · Software Engineering ·
                   Web Technologies · Data Structures &amp; Algorithms · Artificial Intelligence ·
                   Computer Networks · Object-Oriented Programming · International Business Management
@@ -364,36 +364,36 @@ export default function About() {
             </AnimateIn>
 
             <AnimateIn delay={0.1}>
-              <div className="border border-[#E2DDD6] rounded-xl p-6 hover:shadow-md transition-shadow">
-                <p className="text-xs font-semibold text-[#E05C2A] uppercase tracking-wide mb-1">
+              <div className="border border-border rounded-xl p-6 hover:shadow-md transition-shadow">
+                <p className="text-xs font-semibold text-primary uppercase tracking-wide mb-1">
                   Jun 2016 — Jun 2018
                 </p>
-                <h3 className="font-semibold text-[#111111] mb-0.5">
+                <h3 className="font-semibold text-fg mb-0.5">
                   Higher Secondary Education (+2)
                 </h3>
-                <p className="text-sm text-[#1A3FA8] font-medium mb-0.5">
+                <p className="text-sm text-primary font-medium mb-0.5">
                   Kanchanjunga Higher Secondary School
                 </p>
-                <p className="text-xs text-[#737373] mb-3">Nepal</p>
-                <p className="text-sm text-[#737373] leading-relaxed">
+                <p className="text-xs text-muted mb-3">Nepal</p>
+                <p className="text-sm text-muted leading-relaxed">
                   Completed higher secondary education with focus on Science.
                 </p>
               </div>
             </AnimateIn>
 
             <AnimateIn delay={0.15}>
-              <div className="border border-[#E2DDD6] rounded-xl p-6 hover:shadow-md transition-shadow">
-                <p className="text-xs font-semibold text-[#E05C2A] uppercase tracking-wide mb-1">
+              <div className="border border-border rounded-xl p-6 hover:shadow-md transition-shadow">
+                <p className="text-xs font-semibold text-primary uppercase tracking-wide mb-1">
                   Apr 2003 — Mar 2016
                 </p>
-                <h3 className="font-semibold text-[#111111] mb-0.5">
+                <h3 className="font-semibold text-fg mb-0.5">
                   School — Class 1 to 10
                 </h3>
-                <p className="text-sm text-[#1A3FA8] font-medium mb-0.5">
+                <p className="text-sm text-primary font-medium mb-0.5">
                   Arundaya English Secondary School
                 </p>
-                <p className="text-xs text-[#737373] mb-3">Jhapa, Nepal</p>
-                <p className="text-sm text-[#737373] leading-relaxed">
+                <p className="text-xs text-muted mb-3">Jhapa, Nepal</p>
+                <p className="text-sm text-muted leading-relaxed">
                   Completed secondary education. Active in extracurriculars including Nepal
                   Scouts and competitive public speaking — district-level winner in Essay
                   Writing (N-PABSON, 2014) and Extempore Speech (N-PABSON, 2013).
@@ -405,28 +405,28 @@ export default function About() {
       </section>
 
       <div className="max-w-6xl mx-auto px-6">
-        <div className="h-px bg-[#E2DDD6]" />
+        <div className="h-px bg-border" />
       </div>
 
       {/* Certifications */}
       <section className="max-w-6xl mx-auto px-6 py-20">
         <div className="grid grid-cols-1 lg:grid-cols-[240px_1fr] gap-12">
           <AnimateIn>
-            <p className="text-xs font-semibold uppercase tracking-widest text-[#737373] lg:sticky lg:top-24">
+            <p className="text-xs font-semibold uppercase tracking-widest text-muted lg:sticky lg:top-24">
               Certifications
             </p>
           </AnimateIn>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
             {certifications.map((c, i) => (
               <AnimateIn key={c.title} delay={i * 0.08}>
-                <div className="border border-[#E2DDD6] rounded-xl p-5 hover:shadow-md hover:-translate-y-0.5 transition-all duration-300">
-                  <p className="text-xs font-semibold text-[#E05C2A] uppercase tracking-wide mb-1.5">
+                <div className="border border-border rounded-xl p-5 hover:shadow-md hover:-translate-y-0.5 transition-all duration-300">
+                  <p className="text-xs font-semibold text-primary uppercase tracking-wide mb-1.5">
                     {c.year}
                   </p>
-                  <p className="text-sm font-semibold text-[#111111] mb-1 leading-snug">
+                  <p className="text-sm font-semibold text-fg mb-1 leading-snug">
                     {c.title}
                   </p>
-                  <p className="text-xs text-[#737373]">{c.issuer}</p>
+                  <p className="text-xs text-muted">{c.issuer}</p>
                 </div>
               </AnimateIn>
             ))}
@@ -435,14 +435,14 @@ export default function About() {
       </section>
 
       <div className="max-w-6xl mx-auto px-6">
-        <div className="h-px bg-[#E2DDD6]" />
+        <div className="h-px bg-border" />
       </div>
 
       {/* Leadership */}
       <section className="max-w-6xl mx-auto px-6 py-20">
         <div className="grid grid-cols-1 lg:grid-cols-[240px_1fr] gap-12">
           <AnimateIn>
-            <p className="text-xs font-semibold uppercase tracking-widest text-[#737373] lg:sticky lg:top-24">
+            <p className="text-xs font-semibold uppercase tracking-widest text-muted lg:sticky lg:top-24">
               Leadership & Speaking
             </p>
           </AnimateIn>
@@ -470,14 +470,14 @@ export default function About() {
               },
             ].map((l, i) => (
               <AnimateIn key={l.role} delay={i * 0.1}>
-                <div className="border-l-2 border-[#E2DDD6] pl-5 hover:border-[#1A3FA8] transition-colors">
+                <div className="border-l-2 border-border pl-5 hover:border-primary transition-colors">
                   <div className="flex flex-wrap items-center gap-x-3 gap-y-0.5 mb-1">
-                    <p className="text-sm font-semibold text-[#111111]">{l.role}</p>
-                    <span className="text-xs text-[#737373]">{l.period}</span>
+                    <p className="text-sm font-semibold text-fg">{l.role}</p>
+                    <span className="text-xs text-muted">{l.period}</span>
                   </div>
-                  <p className="text-xs font-medium text-[#1A3FA8] mb-1">{l.org}</p>
+                  <p className="text-xs font-medium text-primary mb-1">{l.org}</p>
                   {l.detail && (
-                    <p className="text-xs text-[#737373] leading-relaxed">{l.detail}</p>
+                    <p className="text-xs text-muted leading-relaxed">{l.detail}</p>
                   )}
                 </div>
               </AnimateIn>
