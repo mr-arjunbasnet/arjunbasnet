@@ -13,6 +13,11 @@
 
 import { SERVICES } from "../src/content/services/index.ts";
 import { FAQS } from "../src/content/faq/index.ts";
+import {
+  AI_TRAINER_PRIMARY_ANSWER,
+  AI_TRAINER_ANSWERS,
+  AI_TRAINER_FAQS,
+} from "../src/content/ai-trainer/index.ts";
 import type { AnswerBlock, Faq } from "../src/content/types.ts";
 
 const MIN_WORDS = 134;
@@ -125,6 +130,37 @@ for (const service of SERVICES) {
 
 for (const faq of FAQS) checkFaq(faq, "faq");
 
+/*
+ * The AI trainer pillar page runs the same answer-block spec as the services.
+ * Checked through the same functions and against the same shared uniqueness
+ * maps, so an answer id or question colliding with a service is an error here
+ * too — the page is a separate route, not a separate standard.
+ */
+{
+  const where = "ai-trainer";
+  for (const block of [AI_TRAINER_PRIMARY_ANSWER, ...AI_TRAINER_ANSWERS]) {
+    checkAnswer(block, where);
+
+    const q = block.question.trim().toLowerCase();
+    const prior = seenQuestions.get(q);
+    if (prior && prior !== where) {
+      errors.push(`${where} [${block.id}]: question duplicates one in ${prior}`);
+    }
+    seenQuestions.set(q, where);
+
+    const priorId = seenAnswerIds.get(block.id);
+    if (priorId) {
+      errors.push(`${where}: answer id "${block.id}" already used in ${priorId}`);
+    }
+    seenAnswerIds.set(block.id, where);
+
+    const list = primaryRoutes.get(block.id) ?? [];
+    list.push(block.primaryRoute);
+    primaryRoutes.set(block.id, list);
+  }
+  for (const faq of AI_TRAINER_FAQS) checkFaq(faq, where);
+}
+
 // Every AnswerBlock must be claimed by exactly one route, or the same Q/A
 // emits FAQPage on two URLs and splits the entity across duplicates.
 for (const [id, routes] of primaryRoutes) {
@@ -138,12 +174,17 @@ for (const [id, routes] of primaryRoutes) {
 
 /* -------------------------------------------------------------------------- */
 
-const answerTotal = SERVICES.reduce((n, s) => n + s.answers.length + 1, 0);
+const answerTotal =
+  SERVICES.reduce((n, s) => n + s.answers.length + 1, 0) +
+  AI_TRAINER_ANSWERS.length +
+  1;
 const faqTotal =
-  SERVICES.reduce((n, s) => n + s.faqs.length, 0) + FAQS.length;
+  SERVICES.reduce((n, s) => n + s.faqs.length, 0) +
+  FAQS.length +
+  AI_TRAINER_FAQS.length;
 
 console.log(
-  `Checked ${SERVICES.length} services · ${answerTotal} answer blocks · ${faqTotal} FAQs`,
+  `Checked ${SERVICES.length} services · 1 pillar page · ${answerTotal} answer blocks · ${faqTotal} FAQs`,
 );
 
 for (const w of warnings) console.warn(`  warn  ${w}`);

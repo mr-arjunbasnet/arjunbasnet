@@ -42,6 +42,12 @@ export const CLUSTERS: {
     description:
       "Build versus buy, vendor selection, and why digital projects fail — written from delivering 100+ of them.",
   },
+  {
+    id: "ai-training",
+    label: "AI Training & Literacy",
+    description:
+      "Learning to use AI properly — which tools to reach for, how to judge an answer, and what actually transfers back to real work.",
+  },
 ];
 
 export function getCluster(id: string) {

@@ -1,7 +1,7 @@
 import type { MetadataRoute } from "next";
 import { absoluteUrl } from "@/content/site";
 import { SERVICES } from "@/content/services/index";
-import { getAllPostMeta, CLUSTERS } from "@/content/blog/index";
+import { getAllPostMeta } from "@/content/blog/index";
 
 /**
  * Generated from the content layer rather than hand-maintained.
@@ -16,6 +16,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const staticRoutes: MetadataRoute.Sitemap = [
     { url: absoluteUrl("/"), lastModified: now, changeFrequency: "weekly", priority: 1.0 },
     { url: absoluteUrl("/services"), lastModified: now, changeFrequency: "weekly", priority: 0.95 },
+    // Pillar page for the AI training entity. High priority: it is the target
+    // the AI-cluster posts link up to.
+    { url: absoluteUrl("/ai-trainer-nepal"), lastModified: now, changeFrequency: "monthly", priority: 0.95 },
     { url: absoluteUrl("/work"), lastModified: now, changeFrequency: "weekly", priority: 0.9 },
     { url: absoluteUrl("/about"), lastModified: now, changeFrequency: "monthly", priority: 0.8 },
     { url: absoluteUrl("/research"), lastModified: now, changeFrequency: "monthly", priority: 0.7 },
@@ -33,12 +36,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: service.featured ? 0.9 : 0.8,
   }));
 
-  const clusterRoutes: MetadataRoute.Sitemap = CLUSTERS.map((c) => ({
-    url: absoluteUrl(`/blog/topic/${c.id}`),
-    lastModified: now,
-    changeFrequency: "weekly" as const,
-    priority: 0.7,
-  }));
 
   const postRoutes: MetadataRoute.Sitemap = getAllPostMeta().map((post) => ({
     url: absoluteUrl(`/blog/${post.slug}`),
@@ -47,5 +44,5 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.75,
   }));
 
-  return [...staticRoutes, ...serviceRoutes, ...clusterRoutes, ...postRoutes];
+  return [...staticRoutes, ...serviceRoutes, ...postRoutes];
 }

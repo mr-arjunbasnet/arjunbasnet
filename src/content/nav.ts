@@ -19,6 +19,7 @@ export interface NavLink {
 
 export const NAV_LINKS: NavLink[] = [
   { href: "/services", label: "Services" },
+  { href: "/ai-trainer-nepal", label: "AI Training" },
   { href: "/work", label: "Work" },
   { href: "/blog", label: "Blog" },
   { href: "/about", label: "About" },

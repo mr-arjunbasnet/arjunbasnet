@@ -128,7 +128,15 @@ export interface ProofLink {
 export type BlogCluster =
   | "ai-automation"
   | "seo-aeo-geo"
-  | "digital-problem-solving";
+  | "digital-problem-solving"
+  /**
+   * Opened 2026-09-08 for the /ai-trainer-nepal pillar. Distinct from
+   * `ai-automation`: that cluster is about wiring processes together, this one
+   * is about people learning to use the technology. Kept as one cluster rather
+   * than the four sub-categories the spec sketches (AI basics, tools, Nepal,
+   * business), because four hubs across a handful of posts is four thin pages.
+   */
+  | "ai-training";
 
 /** Frontmatter contract for `src/content/blog/posts/*.md`. */
 export interface BlogPostMeta {

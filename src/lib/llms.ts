@@ -43,6 +43,7 @@ export function buildLlmsTxt(): string {
     "## Pages",
     "",
     `- [Services](${SITE.url}/services): All nine service lines.`,
+    `- [AI Trainer in Nepal](${SITE.url}/ai-trainer-nepal): AI training, workshops and seminars for students, professionals, educators and organisations.`,
     `- [Work](${SITE.url}/work): Case studies including Cricket Nepal, nationwide LMS platforms, and AI automation workflows.`,
     `- [About](${SITE.url}/about): Background, timeline, and credentials.`,
     `- [Research](${SITE.url}/research): Peer-reviewed publication in computer vision.`,
