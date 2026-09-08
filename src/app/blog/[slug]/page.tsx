@@ -94,9 +94,6 @@ export default async function BlogPostPage({
         data={breadcrumbSchema([
           { name: "Home", path: "/" },
           { name: "Blog", path: "/blog" },
-          ...(cluster
-            ? [{ name: cluster.label, path: `/blog/topic/${cluster.id}` }]
-            : []),
           { name: meta.title, path: `/blog/${slug}` },
         ])}
         id="ld-post-breadcrumb"
@@ -115,12 +112,9 @@ export default async function BlogPostPage({
 
             {cluster && (
               <Eyebrow className="mb-4">
-                <Link
-                  href={`/blog/topic/${cluster.id}`}
-                  className="hover:text-primary"
-                >
+                <span className="hover:text-primary">
                   {cluster.label}
-                </Link>
+                </span>
               </Eyebrow>
             )}
 
@@ -153,7 +147,7 @@ export default async function BlogPostPage({
           <Container width="reading" className="mb-10">
             <AnimateIn>
               <div className="key-takeaways rounded-card border border-border bg-surface p-6">
-                <p className="mb-4 text-xs font-semibold uppercase tracking-label text-accent">
+                <p className="mb-4 text-xs font-semibold uppercase tracking-label text-primary">
                   Key takeaways
                 </p>
                 <ul className="space-y-2.5">

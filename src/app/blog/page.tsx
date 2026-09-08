@@ -1,6 +1,4 @@
 import type { Metadata } from "next";
-import Link from "next/link";
-import { ArrowRight } from "lucide-react";
 import { buildMetadata } from "@/lib/seo";
 import { SITE, absoluteUrl } from "@/content/site";
 import { getAllPostMeta, CLUSTERS, getPostsByCluster } from "@/content/blog/index";
@@ -88,6 +86,11 @@ export default function BlogIndex() {
           <p className="text-muted">First posts are on their way.</p>
         </Section>
       ) : (
+        /* Grouped by cluster, statically. There are no per-cluster hub pages
+           (removed 2026-09-08 at the owner's request — every post is
+           /blog/{slug}, and this page already lists all of them). Grouping
+           here is presentation only; never turn it into a searchParams filter,
+           which would make the route dynamic. */
         CLUSTERS.map((cluster) => {
           const clusterPosts = getPostsByCluster(cluster.id);
           if (!clusterPosts.length) return null;
@@ -138,15 +141,6 @@ export default function BlogIndex() {
                   </AnimateIn>
                 ))}
               </div>
-              <p className="mt-6">
-                <Link
-                  href={`/blog/topic/${cluster.id}`}
-                  className="inline-flex items-center gap-1.5 text-sm font-medium text-primary hover:underline"
-                >
-                  All {cluster.label.toLowerCase()} posts
-                  <ArrowRight size={14} aria-hidden />
-                </Link>
-              </p>
             </Section>
           );
         })

@@ -34,6 +34,14 @@ const nextConfig: NextConfig = {
         destination: "/services/generative-engine-optimization",
         permanent: true,
       },
+      // /blog/topic/{cluster} hub pages were removed 2026-09-08 (owner's
+      // decision: the blog is /blog and /blog/{slug}, nothing else). They had
+      // been in the live sitemap, so they 301 rather than 404.
+      {
+        source: "/blog/topic/:cluster",
+        destination: "/blog",
+        permanent: true,
+      },
     ];
   },
 };
