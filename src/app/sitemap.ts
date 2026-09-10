@@ -28,7 +28,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: absoluteUrl("/faq"), lastModified: now, changeFrequency: "monthly", priority: 0.8 },
     { url: absoluteUrl("/contact"), lastModified: now, changeFrequency: "yearly", priority: 0.7 },
     // Previously missing from the sitemap despite being a real indexable page.
-    { url: absoluteUrl("/melos"), lastModified: now, changeFrequency: "monthly", priority: 0.5 },
+    { url: absoluteUrl("/product/melos"), lastModified: now, changeFrequency: "monthly", priority: 0.6 },
   ];
 
   const serviceRoutes: MetadataRoute.Sitemap = SERVICES.map((service) => ({

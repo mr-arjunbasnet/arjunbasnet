@@ -81,6 +81,13 @@ const nextConfig: NextConfig = {
         destination: "/blog",
         permanent: true,
       },
+      // Melos moved under /product/ on 2026-09-10 when the products listing
+      // arrived. The old address had been live and in the sitemap.
+      {
+        source: "/melos",
+        destination: "/product/melos",
+        permanent: true,
+      },
     ];
   },
 };

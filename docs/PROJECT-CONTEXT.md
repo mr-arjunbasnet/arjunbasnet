@@ -541,3 +541,12 @@ site with the ClipStack landing page style, but not the blacks."
   served CSS (dev CSS is unminified, hex is lowercased).
 - ClipStack nav/footer gained "← Arjun Basnet" and "All products" links —
   there had been no way back to the site.
+
+## 18. Melos moved to `/product/melos` — 2026-09-10
+
+`/melos` → `/product/melos` (`git mv`, history intact) and Melos Studio listed
+on `/products` beside ClipStack. `/melos` 301s to the new address — it had
+been live and in the sitemap. Standalone-route list, sitemap, canonical and
+`llms.txt` updated. The `check:tokens` exemption still matches (`/melos/` is
+a substring of the new path). Product cards resolve their glyph through an
+explicit `icon` map — ClipStack's clipboard, Melos's waveform.

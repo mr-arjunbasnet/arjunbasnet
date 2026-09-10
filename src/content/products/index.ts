@@ -14,6 +14,8 @@ export interface Product {
   price: string;
   /** Hex, the product's own identity colour — not the site palette. */
   brand: string;
+  /** Which glyph the card draws; resolved through an explicit map in the page. */
+  icon: "clipboard" | "waveform";
 }
 
 export const PRODUCTS: Product[] = [
@@ -27,6 +29,19 @@ export const PRODUCTS: Product[] = [
     platform: "macOS 14 and later · Apple silicon and Intel",
     price: "Free",
     brand: "#4868E8",
+    icon: "clipboard",
+  },
+  {
+    slug: "melos",
+    name: "Melos Studio",
+    tagline: "Record your voice, visualised.",
+    description:
+      "A browser-based recording studio: a real-time equalizer that dances to your voice, vertical 1080×1920 video capture, and one-tap sharing to TikTok or Reels. Everything runs on your device — nothing is ever uploaded.",
+    href: "/product/melos",
+    platform: "Web · runs in your browser, nothing to install",
+    price: "Free",
+    brand: "#A24BFF",
+    icon: "waveform",
   },
 ];
 

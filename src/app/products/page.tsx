@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import type { Route } from "next";
 import Link from "next/link";
-import { ArrowRight, Sparkles } from "lucide-react";
+import { ArrowRight, Sparkles, AudioWaveform } from "lucide-react";
 import { buildMetadata } from "@/lib/seo";
 import { absoluteUrl } from "@/content/site";
 import { PRODUCTS, COMING_SOON, PRODUCTS_META } from "@/content/products/index";
@@ -49,11 +49,15 @@ export default function ProductsPage() {
       <Section size="md">
         <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
           {PRODUCTS.map((p) => (
-            <AnimateIn key={p.slug} className="md:col-span-2">
+            <AnimateIn key={p.slug}>
               <Card href={p.href as Route} padding="none" className="flex h-full flex-col overflow-hidden">
                 <div className="flex items-center gap-4 border-b border-white/70 p-7">
                   <span className="grid h-14 w-14 shrink-0 place-items-center rounded-2xl text-white shadow-[inset_0_1px_0_rgb(255_255_255/0.25),0_10px_30px_rgb(0_0_0/0.18)]" style={{ background: p.brand }}>
-                    <svg viewBox="0 0 64 64" aria-hidden className="h-8 w-8"><rect x="18" y="20" width="24" height="30" rx="4" fill="#fff" opacity=".4" /><rect x="22" y="16" width="24" height="30" rx="4" fill="#fff" opacity=".7" /><rect x="26" y="12" width="24" height="30" rx="4" fill="#fff" /><rect x="33" y="10" width="10" height="4" rx="2" fill={p.brand} /></svg>
+                    {p.icon === "clipboard" ? (
+                      <svg viewBox="0 0 64 64" aria-hidden className="h-8 w-8"><rect x="18" y="20" width="24" height="30" rx="4" fill="#fff" opacity=".4" /><rect x="22" y="16" width="24" height="30" rx="4" fill="#fff" opacity=".7" /><rect x="26" y="12" width="24" height="30" rx="4" fill="#fff" /><rect x="33" y="10" width="10" height="4" rx="2" fill={p.brand} /></svg>
+                    ) : (
+                      <AudioWaveform size={28} aria-hidden />
+                    )}
                   </span>
                   <div className="min-w-0">
                     <div className="flex flex-wrap items-center gap-2">
@@ -68,7 +72,7 @@ export default function ProductsPage() {
                   <p className="leading-relaxed text-muted">{p.description}</p>
                   <p className="mt-4 text-xs font-medium uppercase tracking-label text-muted">{p.platform}</p>
                   <span className="mt-auto inline-flex items-center gap-1.5 pt-6 text-sm font-medium text-primary">
-                    See ClipStack <ArrowRight size={14} aria-hidden className="transition-transform group-hover:translate-x-0.5" />
+                    See {p.name} <ArrowRight size={14} aria-hidden className="transition-transform group-hover:translate-x-0.5" />
                   </span>
                 </div>
               </Card>

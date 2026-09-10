@@ -12,7 +12,7 @@ export const metadata: Metadata = {
   title: "Melos Studio — Record Your Voice, Visualized",
   description:
     "A browser-based recording studio: a real-time equalizer that dances to your voice, vertical 1080×1920 video capture, and one-tap sharing to TikTok or Reels. Everything runs on your device — nothing is ever uploaded.",
-  alternates: { canonical: "/melos" },
+  alternates: { canonical: "/product/melos" },
 };
 
 export const viewport: Viewport = {
