@@ -516,11 +516,16 @@ site with the ClipStack landing page style, but not the blacks."
 
 ### 17a. Canvas and motion corrections — 2026-09-10, later
 
-- **Site canvas is cool light grey `#F1F2F6`** (was near-white `#FBFBFD`), bands
-  `#EEF0F6`, blooms stronger. Reason: glass is invisible on near-white; the
-  ClipStack page worked because its canvas is grey. Contrast re-verified:
-  primary on band 4.54, muted on band 5.38. `surface-2` (`#E1E4EE`) is chips
-  and art stages only — brand-blue text on it is 4.07 and is not allowed.
+- **Site canvas is cool grey `#E9EBF2`** (shipped 2026-09-10; was near-white
+  `#FBFBFD`, briefly `#F1F2F6`), bands `#E2E5EE`, blooms stronger, glass at
+  62% white. Reason: glass is invisible on near-white. **Brand-blue text
+  deepened to `#1D4ED8`** (hover `#1E40AF`) because `#2563EB` is 4.2:1 on
+  this grey; buttons keep the `#2563EB→#7C3AED` gradient and the logo is
+  unchanged. Measured: text-blue on canvas 5.63, on band 5.32; muted 5.15 /
+  4.87. On the ClipStack page the canvas is `#E8E8E8`, muted `#616161`
+  (5.05), and **links use a deeper indigo `#2E48D6`** via `--color-primary-
+  light` — the icon indigo `#4868E8` is 4.0:1 on any grey and is fills only.
+  `surface-2` is chips and art stages only; never brand-blue text on it.
 - **Copy→paste scene stutter, root-caused:** the new-row keyframe animated
   `max-height` (layout every frame), the typewriter used stepped `scaleX`
   (glyph distortion), and the panel sat inside a `backdrop-filter` element
