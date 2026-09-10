@@ -550,3 +550,41 @@ been live and in the sitemap. Standalone-route list, sitemap, canonical and
 `llms.txt` updated. The `check:tokens` exemption still matches (`/melos/` is
 a substring of the new path). Product cards resolve their glyph through an
 explicit `icon` map — ClipStack's clipboard, Melos's waveform.
+
+## 19. SEO / AEO / GEO audit and click tracking — 2026-09-10
+
+Prompted by the AI trainer pillar not yet being indexed (live since
+2026-09-09). Audited every key page live: all 200, self-canonical, one h1,
+`index,follow`, valid JSON-LD — nothing blocks indexing; the remaining
+variable is Google's crawl schedule, which Search Console can nudge.
+
+**Gaps found and fixed** (commit `e9e262b`):
+
+| Gap | Fix |
+|---|---|
+| Nested routes did not inherit the root `og:image` — pillar, `/products`, `/blog`, every post shared with no image | `buildMetadata` defaults to `/opengraph-image`; routes with their own image override |
+| Descriptions > 160 (About was 267); pillar title 70; post titles up to 89 | Builder caps descriptions on a word boundary; `titleAbsolute` for the pillar and posts |
+| `llms-full.txt` exported only the nine services' answer blocks | Pillar's five answers + eight FAQs added |
+| Pillar had no `Service` schema, no `speakable`, no dates | `standaloneServiceSchema` (provider Person, Nepal + online, six audiences); speakable on `.answer-lead`; datePublished/Modified |
+| Person `knowsAbout` lacked the AI-training entity | Added Artificial Intelligence, Generative AI, Machine Learning, AI Training, AI Education, Information Systems |
+| `/ai-trainer-in-nepal` (the owner's own spelling) 404'd | 301, plus `/ai-training` |
+| Pillar reachable only from nav | Body-copy link from the homepage |
+
+**Click tracking** — `ClickTracker` (client, mounted in the root layout
+outside SiteChrome so product pages get it) delegates one `click` listener:
+any element with `data-track="<event>"` (+ `data-track-label`) sends the GA4
+event with label, href and path. `Button` and `Card` accept `track` /
+`trackLabel` props. Instrumented: ClipStack download CTAs and file links
+(`product_download`, labels `clipstack_nav_download`, `_hero_`, `_plan_`,
+`_bookend_`, `_file_dmg`, `_file_pkg_again`; the form submit fires from its
+handler as `clipstack_form_submit` so it counts once); CTA bands and hero
+buttons (`cta_click`); header CTA (`nav_cta_click`); product cards
+(`product_card_click`). `whatsapp_click` / `calendar_click` were already
+tracked via `TrackedLink`. `track()` no-ops outside production.
+`product_download` added to `KEY_EVENTS` — **marking key events is GA4 admin
+configuration** the code cannot do.
+
+**Not reachable from here:** the Adspirer connector reports Google Analytics
+and Search Console as not connected, so event counts and URL-inspection /
+sitemap submission wait on the owner authorising both. Event names to read
+once connected are the ones above.
