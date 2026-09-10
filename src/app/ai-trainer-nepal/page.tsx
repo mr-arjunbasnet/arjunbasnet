@@ -41,7 +41,7 @@ import {
   WHY_TRAIN,
 } from "@/content/ai-trainer/index";
 import { getAllPostMeta } from "@/content/blog/index";
-import { breadcrumbSchema, faqPageSchema, webPageSchema } from "@/lib/schema";
+import { breadcrumbSchema, faqPageSchema, webPageSchema, standaloneServiceSchema } from "@/lib/schema";
 import JsonLd from "@/components/seo/JsonLd";
 import Container from "@/components/ui/Container";
 import Section from "@/components/ui/Section";
@@ -69,6 +69,7 @@ export const metadata: Metadata = buildMetadata({
   description: AI_TRAINER_META.description,
   path: AI_TRAINER_ROUTE,
   keywords: [...AI_TRAINER_META.keywords],
+  titleAbsolute: true,
 });
 
 const SPEAKING_PHOTO = "/media/ai-trainer/arjun-speaking.jpg";
@@ -132,8 +133,21 @@ export default function AiTrainerNepal() {
           name: AI_TRAINER_META.title,
           description: AI_TRAINER_META.description,
           path: AI_TRAINER_ROUTE,
+          datePublished: "2026-09-09",
+          dateModified: "2026-09-10",
+          speakable: [".answer-lead"],
         })}
         id="ld-ai-trainer-page"
+      />
+      <JsonLd
+        data={standaloneServiceSchema({
+          path: AI_TRAINER_ROUTE,
+          name: "AI Training in Nepal",
+          serviceType: "AI Training",
+          description: AI_TRAINER_META.description,
+          audience: ["Students", "Teachers and educators", "Professionals", "Corporate teams", "Educational institutions", "Organisations and agencies"],
+        })}
+        id="ld-ai-trainer-service"
       />
       <JsonLd
         data={faqPageSchema([AI_TRAINER_PRIMARY_ANSWER, ...AI_TRAINER_ANSWERS, ...AI_TRAINER_FAQS])}
@@ -171,7 +185,7 @@ export default function AiTrainerNepal() {
               </p>
 
               <div className="mb-8 flex flex-wrap gap-3">
-                <Button href="/contact" size="lg" icon={<ArrowRight size={16} />}>
+                <Button href="/contact" size="lg" track="cta_click" trackLabel="trainer_hero_book" icon={<ArrowRight size={16} />}>
                   Book AI training
                 </Button>
                 <Button href="/contact" size="lg" variant="secondary">

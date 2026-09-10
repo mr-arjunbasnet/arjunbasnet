@@ -77,6 +77,13 @@ export function personSchema(): Json {
       "AI Automation",
       "Custom Software Development",
       "IT Consulting",
+      // AI training entity (docs/reference/ai-trainer-nepal-ready-to-build.md §29).
+      "Artificial Intelligence",
+      "Generative AI",
+      "Machine Learning",
+      "AI Training",
+      "AI Education",
+      "Information Systems",
       // Retained expertise signals.
       "Project Management",
       "Business Process Automation",
@@ -369,6 +376,11 @@ export function webPageSchema(input: {
   description: string;
   path: string;
   type?: "WebPage" | "AboutPage" | "ContactPage" | "ProfilePage";
+  /** ISO dates, when the page has a real publication history. */
+  datePublished?: string;
+  dateModified?: string;
+  /** CSS selectors for the passages an assistant may read aloud / quote. */
+  speakable?: string[];
 }): Json {
   return {
     "@context": "https://schema.org",
@@ -378,5 +390,44 @@ export function webPageSchema(input: {
     url: absoluteUrl(input.path),
     isPartOf: ref(SCHEMA_ID.website),
     about: ref(SCHEMA_ID.person),
+    ...(input.datePublished ? { datePublished: input.datePublished } : {}),
+    ...(input.dateModified ? { dateModified: input.dateModified } : {}),
+    ...(input.speakable?.length
+      ? { speakable: { "@type": "SpeakableSpecification", cssSelector: input.speakable } }
+      : {}),
+  };
+}
+
+/**
+ * A Service that is not one of the nine service-page objects — used by the
+ * AI training pillar. Provider is the Person (it is training delivered by
+ * him), area is Nepal with online delivery, and the offer carries no price
+ * because sessions are scoped per engagement.
+ */
+export function standaloneServiceSchema(input: {
+  path: string;
+  name: string;
+  serviceType: string;
+  description: string;
+  audience?: string[];
+}): Json {
+  const url = absoluteUrl(input.path);
+  return {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    "@id": `${url}#service`,
+    name: input.name,
+    serviceType: input.serviceType,
+    description: input.description,
+    url,
+    provider: ref(SCHEMA_ID.person),
+    areaServed: [{ "@type": "Country", name: "Nepal" }],
+    availableChannel: [
+      { "@type": "ServiceChannel", serviceUrl: url, name: "In person, Nepal" },
+      { "@type": "ServiceChannel", serviceUrl: url, name: "Online" },
+    ],
+    ...(input.audience?.length
+      ? { audience: input.audience.map((a) => ({ "@type": "Audience", audienceType: a })) }
+      : {}),
   };
 }

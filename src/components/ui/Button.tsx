@@ -13,6 +13,9 @@ interface CommonProps {
   iconPosition?: "left" | "right";
   className?: string;
   children: React.ReactNode;
+  /** Analytics: sets data-track / data-track-label for the site ClickTracker. */
+  track?: string;
+  trackLabel?: string;
 }
 
 type ButtonAsButton = CommonProps &
@@ -68,7 +71,10 @@ export default function Button(props: ButtonProps) {
     iconPosition = "right",
     className,
     children,
+    track,
+    trackLabel,
   } = props;
+  const trackAttrs = track ? { "data-track": track, "data-track-label": trackLabel } : {};
 
   const classes = cn(
     "inline-flex items-center justify-center rounded-xl font-medium transition-[color,background-color,border-color,transform,box-shadow] duration-200 active:scale-[0.98]",
@@ -95,23 +101,24 @@ export default function Button(props: ButtonProps) {
           className={classes}
           target="_blank"
           rel="noopener noreferrer"
+          {...trackAttrs}
         >
           {content}
         </a>
       );
     }
     return (
-      <Link href={props.href as Route} className={classes}>
+      <Link href={props.href as Route} className={classes} {...trackAttrs}>
         {content}
       </Link>
     );
   }
 
   const { variant: _v, size: _s, fullWidth: _f, icon: _i, iconPosition: _ip,
-    className: _c, children: _ch, ...buttonRest } = props as ButtonAsButton;
+    className: _c, children: _ch, track: _t, trackLabel: _tl, ...buttonRest } = props as ButtonAsButton;
 
   return (
-    <button className={classes} {...buttonRest}>
+    <button className={classes} {...buttonRest} {...trackAttrs}>
       {content}
     </button>
   );

@@ -71,6 +71,8 @@ export default function Navbar() {
           ))}
           <Link
             href="/contact"
+            data-track="nav_cta_click"
+            data-track-label="header_get_in_touch"
             className="text-sm font-medium px-4 py-2 bg-brand bg-[length:200%_100%] bg-left hover:bg-right text-white rounded-xl transition-[background-position] duration-500"
           >
             Get in touch

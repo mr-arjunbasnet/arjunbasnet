@@ -7,6 +7,7 @@ import SiteChrome from "@/components/layout/SiteChrome";
 import SiteBackdrop from "@/components/layout/SiteBackdrop";
 import ScrollProgress from "@/components/ui/ScrollProgress";
 import WhatsAppFab from "@/components/lead/WhatsAppFab";
+import ClickTracker from "@/components/lead/ClickTracker";
 import JsonLd from "@/components/seo/JsonLd";
 import { GoogleAnalytics } from "@next/third-parties/google";
 import { SITE } from "@/content/site";
@@ -121,6 +122,8 @@ export default function RootLayout({
         <SiteChrome>
           <SiteBackdrop />
         </SiteChrome>
+        {/* Outside SiteChrome on purpose: tracking runs on the product pages too. */}
+        <ClickTracker />
         <JsonLd data={personSchema()} id="ld-person" />
         <JsonLd data={websiteSchema()} id="ld-website" />
         <JsonLd data={professionalServiceSchema(SERVICES)} id="ld-business" />

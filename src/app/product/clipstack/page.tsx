@@ -172,7 +172,7 @@ export default function ClipStackPage() {
           <div className="flex items-center gap-2">
             <Link href="/products" className="hidden text-[13px] text-muted no-underline hover:text-fg lg:inline">All products</Link>
             <Link href="/" className="inline-flex text-[13px] text-muted no-underline hover:text-fg sm:hidden" aria-label="Back to arjun-basnet.com.np">← Home</Link>
-            <a href="#download" className={btnPrimary}>Download</a>
+            <a href="#download" className={btnPrimary} data-track="product_download" data-track-label="clipstack_nav_download">Download</a>
           </div>
         </div>
       </header>
@@ -190,7 +190,7 @@ export default function ClipStackPage() {
             </h1>
             <p className="mx-auto mt-5 max-w-[58ch] text-[clamp(17px,1.8vw,20px)] leading-relaxed text-muted">{HERO.lead}</p>
             <div className="mt-7 flex flex-wrap items-center justify-center gap-3">
-              <a href="#download" className={btnPrimary}>{HERO.primary}<ArrowRight size={16} aria-hidden /></a>
+              <a href="#download" className={btnPrimary} data-track="product_download" data-track-label="clipstack_hero_download">{HERO.primary}<ArrowRight size={16} aria-hidden /></a>
               <a href="#how" className={btn}>{HERO.secondary}</a>
             </div>
             <div className="mt-4 flex justify-center"><VersionBadge version={feed.version} publishedAt={feed.publishedAt} sizeMB={feed.sizeMB} /></div>
@@ -391,7 +391,7 @@ export default function ClipStackPage() {
               <ul className="mt-7 grid gap-3 text-left text-[15px]">
                 {PLAN.includes.map((t) => <li key={t} className="flex gap-3"><Check size={18} aria-hidden className="mt-0.5 flex-none" /><span className="text-muted">{t}</span></li>)}
               </ul>
-              <a href="#download" className={`${btnPrimary} mt-8 w-full`}>{PLAN.cta}<ArrowRight size={16} aria-hidden /></a>
+              <a href="#download" className={`${btnPrimary} mt-8 w-full`} data-track="product_download" data-track-label="clipstack_plan_download">{PLAN.cta}<ArrowRight size={16} aria-hidden /></a>
               <p className="mt-3 text-[13px] text-muted">{PLAN.note}</p>
             </Card>
           </div>
@@ -437,7 +437,7 @@ export default function ClipStackPage() {
             <h2 className="-mt-4 text-[clamp(28px,3.6vw,40px)] font-semibold leading-[1.1] tracking-[-0.02em]">Get ClipStack for your Mac.</h2>
             <p className="mx-auto mt-3 max-w-[48ch] text-[16px] text-muted">Free, private, and one shortcut away. Version {feed.version}, about {feed.sizeMB} MB.</p>
             <div className="mt-8"><CopyPasteScene compact /></div>
-            <div className="mt-6 flex justify-center"><a href="#download" className={btnPrimary}>Download for Mac<ArrowRight size={16} aria-hidden /></a></div>
+            <div className="mt-6 flex justify-center"><a href="#download" className={btnPrimary} data-track="product_download" data-track-label="clipstack_bookend_download">Download for Mac<ArrowRight size={16} aria-hidden /></a></div>
           </div>
         </section>
       </main>

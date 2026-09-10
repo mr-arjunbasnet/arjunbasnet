@@ -17,6 +17,8 @@ export default function StickyCta() {
     <div className="fixed inset-x-0 bottom-0 z-30 border-t border-white/70 bg-bg/95 px-4 py-3 pr-[5.5rem] backdrop-blur-sm md:hidden print:hidden">
       <Link
         href="/contact"
+        data-track="cta_click"
+        data-track-label="trainer_sticky_book"
         className="flex h-11 w-full items-center justify-center gap-2 rounded-xl bg-brand text-sm font-medium text-primary-fg transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
       >
         Book AI training

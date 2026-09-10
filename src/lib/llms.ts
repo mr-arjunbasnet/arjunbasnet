@@ -2,6 +2,7 @@ import { SITE, startingFromLabel } from "@/content/site";
 import { SERVICES } from "@/content/services/index";
 import { FAQS } from "@/content/faq/index";
 import { getAllPostMeta, CLUSTERS } from "@/content/blog/index";
+import { AI_TRAINER_PRIMARY_ANSWER, AI_TRAINER_ANSWERS, AI_TRAINER_FAQS, AI_TRAINER_META } from "@/content/ai-trainer/index";
 
 /**
  * Generates llms.txt and llms-full.txt from the content layer.
@@ -103,6 +104,21 @@ export function buildLlmsFullTxt(): string {
       "",
     );
   }
+
+  // The AI training pillar runs the same answer-block spec as the services
+  // and belongs in the same file — this is the text an assistant cites.
+  parts.push(
+    "## AI Training in Nepal",
+    "",
+    `URL: ${SITE.url}/ai-trainer-nepal`,
+    AI_TRAINER_META.description,
+    "",
+  );
+  for (const block of [AI_TRAINER_PRIMARY_ANSWER, ...AI_TRAINER_ANSWERS]) {
+    parts.push(`### ${block.question}`, "", block.answer, "");
+    if (block.supporting?.length) parts.push(...block.supporting.map((x) => `- ${x}`), "");
+  }
+  for (const faq of AI_TRAINER_FAQS) parts.push(`### ${faq.question}`, "", faq.answer, "");
 
   parts.push("## Articles", "");
   for (const cluster of CLUSTERS) {

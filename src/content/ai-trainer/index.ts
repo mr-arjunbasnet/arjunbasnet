@@ -27,9 +27,10 @@ import type { AnswerBlock, Faq, ProcessStep } from "../types.ts";
 export const AI_TRAINER_ROUTE = "/ai-trainer-nepal";
 
 export const AI_TRAINER_META = {
-  title: "AI Trainer in Nepal | AI Training, Workshops & Seminars",
+  /* 55 chars, rendered without the site suffix — the 70-char version truncated in results. */
+  title: "AI Trainer in Nepal — AI Training, Workshops & Seminars",
   description:
-    "Learn Artificial Intelligence in Nepal through practical AI training, workshops and seminars covering Generative AI, AI tools, automation and real-world applications.",
+    "Practical AI training in Nepal — workshops, seminars and programmes on generative AI, AI tools, prompting and automation, for students, teams and institutions.",
   heading: "AI Trainer in Nepal",
   eyebrow: "AI Trainer & Educator in Nepal",
   supporting:

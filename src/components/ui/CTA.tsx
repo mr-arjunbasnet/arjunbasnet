@@ -57,6 +57,8 @@ export default function CTA({
       </p>
       <div className="flex flex-wrap gap-3">
         <Button
+          track="cta_click"
+          trackLabel={`cta_band_${context ?? "site"}`}
           href={primary.href}
           variant={variant === "band" ? "accent" : "primary"}
           size="lg"

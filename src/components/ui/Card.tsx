@@ -11,6 +11,9 @@ interface CardProps {
   accent?: boolean;
   className?: string;
   children: React.ReactNode;
+  /** Analytics attributes for the site ClickTracker (link cards only). */
+  track?: string;
+  trackLabel?: string;
 }
 
 const paddings = {
@@ -31,6 +34,8 @@ export default function Card({
   accent,
   className,
   children,
+  track,
+  trackLabel,
 }: CardProps) {
   const isInteractive = interactive ?? href !== undefined;
 

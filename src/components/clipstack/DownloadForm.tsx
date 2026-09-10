@@ -108,7 +108,7 @@ export default function DownloadForm({ version }: { version: string }) {
       /* never block the download on the lead call */
     }
 
-    track("product_download", { product: "clipstack", uses: payload.uses, version });
+    track("product_download", { label: "clipstack_form_submit", product: "clipstack", uses: payload.uses, version });
     startDownload(CLIPSTACK.pkg);
     setSubmitted(true);
     setBusy(false);
@@ -127,9 +127,9 @@ export default function DownloadForm({ version }: { version: string }) {
         </p>
         <p className="text-[13px] text-muted">
           Prefer a disk image?{" "}
-          <a href={CLIPSTACK.dmg} download className="text-primary-light hover:underline">Download the .dmg</a>
+          <a href={CLIPSTACK.dmg} download data-track="product_download" data-track-label="clipstack_file_dmg" className="text-primary-light hover:underline">Download the .dmg</a>
           {" · "}Didn&rsquo;t start?{" "}
-          <a href={CLIPSTACK.pkg} download className="text-primary-light hover:underline">Download again</a>
+          <a href={CLIPSTACK.pkg} download data-track="product_download" data-track-label="clipstack_file_pkg_again" className="text-primary-light hover:underline">Download again</a>
         </p>
       </div>
     );

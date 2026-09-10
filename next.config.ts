@@ -88,6 +88,9 @@ const nextConfig: NextConfig = {
         destination: "/product/melos",
         permanent: true,
       },
+      // The owner himself typed this spelling; visitors will too.
+      { source: "/ai-trainer-in-nepal", destination: "/ai-trainer-nepal", permanent: true },
+      { source: "/ai-training", destination: "/ai-trainer-nepal", permanent: true },
     ];
   },
 };

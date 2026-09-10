@@ -25,6 +25,8 @@ interface BuildMetadataInput {
    * such file and needs an explicit image.
    */
   images?: { url: string; width: number; height: number; alt: string }[];
+  /** Render the title without the site's "| Arjun Basnet" template suffix. */
+  titleAbsolute?: boolean;
 }
 
 /**
@@ -45,11 +47,25 @@ export function buildMetadata({
   modifiedTime,
   noindex,
   images,
+  titleAbsolute,
 }: BuildMetadataInput): Metadata {
   const url = absoluteUrl(path);
 
+  /*
+   * Every page carries a share image. The root opengraph-image is NOT
+   * inherited by nested routes (audited live 2026-09-10: the pillar, /products
+   * and every post shipped with no og:image at all), so the site card is the
+   * default and a route with its own image overrides it.
+   */
+  const ogImages = images ?? [
+    { url: absoluteUrl("/opengraph-image"), width: 1200, height: 630, alt: SITE.brand },
+  ];
+  // Google shows ~155–160 characters; a longer description is truncated
+  // mid-sentence in the result. Word-boundary cap, once, here.
+  description = truncate(description, 158);
+
   return {
-    title,
+    title: titleAbsolute ? { absolute: title } : title,
     description,
     ...(keywords?.length ? { keywords } : {}),
     alternates: { canonical: path },
@@ -60,7 +76,7 @@ export function buildMetadata({
       siteName: SITE.name,
       title,
       description,
-      ...(images ? { images } : {}),
+      images: ogImages,
       ...(type === "article" && publishedTime ? { publishedTime } : {}),
       ...(type === "article" && modifiedTime ? { modifiedTime } : {}),
     },
@@ -68,7 +84,7 @@ export function buildMetadata({
       card: "summary_large_image",
       title,
       description,
-      ...(images ? { images: images.map((i) => i.url) } : {}),
+      images: ogImages.map((i) => i.url),
     },
     ...(noindex
       ? { robots: { index: false, follow: false } }

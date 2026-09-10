@@ -105,6 +105,8 @@ export default function Home() {
                 <Button
                   href="/contact"
                   size="lg"
+                  track="cta_click"
+                  trackLabel="home_hero_start_conversation"
                   icon={<ArrowRight size={18} />}
                   className="h-13 px-7 text-base shadow-[0_12px_32px_-10px_var(--color-primary)] hover:shadow-[0_16px_40px_-10px_var(--color-secondary)] transition-shadow"
                 >
@@ -114,6 +116,8 @@ export default function Home() {
                   href="/services"
                   size="lg"
                   variant="secondary"
+                  track="cta_click"
+                  trackLabel="home_hero_see_services"
                   icon={<ArrowRight size={16} />}
                   className="h-13 px-7 text-base"
                 >
@@ -360,9 +364,13 @@ export default function Home() {
                 <Link href="/research" className="text-primary hover:underline">
                   research
                 </Link>
-                {", and "}
+                {", "}
                 <Link href="/faq" className="text-primary hover:underline">
                   frequently asked questions
+                </Link>
+                {", and "}
+                <Link href="/ai-trainer-nepal" className="text-primary hover:underline">
+                  AI training for teams and institutions
                 </Link>
                 .
               </p>

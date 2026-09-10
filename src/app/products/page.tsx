@@ -50,7 +50,7 @@ export default function ProductsPage() {
         <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
           {PRODUCTS.map((p) => (
             <AnimateIn key={p.slug}>
-              <Card href={p.href as Route} padding="none" className="flex h-full flex-col overflow-hidden">
+              <Card href={p.href as Route} padding="none" className="flex h-full flex-col overflow-hidden" track="product_card_click" trackLabel={p.slug}>
                 <div className="flex items-center gap-4 border-b border-white/70 p-7">
                   <span className="grid h-14 w-14 shrink-0 place-items-center rounded-2xl text-white shadow-[inset_0_1px_0_rgb(255_255_255/0.25),0_10px_30px_rgb(0_0_0/0.18)]" style={{ background: p.brand }}>
                     {p.icon === "clipboard" ? (

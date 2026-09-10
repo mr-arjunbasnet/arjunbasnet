@@ -37,7 +37,9 @@ type FunnelEvent =
   /* /product/* pages: a gated installer download, and the "build me one of
      these" request form. */
   | "product_download"
-  | "product_request";
+  | "product_request"
+  | "product_card_click"
+  | "nav_cta_click";
 
 export type AnalyticsEvent = StudioEvent | FunnelEvent;
 
@@ -50,6 +52,7 @@ export const KEY_EVENTS: AnalyticsEvent[] = [
   "lead_form_success",
   "whatsapp_click",
   "calendar_click",
+  "product_download",
 ];
 
 export function track(

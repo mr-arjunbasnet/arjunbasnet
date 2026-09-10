@@ -34,6 +34,7 @@ export async function generateMetadata({
   if (!post) return {};
 
   return buildMetadata({
+    titleAbsolute: true,
     title: post.meta.title,
     description: post.meta.description,
     path: `/blog/${slug}`,
