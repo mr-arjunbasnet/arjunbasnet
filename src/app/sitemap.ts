@@ -19,6 +19,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     // Pillar page for the AI training entity. High priority: it is the target
     // the AI-cluster posts link up to.
     { url: absoluteUrl("/ai-trainer-nepal"), lastModified: now, changeFrequency: "monthly", priority: 0.95 },
+    { url: absoluteUrl("/products"), lastModified: now, changeFrequency: "monthly", priority: 0.7 },
+    { url: absoluteUrl("/product/clipstack"), lastModified: now, changeFrequency: "monthly", priority: 0.8 },
     { url: absoluteUrl("/work"), lastModified: now, changeFrequency: "weekly", priority: 0.9 },
     { url: absoluteUrl("/about"), lastModified: now, changeFrequency: "monthly", priority: 0.8 },
     { url: absoluteUrl("/research"), lastModified: now, changeFrequency: "monthly", priority: 0.7 },

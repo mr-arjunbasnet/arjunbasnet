@@ -20,11 +20,14 @@ export interface NavLink {
 export const NAV_LINKS: NavLink[] = [
   { href: "/services", label: "Services" },
   { href: "/ai-trainer-nepal", label: "AI Training" },
+  { href: "/products", label: "Products" },
   { href: "/work", label: "Work" },
   { href: "/blog", label: "Blog" },
   { href: "/about", label: "About" },
-  { href: "/research", label: "Research" },
+  // Header holds seven; Research moved to the footer when Products arrived.
+  { href: "/research", label: "Research", footerOnly: true },
   { href: "/faq", label: "FAQ", footerOnly: true },
+  { href: "/product/clipstack", label: "ClipStack for Mac", footerOnly: true },
   { href: "/contact", label: "Contact" },
 ];
 

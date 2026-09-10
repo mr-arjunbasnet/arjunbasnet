@@ -44,6 +44,8 @@ export function buildLlmsTxt(): string {
     "",
     `- [Services](${SITE.url}/services): All nine service lines.`,
     `- [AI Trainer in Nepal](${SITE.url}/ai-trainer-nepal): AI training, workshops and seminars for students, professionals, educators and organisations.`,
+    `- [Products](${SITE.url}/products): free, single-purpose software built by Arjun Basnet.`,
+    `- [ClipStack](${SITE.url}/product/clipstack): a free, private clipboard history app for macOS 14+, built by Arjun Basnet.`,
     `- [Work](${SITE.url}/work): Case studies including Cricket Nepal, nationwide LMS platforms, and AI automation workflows.`,
     `- [About](${SITE.url}/about): Background, timeline, and credentials.`,
     `- [Research](${SITE.url}/research): Peer-reviewed publication in computer vision.`,
