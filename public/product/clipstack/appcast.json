@@ -1,0 +1,19 @@
+{
+  "app": "com.makura.clipstack",
+  "releases": [
+    {
+      "version": "1.1.0",
+      "build": "202609092323",
+      "minimumSystemVersion": "14.0",
+      "publishedAt": "2026-09-09T17:39:13Z",
+      "notes": "ClipStack 1.1.0\n\n• ClipStack now updates itself. It checks once a day and installs new versions with one click (Settings → General → Software Update, or Check for Updates… in the menu). Every download is verified against a signature built into the app before anything is replaced.\n• Spotlight-style panel: opens centred on the screen you are working on, with a larger search field and a detail pane that shows the full text, the whole image, every file, or the colour before you paste. Turn the pane off in Settings → Appearance.\n• The panel always stays on screen — it no longer slides off the bottom when you open it from a field at the foot of the display.\n• Starts at login from the first launch, and keeps recording until you quit it. Change this in Settings → General.\n• Change Shortcut… is now one click away in the menu-bar menu.\n• New Settings window in the style of System Settings.\n• Fixed: the list no longer scrolls on its own when the pointer rests over it, and the bottom rows can be reached with the mouse.\n• Removed the ⌘1–⌘9 shortcuts; they collided with browser tab switching.\n• On first launch from the disk image or Downloads, ClipStack offers to move itself to Applications.",
+      "downloadPage": "https://arjun-basnet.com.np/product/clipstack/ClipStack-1.1.0.dmg",
+      "archive": {
+        "url": "https://arjun-basnet.com.np/product/clipstack/ClipStack-1.1.0.zip",
+        "length": 2015575,
+        "sha256": "d705d3c320216e253e2cf7103d18b597d5ec60372504ceb0b018a3e6c6afadbc",
+        "signature": "dvu+/mPvJm+Bun1uNDoE8IuSHTjCTweyxt7k6y0gKQ9OOJWCrEi+gzfbNB1Xvkob9LRUb8uSZ/lkwiOZVzZaCA=="
+      }
+    }
+  ]
+}

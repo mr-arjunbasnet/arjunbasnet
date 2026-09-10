@@ -9,6 +9,11 @@ import {
 } from "@/lib/escape";
 import { renderLeadEmail, renderAutoResponse } from "@/lib/email-templates";
 import type { LeadFields } from "@/lib/email-templates";
+import {
+  renderDownloadConfirmation,
+  renderRequestConfirmation,
+  renderOwnerNotification,
+} from "@/lib/clipstack-email";
 import { SERVICE_SLUGS, getService } from "@/content/services/index";
 
 // `after` runs the autoresponder past the response, so the visitor is not kept
@@ -31,6 +36,15 @@ const BUDGETS = [
   "NPR 500,000 – 2,000,000",
   "Over NPR 2,000,000",
   "Not sure yet",
+];
+
+/* The two <select>s on /product/clipstack — validated here, never trusted. */
+const CLIPSTACK_USES = ["Text & code", "Links", "Images & design", "Files", "A bit of everything"];
+const CLIPSTACK_KINDS = [
+  "A problem with ClipStack",
+  "A feature I wish ClipStack had",
+  "A similar tool or automation for my work",
+  "Something else",
 ];
 
 const TIMELINES = [
@@ -98,9 +112,39 @@ export async function POST(req: Request) {
       );
     }
 
+    /*
+     * ClipStack (/product/clipstack) sends its two forms here rather than to
+     * a second API route, so /api/contact stays the site's only dynamic
+     * route. A download lead has no free-text message, so one is composed
+     * from the structured fields; a request carries the visitor's text.
+     */
+    const product =
+      body.type === "clipstack-download"
+        ? "download"
+        : body.type === "clipstack-request"
+          ? "request"
+          : null;
+
     const name = sanitiseField(body.name, LIMITS.name);
     const email = sanitiseField(body.email, LIMITS.email);
-    const message = sanitiseBody(body.message, LIMITS.message);
+
+    const uses = CLIPSTACK_USES.includes(sanitiseField(body.uses, 40))
+      ? sanitiseField(body.uses, 40)
+      : undefined;
+    const kind = CLIPSTACK_KINDS.includes(sanitiseField(body.kind, 60))
+      ? sanitiseField(body.kind, 60)
+      : undefined;
+
+    const message =
+      product === "download"
+        ? [
+            `ClipStack download lead.`,
+            `Copies most: ${uses ?? "not given"}`,
+            `Update emails: ${body.updates === true ? "yes" : "no"}`,
+            `Version: ${sanitiseField(body.version, 20) || "unknown"}`,
+            `Referrer: ${sanitiseField(body.referrer, 200) || "direct"}`,
+          ].join("\n")
+        : sanitiseBody(body.message, LIMITS.message);
 
     if (!name || !email || !message) {
       return NextResponse.json(
@@ -118,9 +162,11 @@ export async function POST(req: Request) {
     // The service field comes from a <select>, but a request can send anything
     // — validate against the registry rather than trusting the client.
     const serviceSlug = sanitiseField(body.service, 80);
-    const service = SERVICE_SLUGS.includes(serviceSlug)
-      ? getService(serviceSlug)?.name
-      : undefined;
+    const service = product
+      ? "ClipStack (macOS app)"
+      : SERVICE_SLUGS.includes(serviceSlug)
+        ? getService(serviceSlug)?.name
+        : undefined;
 
     const budgetRaw = sanitiseField(body.budget, LIMITS.budget);
     const timelineRaw = sanitiseField(body.timeline, LIMITS.timeline);
@@ -143,7 +189,22 @@ export async function POST(req: Request) {
       auth: { user: process.env.SMTP_USER, pass: process.env.SMTP_PASS },
     });
 
-    const lead = renderLeadEmail(fields);
+    const clip = product
+      ? {
+          name,
+          email,
+          uses,
+          updates: body.updates === true,
+          version: sanitiseField(body.version, 20) || "latest",
+          referrer: sanitiseField(body.referrer, 200) || undefined,
+          kind,
+          message,
+        }
+      : null;
+
+    const lead = clip
+      ? renderOwnerNotification(product as "download" | "request", clip)
+      : renderLeadEmail(fields);
 
     await transporter.sendMail({
       // stripCrlf on the display name closes the header-injection path that
@@ -151,7 +212,7 @@ export async function POST(req: Request) {
       from: `"${stripCrlf(name)}" <${process.env.SMTP_FROM}>`,
       replyTo: email,
       to: process.env.SMTP_TO || "mr.arjunbasnet@gmail.com",
-      subject: lead.subject,
+      subject: stripCrlf(lead.subject),
       text: lead.text,
       html: lead.html,
     });
@@ -160,6 +221,7 @@ export async function POST(req: Request) {
     console.log(
       JSON.stringify({
         event: "lead_received",
+        product: product ?? null,
         service: fields.service ?? null,
         budget: fields.budget ?? null,
         timeline: fields.timeline ?? null,
@@ -169,11 +231,22 @@ export async function POST(req: Request) {
 
     // Autoresponder goes out after the response. Only ever to the address the
     // sender typed, and only once the notification itself succeeded.
+    //
+    //
+    // ClipStack gets its own confirmations (the download links plus the
+    // first-launch note; or a "got it" for a request) — never the consulting
+    // "enquiry received" email. The form's privacy line describes exactly
+    // these two messages; change it first if this ever sends anything else.
     after(async () => {
       try {
-        const auto = renderAutoResponse(fields);
+        const auto = clip
+          ? product === "download"
+            ? renderDownloadConfirmation(clip)
+            : renderRequestConfirmation(clip)
+          : renderAutoResponse(fields);
         await transporter.sendMail({
-          from: `"Arjun Basnet" <${process.env.SMTP_FROM}>`,
+          from: `"${clip ? "ClipStack" : "Arjun Basnet"}" <${process.env.SMTP_FROM}>`,
+          replyTo: process.env.SMTP_TO || "mr.arjunbasnet@gmail.com",
           to: email,
           subject: auto.subject,
           text: auto.text,

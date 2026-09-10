@@ -20,6 +20,45 @@ const nextConfig: NextConfig = {
     remotePatterns: [],
   },
 
+  /*
+   * ClipStack update feed and installers (Clipboard-Landing-page.md §6).
+   *
+   * appcast.json must never be cached: installed apps poll it daily and a
+   * stale copy hides a release. Versioned archives are immutable by name and
+   * are what the app's updater verifies, so they cache for a year.
+   *
+   * One deliberate departure from the brief's vercel.json: the un-versioned
+   * "latest" aliases (ClipStack.pkg, ClipStack.dmg) are NOT immutable. They
+   * are overwritten on every release under the same name, and a year-long
+   * immutable cache would hand returning visitors the previous build. They
+   * revalidate on every download instead.
+   */
+  async headers() {
+    return [
+      {
+        source: "/product/clipstack/appcast.json",
+        headers: [
+          { key: "Cache-Control", value: "no-cache, max-age=0, must-revalidate" },
+          { key: "Content-Type", value: "application/json; charset=utf-8" },
+        ],
+      },
+      {
+        source: "/product/clipstack/:file(ClipStack-.*\\.(?:zip|dmg|pkg))",
+        headers: [
+          { key: "Cache-Control", value: "public, max-age=31536000, immutable" },
+          { key: "Content-Disposition", value: "attachment" },
+        ],
+      },
+      {
+        source: "/product/clipstack/:file(ClipStack\\.(?:dmg|pkg))",
+        headers: [
+          { key: "Cache-Control", value: "public, max-age=0, must-revalidate" },
+          { key: "Content-Disposition", value: "attachment" },
+        ],
+      },
+    ];
+  },
+
   async redirects() {
     return [
       // Acronym aliases: people type /services/aeo, the canonical page is the

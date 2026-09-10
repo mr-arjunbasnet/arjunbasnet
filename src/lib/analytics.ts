@@ -33,7 +33,11 @@ type FunnelEvent =
   | "email_click"
   | "case_study_view"
   | "faq_expand"
-  | "outbound_click";
+  | "outbound_click"
+  /* /product/* pages: a gated installer download, and the "build me one of
+     these" request form. */
+  | "product_download"
+  | "product_request";
 
 export type AnalyticsEvent = StudioEvent | FunnelEvent;
 
