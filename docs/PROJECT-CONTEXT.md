@@ -481,3 +481,58 @@ the line *Explore · Learn · Build*.
 Gradient stops are read off the screenshot, not sampled from a source file. If
 the designer has exact values, replace them in `LogoMark.tsx`, the files in
 `public/brand/`, and `--background-image-brand` in `globals.css`.
+
+## 16. `/product/clipstack` — built 2026-09-10
+
+The first `/product/*` page: a landing page and download host for ClipStack,
+a macOS clipboard-history app, built from `Clipboard-Landing-page.md` (also in
+the ClipStack project as `site/LANDING-PAGE.md`; identical).
+
+| Decision | Reasoning |
+|---|---|
+| **Standalone route** (own nav/footer, in `STANDALONE_ROUTES`) | The brief specifies its own chrome, and a native-Mac page with an OS-following dark scheme cannot share the site's light-only chrome. Same mechanism as `/melos`. |
+| **Own visual tokens, scoped** (`.clipstack` in globals.css) | Restyled 2026-09-10 to the owner's reference (the "ORB AI" Framer template): monochrome, glass cards (`.cs-glass*`) over soft grey blooms, ripple orb behind the mark. **Light only** — the owner removed the dark scheme the brief asked for. |
+| **Leads go through `/api/contact`** as `clipstack-download` / `clipstack-request` | Keeps `/api/contact` the only dynamic route (§ invariant 1). The route composes a message for download leads, validates both selects, prefixes the subject `[ClipStack]`, and sends **no autoresponder** — the form promises the address is used only for a release note. |
+| **Headers in `next.config.ts`**, not `vercel.json` | The project's convention. `appcast.json` no-cache; versioned archives immutable; "latest" aliases must-revalidate — a deliberate correction to the brief, which would have cached `ClipStack.pkg` for a year under a name that changes contents every release. |
+| Version badge SSR'd from the feed, then refreshed client-side | Right without JS; live with it. The page and installed apps read the same file. |
+| Binaries committed to `public/` (~14 MB per release) | The brief's flow; Vercel deploys atomically. Verified the zip's sha256 and length match the feed before committing. |
+
+Release procedure: `docs/reference/clipstack-release-flow.md`.
+
+## 17. Site-wide glass, `/products`, ClipStack indigo — 2026-09-10
+
+Owner's direction after approving the ClipStack page: "update the entire
+site with the ClipStack landing page style, but not the blacks."
+
+| Decision | Reasoning |
+|---|---|
+| **Glass is the site material**, applied at the primitive level | `Card`, `Eyebrow` (now a pill with a dot), `Button` (xl radius; glass secondary), `Badge`, `FaqAccordion`, the `CTA` card, `Navbar` (glass when scrolled), `Footer`, the trainer sticky CTA. Every page inherits without per-page edits. `.glass*` utilities in globals.css; `.cs-glass*` are the ClipStack aliases. |
+| **`SiteBackdrop`** — brand-tinted blooms behind the whole site | Blur is invisible without something to diffuse. Blue/violet at ≤10% opacity, positioned by page-height percentage. Body is `relative isolate` so `-z-10` stays inside the page. Hidden on standalone routes via `SiteChrome`. |
+| Icons and accents stay **brand blue** | The owner's "not the blacks": the black tiles are ClipStack's; the site keeps its blue/violet identity. |
+| **`/products`** listing in the site chrome | One live product plus two "coming soon" cards that say exactly that — no invented names. `Products` joined the header; `Research` moved to footer-only to keep seven links. Content in `src/content/products/`. |
+| **ClipStack colour is its icon's indigo `#4868E8`**, not black | Owner asked for "ClipStack's purple"; the app icon sampled is a blue-violet. Tiles, `.cs-glass-dark` and the primary button on that page carry it. Body text stays near-black. If a truer violet is wanted, it is one token. |
+| **Copy → paste animation** on the ClipStack hero and bookend | `CopyPasteScene` + `cp-*` keyframes: selection sweep, ⌘C, the item drops into the panel, ⌘⇧V, typed into the target. transform/opacity only; reduced-motion shows the finished state. The brief's "no motion" rule was overridden by the owner. |
+| ClipStack SEO reworked | Title/description/keywords/schema lead with the problem and the solution: clipboard history for Mac, clipboard manager macOS, Win+V for Mac. |
+
+### 17a. Canvas and motion corrections — 2026-09-10, later
+
+- **Site canvas is cool light grey `#F1F2F6`** (was near-white `#FBFBFD`), bands
+  `#EEF0F6`, blooms stronger. Reason: glass is invisible on near-white; the
+  ClipStack page worked because its canvas is grey. Contrast re-verified:
+  primary on band 4.54, muted on band 5.38. `surface-2` (`#E1E4EE`) is chips
+  and art stages only — brand-blue text on it is 4.07 and is not allowed.
+- **Copy→paste scene stutter, root-caused:** the new-row keyframe animated
+  `max-height` (layout every frame), the typewriter used stepped `scaleX`
+  (glyph distortion), and the panel sat inside a `backdrop-filter` element
+  (blur recomputed per frame). Fixed: rows reserve space and animate only
+  opacity/transform; typing is a stepped `clip-path` reveal; the scene panel
+  is near-solid white (`.cp-panel`), glass stays on the sections around it.
+- **`HeroBackground` painted over the hero CTAs** — its absolutely positioned
+  layer sat above unpositioned content, and its bottom fade covered the
+  buttons' lower edge. Now `-z-10` inside an `isolate` hero (homepage and
+  service pages).
+- **Dev-server rule:** CSS appended while `next dev` runs is not served until
+  a clean restart. Verify with a case-insensitive fixed-string grep of the
+  served CSS (dev CSS is unminified, hex is lowercased).
+- ClipStack nav/footer gained "← Arjun Basnet" and "All products" links —
+  there had been no way back to the site.

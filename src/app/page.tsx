@@ -67,7 +67,7 @@ export default function Home() {
       />
 
       {/* ─── Hero ─── */}
-      <section className="relative overflow-hidden pt-14 pb-14 md:pt-20 md:pb-20">
+      <section className="relative isolate overflow-hidden pt-14 pb-14 md:pt-20 md:pb-20">
         <HeroBackground />
         <Container>
           <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-[1.15fr_1fr]">

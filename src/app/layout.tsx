@@ -4,6 +4,7 @@ import "./globals.css";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import SiteChrome from "@/components/layout/SiteChrome";
+import SiteBackdrop from "@/components/layout/SiteBackdrop";
 import ScrollProgress from "@/components/ui/ScrollProgress";
 import WhatsAppFab from "@/components/lead/WhatsAppFab";
 import JsonLd from "@/components/seo/JsonLd";
@@ -116,7 +117,10 @@ export default function RootLayout({
         <link rel="preconnect" href="https://www.googletagmanager.com" />
         <link rel="preconnect" href="https://www.google-analytics.com" />
       </head>
-      <body className="min-h-full flex flex-col bg-bg text-fg">
+      <body className="relative isolate min-h-full flex flex-col overflow-x-clip bg-bg text-fg">
+        <SiteChrome>
+          <SiteBackdrop />
+        </SiteChrome>
         <JsonLd data={personSchema()} id="ld-person" />
         <JsonLd data={websiteSchema()} id="ld-website" />
         <JsonLd data={professionalServiceSchema(SERVICES)} id="ld-business" />

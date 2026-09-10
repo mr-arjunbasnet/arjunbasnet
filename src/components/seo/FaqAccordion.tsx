@@ -16,10 +16,10 @@ interface FaqAccordionProps {
  */
 export default function FaqAccordion({ items, className }: FaqAccordionProps) {
   return (
-    <div className={cn("divide-y divide-border border-y border-border", className)}>
+    <div className={cn("grid gap-3", className)}>
       {items.map((faq) => (
-        <details key={faq.id} id={faq.id} className="group scroll-mt-24">
-          <summary className="flex cursor-pointer list-none items-start justify-between gap-6 py-5 text-left [&::-webkit-details-marker]:hidden">
+        <details key={faq.id} id={faq.id} className="glass group scroll-mt-24 rounded-[16px] px-6">
+          <summary className="flex cursor-pointer list-none items-start justify-between gap-6 py-5 text-left transition-opacity active:opacity-70 [&::-webkit-details-marker]:hidden">
             <span className="font-medium text-fg group-hover:text-primary transition-colors">
               {faq.question}
             </span>

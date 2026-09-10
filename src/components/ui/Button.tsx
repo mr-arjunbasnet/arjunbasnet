@@ -36,7 +36,7 @@ const variants: Record<Variant, string> = {
   /* Was border-border, which is a hairline tint that disappears next to the
      gradient primary. The stronger hairline reads as a real button. */
   secondary:
-    "bg-transparent text-fg border border-hairline hover:border-primary hover:text-primary hover:bg-surface",
+    "glass-soft text-fg hover:bg-white/80 hover:text-primary",
   ghost:
     "bg-transparent text-muted border border-transparent hover:text-fg hover:bg-surface",
   /* Used on the primary-blue bands. The accent token is artwork-only now, so
@@ -71,7 +71,7 @@ export default function Button(props: ButtonProps) {
   } = props;
 
   const classes = cn(
-    "inline-flex items-center justify-center rounded-pill font-medium transition-colors",
+    "inline-flex items-center justify-center rounded-xl font-medium transition-[color,background-color,border-color,transform,box-shadow] duration-200 active:scale-[0.98]",
     "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary",
     variants[variant],
     sizes[size],

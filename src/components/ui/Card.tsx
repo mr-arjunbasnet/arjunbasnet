@@ -35,11 +35,12 @@ export default function Card({
   const isInteractive = interactive ?? href !== undefined;
 
   const classes = cn(
-    "block rounded-card border border-border bg-bg shadow-card",
+    // Glass: the site-wide material since 2026-09-10 (see globals.css).
+    "glass block rounded-[20px]",
     paddings[padding],
     accent && "border-l-2 border-l-primary",
     isInteractive &&
-      "transition-all hover:border-primary hover:shadow-card-hover",
+      "transition-[transform,background-color] duration-300 hover:-translate-y-0.5 hover:bg-white/75 active:scale-[0.995] active:translate-y-0",
     className,
   );
 

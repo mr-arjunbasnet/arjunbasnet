@@ -14,10 +14,10 @@ import { ArrowRight } from "lucide-react";
  */
 export default function StickyCta() {
   return (
-    <div className="fixed inset-x-0 bottom-0 z-30 border-t border-border bg-bg/95 px-4 py-3 pr-[5.5rem] backdrop-blur-sm md:hidden print:hidden">
+    <div className="fixed inset-x-0 bottom-0 z-30 border-t border-white/70 bg-bg/95 px-4 py-3 pr-[5.5rem] backdrop-blur-sm md:hidden print:hidden">
       <Link
         href="/contact"
-        className="flex h-11 w-full items-center justify-center gap-2 rounded-pill bg-brand text-sm font-medium text-primary-fg transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+        className="flex h-11 w-full items-center justify-center gap-2 rounded-xl bg-brand text-sm font-medium text-primary-fg transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
       >
         Book AI training
         <ArrowRight size={15} aria-hidden />

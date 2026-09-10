@@ -8,7 +8,7 @@ import LogoMark from "@/components/ui/LogoMark";
 
 export default function Footer() {
   return (
-    <footer className="border-t border-border bg-bg mt-auto">
+    <footer className="glass-soft mt-auto rounded-t-[24px]">
       <div className="max-w-6xl mx-auto px-6 py-14">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-10 mb-12">
           <div>

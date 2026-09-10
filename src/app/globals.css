@@ -32,7 +32,10 @@
    *   muted on bg         5.74   muted on surface   5.38   muted on surface-2  4.88
    *   primary on bg       8.22   primary on surface 7.66   white on primary    9.05
    */
-  --color-bg: #FBFBFD;
+  /* Cool light grey, not near-white: glass cards need a ground darker than
+     themselves to read. Matched to the ClipStack page's #f2f2f2 in tone,
+     with the site's blue cast. Bands (surface) sit a step darker still. */
+  --color-bg: #E9EBF2;
   --color-fg: #10132A;
   /*
    * Brand palette, 2026-09-08 — derived from the owner's logo: a ring running
@@ -42,24 +45,29 @@
    *
    * Contrast (measured, see PROJECT-CONTEXT §15): every text pair ≥ 4.5:1.
    */
-  --color-primary: #2563EB;
+  /* Deepened from #2563EB when the canvas went grey (the brighter blue is
+     4.2:1 on #E9EBF2). Buttons keep the #2563EB→#7C3AED gradient — white text
+     5.17:1 at its lightest — and the logo is literal and unchanged. */
+  --color-primary: #1D4ED8;
   /* Hover/press. Named "light" for historical reasons — it is the darker
      step, because white text on a lighter blue drops below AA. */
-  --color-primary-light: #1D4ED8;
+  --color-primary-light: #1E40AF;
   --color-secondary: #7C3AED;
   /* ARTWORK ONLY — the focal point in each drawn scene. A light violet reads
      as a glow on the blue masses and a highlight on the canvas. 3.3:1 on
      white: never text. All text uses of accent route to primary. */
   --color-accent: #9F7AEA;
   --color-muted: #5B6178;
-  --color-border: #DFE2F0;
-  --color-surface: #F3F4FA;
-  --color-surface-2: #EEF0F9;
+  --color-border: #CDD2DF;
+  --color-surface: #E2E5EE;
+  /* A tint for chips and art stages only. Brand-blue text on it is 4.07:1 —
+     below AA — so never put text-primary on bg-surface-2. */
+  --color-surface-2: #D9DDE8;
 
   /* Semantic aliases consumed by the primitives */
   --color-fg-muted: #5B6178;
   --color-primary-fg: #FFFFFF;
-  --color-hairline: #BEC3DA;
+  --color-hairline: #AEB5C8;
 
   /* The brand gradient, as a utility: bg-brand. Both ends keep white text
      above 5:1, so it is safe under button and band copy. */
@@ -648,7 +656,7 @@ html {
 }
 
 body {
-  background-color: #FBFBFD;
+  background-color: #E9EBF2;
   color: #10132A;
   font-family: var(--font-geist-sans), system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -665,7 +673,7 @@ body {
   width: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: #FBFBFD;
+  background: #E9EBF2;
 }
 ::-webkit-scrollbar-thumb {
   background: #BFC5D2;
@@ -673,4 +681,168 @@ body {
 }
 ::-webkit-scrollbar-thumb:hover {
   background: #2563EB;
+}
+
+/*
+ * ClipStack product page (/product/clipstack) — 2026-09-10.
+ *
+ * Owner's direction: the "ORB AI" reference's monochrome, and glass wherever
+ * a surface allows it. LIGHT ONLY — the owner removed the dark scheme the
+ * brief had asked for. Tokens are scoped here the same way `.svc-cool` was:
+ * the site's utilities compile to var(--color-…), so redeclaring them on this
+ * ancestor recolours the subtree and nothing leaks out.
+ */
+.clipstack {
+  --color-bg: #E8E8E8;
+  --color-surface: #ffffff;
+  --color-surface-2: #DCDCDC;
+  --color-fg: #0a0a0a;
+  --color-muted: #616161;
+  --color-fg-muted: #616161;
+  --color-border: #d6d6d6;
+  --color-hairline: #bdbdbd;
+  /* ClipStack's own colour, sampled from its app icon (dominant #4868E8,
+     shading to #3858E8). Tiles, dark-glass surfaces and the primary button
+     carry it; body text stays near-black. */
+  --color-primary: #4868e8;
+  /* Deeper indigo for TEXT links: the fill indigo is 4.0:1 on this grey. */
+  --color-primary-light: #2E48D6;
+  --color-primary-fg: #ffffff;
+  --cs-shadow: 0 1px 2px rgb(0 0 0 / 0.04), 0 12px 32px rgb(0 0 0 / 0.06);
+  --cs-shadow-tile: inset 0 1px 0 rgb(255 255 255 / 0.28), 0 10px 30px rgb(72 104 232 / 0.35);
+
+  position: relative;
+  isolation: isolate;
+  color-scheme: light;
+  background-color: var(--color-bg);
+  color: var(--color-fg);
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", Inter, "Segoe UI", Roboto, sans-serif;
+}
+
+/*
+ * Glass — site-wide material as of 2026-09-10 (`.glass*`), first built for
+ * the ClipStack page (`.cs-glass*` are aliases kept for that page).
+ * Translucent white over blurred backdrop, a one-pixel white highlight
+ * along the top edge, and a soft drop shadow — the material for every card,
+ * pill, field and panel on the page. Blur needs something behind it to
+ * diffuse, which is what the `.cs-bloom` shapes on the canvas are for.
+ */
+.glass,
+.cs-glass {
+  background: rgb(255 255 255 / 0.62);
+  -webkit-backdrop-filter: blur(20px) saturate(140%);
+  backdrop-filter: blur(20px) saturate(140%);
+  border: 1px solid rgb(255 255 255 / 0.75);
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.9), var(--cs-shadow);
+}
+.glass-soft,
+.cs-glass-soft {
+  background: rgb(255 255 255 / 0.45);
+  -webkit-backdrop-filter: blur(14px) saturate(140%);
+  backdrop-filter: blur(14px) saturate(140%);
+  border: 1px solid rgb(255 255 255 / 0.7);
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.8), 0 1px 2px rgb(0 0 0 / 0.04);
+}
+/* Dark glass: the black surfaces, made of the same material. */
+.glass-dark {
+  background: rgb(10 10 10 / 0.9);
+  -webkit-backdrop-filter: blur(20px) saturate(140%);
+  backdrop-filter: blur(20px) saturate(140%);
+  border: 1px solid rgb(255 255 255 / 0.12);
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.18), 0 16px 40px rgb(0 0 0 / 0.25);
+}
+/* ClipStack's "dark" glass is its indigo, translucent, with the same highlight. */
+.cs-glass-dark {
+  background: rgb(72 104 232 / 0.92);
+  -webkit-backdrop-filter: blur(20px) saturate(140%);
+  backdrop-filter: blur(20px) saturate(140%);
+  border: 1px solid rgb(255 255 255 / 0.22);
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.3), 0 16px 40px rgb(72 104 232 / 0.3);
+}
+
+/* Soft grey blooms behind the glass, spaced down the page. Decorative,
+   behind everything (the root is isolated, so -1 stays inside the page). */
+.bloom,
+.cs-bloom {
+  position: absolute;
+  z-index: -1;
+  border-radius: 9999px;
+  pointer-events: none;
+  filter: blur(70px);
+}
+
+.clipstack kbd {
+  font: 13px ui-monospace, SFMono-Regular, Menlo, monospace;
+  background: rgb(255 255 255 / 0.7);
+  border: 1px solid rgb(255 255 255 / 0.9);
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.9), 0 1px 2px rgb(0 0 0 / 0.06);
+  padding: 2px 7px;
+  border-radius: 6px;
+  white-space: nowrap;
+}
+.clipstack code {
+  font: 13px ui-monospace, SFMono-Regular, Menlo, monospace;
+  background: var(--color-surface-2);
+  padding: 1px 6px;
+  border-radius: 6px;
+  word-break: break-all;
+}
+.clipstack summary::-webkit-details-marker { display: none; }
+.clipstack summary::after { content: "+"; color: var(--color-muted); font-weight: 400; font-size: 22px; line-height: 1; }
+.clipstack details[open] summary::after { content: "–"; }
+
+/* The orb rings behind the mark. transform+opacity only; still under reduced motion. */
+.cs-ring {
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  border-radius: 9999px;
+  border: 1px solid var(--color-hairline);
+  pointer-events: none;
+}
+@keyframes cs-pulse {
+  0%, 100% { transform: scale(1); opacity: var(--o, 1); }
+  50% { transform: scale(1.035); opacity: calc(var(--o, 1) * 0.6); }
+}
+.cs-ring-pulse { animation: cs-pulse 6s ease-in-out infinite; }
+@media (prefers-reduced-motion: reduce) { .cs-ring-pulse { animation: none; } }
+
+/*
+ * Copy → paste scene (/product/clipstack hero and bookend). One 6.5s loop
+ * shared by every part; each element animates its own slice via delay-free
+ * keyframes on the common timeline. transform and opacity only. Under
+ * prefers-reduced-motion the scene shows its finished state, static.
+ */
+@keyframes cp-select { 0%,8% { transform: scaleX(0); opacity: 0 } 10% { opacity: 1 } 24% { transform: scaleX(1) } 58% { transform: scaleX(1); opacity: 1 } 64%,100% { transform: scaleX(1); opacity: 0 } }
+@keyframes cp-pop-c { 0%,24% { transform: scale(.7); opacity: 0 } 28% { transform: scale(1.06); opacity: 1 } 32% { transform: scale(1) } 42% { opacity: 1 } 48%,100% { transform: scale(.9); opacity: 0 } }
+@keyframes cp-fly { 0%,30% { transform: translate3d(0,0,0) scale(.9); opacity: 0 } 33% { opacity: 1; transform: translate3d(0,0,0) scale(1) } 44% { transform: translate3d(0,58px,0) scale(.96); opacity: 1 } 46%,100% { transform: translate3d(0,58px,0); opacity: 0 } }
+/* The new row keeps its space from the start; only opacity/transform move,
+   so the panel never changes height and never re-lays out. */
+@keyframes cp-row { 0%,44% { transform: translate3d(0,-8px,0); opacity: 0 } 48% { transform: translate3d(0,0,0); opacity: 1 } 100% { transform: translate3d(0,0,0); opacity: 1 } }
+@keyframes cp-pop-v { 0%,56% { transform: scale(.7); opacity: 0 } 60% { transform: scale(1.06); opacity: 1 } 64% { transform: scale(1) } 76% { opacity: 1 } 82%,100% { transform: scale(.9); opacity: 0 } }
+/* Typewriter as a stepped clip-path reveal: no glyph distortion, no layout. */
+@keyframes cp-type { 0%,62% { clip-path: inset(0 100% 0 0) } 84%,100% { clip-path: inset(0 0 0 0) } }
+@keyframes cp-caret { 0%,62% { opacity: 0 } 63%,70% { opacity: 1 } 71%,78% { opacity: 0 } 79%,86% { opacity: 1 } 87%,94% { opacity: 0 } 95%,100% { opacity: 1 } }
+.cp { --cp: 6.5s; }
+/* No backdrop-filter on the animated panel itself: a blur has to be
+   recomputed on every animated frame, which is the stutter. The glass stays
+   on the sections around it. */
+.cp-panel {
+  background: rgb(255 255 255 / 0.88);
+  border: 1px solid rgb(255 255 255 / 0.9);
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.9), var(--cs-shadow, 0 12px 32px rgb(0 0 0 / 0.06));
+  transform: translateZ(0);
+}
+.cp-select, .cp-key-c, .cp-fly, .cp-row, .cp-key-v, .cp-type, .cp-caret { will-change: transform, opacity; backface-visibility: hidden; }
+.cp-select { transform-origin: left; animation: cp-select var(--cp) ease-in-out infinite; }
+.cp-key-c { animation: cp-pop-c var(--cp) ease-out infinite; }
+.cp-fly { animation: cp-fly var(--cp) cubic-bezier(.4,0,.2,1) infinite; }
+.cp-row { animation: cp-row var(--cp) ease-out infinite; }
+.cp-key-v { animation: cp-pop-v var(--cp) ease-out infinite; }
+.cp-type { animation: cp-type var(--cp) steps(28, end) infinite; }
+.cp-caret { animation: cp-caret var(--cp) steps(1, end) infinite; }
+@media (prefers-reduced-motion: reduce) {
+  .cp-select, .cp-key-c, .cp-fly, .cp-key-v, .cp-caret { animation: none; opacity: 0; }
+  .cp-row { animation: none; transform: none; opacity: 1; }
+  .cp-type { animation: none; clip-path: none; }
 }

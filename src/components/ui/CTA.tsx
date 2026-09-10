@@ -37,7 +37,7 @@ export default function CTA({
     <div
       className={cn(
         variant === "card" &&
-          "rounded-card border border-border bg-surface p-8 md:p-10",
+          "glass rounded-[20px] p-8 md:p-10",
       )}
     >
       <Heading

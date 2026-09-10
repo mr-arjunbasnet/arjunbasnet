@@ -19,8 +19,12 @@ export default function HeroBackground() {
     return () => window.removeEventListener("mousemove", handler);
   }, [mouseX, mouseY]);
 
+  // -z-10 keeps this behind the hero content. Without it the absolutely
+  // positioned layer paints ABOVE the (unpositioned) content, and the bottom
+  // fade covered the lower edge of the hero CTAs. The hero section must be
+  // `isolate` so -z-10 stays inside it.
   return (
-    <div className="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden>
+    <div className="absolute inset-0 -z-10 overflow-hidden pointer-events-none" aria-hidden>
       {/* Dot grid */}
       <div
         className="absolute inset-0 opacity-[0.35]"

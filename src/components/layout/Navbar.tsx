@@ -35,7 +35,7 @@ export default function Navbar() {
       className={cn(
         "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
         scrolled
-          ? "bg-bg/95 backdrop-blur-sm border-b border-border"
+          ? "glass-soft border-b border-white/70"
           : "bg-transparent"
       )}
     >
@@ -71,7 +71,7 @@ export default function Navbar() {
           ))}
           <Link
             href="/contact"
-            className="text-sm font-medium px-4 py-2 bg-brand bg-[length:200%_100%] bg-left hover:bg-right text-white rounded-full transition-[background-position] duration-500"
+            className="text-sm font-medium px-4 py-2 bg-brand bg-[length:200%_100%] bg-left hover:bg-right text-white rounded-xl transition-[background-position] duration-500"
           >
             Get in touch
           </Link>
@@ -89,7 +89,7 @@ export default function Navbar() {
 
       {/* Mobile menu */}
       {open && (
-        <div className="md:hidden bg-bg border-t border-border px-6 py-6 flex flex-col gap-5">
+        <div className="glass md:hidden border-t border-white/70 px-6 py-6 flex flex-col gap-5">
           {links.map((l) => (
             <Link
               key={l.href}
@@ -104,7 +104,7 @@ export default function Navbar() {
           ))}
           <Link
             href="/contact"
-            className="text-sm font-medium px-4 py-2.5 bg-brand text-white rounded-full text-center"
+            className="text-sm font-medium px-4 py-2.5 bg-brand text-white rounded-xl text-center"
           >
             Get in touch
           </Link>

@@ -21,11 +21,12 @@ export default function Eyebrow({
   return (
     <p
       className={cn(
-        "text-xs font-semibold uppercase tracking-label",
+        "glass-soft inline-flex items-center gap-2 rounded-full px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.14em]",
         tones[tone],
         className,
       )}
     >
+      <span aria-hidden className="h-1.5 w-1.5 rounded-full bg-primary" />
       {children}
     </p>
   );

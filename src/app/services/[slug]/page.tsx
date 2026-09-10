@@ -89,7 +89,7 @@ export default async function ServicePage({
       />
 
       {/* ─── Hero ─── */}
-      <section className="relative overflow-hidden pt-16 pb-12 md:pt-24 md:pb-16">
+      <section className="relative isolate overflow-hidden pt-16 pb-12 md:pt-24 md:pb-16">
         <HeroBackground />
         <Container>
           <div className="mb-5 flex items-center gap-3">
