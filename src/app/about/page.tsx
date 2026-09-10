@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { truncate } from "@/lib/seo";
 import Link from "next/link";
 import { ArrowRight, MapPin, Sparkles, Users, Globe2 } from "lucide-react";
 import AnimateIn from "@/components/ui/AnimateIn";
@@ -9,7 +10,7 @@ import JsonLd from "@/components/seo/JsonLd";
 export const metadata: Metadata = {
   title: "About — Project Manager & AI Engineer in Kathmandu",
   description:
-    "Background of Arjun Basnet — three years at Makura Creations delivering 100+ products, B.Sc. CSIT from Tribhuvan University, peer-reviewed computer vision publication, two-time ICC Digital Fan Engagement Award winner. Education and work timeline from 2003 to present.",
+    truncate("Background of Arjun Basnet — three years at Makura Creations delivering 100+ products, B.Sc. CSIT from Tribhuvan University, peer-reviewed computer vision publication, two-time ICC Digital Fan Engagement Award winner. Education and work timeline from 2003 to present.", 158),
   keywords: [
     "Arjun Basnet about",
     "Project Manager biography Nepal",

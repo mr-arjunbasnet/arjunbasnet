@@ -51,7 +51,7 @@ export default function Card({
 
   if (href) {
     return (
-      <Link href={href as Route} className={cn(classes, "group")}>
+      <Link href={href as Route} className={cn(classes, "group")} {...(track ? { "data-track": track, "data-track-label": trackLabel } : {})}>
         {children}
       </Link>
     );
