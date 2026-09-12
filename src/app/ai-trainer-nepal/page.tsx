@@ -566,8 +566,8 @@ export default function AiTrainerNepal() {
         </div>
       </Section>
 
-      {/* ─── §14 Credentials — a timeline, every node linked to its evidence ─── */}
-      <Section border="top" size="lg" bg="surface">
+      {/* ─── §14 Credentials — on Night ─── */}
+      <Section size="lg" bg="night">
         <div className="grid grid-cols-1 gap-12 lg:grid-cols-[1fr_1.4fr] lg:gap-16">
           <AnimateIn>
             <Eyebrow className="mb-4">Credentials</Eyebrow>

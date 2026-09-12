@@ -1,0 +1,14 @@
+:root{
+  --arjun-aurora-blue: #4F7BFF;
+  --arjun-aurora-violet: #8B5CF6;
+  --arjun-aurora-magenta: #D946EF;
+  --arjun-coral-glow: #FF7A8B;
+  --arjun-deep-indigo: #221A5C;
+  --arjun-night: #120F2E;
+  --arjun-warm-white: #FAF8F6;
+  --arjun-pure-white: #FFFFFF;
+  --arjun-iris: #5B4BDB;
+  --arjun-lavender: #C9BEFF;
+  --arjun-blush: #F8C9E7;
+  --arjun-aurora: linear-gradient(135deg,#4F7BFF,#8B5CF6 52%,#D946EF);
+}

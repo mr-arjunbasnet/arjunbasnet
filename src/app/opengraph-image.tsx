@@ -10,7 +10,7 @@ import { SITE } from "@/content/site";
  * Read once at module load; this route is generated at build time.
  */
 const MARK = `data:image/svg+xml;base64,${fs
-  .readFileSync(path.join(process.cwd(), "public/brand/arjun-mark.svg"))
+  .readFileSync(path.join(process.cwd(), "public/brand/mark/ARJUN_mark_full.svg"))
   .toString("base64")}`;
 
 export const alt = `${SITE.name} — ${SITE.jobTitle}`;
@@ -26,7 +26,7 @@ export default function OG() {
           height: "100%",
           display: "flex",
           flexDirection: "column",
-          background: "#FBFBFD",
+          background: "#FAF8F6",
           padding: "80px",
           position: "relative",
         }}
@@ -49,7 +49,7 @@ export default function OG() {
             width: "16px",
             height: "16px",
             borderRadius: "9999px",
-            background: "#7C3AED",
+            background: "#8B5CF6",
             display: "flex",
           }}
         />
@@ -61,7 +61,7 @@ export default function OG() {
             width: "10px",
             height: "10px",
             borderRadius: "9999px",
-            background: "#2563EB",
+            background: "#5B4BDB",
             display: "flex",
           }}
         />
@@ -72,7 +72,7 @@ export default function OG() {
             display: "flex",
             alignItems: "center",
             gap: "12px",
-            color: "#5B6178",
+            color: "#6B6790",
             fontSize: 20,
             fontWeight: 600,
             letterSpacing: "3px",
@@ -84,7 +84,7 @@ export default function OG() {
               width: "8px",
               height: "8px",
               borderRadius: "9999px",
-              background: "#7C3AED",
+              background: "#8B5CF6",
               display: "flex",
             }}
           />
@@ -93,7 +93,7 @@ export default function OG() {
             style={{
               width: "1px",
               height: "16px",
-              background: "#DFE2F0",
+              background: "#E6E1F2",
               display: "flex",
             }}
           />
@@ -108,7 +108,7 @@ export default function OG() {
           style={{
             fontSize: 180,
             fontWeight: 400,
-            color: "#10132A",
+            color: "#221A5C",
             lineHeight: 1,
             letterSpacing: "-6px",
             fontFamily: "serif",
@@ -125,7 +125,7 @@ export default function OG() {
           style={{
             width: "100%",
             height: "1px",
-            background: "#DFE2F0",
+            background: "#E6E1F2",
             marginTop: "32px",
             marginBottom: "20px",
             display: "flex",
@@ -143,7 +143,7 @@ export default function OG() {
           <div
             style={{
               fontSize: 28,
-              color: "#10132A",
+              color: "#221A5C",
               fontWeight: 500,
               display: "flex",
             }}
@@ -153,7 +153,7 @@ export default function OG() {
           <div
             style={{
               fontSize: 18,
-              color: "#2563EB",
+              color: "#5B4BDB",
               fontWeight: 600,
               letterSpacing: "1px",
               display: "flex",

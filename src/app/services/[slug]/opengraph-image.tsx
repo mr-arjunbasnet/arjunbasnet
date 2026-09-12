@@ -40,7 +40,7 @@ export default async function Image({
           display: "flex",
           flexDirection: "column",
           justifyContent: "space-between",
-          backgroundColor: "#FBFBFD",
+          backgroundColor: "#FAF8F6",
           padding: "72px",
           position: "relative",
         }}
@@ -53,7 +53,7 @@ export default async function Image({
             width: 560,
             height: 560,
             borderRadius: "50%",
-            border: "2px solid #DFE2F0",
+            border: "2px solid #E6E1F2",
             display: "flex",
           }}
         />
@@ -65,7 +65,7 @@ export default async function Image({
             width: 400,
             height: 400,
             borderRadius: "50%",
-            border: "2px solid #DFE2F0",
+            border: "2px solid #E6E1F2",
             display: "flex",
           }}
         />
@@ -76,7 +76,7 @@ export default async function Image({
               width: 12,
               height: 12,
               borderRadius: 6,
-              backgroundColor: "#7C3AED",
+              backgroundColor: "#8B5CF6",
               display: "flex",
             }}
           />
@@ -85,7 +85,7 @@ export default async function Image({
               fontSize: 22,
               letterSpacing: 3,
               textTransform: "uppercase",
-              color: "#5B6178",
+              color: "#6B6790",
               fontWeight: 600,
             }}
           >
@@ -98,7 +98,7 @@ export default async function Image({
             style={{
               fontSize: 66,
               lineHeight: 1.08,
-              color: "#10132A",
+              color: "#221A5C",
               fontWeight: 700,
               marginBottom: 24,
               display: "flex",
@@ -107,7 +107,7 @@ export default async function Image({
             {heading}
           </div>
           <div
-            style={{ fontSize: 30, color: "#5B6178", lineHeight: 1.4, display: "flex" }}
+            style={{ fontSize: 30, color: "#6B6790", lineHeight: 1.4, display: "flex" }}
           >
             {tagline}
           </div>
@@ -118,14 +118,14 @@ export default async function Image({
             display: "flex",
             alignItems: "center",
             justifyContent: "space-between",
-            borderTop: "2px solid #DFE2F0",
+            borderTop: "2px solid #E6E1F2",
             paddingTop: 28,
           }}
         >
-          <span style={{ fontSize: 26, color: "#10132A", fontWeight: 600 }}>
+          <span style={{ fontSize: 26, color: "#221A5C", fontWeight: 600 }}>
             Arjun Basnet
           </span>
-          <span style={{ fontSize: 24, color: "#2563EB", fontWeight: 500 }}>
+          <span style={{ fontSize: 24, color: "#5B4BDB", fontWeight: 500 }}>
             arjun-basnet.com.np
           </span>
         </div>

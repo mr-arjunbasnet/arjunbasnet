@@ -23,9 +23,10 @@ re-litigate.
 
 ## Invariants
 
-1. **`/api/contact` is the only dynamic route.** Check the build route table
-   after any page change. A second `ƒ` means something read `searchParams`,
-   `cookies()`, or `headers()` in a page tree. `useSearchParams` in a client
+1. **Exactly two dynamic routes: `/api/contact` and `/api/assistant`.** Both
+   are API routes and both are deliberate. Check the build route table after
+   any page change. A third `ƒ`, or a `ƒ` on a page, means something read
+   `searchParams`, `cookies()`, or `headers()` in a page tree. `useSearchParams` in a client
    component needs a Suspense boundary or the page drops out of prerendering.
 
 2. **Content lives in `src/content/`, never in page components.** Adding a

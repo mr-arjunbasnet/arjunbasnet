@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Geist, Geist_Mono, DM_Serif_Display } from "next/font/google";
+import { Montserrat, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
@@ -7,6 +7,7 @@ import SiteChrome from "@/components/layout/SiteChrome";
 import SiteBackdrop from "@/components/layout/SiteBackdrop";
 import ScrollProgress from "@/components/ui/ScrollProgress";
 import WhatsAppFab from "@/components/lead/WhatsAppFab";
+import AssistantFab from "@/components/lead/AssistantFab";
 import ClickTracker from "@/components/lead/ClickTracker";
 import JsonLd from "@/components/seo/JsonLd";
 import { GoogleAnalytics } from "@next/third-parties/google";
@@ -18,9 +19,13 @@ import {
   websiteSchema,
 } from "@/lib/schema";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+// Brand typeface (guidelines §07): one geometric family for logo, headings,
+// interface and documents. Variable, so 400/500/600 come from one file.
+const montserrat = Montserrat({
+  variable: "--font-montserrat",
   subsets: ["latin"],
+  weight: "variable",
+  display: "swap",
 });
 
 const geistMono = Geist_Mono({
@@ -28,16 +33,11 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-const dmSerif = DM_Serif_Display({
-  variable: "--font-dm-serif",
-  subsets: ["latin"],
-  weight: "400",
-});
 
 const siteUrl = SITE.url;
 
 export const viewport: Viewport = {
-  themeColor: "#2563EB",
+  themeColor: "#221A5C",
   colorScheme: "light",
 };
 
@@ -110,7 +110,7 @@ export default function RootLayout({
       // for route transitions when this attribute is present — without it,
       // navigating to a new page slow-scrolls to the top instead of jumping.
       data-scroll-behavior="smooth"
-      className={`${geistSans.variable} ${geistMono.variable} ${dmSerif.variable} h-full antialiased`}
+      className={`${montserrat.variable} ${geistMono.variable} h-full antialiased`}
     >
       <head>
         {/* GA resolves on every page; opening the connection early recovers

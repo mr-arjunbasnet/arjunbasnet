@@ -20,7 +20,7 @@ import ServiceArt from "@/components/ui/ServiceArt";
 import AnimateIn from "@/components/ui/AnimateIn";
 import CountUp from "@/components/ui/CountUp";
 import HeroBackground from "@/components/ui/HeroBackground";
-import ToolOrbit from "@/components/ui/ToolOrbit";
+import HeroMark from "@/components/ui/HeroMark";
 import Headshot from "@/components/ui/Headshot";
 
 const title =
@@ -126,9 +126,10 @@ export default function Home() {
               </div>
             </div>
 
-            <AnimateIn delay={0.15} className="hidden lg:block">
-              <ToolOrbit />
-            </AnimateIn>
+            {/* Not wrapped in AnimateIn: above the fold, paints with the document. */}
+            <div className="hidden lg:block">
+              <HeroMark />
+            </div>
           </div>
         </Container>
       </section>
@@ -249,8 +250,8 @@ export default function Home() {
         </AnimateIn>
       </Section>
 
-      {/* ─── Selected work ─── */}
-      <Section border="top" size="lg" bg="surface">
+      {/* ─── Selected work — on Night (brand §09: dark ground) ─── */}
+      <Section size="lg" bg="night">
         <AnimateIn>
           <Eyebrow className="mb-4">Selected work</Eyebrow>
           <Heading level={2} size="lg" className="mb-10 max-w-2xl">

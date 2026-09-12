@@ -59,6 +59,12 @@ const nextConfig: NextConfig = {
     ];
   },
 
+  // The brand identity page is a self-contained static HTML from the kit,
+  // served from public/brand/index.html at a clean address.
+  async rewrites() {
+    return [{ source: "/brand", destination: "/brand/index.html" }];
+  },
+
   async redirects() {
     return [
       // Acronym aliases: people type /services/aeo, the canonical page is the

@@ -3,7 +3,7 @@ import Container from "./Container";
 
 interface SectionProps extends React.HTMLAttributes<HTMLElement> {
   size?: "sm" | "md" | "lg";
-  bg?: "default" | "surface" | "surface-2" | "primary";
+  bg?: "default" | "surface" | "surface-2" | "primary" | "night";
   border?: "none" | "top" | "bottom" | "y";
   /** Set false when the section needs to bleed full-width. */
   contained?: boolean;
@@ -26,6 +26,8 @@ const backgrounds = {
   surface: "bg-surface",
   "surface-2": "bg-surface-2",
   primary: "bg-primary text-primary-fg",
+  /* The brand's dark ground — a token scope, see `.night` in globals.css. */
+  night: "night",
 } as const;
 
 const borders = {

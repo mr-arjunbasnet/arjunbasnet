@@ -17,8 +17,8 @@
  * its own palette in melos/lib/themes.ts).
  */
 @theme {
-  --font-display: var(--font-dm-serif);
-  --font-sans: var(--font-geist-sans);
+  --font-display: var(--font-montserrat);
+  --font-sans: var(--font-montserrat);
   --font-mono: var(--font-geist-mono);
 
   /*
@@ -35,45 +35,39 @@
   /* Cool light grey, not near-white: glass cards need a ground darker than
      themselves to read. Matched to the ClipStack page's #f2f2f2 in tone,
      with the site's blue cast. Bands (surface) sit a step darker still. */
-  --color-bg: #E9EBF2;
-  --color-fg: #10132A;
   /*
-   * Brand palette, 2026-09-08 — derived from the owner's logo: a ring running
-   * blue → indigo → violet. Primary is the mark's blue at the darkness that
-   * clears 4.5:1 on white; secondary is its violet, likewise text-safe. The
-   * previous navy #1A3FA8 was the old identity.
-   *
-   * Contrast (measured, see PROJECT-CONTEXT §15): every text pair ≥ 4.5:1.
+   * ARJUN · Variant Aurora (docs/Updated Branding, September 2026). Warm White
+   * canvas, Deep Indigo text, Iris for links and actions, the Aurora gradient
+   * reserved for the mark, hero moments and the primary action (guidelines
+   * §06: Warm White 60 · Indigo/Night 25 · Aurora 10). Measured: Indigo on
+   * Warm White 14.5:1, Iris on Warm White 5.7:1, Lavender on Night 10.9:1.
+   * Bands and surfaces are Lavender/Blush tints so glass has a ground.
    */
-  /* Deepened from #2563EB when the canvas went grey (the brighter blue is
-     4.2:1 on #E9EBF2). Buttons keep the #2563EB→#7C3AED gradient — white text
-     5.17:1 at its lightest — and the logo is literal and unchanged. */
-  --color-primary: #1D4ED8;
-  /* Hover/press. Named "light" for historical reasons — it is the darker
-     step, because white text on a lighter blue drops below AA. */
-  --color-primary-light: #1E40AF;
-  --color-secondary: #7C3AED;
-  /* ARTWORK ONLY — the focal point in each drawn scene. A light violet reads
-     as a glow on the blue masses and a highlight on the canvas. 3.3:1 on
-     white: never text. All text uses of accent route to primary. */
-  --color-accent: #9F7AEA;
-  --color-muted: #5B6178;
-  --color-border: #CDD2DF;
-  --color-surface: #E2E5EE;
-  /* A tint for chips and art stages only. Brand-blue text on it is 4.07:1 —
-     below AA — so never put text-primary on bg-surface-2. */
-  --color-surface-2: #D9DDE8;
-
-  /* Semantic aliases consumed by the primitives */
-  --color-fg-muted: #5B6178;
+  --color-bg: #FAF8F6;
+  --color-fg: #221A5C;
+  --color-primary: #5B4BDB;
+  --color-primary-light: #4A3BC4;
+  --color-secondary: #8B5CF6;
+  --color-accent: #D946EF;
+  --color-muted: #6B6790;
+  --color-border: #E6E1F2;
+  --color-surface: #F4F1FA;
+  --color-surface-2: #EDE8F7;
+  --color-fg-muted: #6B6790;
   --color-primary-fg: #FFFFFF;
-  --color-hairline: #AEB5C8;
+  --color-hairline: #CFC7E6;
+  --color-night: #120F2E;
+  --color-indigo: #221A5C;
+  --color-lavender: #C9BEFF;
+  --color-blush: #F8C9E7;
+  --color-coral: #FF7A8B;
 
   /* The brand gradient, as a utility: bg-brand. Both ends keep white text
      above 5:1, so it is safe under button and band copy. */
   /* Two stops, not the ring's three: the indigo midpoint drops white text to
      4.47:1, while a straight blue→violet blend keeps it above 5.7 throughout. */
-  --background-image-brand: linear-gradient(135deg, #2563EB 0%, #7C3AED 100%);
+  /* The Aurora gradient, the brand's own asset — 135°, blue → violet 52% → magenta. */
+  --background-image-brand: linear-gradient(135deg, #4F7BFF 0%, #8B5CF6 52%, #D946EF 100%);
 
   /* Scale tokens */
   --radius-card: 0.75rem;
@@ -656,15 +650,15 @@ html {
 }
 
 body {
-  background-color: #E9EBF2;
-  color: #10132A;
+  background-color: #FAF8F6;
+  color: #221A5C;
   font-family: var(--font-geist-sans), system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 ::selection {
-  background-color: #2563EB;
+  background-color: #5B4BDB;
   color: #ffffff;
 }
 
@@ -673,14 +667,14 @@ body {
   width: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: #E9EBF2;
+  background: #FAF8F6;
 }
 ::-webkit-scrollbar-thumb {
   background: #BFC5D2;
   border-radius: 3px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #2563EB;
+  background: #5B4BDB;
 }
 
 /*
@@ -845,4 +839,48 @@ body {
   .cp-select, .cp-key-c, .cp-fly, .cp-key-v, .cp-caret { animation: none; opacity: 0; }
   .cp-row { animation: none; transform: none; opacity: 1; }
   .cp-type { animation: none; clip-path: none; }
+}
+
+/*
+ * Night — the brand's dark ground (guidelines §06/§09: Night carries the
+ * reversed logo; Lavender is the text on dark). A token scope, like
+ * `.svc-cool` and `.clipstack`: every utility inside recolours — headings
+ * white, muted copy Lavender, Iris links Lavender, glass to dark glass.
+ * Used by Section bg="night" and the footer.
+ */
+.night {
+  --color-bg: #120F2E;
+  --color-fg: #FFFFFF;
+  --color-muted: #C9BEFF;
+  --color-fg-muted: #C9BEFF;
+  --color-primary: #C9BEFF;
+  --color-primary-light: #E3DCFF;
+  --color-primary-fg: #120F2E;
+  --color-surface: #1B1640;
+  --color-surface-2: #241E52;
+  --color-border: rgb(255 255 255 / 0.12);
+  --color-hairline: rgb(255 255 255 / 0.22);
+  background-color: #120F2E;
+  color: #FFFFFF;
+}
+.night .glass,
+.night .glass-soft {
+  background: rgb(255 255 255 / 0.06);
+  border-color: rgb(255 255 255 / 0.14);
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.12), 0 12px 32px rgb(0 0 0 / 0.35);
+}
+.night .glass:hover { background: rgb(255 255 255 / 0.1); }
+
+/* Hero mark reveal — the branding page's own keyframes, then a float. */
+@keyframes hm-rise { from { opacity: 0; transform: translate(var(--dx), var(--dy)); } to { opacity: 1; transform: none; } }
+@keyframes hm-spark { 0% { opacity: 0; transform: scale(0.2) rotate(-40deg); } 100% { opacity: 1; transform: none; } }
+@keyframes hm-float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+@keyframes hm-twinkle { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.1); } }
+.hm-piece { opacity: 0; transform-box: fill-box; transform-origin: center; animation: hm-rise 0.9s cubic-bezier(0.2, 0.7, 0.2, 1) forwards; }
+.hm-p1 { --dx: -40px; --dy: 66px; animation-delay: 0.1s; }
+.hm-p2 { --dx: -40px; --dy: 66px; animation-delay: 0.25s; }
+.hm-p3 { --dx: 40px; --dy: 66px; animation: hm-spark 0.9s cubic-bezier(0.2, 0.7, 0.2, 1) 0.45s forwards, hm-twinkle 4s ease-in-out 1.6s infinite; }
+.hm-float { animation: hm-float 7s ease-in-out 1.4s infinite; }
+@media (prefers-reduced-motion: reduce) {
+  .hm-piece, .hm-p3, .hm-float { animation: none; opacity: 1; transform: none; }
 }

@@ -1,0 +1,133 @@
+{
+  "name": "ARJUN, Variant Aurora",
+  "colors": [
+    {
+      "name": "Aurora Blue",
+      "hex": "#4F7BFF",
+      "rgb": [
+        79,
+        123,
+        255
+      ],
+      "use": "Gradient start"
+    },
+    {
+      "name": "Aurora Violet",
+      "hex": "#8B5CF6",
+      "rgb": [
+        139,
+        92,
+        246
+      ],
+      "use": "Gradient mid"
+    },
+    {
+      "name": "Aurora Magenta",
+      "hex": "#D946EF",
+      "rgb": [
+        217,
+        70,
+        239
+      ],
+      "use": "Gradient end"
+    },
+    {
+      "name": "Coral Glow",
+      "hex": "#FF7A8B",
+      "rgb": [
+        255,
+        122,
+        139
+      ],
+      "use": "Gradient tail accent only"
+    },
+    {
+      "name": "Deep Indigo",
+      "hex": "#221A5C",
+      "rgb": [
+        34,
+        26,
+        92
+      ],
+      "use": "Text and one-colour logo"
+    },
+    {
+      "name": "Night",
+      "hex": "#120F2E",
+      "rgb": [
+        18,
+        15,
+        46
+      ],
+      "use": "Dark backgrounds"
+    },
+    {
+      "name": "Warm White",
+      "hex": "#FAF8F6",
+      "rgb": [
+        250,
+        248,
+        246
+      ],
+      "use": "Light backgrounds"
+    },
+    {
+      "name": "Pure White",
+      "hex": "#FFFFFF",
+      "rgb": [
+        255,
+        255,
+        255
+      ],
+      "use": "Reversed logo"
+    },
+    {
+      "name": "Iris",
+      "hex": "#5B4BDB",
+      "rgb": [
+        91,
+        75,
+        219
+      ],
+      "use": "Slogan, links"
+    },
+    {
+      "name": "Lavender",
+      "hex": "#C9BEFF",
+      "rgb": [
+        201,
+        190,
+        255
+      ],
+      "use": "Text on dark"
+    },
+    {
+      "name": "Blush",
+      "hex": "#F8C9E7",
+      "rgb": [
+        248,
+        201,
+        231
+      ],
+      "use": "Tints, surfaces"
+    }
+  ],
+  "gradient": {
+    "name": "Aurora",
+    "angle": 135,
+    "stops": [
+      [
+        "#4F7BFF",
+        0
+      ],
+      [
+        "#8B5CF6",
+        52
+      ],
+      [
+        "#D946EF",
+        100
+      ]
+    ]
+  }
+}

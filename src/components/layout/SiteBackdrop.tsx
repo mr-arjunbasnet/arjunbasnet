@@ -5,11 +5,11 @@
  * pages get them too. Pure CSS, painted with the document.
  */
 const BLOOMS: { top: string; left?: string; right?: string; w: number; h: number; c: string }[] = [
-  { top: "1%", left: "-8%", w: 640, h: 640, c: "rgb(37 99 235 / 0.16)" },
-  { top: "4%", right: "-6%", w: 520, h: 520, c: "rgb(124 58 237 / 0.14)" },
+  { top: "1%", left: "-8%", w: 640, h: 640, c: "rgb(201 190 255 / 0.55)" },
+  { top: "4%", right: "-6%", w: 520, h: 520, c: "rgb(248 201 231 / 0.5)" },
   { top: "24%", left: "22%", w: 720, h: 480, c: "rgb(255 255 255 / 0.9)" },
-  { top: "42%", right: "-8%", w: 560, h: 560, c: "rgb(37 99 235 / 0.14)" },
-  { top: "62%", left: "-10%", w: 620, h: 620, c: "rgb(124 58 237 / 0.12)" },
+  { top: "42%", right: "-8%", w: 560, h: 560, c: "rgb(139 92 246 / 0.16)" },
+  { top: "62%", left: "-10%", w: 620, h: 620, c: "rgb(79 123 255 / 0.14)" },
   { top: "84%", right: "12%", w: 600, h: 460, c: "rgb(255 255 255 / 0.9)" },
 ];
 

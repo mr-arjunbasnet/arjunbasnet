@@ -1,61 +1,46 @@
 import { cn } from "@/lib/utils";
 
 /**
- * The mark — redrawn as vector from the owner's brand sheet (2026-09-08).
+ * The ARJUN mark — Variant Aurora, generated from the kit's own file
+ * (public/brand/mark/ARJUN_mark_full.svg): gradient definitions and paths
+ * verbatim. Guidelines §04/§10 — never redraw, re-space, recolour or move
+ * the spark — so nothing here is hand-drawn. Three gradients, not one: the
+ * A, the ribbon (with its coral tail) and the spark each carry their own.
  *
- * A ring on a blue→violet gradient, a bow with its string drawn taut through
- * the centre, a four-point star at the centre, and a node at each pole. The
- * sheet reads it as: arrow (direction), bow (discipline), star (guidance),
- * circle (wholeness), the centre (focus).
- *
- * The gradient stops are literal hex on purpose. A logo is the one thing on
- * the site that must NOT re-theme with the palette — it is the fixed point
- * the palette is derived from — so this is a deliberate exemption from the
- * tokens-only rule, like WhatsApp's brand green. The string and star are
- * `currentColor`, so the mark sits on light chrome (dark internals) and on the
- * gradient bands (white internals) without a second asset.
- *
- * Standalone files for use off-site live in public/brand/.
+ * `tone`: `full` renders the kit gradients; `white` and `indigo` are the §05
+ * one-colour colourways for Aurora/photographic and formal grounds.
  */
 export default function LogoMark({
   size = 32,
+  tone = "full",
   className,
 }: {
   size?: number;
+  tone?: "full" | "white" | "indigo";
   className?: string;
 }) {
+  const flat = tone === "white" ? "#FFFFFF" : tone === "indigo" ? "#221A5C" : null;
+  if (flat) {
+    return (
+      <svg width={size} height={size} viewBox="0 0 702.0 684.0" aria-hidden className={cn("shrink-0", className)} fill={flat}>
+        <g transform="translate(14.00 14.00) scale(1.00000) translate(-66 -40)">
+      <path d="M68,694 L258,388 C272,368 289,361 306,361 C323,361 340,370 352,388 C400,468 470,588 531,694 C470,694 420,684 388,650 L301,520 L226,630 C206,664 168,694 100,694 Z"/>
+      <path d="M737,694 L467,250 C458,232 450,214 440,203 C432,191 414,189 402,199 L360,240 C344,256 340,286 354,310 L557,630 C580,662 625,694 690,694 Z"/>
+      <path d="M588,42 Q596,130 664,138 Q596,146 588,228 Q580,146 512,138 Q580,130 588,42 Z"/>
+        </g>
+      </svg>
+    );
+  }
   return (
-    <svg
-      width={size}
-      height={size}
-      viewBox="0 0 64 64"
-      fill="none"
-      aria-hidden
-      className={cn("shrink-0", className)}
-    >
+    <svg width={size} height={size} viewBox="0 0 702.0 684.0" aria-hidden className={cn("shrink-0", className)}>
       <defs>
-        <linearGradient id="arjun-ring" x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0" stopColor="#3B82F6" />
-          <stop offset="0.55" stopColor="#6366F1" />
-          <stop offset="1" stopColor="#8B5CF6" />
-        </linearGradient>
+        <linearGradient id="ls4l" gradientUnits="userSpaceOnUse" x1="68" y1="694" x2="531" y2="694"><stop offset="0" stopColor="#3E86FF"/><stop offset=".36" stopColor="#6C63F7"/><stop offset=".58" stopColor="#7C4DF4"/><stop offset=".8" stopColor="#9D4EF0"/><stop offset="1" stopColor="#C451E8"/></linearGradient><linearGradient id="ls4b" gradientUnits="userSpaceOnUse" x1="350" y1="220" x2="690" y2="690"><stop offset="0" stopColor="#8A5CF6"/><stop offset=".5" stopColor="#D23FEA"/><stop offset=".78" stopColor="#E04BD0"/><stop offset="1" stopColor="#FF7A8B"/></linearGradient><linearGradient id="ls4s" gradientUnits="userSpaceOnUse" x1="512" y1="200" x2="664" y2="80"><stop offset="0" stopColor="#4F7BFF"/><stop offset=".5" stopColor="#9B5CF4"/><stop offset="1" stopColor="#E545D6"/></linearGradient>
       </defs>
-      <circle cx="32" cy="32" r="22.5" stroke="url(#arjun-ring)" strokeWidth="3" />
-      <circle cx="32" cy="7" r="3" fill="#3B82F6" />
-      <circle cx="32" cy="57" r="3" fill="#8B5CF6" />
-      <path
-        d="M32 15.5 C 23.5 24, 23.5 40, 32 48.5"
-        stroke="currentColor"
-        strokeWidth="1.3"
-        strokeLinecap="round"
-        opacity="0.45"
-      />
-      <path d="M32 15.5 V48.5" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
-      <circle cx="32" cy="32" r="7.5" fill="url(#arjun-ring)" opacity="0.22" />
-      <path
-        d="M32 25.5 L33.7 30.3 L38.5 32 L33.7 33.7 L32 38.5 L30.3 33.7 L25.5 32 L30.3 30.3 Z"
-        fill="currentColor"
-      />
+      <g transform="translate(14.00 14.00) scale(1.00000) translate(-66 -40)">
+      <path d="M68,694 L258,388 C272,368 289,361 306,361 C323,361 340,370 352,388 C400,468 470,588 531,694 C470,694 420,684 388,650 L301,520 L226,630 C206,664 168,694 100,694 Z" fill="url(#ls4l)"/>
+      <path d="M737,694 L467,250 C458,232 450,214 440,203 C432,191 414,189 402,199 L360,240 C344,256 340,286 354,310 L557,630 C580,662 625,694 690,694 Z" fill="url(#ls4b)"/>
+      <path d="M588,42 Q596,130 664,138 Q596,146 588,228 Q580,146 512,138 Q580,130 588,42 Z" fill="url(#ls4s)"/>
+      </g>
     </svg>
   );
 }

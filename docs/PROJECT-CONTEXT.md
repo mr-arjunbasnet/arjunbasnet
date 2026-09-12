@@ -588,3 +588,32 @@ configuration** the code cannot do.
 and Search Console as not connected, so event counts and URL-inspection /
 sitemap submission wait on the owner authorising both. Event names to read
 once connected are the ones above.
+
+## 20. Brand refresh — ARJUN · Variant Aurora, 2026-09-12
+
+The owner delivered a full brand kit in `docs/Updated Branding/` (guidelines
+PDF, logo system, colours, Montserrat, favicons, social, an identity web page
+and a voice-orb page). Applied site-wide, verified locally.
+
+| Decision | Reasoning |
+|---|---|
+| **`LogoMark` is generated from the kit's SVG**, defs and paths verbatim | Guidelines §04/§10: never redraw, recolour or move the spark. The mark carries three gradients (A, ribbon with coral tail, spark), not one. Colourways `full` / `white` / `indigo` per §05. |
+| Kit staged under `public/brand/` (vectors, 1000px rasters, icons, favicons, font, colours, PDF, trimmed zip 14 MB) | Downloadable assets and the identity page's links. 4000/2048px rasters excluded from the zip to keep the repo sane. |
+| **`/brand`** serves the kit's identity HTML (`public/brand/index.html`, rewrite) | Self-contained page from the designer; linked from the footer. |
+| Palette → Warm White `#FAF8F6` canvas, Deep Indigo `#221A5C` text, Iris `#5B4BDB` links/actions, Aurora gradient for the mark, hero moments and primary action | Guidelines §06 balance (60/25/10). Measured: Indigo on Warm White 14.5:1, Iris 5.7:1. Surfaces are lavender/blush tints so glass keeps a ground. Favicons/manifest from the kit; theme colour Indigo. |
+| **Montserrat** replaces Geist (variable, via next/font) | §07: one geometric family for everything. Type scale from §07; label tracking 0.34em. Geist Mono stays for code. |
+| Header: brand lockup + **services mega menu** | Nine services by group with taglines and icons, AI-training and compare links; button + aria-expanded, hover/focus/click, Escape and outside-click close; accordion in the mobile sheet. |
+| Footer rebuilt: brand column (stacked logo, slogan), Services, Company, Products, Contact + profiles, legal bar | Was three thin columns. |
+| **`/assistant`** — the voice orb as the face of a real assistant | The kit's orb only visualises the microphone; it does not converse. Ported to `VoiceOrb.tsx` with its drawing loop intact. Speech in/out is on-device (browser APIs). Replies from `/api/assistant`: Claude (`ANTHROPIC_API_KEY`, model `ASSISTANT_MODEL` or `claude-sonnet-5`) grounded only in site content, else a rules-based concierge. Standalone route, `noindex`, Night ground. Opened from an orb FAB above WhatsApp. **This is the second deliberate dynamic route**; AGENTS.md invariant 1 and the release gate were updated to expect exactly two. |
+| Voice (§11) | Practical, direct, human. Never "AI-powered"; AI is the tool, not the headline. The assistant's system prompt enforces this. |
+
+### 20a. Brand refresh — owner's review fixes, 2026-09-12
+
+| Issue | Cause / fix |
+|---|---|
+| Mega menu "transparent, content leaking" | A `backdrop-filter` inside the header's `backdrop-filter` only samples the header's own layer, so the panel's 62% white had nothing behind it to blur. Panel and mobile sheet now carry their own near-opaque glass (`bg-white/95` + blur + shadow); the header bar goes `bg-white/85` when open. |
+| Hero "AI icon" | The old `ToolOrbit` (client, wrapped in `AnimateIn` above the fold — a standing violation of invariant 5). Replaced by `HeroMark`: the kit's mark with the branding page's own reveal (`rise` from its `--dx/--dy` offsets, staggered; spark scale+rotate), then a float. Pure CSS, paints with the document. |
+| Headings too thin | `Heading` set h1/h2 at weight 400 (a leftover from the single-weight serif). Now 700; h3+ 600. Deliberate departure from the guidelines' 600 display weight, at the owner's request. |
+| Footer glitches / last item clipped | Five fixed-fraction columns at `md` overflowed; the two floating buttons covered the last links on mobile. Grid is now 1 → 2 → 5 columns with `min-w-0`; `pb-32` on mobile clears the buttons. |
+| "Add the dark sections" | `.night` token scope (Night ground, white headings, Lavender copy and links, dark glass) + `Section bg="night"`. Applied: homepage Selected Work, trainer Credentials, and the footer (reversed stacked logo, per §09). |
+| Favicon | Owner prefers the filled Aurora tile over the transparent mark: `icon.svg` = rounded Aurora app icon, `apple-icon.png` = square 180, `.ico` built from the tile at 16/32/48, manifest icons = square 192 (maskable) / 512. |

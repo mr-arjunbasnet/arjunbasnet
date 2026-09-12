@@ -42,7 +42,8 @@ export default function Heading({
     <Tag
       className={cn(
         sizeClasses[size ?? defaultSizes[level]],
-        useSerif ? "font-display font-normal" : "font-semibold",
+        // Montserrat needs weight to hold a headline: 700 for h1/h2, 600 below.
+        useSerif ? "font-display font-bold" : "font-semibold",
         "text-fg text-balance",
         className,
       )}
