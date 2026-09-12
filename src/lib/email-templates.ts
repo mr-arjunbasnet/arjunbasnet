@@ -20,13 +20,14 @@ export interface LeadFields {
   message: string;
 }
 
+// Aurora kit values (email clients need literals; mirrors globals.css @theme).
 const C = {
-  bg: "#FAFAF8",
-  border: "#E2DDD6",
-  surface: "#F2EEE8",
-  fg: "#111111",
-  muted: "#737373",
-  primary: "#1A3FA8",
+  bg: "#FAF8F6",
+  border: "#E6E1F2",
+  surface: "#F4F1FA",
+  fg: "#221A5C",
+  muted: "#6B6790",
+  primary: "#5B4BDB",
 };
 
 const shell = (inner: string) => `

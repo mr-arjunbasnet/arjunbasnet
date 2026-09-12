@@ -21,7 +21,8 @@ export const metadata: Metadata = {
 export default function AssistantPage() {
   return (
     <div className="-mt-16 min-h-[100dvh] bg-night font-display text-white">
-      <div className="pointer-events-none absolute inset-x-0 top-0 z-10 flex items-center justify-between px-5 py-4 md:px-7">
+      {/* Spans the orb column only on md+: the conversation header lives under it otherwise. */}
+      <div className="pointer-events-none absolute inset-x-0 top-0 z-10 flex items-center justify-between px-5 py-4 md:right-[47.62%] md:px-7">
         <Link href="/" className="pointer-events-auto flex items-center gap-2.5 text-white" aria-label="ARJUN — home">
           <LogoMark size={30} tone="white" />
           <span className="text-[13px] font-semibold uppercase tracking-[0.34em]">Arjun</span>

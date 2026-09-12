@@ -118,7 +118,7 @@ export default function AssistantPanel() {
   }
 
   return (
-    <div className="grid min-h-[100dvh] grid-rows-[minmax(38dvh,1fr)_auto] md:grid-cols-[1.1fr_1fr] md:grid-rows-1">
+    <div className="grid min-h-[100dvh] grid-cols-[minmax(0,1fr)] grid-rows-[minmax(38dvh,1fr)_auto] md:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)] [&>*]:min-w-0 md:grid-rows-1">
       <VoiceOrb mode={mode} signal={signal} onActivate={canListen ? toggleListen : undefined} className="min-h-[38dvh] md:min-h-[100dvh]" />
 
       <section className="flex flex-col bg-night text-white md:border-l md:border-white/10" aria-label="Conversation">
@@ -156,10 +156,10 @@ export default function AssistantPanel() {
               </button>
             )}
             <label className="sr-only" htmlFor="assistant-input">Your message</label>
-            <textarea id="assistant-input" value={input} onChange={(e) => setInput(e.target.value)} onKeyDown={(e) => { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); void send(input); } }} rows={1} placeholder={listening ? "Listening…" : "Ask about services, products, pricing, or how to reach Arjun"} className="min-h-11 flex-1 resize-none rounded-xl border border-white/20 bg-white/10 px-3.5 py-2.5 text-[15px] text-white placeholder:text-white/40 focus:border-lavender focus:outline-none" />
+            <textarea id="assistant-input" value={input} onChange={(e) => setInput(e.target.value)} onKeyDown={(e) => { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); void send(input); } }} rows={1} placeholder={listening ? "Listening…" : "Ask a question…"} className="min-h-11 flex-1 resize-none rounded-xl border border-white/20 bg-white/10 px-3.5 py-2.5 text-[15px] text-white placeholder:text-white/40 focus:border-lavender focus:outline-none" />
             <button type="submit" disabled={busy || !input.trim()} className="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-brand text-white disabled:opacity-50" aria-label="Send"><Send size={18} /></button>
           </div>
-          <p className="mt-2.5 flex items-center gap-1.5 text-[12px] text-lavender/80"><Sparkles size={12} aria-hidden /> Your voice is analysed on this device. Only the text you send leaves it. Prefer a person? <Link href="/contact" className="underline">Contact Arjun</Link>.</p>
+          <p className="mt-2.5 text-[12px] leading-relaxed text-lavender/80"><Sparkles size={12} aria-hidden className="mr-1.5 inline-block align-[-2px]" /> Your voice is analysed on this device. Only the text you send leaves it. Prefer a person? <Link href="/contact" className="underline">Contact Arjun</Link>.</p>
         </form>
       </section>
     </div>

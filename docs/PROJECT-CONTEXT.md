@@ -617,3 +617,45 @@ and a voice-orb page). Applied site-wide, verified locally.
 | Footer glitches / last item clipped | Five fixed-fraction columns at `md` overflowed; the two floating buttons covered the last links on mobile. Grid is now 1 → 2 → 5 columns with `min-w-0`; `pb-32` on mobile clears the buttons. |
 | "Add the dark sections" | `.night` token scope (Night ground, white headings, Lavender copy and links, dark glass) + `Section bg="night"`. Applied: homepage Selected Work, trainer Credentials, and the footer (reversed stacked logo, per §09). |
 | Favicon | Owner prefers the filled Aurora tile over the transparent mark: `icon.svg` = rounded Aurora app icon, `apple-icon.png` = square 180, `.ico` built from the tile at 16/32/48, manifest icons = square 192 (maskable) / 512. |
+
+### 20b. Responsive QA pass — 2026-09-12
+
+Owner review after the brand refresh went live: mega menu still see-through,
+headings still thin, "no cheap overlap/overflow issues anywhere". A real
+browser sweep (`scripts/qa/visual-sweep.js`, Playwright, 38 URLs × 320–1536px)
+found and fixed:
+
+- **Header blur broke the mobile sheet.** `backdrop-filter` on `<header>`
+  makes it the containing block for `position: fixed` descendants, so the
+  `fixed top-16 bottom-0` sheet collapsed to a strip with the page visible
+  under it. The blur now lives on `header::before` (`before:backdrop-blur-xl`).
+  Rule: never put `backdrop-filter`, `filter` or `transform` on an ancestor of
+  a fixed element.
+- **Menus are opaque.** `bg-white/95` reads as transparent when a 56px bold
+  headline sits behind it (5% bleed of near-black is visible). Mega panel and
+  mobile sheet are `bg-white`.
+- **Desktop nav needs `lg`, not `md`.** At 768–1023px the seven items plus CTA
+  wrapped and collided with the wordmark. Hamburger + sheet up to 1023px.
+- **Headings.** Five pages still carried `style={{ fontFamily: "var(--font-dm-serif)" }}`
+  from the serif era; the variable no longer exists, so those h1/h2 rendered in
+  the 400-weight fallback face — the "thin headings" the owner saw. Removed.
+  `@layer base` now sets h1/h2 800 (−0.02em), h3/h4 700; `Heading` uses
+  `font-extrabold` / `font-bold`; legacy h1s step `text-4xl sm:text-5xl md:text-6xl`.
+- **Horizontal scroll on phones.** About: timeline cards animated in from
+  `x: ±28` and sat past the edge until scrolled into view (now `y: 18`); the
+  badge row didn't wrap; the tool orbit's rotating layer widened the page
+  (`overflow-hidden` on its root). Assistant: grid column `1fr` inherited a
+  child's min-content (`minmax(0,1fr)` + `[&>*]:min-w-0`). Footer at 1024: the
+  email address could not wrap (column weights rebalanced, `break-words`).
+  Brand page (kit HTML in `public/brand/index.html`): 12-column grid gaps
+  exceeded 320px, `.tab` nowrap, `.sh` fixed 260px column, gradient labels —
+  all patched with small media rules.
+- **Legal bar** clears the floating buttons at desktop (`md:pr-24`).
+- Assistant top bar spans only the orb column on md+; composer placeholder
+  shortened; email templates moved to Aurora colours.
+
+Sweep caveats: blooms, the WhatsApp ripple and hero blobs always overflow by
+design; overlap hits inside collapsed accordions or mid-AnimateIn are false
+positives — confirm with a targeted screenshot. Full-page screenshots with
+sticky labels and `scroll-behavior: smooth` also fake overlaps; the harness
+forces `scroll-behavior: auto`.

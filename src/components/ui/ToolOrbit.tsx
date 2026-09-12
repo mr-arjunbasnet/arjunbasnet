@@ -48,14 +48,15 @@ function ToolBadge({ tool }: { tool: Tool }) {
 }
 
 export default function ToolOrbit() {
+  // overflow-hidden: the rotating icon layer's bounding box otherwise widens the page.
   return (
-    <div className="relative w-full aspect-square max-w-[420px] mx-auto select-none">
+    <div className="relative w-full aspect-square max-w-[420px] mx-auto select-none overflow-hidden">
       {/* Soft radial glow background */}
       <div
         className="absolute inset-0 rounded-full"
         style={{
           background:
-            "radial-gradient(circle at center, rgba(26,63,168,0.08) 0%, rgba(224,92,42,0.04) 40%, transparent 70%)",
+            "radial-gradient(circle at center, rgba(91,75,219,0.10) 0%, rgba(217,70,239,0.05) 40%, transparent 70%)",
         }}
       />
 
@@ -80,13 +81,13 @@ export default function ToolOrbit() {
       {/* Center: AI orb */}
       <motion.div
         className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-20 h-20 rounded-full bg-gradient-to-br from-primary via-primary-light to-primary flex items-center justify-center z-20"
-        style={{ boxShadow: "0 12px 40px rgba(26,63,168,0.4), inset 0 -2px 6px rgba(0,0,0,0.2)" }}
+        style={{ boxShadow: "0 12px 40px rgba(91,75,219,0.4), inset 0 -2px 6px rgba(0,0,0,0.2)" }}
         whileHover={{ scale: 1.08 }}
         animate={{
           boxShadow: [
-            "0 12px 40px rgba(26,63,168,0.4), inset 0 -2px 6px rgba(0,0,0,0.2)",
-            "0 12px 50px rgba(26,63,168,0.6), inset 0 -2px 6px rgba(0,0,0,0.2)",
-            "0 12px 40px rgba(26,63,168,0.4), inset 0 -2px 6px rgba(0,0,0,0.2)",
+            "0 12px 40px rgba(91,75,219,0.4), inset 0 -2px 6px rgba(0,0,0,0.2)",
+            "0 12px 50px rgba(91,75,219,0.6), inset 0 -2px 6px rgba(0,0,0,0.2)",
+            "0 12px 40px rgba(91,75,219,0.4), inset 0 -2px 6px rgba(0,0,0,0.2)",
           ],
         }}
         transition={{ duration: 2.4, repeat: Infinity, ease: "easeInOut" }}
@@ -135,7 +136,7 @@ export default function ToolOrbit() {
       >
         {outerTools.map((tool, i) => {
           const angle = (i / outerTools.length) * Math.PI * 2 - Math.PI / 2;
-          const radius = 44;
+          const radius = 41;
           const x = 50 + Math.cos(angle) * radius;
           const y = 50 + Math.sin(angle) * radius;
           return (

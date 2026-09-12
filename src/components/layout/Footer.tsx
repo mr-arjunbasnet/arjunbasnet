@@ -30,7 +30,7 @@ export default function Footer() {
   return (
     <footer className="night mt-auto rounded-t-[28px]">
       <div className="mx-auto max-w-6xl px-6 pt-16 pb-32 md:pb-10">
-        <div className="grid grid-cols-1 gap-x-8 gap-y-10 sm:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr_1fr_1.2fr] [&>*]:min-w-0">
+        <div className="grid grid-cols-1 gap-x-8 gap-y-10 sm:grid-cols-2 lg:grid-cols-[1.25fr_1fr_0.9fr_0.95fr_1.5fr] [&>*]:min-w-0">
           {/* Brand */}
           <div className="sm:col-span-2 lg:col-span-1">
             <Image src="/brand/logo/ARJUN_logo_stacked_reversed.svg" alt="ARJUN — From problem to solutions" width={180} height={170} unoptimized className="mb-5 h-auto w-[160px]" />
@@ -63,18 +63,18 @@ export default function Footer() {
 
           <Col heading="Contact">
             <li>
-              <a href={whatsappUrl("/footer")} target="_blank" rel="noopener noreferrer" data-track="whatsapp_click" data-track-label="footer" className={`${item} inline-flex items-center gap-2`}>
+              <a href={whatsappUrl("/footer")} target="_blank" rel="noopener noreferrer" data-track="whatsapp_click" data-track-label="footer" className={`${item} inline-flex min-w-0 max-w-full items-center gap-2`}>
                 <MessageCircle size={14} aria-hidden /> WhatsApp
               </a>
             </li>
             <li>
-              <a href={SITE.calendarUrl} target="_blank" rel="noopener noreferrer" data-track="calendar_click" data-track-label="footer" className={`${item} inline-flex items-center gap-2`}>
+              <a href={SITE.calendarUrl} target="_blank" rel="noopener noreferrer" data-track="calendar_click" data-track-label="footer" className={`${item} inline-flex min-w-0 max-w-full items-center gap-2`}>
                 <CalendarDays size={14} aria-hidden /> Book a call
               </a>
             </li>
             <li>
-              <a href={`mailto:${SITE.email}`} data-track="email_click" data-track-label="footer" className={`${item} inline-flex items-center gap-2`}>
-                <Mail size={14} aria-hidden /> {SITE.email}
+              <a href={`mailto:${SITE.email}`} data-track="email_click" data-track-label="footer" className={`${item} inline-flex min-w-0 max-w-full items-center gap-2`}>
+                <Mail size={14} aria-hidden className="shrink-0" /> <span className="min-w-0 break-words">{SITE.email}</span>
               </a>
             </li>
             <li className="pt-2">
@@ -88,7 +88,7 @@ export default function Footer() {
           </Col>
         </div>
 
-        <div className="mt-14 flex flex-col gap-3 border-t border-white/15 pt-6 text-xs text-lavender/70 sm:flex-row sm:items-center sm:justify-between">
+        <div className="mt-14 flex flex-col gap-3 border-t border-white/15 pt-6 text-xs text-lavender/70 sm:flex-row sm:items-center sm:justify-between md:pr-24">
           <p>© <CurrentYear /> {SITE.name}. All rights reserved.</p>
           <p className="font-medium uppercase tracking-[0.2em] text-white">From problem to solutions</p>
         </div>

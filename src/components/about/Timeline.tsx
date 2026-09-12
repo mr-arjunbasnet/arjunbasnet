@@ -86,8 +86,10 @@ function TimelineCard({
   return (
     <motion.div
       ref={ref}
-      initial={{ opacity: 0, x: isLeft ? -28 : 28 }}
-      animate={inView ? { opacity: 1, x: 0 } : {}}
+      // Rises, never slides: a sideways offset sat 28px past the viewport edge
+      // until scrolled into view and made every phone wobble horizontally.
+      initial={{ opacity: 0, y: 18 }}
+      animate={inView ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.65, delay: 0.08, ease: [0.22, 1, 0.36, 1] }}
       className={`border border-border rounded-xl p-5 bg-bg hover:shadow-md transition-shadow duration-300 ${
         isEdu
@@ -95,8 +97,9 @@ function TimelineCard({
           : "border-l-[3px] border-l-primary"
       }`}
     >
-      <div className="flex items-start justify-between gap-3 mb-2">
-        <div className="flex items-center gap-2 flex-wrap">
+      {/* Wraps: a long badge plus a no-wrap duration once pushed phones 4px wide. */}
+      <div className="flex flex-wrap items-start justify-between gap-x-3 gap-y-1 mb-2">
+        <div className="flex items-center gap-2 flex-wrap min-w-0">
           <span
             className={`text-[10px] font-semibold uppercase tracking-widest px-2 py-0.5 rounded-full ${
               isEdu
@@ -117,7 +120,7 @@ function TimelineCard({
         </span>
       </div>
 
-      <h3 className="text-sm font-semibold text-fg leading-snug mb-0.5">
+      <h3 className="text-sm font-bold text-fg leading-snug mb-0.5">
         {item.title}
       </h3>
       <p
@@ -212,7 +215,7 @@ export default function Timeline() {
               </div>
 
               {/* Right: card */}
-              <div className="pb-8 flex-1">
+              <div className="min-w-0 flex-1 pb-8">
                 <TimelineCard item={item} index={i} isLeft={false} />
               </div>
             </div>
