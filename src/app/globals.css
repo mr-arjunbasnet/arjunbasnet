@@ -884,3 +884,9 @@ body {
 @media (prefers-reduced-motion: reduce) {
   .hm-piece, .hm-p3, .hm-float { animation: none; opacity: 1; transform: none; }
 }
+
+@layer base {
+  /* Montserrat needs weight to hold a headline. Utilities override these. */
+  h1, h2 { font-weight: 800; letter-spacing: -0.02em; }
+  h3, h4 { font-weight: 700; }
+}

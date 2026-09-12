@@ -81,7 +81,7 @@ function Head({ eyebrow, h2, lead }: { eyebrow: string; h2: string; lead?: React
         <span aria-hidden className="h-1.5 w-1.5 rounded-full bg-primary" />
         {eyebrow}
       </span>
-      <h2 className="text-[clamp(30px,4vw,46px)] font-semibold leading-[1.1] tracking-[-0.02em]">{h2}</h2>
+      <h2 className="text-[clamp(30px,4vw,46px)] font-bold leading-[1.1] tracking-[-0.02em]">{h2}</h2>
       {lead && <p className="mx-auto mt-4 max-w-[60ch] text-[clamp(16px,1.6vw,19px)] leading-relaxed text-muted">{lead}</p>}
     </AnimateIn>
   );
@@ -185,7 +185,7 @@ export default function ClipStackPage() {
               <span aria-hidden className="h-1.5 w-1.5 rounded-full bg-primary" />{HERO.eyebrow}
             </span>
             <Orb />
-            <h1 className="mx-auto -mt-6 max-w-[16ch] text-[clamp(38px,6vw,68px)] font-semibold leading-[1.04] tracking-[-0.03em]">
+            <h1 className="mx-auto -mt-6 max-w-[16ch] text-[clamp(38px,6vw,68px)] font-bold leading-[1.04] tracking-[-0.03em]">
               {HERO.h1[0]} {HERO.h1[1]}
             </h1>
             <p className="mx-auto mt-5 max-w-[58ch] text-[clamp(17px,1.8vw,20px)] leading-relaxed text-muted">{HERO.lead}</p>
@@ -253,7 +253,7 @@ export default function ClipStackPage() {
               {SOLUTION.cards.map((c, i) => (
                 <Card key={c.title} className="p-7">
                   <div className="mb-5"><Tile icon={SOLUTION_ICONS[i]} /></div>
-                  <h3 className="mb-1.5 text-lg font-semibold">{c.title}</h3>
+                  <h3 className="mb-1.5 text-lg font-bold">{c.title}</h3>
                   <p className="text-[15px] leading-relaxed text-muted">{c.body}</p>
                 </Card>
               ))}
@@ -290,7 +290,7 @@ export default function ClipStackPage() {
               {FEATURES.cards.map((c, i) => (
                 <Card key={c.title} className="p-6">
                   <div className="mb-5"><Tile icon={FEATURE_ICONS[i]} size={40} /></div>
-                  <h3 className="mb-1.5 text-[17px] font-semibold">{c.title}</h3>
+                  <h3 className="mb-1.5 text-[17px] font-bold">{c.title}</h3>
                   <p className="text-[15px] leading-relaxed text-muted">{c.body}</p>
                 </Card>
               ))}
@@ -307,7 +307,7 @@ export default function ClipStackPage() {
                 <li key={s.title}>
                   <Card className="h-full p-7">
                     <p className="mb-5 text-[13px] font-semibold tracking-[0.1em] text-muted">{String(i + 1).padStart(2, "0")}</p>
-                    <h3 className="mb-2 text-[17px] font-semibold">{s.title}</h3>
+                    <h3 className="mb-2 text-[17px] font-bold">{s.title}</h3>
                     <p className="text-[15px] leading-relaxed text-muted [&_a]:text-primary-light [&_a]:underline [&_a]:underline-offset-2">{s.body}</p>
                   </Card>
                 </li>
@@ -325,7 +325,7 @@ export default function ClipStackPage() {
 
             <Card className="mt-8 overflow-hidden">
               <div className="flex items-center justify-between border-b border-white/70 px-6 py-4">
-                <h3 className="text-[15px] font-semibold">{HOW.keysHeading}</h3>
+                <h3 className="text-[15px] font-bold">{HOW.keysHeading}</h3>
                 <span className="text-[12px] text-muted">inside the panel</span>
               </div>
               <div className="overflow-x-auto">
@@ -352,7 +352,7 @@ export default function ClipStackPage() {
               {USE_CASES.cards.map((c, i) => (
                 <Card key={c.title} className="p-6">
                   <div className="mb-5"><Tile icon={USE_CASE_ICONS[i]} size={40} /></div>
-                  <h3 className="mb-1.5 text-[17px] font-semibold">{c.title}</h3>
+                  <h3 className="mb-1.5 text-[17px] font-bold">{c.title}</h3>
                   <p className="text-[15px] leading-relaxed text-muted">{c.body}</p>
                 </Card>
               ))}
@@ -434,7 +434,7 @@ export default function ClipStackPage() {
         <section className="pt-8 pb-20 text-center">
           <div className={wrap}>
             <Orb size={80} height={260} rings={[150, 250, 370, 500]} />
-            <h2 className="-mt-4 text-[clamp(28px,3.6vw,40px)] font-semibold leading-[1.1] tracking-[-0.02em]">Get ClipStack for your Mac.</h2>
+            <h2 className="-mt-4 text-[clamp(28px,3.6vw,40px)] font-bold leading-[1.1] tracking-[-0.02em]">Get ClipStack for your Mac.</h2>
             <p className="mx-auto mt-3 max-w-[48ch] text-[16px] text-muted">Free, private, and one shortcut away. Version {feed.version}, about {feed.sizeMB} MB.</p>
             <div className="mt-8"><CopyPasteScene compact /></div>
             <div className="mt-6 flex justify-center"><a href="#download" className={btnPrimary} data-track="product_download" data-track-label="clipstack_bookend_download">Download for Mac<ArrowRight size={16} aria-hidden /></a></div>

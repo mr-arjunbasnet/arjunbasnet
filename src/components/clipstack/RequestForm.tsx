@@ -63,7 +63,7 @@ export default function RequestForm() {
   if (state === "sent") {
     return (
       <div className="max-w-[640px] rounded-2xl border border-border bg-surface p-[22px]">
-        <h3 className="mb-2 text-lg font-semibold">Sent — thank you.</h3>
+        <h3 className="mb-2 text-lg font-bold">Sent — thank you.</h3>
         <p className="text-[15px] text-muted">
           I read every one of these myself and reply from {SITE.email}, usually within a day.
         </p>

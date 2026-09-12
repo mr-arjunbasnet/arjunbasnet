@@ -178,7 +178,7 @@ export default function ServicesPage() {
                   className="transition-transform duration-500 group-hover:scale-[1.03]"
                 />
                 <div className="flex flex-1 flex-col p-6">
-                  <h3 className="mb-2 text-lg font-semibold text-fg">
+                  <h3 className="mb-2 text-lg font-bold text-fg">
                     {service.name}
                   </h3>
                   <p className="mb-5 flex-1 text-sm leading-relaxed text-muted">

@@ -9,8 +9,7 @@ export default function NotFound() {
         404
       </p>
       <h1
-        className="text-5xl md:text-6xl text-fg mb-6"
-        style={{ fontFamily: "var(--font-dm-serif)" }}
+        className="text-4xl sm:text-5xl md:text-6xl text-fg mb-6"
       >
         Page not found.
       </h1>

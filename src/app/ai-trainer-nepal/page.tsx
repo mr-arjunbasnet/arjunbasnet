@@ -330,14 +330,14 @@ export default function AiTrainerNepal() {
           {TEACHING_AREAS.map((area, i) => (
             <AnimateIn key={area.id} delay={(i % 4) * 0.05}>
               <Card padding="none" className="flex h-full flex-col overflow-hidden">
-                <div className="border-b border-border bg-surface">
+                <div className="overflow-hidden border-b border-border bg-surface">
                   <TeachingScene id={area.id} />
                 </div>
                 <div className="flex flex-1 flex-col p-5">
                   <p className="mb-2 text-xs font-semibold uppercase tracking-label text-primary">
                     {area.label}
                   </p>
-                  <h3 className="mb-2 font-semibold text-fg">{area.title}</h3>
+                  <h3 className="mb-2 font-bold text-fg">{area.title}</h3>
                   <p className="flex-1 text-sm leading-relaxed text-muted">
                     {area.description}
                   </p>
@@ -375,7 +375,7 @@ export default function AiTrainerNepal() {
                     <Icon size={22} aria-hidden />
                   </div>
                   <div>
-                    <h3 className="mb-1.5 font-semibold text-fg">{a.title}</h3>
+                    <h3 className="mb-1.5 font-bold text-fg">{a.title}</h3>
                     <p className="text-sm leading-relaxed text-muted">{a.description}</p>
                   </div>
                 </div>
@@ -428,7 +428,7 @@ export default function AiTrainerNepal() {
               <AnimateIn key={app.id} delay={(i % 6) * 0.04}>
                 <div className="flex h-full flex-col gap-3 rounded-card border border-border bg-surface p-4">
                   <Icon size={20} aria-hidden className="text-primary" />
-                  <h3 className="text-sm font-semibold text-fg">{app.title}</h3>
+                  <h3 className="text-sm font-bold text-fg">{app.title}</h3>
                   <p className="text-xs leading-relaxed text-muted">{app.description}</p>
                 </div>
               </AnimateIn>
@@ -456,7 +456,7 @@ export default function AiTrainerNepal() {
                 <p className="mb-1 font-display text-2xl text-primary md:hidden">
                   {String(step.step).padStart(2, "0")}
                 </p>
-                <h3 className="mb-1.5 font-semibold text-fg">
+                <h3 className="mb-1.5 font-bold text-fg">
                   <span className="hidden md:inline text-primary">{String(step.step).padStart(2, "0")} · </span>
                   {step.title}
                 </h3>
@@ -498,7 +498,7 @@ export default function AiTrainerNepal() {
                       {f.duration}
                     </span>
                   </div>
-                  <h3 className="mb-2 font-semibold text-fg">{f.title}</h3>
+                  <h3 className="mb-2 font-bold text-fg">{f.title}</h3>
                   <p className="text-sm leading-relaxed text-muted">{f.description}</p>
                 </Card>
               </AnimateIn>
@@ -515,7 +515,7 @@ export default function AiTrainerNepal() {
               <p className="mb-5 text-xs font-semibold uppercase tracking-label text-primary-fg/70">
                 What outlasts the tools
               </p>
-              <h2 className="mb-6 font-display text-3xl leading-[1.08] text-primary-fg text-balance md:text-4xl lg:text-5xl">
+              <h2 className="mb-6 font-display text-3xl font-extrabold leading-[1.08] tracking-[-0.02em] text-primary-fg text-balance md:text-4xl lg:text-5xl">
                 Technology changes quickly. Learning how to think with it
                 matters more.
               </h2>
@@ -590,7 +590,7 @@ export default function AiTrainerNepal() {
                   >
                     <span className="h-2 w-2 rounded-full bg-primary" />
                   </span>
-                  <h3 className="mb-1.5 font-semibold text-fg">{c.title}</h3>
+                  <h3 className="mb-1.5 font-bold text-fg">{c.title}</h3>
                   <p className="mb-2 leading-relaxed text-muted">{c.description}</p>
                   <Link href={c.href as Route} className="inline-flex items-center gap-1.5 text-sm font-medium text-primary hover:underline">
                     {c.linkLabel}
@@ -617,7 +617,7 @@ export default function AiTrainerNepal() {
                 <p className="mb-3 font-display text-3xl text-primary">
                   {String(i + 1).padStart(2, "0")}
                 </p>
-                <h3 className="mb-2 font-semibold text-fg">{w.title}</h3>
+                <h3 className="mb-2 font-bold text-fg">{w.title}</h3>
                 <p className="leading-relaxed text-muted">{w.description}</p>
               </div>
             </AnimateIn>
@@ -671,7 +671,7 @@ export default function AiTrainerNepal() {
               <AnimateIn key={post.slug} delay={i * 0.06}>
                 <Card href={`/blog/${post.slug}`} padding="lg" className="h-full">
                   <p className="mb-3 text-xs font-medium text-muted">{post.readingMinutes} min read</p>
-                  <h3 className="mb-2 font-semibold text-fg">{post.title}</h3>
+                  <h3 className="mb-2 font-bold text-fg">{post.title}</h3>
                   <p className="text-sm leading-relaxed text-muted">{post.description}</p>
                 </Card>
               </AnimateIn>

@@ -51,8 +51,7 @@ export default function Contact() {
         </p>
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-end">
           <h1
-            className="text-5xl md:text-6xl leading-[0.95] text-fg"
-            style={{ fontFamily: "var(--font-dm-serif)" }}
+            className="text-4xl sm:text-5xl md:text-6xl leading-[0.95] text-fg"
           >
             Let&apos;s work
             <br />

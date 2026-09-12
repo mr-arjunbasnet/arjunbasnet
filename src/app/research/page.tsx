@@ -117,8 +117,7 @@ export default function Research() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-end">
           <AnimateIn delay={0.1}>
             <h1
-              className="text-5xl md:text-6xl leading-[0.95] text-fg"
-              style={{ fontFamily: "var(--font-dm-serif)" }}
+              className="text-4xl sm:text-5xl md:text-6xl leading-[0.95] text-fg"
             >
               Research &
               <br />
@@ -163,7 +162,6 @@ export default function Research() {
               <div className="px-6 py-8">
                 <h2
                   className="text-xl md:text-2xl text-fg mb-3 leading-snug"
-                  style={{ fontFamily: "var(--font-dm-serif)" }}
                 >
                   An Automated Attendance System Using Facial Detection and Recognition Technology
                 </h2>
@@ -251,7 +249,7 @@ export default function Research() {
                   <span className="text-xs font-semibold text-primary mt-0.5">
                     {String(i + 1).padStart(2, "0")}
                   </span>
-                  <h3 className="text-sm font-semibold text-fg leading-snug">
+                  <h3 className="text-sm font-bold text-fg leading-snug">
                     {r.title}
                   </h3>
                 </div>
@@ -277,7 +275,6 @@ export default function Research() {
           <div>
             <h2
               className="text-2xl md:text-3xl text-fg mb-6 leading-tight"
-              style={{ fontFamily: "var(--font-dm-serif)" }}
             >
               The questions I&apos;m working on.
             </h2>

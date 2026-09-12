@@ -16,8 +16,8 @@ const defaultSizes = {
 } as const;
 
 const sizeClasses = {
-  display: "text-4xl md:text-5xl lg:text-display leading-[1.05]",
-  xl: "text-3xl md:text-4xl leading-[1.1]",
+  display: "text-4xl md:text-5xl lg:text-display leading-[1.05] tracking-[-0.02em]",
+  xl: "text-3xl md:text-4xl leading-[1.1] tracking-[-0.015em]",
   lg: "text-2xl md:text-3xl leading-tight",
   md: "text-lg md:text-xl leading-snug",
   sm: "text-base leading-snug",
@@ -42,8 +42,9 @@ export default function Heading({
     <Tag
       className={cn(
         sizeClasses[size ?? defaultSizes[level]],
-        // Montserrat needs weight to hold a headline: 700 for h1/h2, 600 below.
-        useSerif ? "font-display font-bold" : "font-semibold",
+        // Montserrat needs weight to hold a headline: 800 for h1/h2, 700 below
+        // (owner asked twice for heavier; the kit's 600 reads thin on the web).
+        useSerif ? "font-display font-extrabold" : "font-bold",
         "text-fg text-balance",
         className,
       )}

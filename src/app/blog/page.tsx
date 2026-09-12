@@ -124,7 +124,7 @@ export default function BlogIndex() {
                         <span>·</span>
                         <span>{post.readingMinutes} min read</span>
                       </div>
-                      <h2 className="mb-2 text-lg font-semibold text-fg">
+                      <h2 className="mb-2 text-lg font-bold text-fg">
                         {post.title}
                       </h2>
                       <p className="mb-4 leading-relaxed text-muted">

@@ -245,8 +245,7 @@ export default function Work() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-end">
           <AnimateIn delay={0.1}>
             <h1
-              className="text-5xl md:text-6xl leading-[0.95] text-fg"
-              style={{ fontFamily: "var(--font-dm-serif)" }}
+              className="text-4xl sm:text-5xl md:text-6xl leading-[0.95] text-fg"
             >
               100+ Projects.
               <br />
@@ -282,7 +281,6 @@ export default function Work() {
               <div className="text-center py-6 border border-border rounded-xl hover:shadow-md hover:-translate-y-0.5 transition-all duration-300">
                 <p
                   className="text-3xl md:text-4xl font-bold text-primary mb-1"
-                  style={{ fontFamily: "var(--font-dm-serif)" }}
                 >
                   <CountUp raw={s.value} />
                 </p>
@@ -328,7 +326,6 @@ export default function Work() {
                   </div>
                   <h2
                     className="text-2xl md:text-3xl text-fg mb-2 leading-tight"
-                    style={{ fontFamily: "var(--font-dm-serif)" }}
                   >
                     {p.title}
                   </h2>
@@ -405,7 +402,6 @@ export default function Work() {
           <div>
             <h2
               className="text-2xl md:text-3xl text-fg mb-2"
-              style={{ fontFamily: "var(--font-dm-serif)" }}
             >
               Working on something interesting?
             </h2>

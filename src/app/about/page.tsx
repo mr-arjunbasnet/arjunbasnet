@@ -111,8 +111,7 @@ export default function About() {
           <div>
             <AnimateIn delay={0.1}>
               <h1
-                className="text-5xl md:text-6xl lg:text-7xl leading-[0.95] text-fg mb-6"
-                style={{ fontFamily: "var(--font-dm-serif)" }}
+                className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl leading-[0.95] text-fg mb-6"
               >
                 Project Manager.
                 <br />
@@ -233,7 +232,6 @@ export default function About() {
                   <div>
                     <h2
                       className="text-2xl text-fg mb-4"
-                      style={{ fontFamily: "var(--font-dm-serif)" }}
                     >
                       {chapter.heading}
                     </h2>
@@ -267,7 +265,6 @@ export default function About() {
               </p>
               <p
                 className="text-2xl text-fg"
-                style={{ fontFamily: "var(--font-dm-serif)" }}
               >
                 Education &<br />
                 Work Timeline
@@ -345,7 +342,7 @@ export default function About() {
                 <p className="text-xs font-semibold text-primary uppercase tracking-wide mb-1">
                   Nov 2018 — Jun 2023
                 </p>
-                <h3 className="font-semibold text-fg mb-0.5">
+                <h3 className="font-bold text-fg mb-0.5">
                   B.Sc. Computer Science and Information Technology
                 </h3>
                 <p className="text-sm text-primary font-medium mb-0.5">
@@ -369,7 +366,7 @@ export default function About() {
                 <p className="text-xs font-semibold text-primary uppercase tracking-wide mb-1">
                   Jun 2016 — Jun 2018
                 </p>
-                <h3 className="font-semibold text-fg mb-0.5">
+                <h3 className="font-bold text-fg mb-0.5">
                   Higher Secondary Education (+2)
                 </h3>
                 <p className="text-sm text-primary font-medium mb-0.5">
@@ -387,7 +384,7 @@ export default function About() {
                 <p className="text-xs font-semibold text-primary uppercase tracking-wide mb-1">
                   Apr 2003 — Mar 2016
                 </p>
-                <h3 className="font-semibold text-fg mb-0.5">
+                <h3 className="font-bold text-fg mb-0.5">
                   School — Class 1 to 10
                 </h3>
                 <p className="text-sm text-primary font-medium mb-0.5">

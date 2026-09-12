@@ -88,7 +88,11 @@ export default function Navbar() {
     <header
       className={cn(
         "fixed top-0 right-0 left-0 z-50 transition-[background-color,border-color] duration-300",
-        scrolled || mega || open ? "border-b border-white/70 bg-white/85 backdrop-blur-xl" : "border-b border-transparent bg-transparent",
+        // The blur lives on a pseudo-element, never on <header>: backdrop-filter
+        // on the header itself makes it the containing block for the fixed
+        // mobile sheet, which then collapses to a strip under the nav.
+        "before:pointer-events-none before:absolute before:inset-0 before:-z-10 before:content-['']",
+        scrolled || mega || open ? "border-b border-white/70 bg-white/85 before:backdrop-blur-xl" : "border-b border-transparent bg-transparent",
       )}
     >
       <nav className="mx-auto flex h-16 max-w-6xl items-center justify-between px-6" aria-label="Primary">
@@ -98,7 +102,7 @@ export default function Navbar() {
         </Link>
 
         {/* Desktop */}
-        <div className="hidden items-center gap-7 md:flex">
+        <div className="hidden items-center gap-7 lg:flex">
           {/* Services — mega menu trigger */}
           <div ref={megaRef} onMouseEnter={hoverOpen} onMouseLeave={hoverClose} className="relative">
             <button
@@ -119,7 +123,7 @@ export default function Navbar() {
             <div
               id="services-mega"
               hidden={!mega}
-              className="absolute top-full left-1/2 mt-3 w-[min(920px,calc(100vw-2rem))] -translate-x-1/2 rounded-[20px] border border-white/80 bg-white/95 p-6 shadow-[0_24px_60px_rgb(34_26_92/0.18)] backdrop-blur-xl"
+              className="absolute top-full left-1/2 mt-3 w-[min(920px,calc(100vw-2rem))] -translate-x-1/2 rounded-[20px] border border-border bg-white p-6 shadow-[0_24px_60px_rgb(34_26_92/0.18)]"
             >
               <div className="grid grid-cols-3 gap-6">
                 {SERVICE_GROUPS.map((group) => (
@@ -183,7 +187,7 @@ export default function Navbar() {
         <button
           type="button"
           onClick={() => setOpen((v) => !v)}
-          className="grid h-11 w-11 place-items-center rounded-xl text-fg md:hidden"
+          className="grid h-11 w-11 place-items-center rounded-xl text-fg lg:hidden"
           aria-label={open ? "Close menu" : "Open menu"}
           aria-expanded={open}
           aria-controls="mobile-menu"
@@ -194,7 +198,7 @@ export default function Navbar() {
 
       {/* Mobile sheet: full height, scrolls, services as an accordion */}
       {open && (
-        <div id="mobile-menu" className="fixed inset-x-0 top-16 bottom-0 overflow-y-auto border-t border-white/70 bg-white/95 px-6 py-5 pb-32 backdrop-blur-xl md:hidden">
+        <div id="mobile-menu" className="fixed inset-x-0 top-16 bottom-0 overflow-y-auto border-t border-border bg-white px-6 py-5 pb-32 lg:hidden">
           <button
             type="button"
             aria-expanded={mobileServices}

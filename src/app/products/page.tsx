@@ -61,7 +61,7 @@ export default function ProductsPage() {
                   </span>
                   <div className="min-w-0">
                     <div className="flex flex-wrap items-center gap-2">
-                      <h2 className="text-xl font-semibold text-fg">{p.name}</h2>
+                      <h2 className="text-xl font-bold text-fg">{p.name}</h2>
                       <span className="rounded-full bg-primary/10 px-2.5 py-0.5 text-[11px] font-semibold uppercase tracking-label text-primary">{p.price}</span>
                       <span className="rounded-full bg-surface-2 px-2.5 py-0.5 text-[11px] font-semibold uppercase tracking-label text-muted">Live</span>
                     </div>
@@ -84,7 +84,7 @@ export default function ProductsPage() {
               <AnimateIn key={i} delay={0.06 * (i + 1)}>
                 <div className="glass-soft flex h-full flex-col rounded-[20px] border-dashed p-7">
                   <span className="mb-4 grid h-11 w-11 place-items-center rounded-xl bg-primary/10 text-primary"><Sparkles size={20} aria-hidden /></span>
-                  <h2 className="mb-1.5 font-semibold text-fg">{c.title}</h2>
+                  <h2 className="mb-1.5 font-bold text-fg">{c.title}</h2>
                   <p className="text-sm leading-relaxed text-muted">{c.body}</p>
                 </div>
               </AnimateIn>

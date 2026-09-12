@@ -118,7 +118,7 @@ export default function DownloadForm({ version }: { version: string }) {
   if (done) {
     return (
       <div className="max-w-[640px] rounded-2xl border border-border bg-surface p-[22px]">
-        <h3 className="mb-2 text-lg font-semibold">{DOWNLOAD.doneTitle}</h3>
+        <h3 className="mb-2 text-lg font-bold">{DOWNLOAD.doneTitle}</h3>
         <p className="mb-3 text-[15px] text-muted">
           Open <strong className="text-fg">ClipStack-{version}.pkg</strong>. If macOS says it can&rsquo;t be
           opened, use System Settings → Privacy &amp; Security →{" "}

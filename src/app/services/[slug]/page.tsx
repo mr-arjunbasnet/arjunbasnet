@@ -162,7 +162,7 @@ export default async function ServicePage({
                 </span>
                 <div>
                   <div className="mb-1.5 flex flex-wrap items-baseline gap-3">
-                    <h3 className="font-semibold text-fg">{step.title}</h3>
+                    <h3 className="font-bold text-fg">{step.title}</h3>
                     {step.duration && (
                       <span className="text-xs text-muted">{step.duration}</span>
                     )}
@@ -197,7 +197,7 @@ export default async function ServicePage({
               <AnimateIn key={p.anchor} delay={i * 0.06}>
                 <Card href={`/work#${p.anchor}`} padding="lg" className="h-full">
                   <div className="mb-2 flex items-start justify-between gap-3">
-                    <h3 className="font-semibold text-fg">{p.label}</h3>
+                    <h3 className="font-bold text-fg">{p.label}</h3>
                     <ArrowUpRight
                       size={15}
                       aria-hidden

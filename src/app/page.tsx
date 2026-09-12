@@ -213,7 +213,7 @@ export default function Home() {
                           </span>
                         </div>
                         <div className="flex flex-1 flex-col p-5">
-                          <h3 className="mb-1.5 font-semibold text-fg transition-colors group-hover:text-primary">
+                          <h3 className="mb-1.5 font-bold text-fg transition-colors group-hover:text-primary">
                             {service.name}
                           </h3>
                           <p className="text-sm leading-relaxed text-muted">
@@ -272,7 +272,7 @@ export default function Home() {
                   </span>
                   <div>
                     <div className="mb-2 flex flex-wrap items-center gap-3">
-                      <h3 className="text-lg font-semibold text-fg transition-colors group-hover:text-primary">
+                      <h3 className="text-lg font-bold text-fg transition-colors group-hover:text-primary">
                         {item.title}
                       </h3>
                       <span className="text-xs text-muted">
