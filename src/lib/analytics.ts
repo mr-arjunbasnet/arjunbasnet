@@ -39,7 +39,10 @@ type FunnelEvent =
   | "product_download"
   | "product_request"
   | "product_card_click"
-  | "nav_cta_click";
+  | "nav_cta_click"
+  /* /assistant: opened from the floating orb; a message sent. */
+  | "assistant_open"
+  | "assistant_message";
 
 export type AnalyticsEvent = StudioEvent | FunnelEvent;
 

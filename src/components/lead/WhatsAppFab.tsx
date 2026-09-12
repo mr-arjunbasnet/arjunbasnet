@@ -6,6 +6,7 @@ import { usePathname } from "next/navigation";
 import { X } from "lucide-react";
 import { whatsappUrl } from "@/content/site";
 import { track } from "@/lib/analytics";
+import AssistantFab from "./AssistantFab";
 
 /**
  * Floating WhatsApp button.
@@ -57,6 +58,7 @@ export default function WhatsAppFab() {
 
   return (
     <div className="fixed bottom-5 right-5 z-40 flex flex-col items-end gap-3 print:hidden">
+      <AssistantFab />
       {showPrompt && (
         <div
           role="status"

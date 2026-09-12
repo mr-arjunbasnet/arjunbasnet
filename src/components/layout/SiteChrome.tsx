@@ -4,7 +4,7 @@ import { usePathname } from "next/navigation";
 
 // Routes that render as standalone full-screen tools without the site chrome.
 // /product/* pages carry their own nav and footer per their briefs.
-const STANDALONE_ROUTES = ["/product/melos", "/product/clipstack"];
+const STANDALONE_ROUTES = ["/product/melos", "/product/clipstack", "/assistant"];
 
 export default function SiteChrome({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
