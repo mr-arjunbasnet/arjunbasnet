@@ -43,17 +43,39 @@ function knowledge(): string {
 }
 
 /* Concierge — used when no model key is configured. Points, never invents. */
+const SKIP = new Set(["nepal", "kathmandu", "services", "service", "company", "agency", "consultant", "developer", "development", "get", "for", "and", "the", "txt", "llms"]);
+const ALIASES: Record<string, string[]> = {
+  "seo-services": ["seo", "rank", "google search", "search engine"],
+  "answer-engine-optimization": ["aeo", "answer engine", "featured snippet", "ai overview", "people also ask"],
+  "generative-engine-optimization": ["geo", "generative engine", "chatgpt", "perplexity", "gemini", "cited by ai", "llms.txt"],
+  "digital-marketing": ["marketing", "facebook ads", "meta ads", "social media", "google ads", "campaign"],
+  "web-development": ["website", "web dev", "web design", "landing page", "next.js", "wordpress", "e-commerce", "ecommerce"],
+  "mobile-app-development": ["mobile", "android", "ios", "iphone", "app dev", "an app", "react native", "flutter"],
+  "custom-software-development": ["custom software", "software", "erp", "crm", "portal", "dashboard", "saas", "system"],
+  "ai-automation": ["automat", "ai agent", "chatbot", "workflow", "quotation", "quoting", "n8n", "zapier"],
+  "it-consulting": ["consult", "advis", "strategy", "digital transformation", "vendor", "which tool", "should i build"],
+};
+
 function concierge(q: string): string {
   const t = q.toLowerCase();
-  const hit = SERVICES.find((s) => [s.name, ...s.keywords].some((k) => t.includes(k.toLowerCase().split(" ")[0])) );
+  // Order: explicit intents (price, contact, products, training) → service
+  // routing → location → greeting → fallback.
+  const esc = (w: string) => w.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  const has = (w: string) => new RegExp(`\\b${esc(w)}`, "i").test(t);
+  // Service routing: hand-written aliases per slug first (natural phrasing),
+  // then whole-word tokens from the SEO keywords minus place names. Never a
+  // bare two-letter word — the "it" of "IT consulting" once matched "with".
+  const hit = SERVICES.find((s) => (ALIASES[s.slug] ?? []).some(has)) ??
+    SERVICES.find((s) => s.keywords.flatMap((k) => k.toLowerCase().split(/\W+/)).some((w) => w.length >= 3 && !SKIP.has(w) && has(w)));
   if (/price|cost|charge|rate|budget|how much/.test(t)) return `${startingFromLabel()} — and every quote follows a short conversation about the actual problem. The fastest way to a number is [WhatsApp](/contact) or [booking a call](/contact).`;
   if (/whatsapp|call|talk|speak|contact|email|reach|human|arjun/.test(t)) return `Easiest is WhatsApp — Arjun usually replies within minutes — or [book a call](/contact). Email works too: ${SITE.email}. Everything is on the [contact page](/contact).`;
   if (/clipstack|clipboard/.test(t)) return `ClipStack is a free clipboard-history app for macOS 14+: everything you copy, searchable and pasted back with ⌘⇧V, and it never leaves your Mac. [Get ClipStack](/product/clipstack).`;
   if (/melos|record|voice/.test(t) && !/orb/.test(t)) return `Melos Studio is a free browser recording studio — record your voice and watch it drawn live. Nothing is uploaded. [Open Melos](/product/melos).`;
   if (/train|workshop|seminar|course|learn|teach|student/.test(t)) return `Arjun runs AI training in Nepal — seminars, workshops and programmes for students, teams and institutions, in person or online. [AI training](/ai-trainer-nepal), or [get in touch](/contact) to scope a session.`;
-  if (hit) return `${hit.name}: ${hit.tagline} ${hit.primaryAnswer.answer.split(". ").slice(0, 2).join(". ")}. [Read more](/services/${hit.slug}) or [talk to Arjun](/contact).`;
   if (/automat|n8n|workflow|zapier/.test(t)) return `AI automation replaces repetitive work — quoting, reporting, document processing — with workflows built on n8n and Claude. Typical result: a ten-hour weekly cycle down to about two. [AI automation](/services/ai-automation).`;
-  if (/hello|hi\b|hey|help|what do you/.test(t)) return `I can point you to the right place: nine services (SEO, AEO, GEO, digital marketing, web, mobile, custom software, AI automation, consulting), AI training, and two free products. What's the problem you're trying to solve?`;
+  if (hit) return `${hit.name}: ${hit.tagline} ${hit.answers[0].answer.split(". ").slice(0, 2).join(". ")}. Read more at /services/${hit.slug} or ask Arjun directly on [WhatsApp](/contact).`;
+  if (/where|based|located|location|office|country|city|australia|remote/.test(t)) return `Arjun is based in Kathmandu, Nepal and works remotely with clients in Nepal, Australia and beyond — most projects run entirely over WhatsApp, calls and shared docs. Details on the [about page](/about).`;
+  if (/hello|\bhi\b|hey|help|what do you|what can you/.test(t)) return `I can point you to the right place: nine services (SEO, AEO, GEO, digital marketing, web, mobile, custom software, AI automation, consulting), AI training, and two free products. What's the problem you're trying to solve?`;
   return `I'm a simple guide here — for anything specific, Arjun answers fast on WhatsApp. Meanwhile: [services](/services), [AI training](/ai-trainer-nepal), [products](/products), or [contact](/contact).`;
 }
 
