@@ -1,11 +1,14 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
+import Image from "next/image";
 import { ArrowLeft, Clock } from "lucide-react";
 import { buildMetadata } from "@/lib/seo";
 import { SITE, absoluteUrl } from "@/content/site";
 import { getAllPostMeta, getPost, getCluster } from "@/content/blog/index";
 import { getService } from "@/content/services/index";
+import { publicFileExists } from "@/lib/media";
+import PostCard from "@/components/blog/PostCard";
 import { breadcrumbSchema, faqPageSchema } from "@/lib/schema";
 import JsonLd from "@/components/seo/JsonLd";
 import Container from "@/components/ui/Container";
@@ -62,6 +65,21 @@ export default async function BlogPostPage({
 
   const url = absoluteUrl(`/blog/${slug}`);
 
+  // Hero renders only once the file is actually in public/ (build-time
+  // check). Until then the post is text-first, never a broken image.
+  const hero =
+    meta.heroImage && publicFileExists(meta.heroImage.src) ? meta.heroImage : null;
+
+  // Related: same cluster first, then posts sharing a service, newest first,
+  // never self. Three is enough to keep a reader moving without a wall.
+  const others = getAllPostMeta().filter((p) => p.slug !== slug);
+  const relatedPosts = [
+    ...others.filter((p) => p.cluster === meta.cluster),
+    ...others.filter(
+      (p) => p.cluster !== meta.cluster && p.serviceSlugs.some((s) => meta.serviceSlugs.includes(s)),
+    ),
+  ].slice(0, 3);
+
   const postingSchema = {
     "@context": "https://schema.org",
     "@type": "BlogPosting",
@@ -77,6 +95,7 @@ export default async function BlogPostPage({
     isPartOf: { "@id": `${absoluteUrl("/blog")}#blog` },
     keywords: meta.keywords.join(", "),
     articleSection: cluster?.label,
+    ...(hero ? { image: absoluteUrl(hero.src) } : {}),
     // The key-takeaways block is the part designed to be read aloud or lifted
     // verbatim, so it is the selector worth marking speakable.
     speakable: {
@@ -141,6 +160,25 @@ export default async function BlogPostPage({
             </div>
           </Container>
         </section>
+
+        {/* Hero image — the LCP element on posts that have one, so it is the
+            one image on the page allowed `priority`. Not inside AnimateIn. */}
+        {hero && (
+          <Container width="reading" className="mb-10">
+            <figure className="m-0">
+              <Image
+                src={hero.src}
+                alt={hero.alt}
+                width={hero.width}
+                height={hero.height}
+                priority
+                sizes="(min-width: 768px) 720px, 100vw"
+                className="h-auto w-full rounded-card border border-border"
+                {...(hero.blurDataURL ? { placeholder: "blur", blurDataURL: hero.blurDataURL } : {})}
+              />
+            </figure>
+          </Container>
+        )}
 
         {/* Key takeaways — the block generative engines lift verbatim, placed
             before the body so it is the first thing any extractor encounters. */}
@@ -229,6 +267,16 @@ export default async function BlogPostPage({
                 <h3 className="mb-1.5 font-medium text-fg">{s.name}</h3>
                 <p className="text-sm leading-relaxed text-muted">{s.tagline}</p>
               </Card>
+            ))}
+          </div>
+        </Section>
+      )}
+
+      {relatedPosts.length > 0 && (
+        <Section border="top" size="md" label="Keep reading">
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
+            {relatedPosts.map((p) => (
+              <PostCard key={p.slug} post={p} variant="compact" />
             ))}
           </div>
         </Section>

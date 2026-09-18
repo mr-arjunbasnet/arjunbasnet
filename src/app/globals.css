@@ -194,19 +194,93 @@
     padding: 0;
   }
 
+  /* Tables: the markdown pipeline wraps each <table> in .table-scroll so a
+     wide table scrolls inside its own bordered box, never the page. On large
+     screens the box may bleed past the reading column, where there is empty
+     margin either side. */
+  & .table-scroll {
+    overflow-x: auto;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-card);
+    background: color-mix(in oklab, white 55%, transparent);
+  }
+
+  @media (min-width: 1024px) {
+    & .table-scroll {
+      width: calc(100% + 12rem);
+      margin-left: -6rem;
+    }
+  }
+
   & table {
     width: 100%;
     border-collapse: collapse;
     font-size: 0.9375rem;
+  }
+
+  & thead th {
+    white-space: nowrap;
+  }
+
+  & td:first-child,
+  & th:first-child {
+    font-weight: 600;
+    color: var(--color-fg);
+  }
+
+  & tbody tr:nth-child(even) td {
+    background: color-mix(in oklab, var(--color-surface) 55%, transparent);
+  }
+
+  /* In-body figures: `![alt](/media/blog/…)` renders as <p><img>; a figure
+     with a caption is written as raw HTML in the markdown. Both get the same
+     rounded, bordered treatment and never exceed the reading column. */
+  & img {
     display: block;
+    max-width: 100%;
+    height: auto;
+    border-radius: var(--radius-card);
+    border: 1px solid var(--color-border);
+  }
+
+  & figure {
+    margin-inline: 0;
+  }
+
+  /* Inline SVG charts (generated into the markdown) keep their labels legible
+     on phones by refusing to shrink below 32rem; the figure scrolls instead,
+     the same rule as tables. */
+  & figure:has(> svg) {
     overflow-x: auto;
+  }
+
+  & figure > svg {
+    min-width: 32rem;
+  }
+
+  & figcaption {
+    margin-top: 0.6em;
+    font-size: 0.875rem;
+    color: var(--color-muted);
+    text-align: center;
   }
 
   & th,
   & td {
-    border: 1px solid var(--color-border);
-    padding: 0.6em 0.8em;
+    border-bottom: 1px solid var(--color-border);
+    padding: 0.7em 0.9em;
     text-align: left;
+    vertical-align: top;
+    min-width: 7rem;
+  }
+
+  & th + th,
+  & td + td {
+    border-left: 1px solid var(--color-border);
+  }
+
+  & tbody tr:last-child td {
+    border-bottom: 0;
   }
 
   & th {

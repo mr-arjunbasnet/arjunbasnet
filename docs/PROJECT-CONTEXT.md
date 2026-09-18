@@ -659,3 +659,71 @@ design; overlap hits inside collapsed accordions or mid-AnimateIn are false
 positives — confirm with a targeted screenshot. Full-page screenshots with
 sticky labels and `scroll-behavior: smooth` also fake overlaps; the harness
 forces `scroll-behavior: auto`.
+
+## 21. Content plan from the first Search Console export — 2026-09-14
+
+The 28-day export (to 2026-09-12) and the plan built from it are in
+`docs/content-plan-2026-09.md`. Read that before adding posts; the short
+version: the bare query "ai" is 80% of impressions and 0% of clicks, so
+filter it out before reading any trend; "custom software development … nepal"
+is the strongest commercial family; `/services/ai-automation` is the best
+non-brand page; clicks come from brand.
+
+### Blog template — imagery and cross-linking, shipped 2026-09-14
+
+The repo had 15 posts with zero images, zero tables and three in-body
+internal links in total, and nothing linked service → post or post → post.
+
+| Change | Where | Reasoning |
+|---|---|---|
+| `PostCard` — one card for every place a post is listed | `src/components/blog/PostCard.tsx` | `/blog`, "Keep reading" on posts and "From the blog" on services render the same card, so imagery lands everywhere at once. Thumbnail only when `heroImage` is set **and** the file exists (`publicFileExists`, build time). Never `priority`. |
+| Post hero image | `/blog/[slug]` | Rendered only when the file exists. It *is* the LCP element, so it is the one image on the page allowed `priority`. Also emitted as `BlogPosting.image`. Not inside `AnimateIn`. |
+| "Keep reading" on posts | `/blog/[slug]` | Same cluster first, then shared `serviceSlugs`, never self, three cards. |
+| "From the blog" on services | `/services/[slug]` | `getPostsForService` existed since July and was never called. Newest three. |
+| Tables and figures styled | `prose-site` in `globals.css` | Tables were unstyled block-scroll; now a bordered glass box with zebra rows, scroll stays inside the box. `img` / `figure` / `figcaption` rules added; in-body figures are raw HTML in the markdown so they can carry a caption. |
+| Image slots documented | `public/media/blog/README.txt` | Spec (1600×900, <250 KB, filename = slug) and a brief per post. Owner generates the images; dropping the file in is the whole upgrade. |
+
+Posts added (all with a table, 4–6 in-body links, FAQs, `heroImage` declared):
+`custom-software-cost-nepal`, `ai-automation-examples-nepal`,
+`ai-training-syllabus-nepal`, `ai-tools-small-business-nepal`, and the study
+below. The "local AI" post in the plan was dropped at the owner's request.
+
+**Pricing in `custom-software-cost-nepal`:** honours §2 — the only absolute
+number is the global floor; the worked examples are in effort multiples, not
+rupee bands. Do not add per-project price ranges to it.
+
+### The AI-search readiness study — 2026-09-14
+
+`nepal-ai-search-readiness-2026` is the link-building asset from the plan,
+reframed at the owner's request to lead on AI rather than speed alone.
+
+| Decision | Reasoning |
+|---|---|
+| Measured locally in headless Chromium, not PageSpeed Insights | PSI's anonymous quota was exhausted (429). Chromium on Lighthouse's slow-4G profile (1.6 Mbps / 150 ms / 4× CPU, 412 px viewport) gives comparable LCP. An API key would let the next run use PSI for CrUX field data too. |
+| Ten sectors × the first ten live candidates | `scripts/research/sites.json` is over-provisioned; the sweep keeps the first ten that return 2xx. Five were swapped by hand after the run (2 parked/under construction, 3 behind an F5 "Request Rejected" WAF) — the swap is recorded in the post's method section. |
+| Sector medians only, nobody named | Per-site rows live in `docs/research/ai-search-readiness-2026/results.{json,csv}` for reproducibility. The post and any outreach use medians and percentages. Do not publish the per-site table. |
+| Charts are inline SVG generated from the data | CSS-variable fills, no hex, no image files, no JS. `scripts/…` does not generate them — the one-off generator was a scratch script; regenerate by hand from `summary.json` if the data changes. |
+| `llms.txt` check verified by hand | Two of ten hits were soft-404 HTML; one plugin-generated file (AIOSEO) starts with a comment, not `#`. The script's check is loose; verify hits before quoting the number. |
+| Speed rows have two wait modes | 80 sites were measured with `load` + 3 s; 20 that never fired `load` in 60 s were re-measured with DOM-ready + 8 s and carry `loadTimedOut: true`. Stated in the post. Next run: use the DOM-ready mode for all. |
+
+Re-run: `PHASE=A node scripts/research/ai-search-readiness.mjs`, then
+`PHASE=B PW_ROOT=<folder with playwright + chromium> node …`, then `PHASE=S`
+after any hand edits to `results.json`. Playwright is not a project
+dependency (same as the QA sweep).
+
+### Publishing the five posts + Microsoft Clarity — 2026-09-18
+
+- All five posts carry `publishedAt: 2026-09-18` — the day they went live —
+  rather than the staggered plan dates, so `datePublished` in schema is true.
+  Hero images had not arrived; the posts render text-first and upgrade
+  automatically when the files land in `public/media/blog/`.
+- **The per-site study data is gitignored** (`docs/research/ai-search-readiness-2026/`,
+  `scripts/research/sites.json`). The repo is public and the post promises
+  no business is named; the script stays open with `sites.example.json`.
+  The raw rows live only on the owner's machine — back them up before the
+  2027 re-run.
+- **Microsoft Clarity** is loaded in the root layout via `next/script`
+  (`afterInteractive`), project ID in `SITE.clarityId`. It is the second
+  third-party script on the site after GA4; it records sessions, so if a
+  consent banner is ever added, Clarity must sit behind it. Watch mobile
+  Lighthouse after deploy — it should stay ≥ 90.

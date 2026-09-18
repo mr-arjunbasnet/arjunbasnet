@@ -1,0 +1,7 @@
+{
+  "_note": "Copy to sites.json. One array of bare domains per sector; the sweep keeps the first PER_SECTOR (default 10) that respond 2xx on the homepage. The real list is deliberately not committed — the study names no business.",
+  "sectors": {
+    "Banks & finance": ["example-bank.com.np", "another-bank.com"],
+    "Hospitals & clinics": ["example-hospital.com.np"]
+  }
+}

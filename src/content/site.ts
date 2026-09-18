@@ -39,6 +39,8 @@ export const SITE = {
 
   /** GA4 measurement ID. Only src/lib/analytics.ts may consume this. */
   gaId: "G-QE8P00642W",
+  /** Microsoft Clarity project ID (session recordings + heatmaps). Loaded once in the root layout. */
+  clarityId: "yjicd0rv6f",
 
   locale: "en_US",
   inLanguage: "en",

@@ -46,3 +46,9 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# AI-search readiness study: per-site rows and the candidate list name real
+# businesses. The post reports sector medians only; the repo is public. The
+# script stays open; bring your own sites.json (see sites.example.json).
+docs/research/ai-search-readiness-2026/
+scripts/research/sites.json

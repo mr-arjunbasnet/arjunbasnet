@@ -87,7 +87,14 @@ function readPost(filename: string): BlogPost {
   const raw = fs.readFileSync(path.join(POSTS_DIR, filename), "utf8");
   const { data, content } = matter(raw);
   const { marked, toc } = createRenderer();
-  const html = marked.parse(content) as string;
+  // Every table gets a scroll container so a wide table scrolls inside its
+  // own box on phones rather than widening the page (the responsive-QA rule:
+  // never page-level horizontal scroll). Styled by `.table-scroll` in
+  // globals.css. String post-processing rather than a renderer override
+  // because marked's table renderer signature has changed across majors.
+  const html = (marked.parse(content) as string)
+    .replaceAll("<table>", '<div class="table-scroll"><table>')
+    .replaceAll("</table>", "</table></div>");
 
   return {
     meta: { ...(data as Omit<BlogPostMeta, "slug">), slug: filename.replace(/\.md$/, "") },

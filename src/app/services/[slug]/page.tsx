@@ -4,6 +4,8 @@ import Link from "next/link";
 import { ArrowRight, ArrowUpRight, Check } from "lucide-react";
 import { buildMetadata } from "@/lib/seo";
 import { SERVICES, getService } from "@/content/services/index";
+import { getPostsForService } from "@/content/blog/index";
+import PostCard from "@/components/blog/PostCard";
 import { formatNpr, formatUsd } from "@/content/site";
 import {
   breadcrumbSchema,
@@ -68,6 +70,9 @@ export default async function ServicePage({
   const related = service.relatedServices
     .map((s) => getService(s))
     .filter((s): s is NonNullable<typeof s> => Boolean(s));
+  // Posts that declare this service in `serviceSlugs`. Newest three: the
+  // service page is the money page, and the posts are what earn its links.
+  const posts = getPostsForService(service.slug).slice(0, 3);
 
   return (
     <>
@@ -243,6 +248,22 @@ export default async function ServicePage({
       {service.faqs.length > 0 && (
         <Section border="top" size="md" label="FAQ">
           <FaqAccordion items={service.faqs} />
+        </Section>
+      )}
+
+      {/* ─── From the blog ─── */}
+      {posts.length > 0 && (
+        <Section border="top" size="md" label="From the blog">
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
+            {posts.map((p) => (
+              <PostCard key={p.slug} post={p} variant="compact" />
+            ))}
+          </div>
+          <p className="mt-8 text-sm text-muted">
+            <Link href="/blog" className="text-primary hover:underline">
+              All posts
+            </Link>
+          </p>
         </Section>
       )}
 

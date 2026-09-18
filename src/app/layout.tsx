@@ -10,6 +10,7 @@ import WhatsAppFab from "@/components/lead/WhatsAppFab";
 import AssistantFab from "@/components/lead/AssistantFab";
 import ClickTracker from "@/components/lead/ClickTracker";
 import JsonLd from "@/components/seo/JsonLd";
+import Script from "next/script";
 import { GoogleAnalytics } from "@next/third-parties/google";
 import { SITE } from "@/content/site";
 import { SERVICES } from "@/content/services/index";
@@ -135,6 +136,12 @@ export default function RootLayout({
         {/* GA4. Loaded via @next/third-parties so the script is deferred and
             does not block first paint. Only src/lib/analytics.ts sends events. */}
         <GoogleAnalytics gaId={SITE.gaId} />
+        {/* Microsoft Clarity (owner's request, 2026-09-18). afterInteractive so
+            it never blocks first paint; the snippet is Clarity's own, with the
+            project ID read from site.ts so it is written in one place. */}
+        <Script id="ms-clarity" strategy="afterInteractive">
+          {`(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);})(window,document,"clarity","script","${SITE.clarityId}");`}
+        </Script>
         <SiteChrome>
           <Footer />
           {/* Inside SiteChrome so it auto-hides on /melos, which already has

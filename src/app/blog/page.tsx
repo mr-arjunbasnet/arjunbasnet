@@ -8,10 +8,9 @@ import Container from "@/components/ui/Container";
 import Section from "@/components/ui/Section";
 import Heading from "@/components/ui/Heading";
 import Eyebrow from "@/components/ui/Eyebrow";
-import Badge from "@/components/ui/Badge";
-import Card from "@/components/ui/Card";
 import CTA from "@/components/ui/CTA";
 import AnimateIn from "@/components/ui/AnimateIn";
+import PostCard from "@/components/blog/PostCard";
 
 const title = "Blog — SEO, AI Automation & Digital Strategy in Nepal";
 const description =
@@ -108,36 +107,7 @@ export default function BlogIndex() {
               <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
                 {clusterPosts.map((post, i) => (
                   <AnimateIn key={post.slug} delay={i * 0.05}>
-                    <Card
-                      href={`/blog/${post.slug}`}
-                      padding="lg"
-                      className="h-full"
-                    >
-                      <div className="mb-3 flex flex-wrap items-center gap-3 text-xs text-muted">
-                        <time dateTime={post.publishedAt}>
-                          {new Date(post.publishedAt).toLocaleDateString("en-GB", {
-                            day: "numeric",
-                            month: "short",
-                            year: "numeric",
-                          })}
-                        </time>
-                        <span>·</span>
-                        <span>{post.readingMinutes} min read</span>
-                      </div>
-                      <h2 className="mb-2 text-lg font-bold text-fg">
-                        {post.title}
-                      </h2>
-                      <p className="mb-4 leading-relaxed text-muted">
-                        {post.description}
-                      </p>
-                      <div className="flex flex-wrap gap-1.5">
-                        {post.tags.slice(0, 3).map((tag) => (
-                          <Badge key={tag} tone="surface">
-                            {tag}
-                          </Badge>
-                        ))}
-                      </div>
-                    </Card>
+                    <PostCard post={post} />
                   </AnimateIn>
                 ))}
               </div>
