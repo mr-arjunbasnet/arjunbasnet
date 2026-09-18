@@ -727,3 +727,26 @@ dependency (same as the QA sweep).
   third-party script on the site after GA4; it records sessions, so if a
   consent banner is ever added, Clarity must sit behind it. Watch mobile
   Lighthouse after deploy — it should stay ≥ 90.
+
+### Search Console "Duplicate, Google chose different canonical" — fixed 2026-09-18
+
+One URL affected, `/product/melos`, since 2026-09-05. Cause: the five pages
+with hand-written `metadata` (Melos, About, Work, Research, Contact) did not
+set `openGraph`, so they inherited the root layout's block whose `url` is the
+homepage. Each of those pages therefore declared canonical = itself and
+og:url = homepage — a conflicting canonical hint. Melos was the one Google
+acted on because it had also just moved from `/melos`.
+
+Fix: all five now go through `buildMetadata`, so og:url derives from the
+same path as the canonical. The root layout's inherited openGraph/twitter
+and default title/description were still the pre-July "Project Manager"
+positioning; they now read `SITE.brand` / `SITE.tagline` / `SITE.description`.
+
+**Rule:** every page's metadata goes through `buildMetadata`. A hand-written
+`export const metadata` without `openGraph.url` re-creates this bug.
+
+Remaining: the About / Work / Research / Contact *titles* still carry the old
+positioning ("Project Manager & AI Engineer", "Hire … for PM Engagements").
+Rewriting them is part of the zero-click title pass in
+`docs/content-plan-2026-09.md` §4, not done here because /work and /research
+copy is the owner's.

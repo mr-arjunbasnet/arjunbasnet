@@ -1,11 +1,14 @@
 import type { Metadata } from "next";
+import { buildMetadata } from "@/lib/seo";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import AnimateIn from "@/components/ui/AnimateIn";
 import CountUp from "@/components/ui/CountUp";
 import JsonLd from "@/components/seo/JsonLd";
 
-export const metadata: Metadata = {
+// Through buildMetadata so og:url matches the canonical (the inherited root
+// openGraph pointed every hand-written page at the homepage).
+export const metadata: Metadata = buildMetadata({
   title: "Work — Case Studies in EdTech, AI Automation & Digital Transformation",
   description:
     "Selected case studies from 100+ delivered projects: Cricket Nepal's ICC Award-winning digital transformation, five K-12 and PSC/TSC Learning Management System platforms across Nepal, seven AI automation workflows in n8n and Claude, USEF Nepal, UWS Nepal. 92% on-time delivery.",
@@ -23,8 +26,8 @@ export const metadata: Metadata = {
     "Makura Creations projects",
     "ICC Digital Fan Engagement Award winner",
   ],
-  alternates: { canonical: "/work" },
-};
+  path: "/work",
+});
 
 const workItemListSchema = {
   "@context": "https://schema.org",

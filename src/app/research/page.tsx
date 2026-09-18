@@ -1,10 +1,13 @@
 import type { Metadata } from "next";
+import { buildMetadata } from "@/lib/seo";
 import Link from "next/link";
 import { ArrowRight, ExternalLink } from "lucide-react";
 import AnimateIn from "@/components/ui/AnimateIn";
 import JsonLd from "@/components/seo/JsonLd";
 
-export const metadata: Metadata = {
+// Through buildMetadata so og:url matches the canonical (the inherited root
+// openGraph pointed every hand-written page at the homepage).
+export const metadata: Metadata = buildMetadata({
   title: "Research & Publications — Computer Vision, EdTech, IS Adoption",
   description:
     "Peer-reviewed research by Arjun Basnet — automated attendance using Haar Cascade and LBPH facial detection, published in the Apex Journal of Business and Management (2023). Active research interests across AI in EdTech, adaptive learning analytics, LMS adoption in emerging economies, and responsible educational data governance.",
@@ -20,8 +23,8 @@ export const metadata: Metadata = {
     "Apex Journal of Business and Management",
     "AI in education research",
   ],
-  alternates: { canonical: "/research" },
-};
+  path: "/research",
+});
 
 const scholarlyArticleSchema = {
   "@context": "https://schema.org",

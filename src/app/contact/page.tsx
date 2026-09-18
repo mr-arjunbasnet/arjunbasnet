@@ -1,10 +1,13 @@
 import type { Metadata } from "next";
+import { buildMetadata } from "@/lib/seo";
 import { Suspense } from "react";
 import { MapPin, Mail, ExternalLink } from "lucide-react";
 import ContactForm from "@/components/contact/ContactForm";
 import JsonLd from "@/components/seo/JsonLd";
 
-export const metadata: Metadata = {
+// Through buildMetadata so og:url matches the canonical (the inherited root
+// openGraph pointed every hand-written page at the homepage).
+export const metadata: Metadata = buildMetadata({
   title: "Contact — Hire Arjun Basnet for AI Automation & PM Engagements",
   description:
     "Contact Arjun Basnet for project enquiries, research collaborations, AI automation consulting, EdTech platform development, and business process automation engagements. Based in Kathmandu, Nepal (UTC+5:45). Typical response time within 24 hours.",
@@ -17,8 +20,8 @@ export const metadata: Metadata = {
     "n8n consultant Nepal",
     "Claude API consultant",
   ],
-  alternates: { canonical: "/contact" },
-};
+  path: "/contact",
+});
 
 const contactPageSchema = {
   "@context": "https://schema.org",

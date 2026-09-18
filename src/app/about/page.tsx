@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { truncate } from "@/lib/seo";
+import { buildMetadata } from "@/lib/seo";
 import Link from "next/link";
 import { ArrowRight, MapPin, Sparkles, Users, Globe2 } from "lucide-react";
 import AnimateIn from "@/components/ui/AnimateIn";
@@ -7,10 +7,12 @@ import Timeline from "@/components/about/Timeline";
 import ToolOrbit from "@/components/ui/ToolOrbit";
 import JsonLd from "@/components/seo/JsonLd";
 
-export const metadata: Metadata = {
+// Through buildMetadata so og:url matches the canonical (the inherited root
+// openGraph pointed every hand-written page at the homepage).
+export const metadata: Metadata = buildMetadata({
   title: "About — Project Manager & AI Engineer in Kathmandu",
   description:
-    truncate("Background of Arjun Basnet — three years at Makura Creations delivering 100+ products, B.Sc. CSIT from Tribhuvan University, peer-reviewed computer vision publication, two-time ICC Digital Fan Engagement Award winner. Education and work timeline from 2003 to present.", 158),
+    "Background of Arjun Basnet — three years at Makura Creations delivering 100+ products, B.Sc. CSIT from Tribhuvan University, peer-reviewed computer vision publication, two-time ICC Digital Fan Engagement Award winner. Education and work timeline from 2003 to present.",
   keywords: [
     "Arjun Basnet about",
     "Project Manager biography Nepal",
@@ -22,8 +24,8 @@ export const metadata: Metadata = {
     "Arundaya English Secondary School",
     "Kanchanjunga Higher Secondary School",
   ],
-  alternates: { canonical: "/about" },
-};
+  path: "/about",
+});
 
 const aboutSchema = {
   "@context": "https://schema.org",

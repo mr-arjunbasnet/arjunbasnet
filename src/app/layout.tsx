@@ -45,11 +45,10 @@ export const viewport: Viewport = {
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: "Arjun Basnet — Project Manager & AI Automation Engineer",
+    default: SITE.brand,
     template: "%s | Arjun Basnet",
   },
-  description:
-    "Arjun Basnet — Project Manager and AI Automation Engineer in Kathmandu, Nepal. Specialising in EdTech platforms, business process automation, n8n and Claude workflows, and digital transformation. 100+ projects delivered at Makura Creations, two-time ICC Digital Fan Engagement Award.",
+  description: SITE.description,
   keywords: [
     "Arjun Basnet",
     "Project Manager Nepal",
@@ -78,15 +77,13 @@ export const metadata: Metadata = {
     locale: "en_US",
     url: siteUrl,
     siteName: "Arjun Basnet",
-    title: "Arjun Basnet — Project Manager & AI Automation Engineer",
-    description:
-      "Project Manager and AI Automation Engineer in Kathmandu, Nepal — EdTech, n8n, Claude, and digital transformation.",
+    title: SITE.brand,
+    description: SITE.tagline,
   },
   twitter: {
     card: "summary_large_image",
-    title: "Arjun Basnet — Project Manager & AI Automation Engineer",
-    description:
-      "Project Manager and AI Automation Engineer in Kathmandu, Nepal — EdTech, n8n, Claude, and digital transformation.",
+    title: SITE.brand,
+    description: SITE.tagline,
   },
   robots: {
     index: true,
