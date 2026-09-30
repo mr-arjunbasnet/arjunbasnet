@@ -14,7 +14,7 @@ import CurrentYear from "./CurrentYear";
  * space allows it); Services (all nine); Company; Products; Contact with the
  * three live channels. A legal bar closes it with the brand-assets link.
  */
-const company = NAV_LINKS.filter((l) => !["/services", "/products", "/product/clipstack"].includes(l.href));
+const company = NAV_LINKS.filter((l) => !["/services", "/products", "/product/clipstack", "/ai-training-nepal", "/ai-courses-nepal"].includes(l.href));
 
 function Col({ heading, children }: { heading: string; children: React.ReactNode }) {
   return (
@@ -44,7 +44,8 @@ export default function Footer() {
             {SERVICES.map((s) => (
               <li key={s.slug}><Link href={`/services/${s.slug}` as Route} className={item}>{s.name}</Link></li>
             ))}
-            <li><Link href="/ai-trainer-nepal" className={`${item} font-medium text-fg`}>AI training</Link></li>
+            <li><Link href="/ai-training-nepal" className={`${item} font-medium text-fg`}>AI training</Link></li>
+            <li><Link href="/ai-courses-nepal" className={`${item} font-medium text-fg`}>AI courses</Link></li>
           </Col>
 
           <Col heading="Company">

@@ -750,3 +750,23 @@ positioning ("Project Manager & AI Engineer", "Hire … for PM Engagements").
 Rewriting them is part of the zero-click title pass in
 `docs/content-plan-2026-09.md` §4, not done here because /work and /research
 copy is the owner's.
+
+## 22. AI Training + AI Courses clusters — pilot built 2026-09-22, deployed 2026-10-01
+
+Built from `docs/reference/ai-training-courses-guide.md` (the owner's guide,
+copied from the repo root). Pilot pages: `/ai-training-nepal` (hub),
+`/ai-training-schools-nepal`, `/ai-courses-nepal` (hub),
+`/ai-courses/ai-fundamentals`. Rollout of the rest of the guide's Phase 1 waits
+on the owner's review of these.
+
+| Decision | Reasoning |
+|---|---|
+| **Owner's answers, 2026-09-22:** pilot 3 pages then roll out; keep `/ai-trainer-nepal` and split intent; courses are **enquiry-based**; stock photos + diagrams | Asked up front. The courses hub was added as a 4th page because every course breadcrumb and CTA points at it. |
+| `/ai-trainer-nepal` = the trainer; `/ai-training-nepal` = the programmes hub | Nav "AI Training", the `/ai-training` redirect and the mega-menu link moved to the hub. Answer questions are chosen so the two pages never target the same query. |
+| URLs carry the geo modifier, as the guide specifies | Same exception as the trainer pillar (§12). The nine `/services/*` keep clean slugs. |
+| Content model in `src/content/training/` (types, hub, `sectors/`, images, enquiry) and `src/content/courses/` | Adding a sector = one file + one line in `sectors/index.ts` + a 3-line route file wrapping `SectorTrainingPage`. Adding a course = one file + one line in `courses/index.ts`; `/ai-courses/[slug]` is static with `dynamicParams = false`. Sitemap, llms.txt, validator follow. |
+| **No testimonial, price, date or certificate fields** on the types | Guide §34/§41. Add a field only when the real thing exists. Planned sectors show "Available on request"; planned courses show "Planned · on enquiry" and are never linked. |
+| `Course` schema has no `offers` and no dates | Enquiry-based. Add them when real cohort details exist (guide §43). |
+| Contact form + `/api/contact` accept `ai-training` / `ai-course` | CTAs link `/contact?service=ai-training` / `ai-course`; the API still validates against a registry (`LEARNING_ENQUIRIES`). |
+| Photos: Pexels, via `scripts/fetch-pexels.mjs <id> <public path>` | Prints the `ImageRef` with blur + credit. Chosen for Nepali/South Asian subjects. Alt text describes the scene only — **no stock photo may be captioned as Arjun's session**; the Meet Program 2022 photo is the only one that is. Credits are shown under each photo. Openverse was tried; its results were ≤1024px. |
+| `validate:content` covers the clusters | Same answer-block spec and uniqueness maps, plus related course/sector/post/service slug integrity. |
