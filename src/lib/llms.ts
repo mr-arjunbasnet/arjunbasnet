@@ -3,6 +3,10 @@ import { SERVICES } from "@/content/services/index";
 import { FAQS } from "@/content/faq/index";
 import { getAllPostMeta, CLUSTERS } from "@/content/blog/index";
 import { AI_TRAINER_PRIMARY_ANSWER, AI_TRAINER_ANSWERS, AI_TRAINER_FAQS, AI_TRAINER_META } from "@/content/ai-trainer/index";
+import { TRAINING_HUB_META, TRAINING_HUB_PRIMARY_ANSWER, TRAINING_HUB_ANSWERS, TRAINING_HUB_FAQS, TRAINING_HUB_ROUTE } from "@/content/training/hub";
+import { SECTORS } from "@/content/training/sectors/index";
+import { COURSES, COURSES_HUB_META, COURSES_HUB_PRIMARY_ANSWER, COURSES_HUB_ANSWERS, COURSES_HUB_FAQS, COURSES_HUB_ROUTE, courseRoute } from "@/content/courses/index";
+import type { AnswerBlock, Faq } from "@/content/types";
 
 /**
  * Generates llms.txt and llms-full.txt from the content layer.
@@ -45,6 +49,10 @@ export function buildLlmsTxt(): string {
     "",
     `- [Services](${SITE.url}/services): All nine service lines.`,
     `- [AI Trainer in Nepal](${SITE.url}/ai-trainer-nepal): AI training, workshops and seminars for students, professionals, educators and organisations.`,
+    `- [AI Training in Nepal](${SITE.url}${TRAINING_HUB_ROUTE}): AI training programmes for schools, colleges, companies, banks and small businesses.`,
+    ...SECTORS.map((sec) => `- [${sec.heading}](${SITE.url}${sec.route}): ${sec.tagline}`),
+    `- [AI Courses in Nepal](${SITE.url}${COURSES_HUB_ROUTE}): practical, project-based AI courses for individual learners, beginner to advanced.`,
+    ...COURSES.map((c) => `- [${c.name} course](${SITE.url}${courseRoute(c.slug)}): ${c.tagline}`),
     `- [Products](${SITE.url}/products): free, single-purpose software built by Arjun Basnet.`,
     `- [Melos Studio](${SITE.url}/product/melos): a free browser recording studio — record your voice and watch it drawn live.`,
     `- [ClipStack](${SITE.url}/product/clipstack): a free, private clipboard history app for macOS 14+, built by Arjun Basnet.`,
@@ -119,6 +127,20 @@ export function buildLlmsFullTxt(): string {
     if (block.supporting?.length) parts.push(...block.supporting.map((x) => `- ${x}`), "");
   }
   for (const faq of AI_TRAINER_FAQS) parts.push(`### ${faq.question}`, "", faq.answer, "");
+
+  // AI Training and AI Courses clusters — same spec, same file.
+  const learningPage = (title: string, route: string, description: string, blocks: AnswerBlock[], faqs: Faq[]) => {
+    parts.push(`## ${title}`, "", `URL: ${SITE.url}${route}`, description, "");
+    for (const block of blocks) {
+      parts.push(`### ${block.question}`, "", block.answer, "");
+      if (block.supporting?.length) parts.push(...block.supporting.map((x) => `- ${x}`), "");
+    }
+    for (const faq of faqs) parts.push(`### ${faq.question}`, "", faq.answer, "");
+  };
+  learningPage(TRAINING_HUB_META.heading, TRAINING_HUB_ROUTE, TRAINING_HUB_META.description, [TRAINING_HUB_PRIMARY_ANSWER, ...TRAINING_HUB_ANSWERS], TRAINING_HUB_FAQS);
+  for (const sec of SECTORS) learningPage(sec.heading, sec.route, sec.description, [sec.primaryAnswer, ...sec.answers], sec.faqs);
+  learningPage(COURSES_HUB_META.heading, COURSES_HUB_ROUTE, COURSES_HUB_META.description, [COURSES_HUB_PRIMARY_ANSWER, ...COURSES_HUB_ANSWERS], COURSES_HUB_FAQS);
+  for (const c of COURSES) learningPage(c.heading, courseRoute(c.slug), c.description, [c.primaryAnswer, ...c.answers], c.faqs);
 
   parts.push("## Articles", "");
   for (const cluster of CLUSTERS) {

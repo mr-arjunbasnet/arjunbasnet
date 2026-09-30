@@ -15,6 +15,7 @@ import {
   renderOwnerNotification,
 } from "@/lib/clipstack-email";
 import { SERVICE_SLUGS, getService } from "@/content/services/index";
+import { learningEnquiryLabel } from "@/content/training/enquiry";
 
 // `after` runs the autoresponder past the response, so the visitor is not kept
 // waiting on a second SMTP round trip. It must complete inside maxDuration.
@@ -166,7 +167,7 @@ export async function POST(req: Request) {
       ? "ClipStack (macOS app)"
       : SERVICE_SLUGS.includes(serviceSlug)
         ? getService(serviceSlug)?.name
-        : undefined;
+        : learningEnquiryLabel(serviceSlug);
 
     const budgetRaw = sanitiseField(body.budget, LIMITS.budget);
     const timelineRaw = sanitiseField(body.timeline, LIMITS.timeline);

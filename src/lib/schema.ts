@@ -431,3 +431,45 @@ export function standaloneServiceSchema(input: {
       : {}),
   };
 }
+
+/**
+ * `Course` for /ai-courses/* pages.
+ *
+ * Courses are enquiry-based (no fixed dates or fees yet), so there is no
+ * `offers` and the single `CourseInstance` states only the delivery modes that
+ * are genuinely available. Google's course rich result needs offers and a
+ * workload; it is not claimed here. Add them when real cohort details exist —
+ * guide §43: "Course information should reflect actual course details."
+ */
+export function courseSchema(input: {
+  path: string;
+  name: string;
+  description: string;
+  level: string;
+  teaches: string[];
+  prerequisites: string[];
+  audience: string[];
+}): Json {
+  const url = absoluteUrl(input.path);
+  return {
+    "@context": "https://schema.org",
+    "@type": "Course",
+    "@id": `${url}#course`,
+    name: input.name,
+    description: input.description,
+    url,
+    provider: ref(SCHEMA_ID.person),
+    inLanguage: ["en", "ne"],
+    educationalLevel: input.level,
+    teaches: input.teaches,
+    coursePrerequisites: input.prerequisites,
+    audience: input.audience.map((a) => ({ "@type": "Audience", audienceType: a })),
+    isAccessibleForFree: false,
+    hasCourseInstance: {
+      "@type": "CourseInstance",
+      courseMode: ["Online", "Onsite"],
+      location: { "@type": "Country", name: "Nepal" },
+      instructor: ref(SCHEMA_ID.person),
+    },
+  };
+}

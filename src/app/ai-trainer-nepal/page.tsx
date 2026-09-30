@@ -324,6 +324,14 @@ export default function AiTrainerNepal() {
             Eight areas, mixed to suit the audience. A half-day workshop does
             three of them properly rather than eight badly.
           </p>
+          <p className="-mt-6 mb-12 max-w-2xl leading-relaxed text-muted">
+            Planning for a whole team? See{" "}
+            <Link href="/ai-training-nepal" className="font-medium text-primary hover:underline">AI training programmes in Nepal</Link>{" "}
+            by sector, including{" "}
+            <Link href="/ai-training-schools-nepal" className="font-medium text-primary hover:underline">AI training for schools</Link>.
+            Learning on your own? Start with the{" "}
+            <Link href="/ai-courses-nepal" className="font-medium text-primary hover:underline">AI courses in Nepal</Link>.
+          </p>
         </AnimateIn>
 
         <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
