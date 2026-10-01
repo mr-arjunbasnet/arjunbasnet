@@ -96,11 +96,7 @@ const nextConfig: NextConfig = {
       },
       // The owner himself typed this spelling; visitors will too.
       { source: "/ai-trainer-in-nepal", destination: "/ai-trainer-nepal", permanent: true },
-      // Retargeted 2026-09-22: /ai-training-nepal is now the training hub.
-      { source: "/ai-training", destination: "/ai-training-nepal", permanent: true },
-      { source: "/ai-training-in-nepal", destination: "/ai-training-nepal", permanent: true },
-      { source: "/ai-courses", destination: "/ai-courses-nepal", permanent: true },
-      { source: "/ai-courses-in-nepal", destination: "/ai-courses-nepal", permanent: true },
+      { source: "/ai-training", destination: "/ai-trainer-nepal", permanent: true },
     ];
   },
 };

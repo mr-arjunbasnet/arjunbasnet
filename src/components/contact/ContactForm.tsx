@@ -4,7 +4,6 @@ import { useState, useEffect, useRef } from "react";
 import { useSearchParams } from "next/navigation";
 import { Send, CheckCircle, AlertCircle, Loader2 } from "lucide-react";
 import { SERVICES } from "@/content/services/index";
-import { LEARNING_ENQUIRIES } from "@/content/training/enquiry";
 import { track } from "@/lib/analytics";
 
 type Status = "idle" | "loading" | "success" | "error";
@@ -215,11 +214,6 @@ export default function ContactForm() {
           {SERVICES.map((s) => (
             <option key={s.slug} value={s.slug}>
               {s.name}
-            </option>
-          ))}
-          {LEARNING_ENQUIRIES.map((e) => (
-            <option key={e.value} value={e.value}>
-              {e.label}
             </option>
           ))}
         </select>

@@ -153,15 +153,10 @@ export default function Navbar() {
                 ))}
               </div>
               <div className="mt-5 flex flex-wrap items-center justify-between gap-3 border-t border-white/70 pt-4">
-                <span className="flex flex-wrap items-center gap-1">
-                  <Link href="/ai-training-nepal" onClick={() => setMega(false)} className="inline-flex items-center gap-2 rounded-xl px-2.5 py-1.5 text-sm font-medium text-fg transition-colors hover:bg-white/70">
-                    <span className="grid h-7 w-7 place-items-center rounded-lg bg-surface-2 text-primary"><GraduationCap size={14} aria-hidden /></span>
-                    AI training for teams and institutions
-                  </Link>
-                  <Link href="/ai-courses-nepal" onClick={() => setMega(false)} className="inline-flex items-center gap-2 rounded-xl px-2.5 py-1.5 text-sm font-medium text-fg transition-colors hover:bg-white/70">
-                    AI courses for individuals
-                  </Link>
-                </span>
+                <Link href="/ai-trainer-nepal" onClick={() => setMega(false)} className="inline-flex items-center gap-2 rounded-xl px-2.5 py-1.5 text-sm font-medium text-fg transition-colors hover:bg-white/70">
+                  <span className="grid h-7 w-7 place-items-center rounded-lg bg-surface-2 text-primary"><GraduationCap size={14} aria-hidden /></span>
+                  AI training for teams and institutions
+                </Link>
                 <Link href="/services" onClick={() => setMega(false)} className="inline-flex items-center gap-1.5 text-sm font-medium text-primary hover:underline">
                   Compare all nine services <ArrowRight size={14} aria-hidden />
                 </Link>

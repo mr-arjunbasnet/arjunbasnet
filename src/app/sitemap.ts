@@ -2,8 +2,6 @@ import type { MetadataRoute } from "next";
 import { absoluteUrl } from "@/content/site";
 import { SERVICES } from "@/content/services/index";
 import { getAllPostMeta } from "@/content/blog/index";
-import { SECTORS } from "@/content/training/sectors/index";
-import { COURSES, courseRoute } from "@/content/courses/index";
 
 /**
  * Generated from the content layer rather than hand-maintained.
@@ -21,9 +19,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     // Pillar page for the AI training entity. High priority: it is the target
     // the AI-cluster posts link up to.
     { url: absoluteUrl("/ai-trainer-nepal"), lastModified: now, changeFrequency: "monthly", priority: 0.95 },
-    // AI Training and AI Courses hubs (docs/reference/ai-training-courses-guide.md).
-    { url: absoluteUrl("/ai-training-nepal"), lastModified: new Date("2026-09-22"), changeFrequency: "monthly", priority: 0.95 },
-    { url: absoluteUrl("/ai-courses-nepal"), lastModified: new Date("2026-09-22"), changeFrequency: "monthly", priority: 0.9 },
     { url: absoluteUrl("/products"), lastModified: now, changeFrequency: "monthly", priority: 0.7 },
     { url: absoluteUrl("/product/clipstack"), lastModified: now, changeFrequency: "monthly", priority: 0.8 },
     { url: absoluteUrl("/work"), lastModified: now, changeFrequency: "weekly", priority: 0.9 },
@@ -51,10 +46,5 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.75,
   }));
 
-  const learningRoutes: MetadataRoute.Sitemap = [
-    ...SECTORS.map((s) => ({ url: absoluteUrl(s.route), lastModified: new Date(s.updatedAt), changeFrequency: "monthly" as const, priority: 0.85 })),
-    ...COURSES.map((c) => ({ url: absoluteUrl(courseRoute(c.slug)), lastModified: new Date(c.updatedAt), changeFrequency: "monthly" as const, priority: 0.85 })),
-  ];
-
-  return [...staticRoutes, ...serviceRoutes, ...learningRoutes, ...postRoutes];
+  return [...staticRoutes, ...serviceRoutes, ...postRoutes];
 }

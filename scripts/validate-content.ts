@@ -18,20 +18,6 @@ import {
   AI_TRAINER_ANSWERS,
   AI_TRAINER_FAQS,
 } from "../src/content/ai-trainer/index.ts";
-import {
-  TRAINING_HUB_PRIMARY_ANSWER,
-  TRAINING_HUB_ANSWERS,
-  TRAINING_HUB_FAQS,
-} from "../src/content/training/hub.ts";
-import { SECTORS } from "../src/content/training/sectors/index.ts";
-import {
-  COURSES,
-  PLANNED_COURSES,
-  COURSES_HUB_PRIMARY_ANSWER,
-  COURSES_HUB_ANSWERS,
-  COURSES_HUB_FAQS,
-} from "../src/content/courses/index.ts";
-import { getAllPostMeta } from "../src/content/blog/index.ts";
 import type { AnswerBlock, Faq } from "../src/content/types.ts";
 
 const MIN_WORDS = 134;
@@ -175,62 +161,6 @@ for (const faq of FAQS) checkFaq(faq, "faq");
   for (const faq of AI_TRAINER_FAQS) checkFaq(faq, where);
 }
 
-/*
- * AI Training and AI Courses clusters (docs/reference/ai-training-courses-guide.md).
- * Same answer-block spec, same shared uniqueness maps, plus link integrity:
- * every related course, sector, post and service slug must resolve.
- */
-function checkPage(where: string, blocks: AnswerBlock[], faqs: Faq[], route: string) {
-  for (const block of blocks) {
-    checkAnswer(block, where);
-    if (block.primaryRoute !== route) {
-      errors.push(`${where} [${block.id}]: primaryRoute ${block.primaryRoute} is not this page (${route})`);
-    }
-    const q = block.question.trim().toLowerCase();
-    const prior = seenQuestions.get(q);
-    if (prior && prior !== where) {
-      errors.push(`${where} [${block.id}]: question duplicates one in ${prior}`);
-    }
-    seenQuestions.set(q, where);
-    const priorId = seenAnswerIds.get(block.id);
-    if (priorId) errors.push(`${where}: answer id "${block.id}" already used in ${priorId}`);
-    seenAnswerIds.set(block.id, where);
-    const list = primaryRoutes.get(block.id) ?? [];
-    list.push(block.primaryRoute);
-    primaryRoutes.set(block.id, list);
-  }
-  for (const faq of faqs) checkFaq(faq, where);
-}
-
-const postSlugs = new Set(getAllPostMeta().map((p) => p.slug));
-const courseSlugs = new Set([...COURSES, ...PLANNED_COURSES].map((c) => c.slug));
-const sectorSlugs = new Set(SECTORS.map((s) => s.slug));
-
-checkPage("training-hub", [TRAINING_HUB_PRIMARY_ANSWER, ...TRAINING_HUB_ANSWERS], TRAINING_HUB_FAQS, "/ai-training-nepal");
-checkPage("courses-hub", [COURSES_HUB_PRIMARY_ANSWER, ...COURSES_HUB_ANSWERS], COURSES_HUB_FAQS, "/ai-courses-nepal");
-
-for (const s of SECTORS) {
-  const where = `training/${s.slug}`;
-  checkPage(where, [s.primaryAnswer, ...s.answers], s.faqs, s.route);
-  if (s.title.length > 60) warnings.push(`${where}: title is ${s.title.length} chars, aim for ≤ 60`);
-  if (s.description.length < 120 || s.description.length > 160) warnings.push(`${where}: description is ${s.description.length} chars, aim for 150-160`);
-  for (const c of s.relatedCourses) if (!courseSlugs.has(c)) errors.push(`${where}: relatedCourses references unknown course "${c}"`);
-  for (const p of s.relatedPosts) if (!postSlugs.has(p)) errors.push(`${where}: relatedPosts references unknown post "${p}"`);
-  for (const v of s.relatedServices) if (!slugs.has(v)) errors.push(`${where}: relatedServices references unknown service "${v}"`);
-}
-for (const c of COURSES) {
-  const where = `course/${c.slug}`;
-  checkPage(where, [c.primaryAnswer, ...c.answers], c.faqs, `/ai-courses/${c.slug}`);
-  if (c.title.length > 60) warnings.push(`${where}: title is ${c.title.length} chars, aim for ≤ 60`);
-  if (c.description.length < 120 || c.description.length > 160) warnings.push(`${where}: description is ${c.description.length} chars, aim for 150-160`);
-  for (const r of c.relatedCourses) {
-    if (!courseSlugs.has(r)) errors.push(`${where}: relatedCourses references unknown course "${r}"`);
-    if (r === c.slug) errors.push(`${where}: relatedCourses includes itself`);
-  }
-  for (const r of c.relatedSectors) if (!sectorSlugs.has(r)) errors.push(`${where}: relatedSectors references unknown sector "${r}"`);
-  for (const p of c.relatedPosts) if (!postSlugs.has(p)) errors.push(`${where}: relatedPosts references unknown post "${p}"`);
-}
-
 // Every AnswerBlock must be claimed by exactly one route, or the same Q/A
 // emits FAQPage on two URLs and splits the entity across duplicates.
 for (const [id, routes] of primaryRoutes) {
@@ -244,17 +174,17 @@ for (const [id, routes] of primaryRoutes) {
 
 /* -------------------------------------------------------------------------- */
 
+const answerTotal =
+  SERVICES.reduce((n, s) => n + s.answers.length + 1, 0) +
+  AI_TRAINER_ANSWERS.length +
+  1;
 const faqTotal =
   SERVICES.reduce((n, s) => n + s.faqs.length, 0) +
   FAQS.length +
-  AI_TRAINER_FAQS.length +
-  TRAINING_HUB_FAQS.length +
-  COURSES_HUB_FAQS.length +
-  SECTORS.reduce((n, s) => n + s.faqs.length, 0) +
-  COURSES.reduce((n, c) => n + c.faqs.length, 0);
+  AI_TRAINER_FAQS.length;
 
 console.log(
-  `Checked ${SERVICES.length} services · 1 pillar page · 2 learning hubs · ${SECTORS.length} sector pages · ${COURSES.length} courses · ${seenAnswerIds.size} answer blocks · ${faqTotal} FAQs`,
+  `Checked ${SERVICES.length} services · 1 pillar page · ${answerTotal} answer blocks · ${faqTotal} FAQs`,
 );
 
 for (const w of warnings) console.warn(`  warn  ${w}`);
