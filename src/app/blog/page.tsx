@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { buildMetadata } from "@/lib/seo";
 import { SITE, absoluteUrl } from "@/content/site";
-import { getAllPostMeta, CLUSTERS, getPostsByCluster } from "@/content/blog/index";
+import { getAllPostMeta, CLUSTERS } from "@/content/blog/index";
 import { breadcrumbSchema, itemListSchema } from "@/lib/schema";
 import JsonLd from "@/components/seo/JsonLd";
 import Container from "@/components/ui/Container";
@@ -9,8 +9,8 @@ import Section from "@/components/ui/Section";
 import Heading from "@/components/ui/Heading";
 import Eyebrow from "@/components/ui/Eyebrow";
 import CTA from "@/components/ui/CTA";
-import AnimateIn from "@/components/ui/AnimateIn";
 import PostCard from "@/components/blog/PostCard";
+import BlogBrowser from "@/components/blog/BlogBrowser";
 
 const title = "Blog — SEO, AI Automation & Digital Strategy in Nepal";
 const description =
@@ -30,6 +30,22 @@ export const metadata: Metadata = buildMetadata({
 
 export default function BlogIndex() {
   const posts = getAllPostMeta();
+
+  // Archive options: one per month that has posts, newest first.
+  const archiveCounts = new Map<string, number>();
+  for (const p of posts) {
+    const month = p.publishedAt.slice(0, 7);
+    archiveCounts.set(month, (archiveCounts.get(month) ?? 0) + 1);
+  }
+  const archives = [...archiveCounts].map(([id, count]) => ({
+    id,
+    count,
+    label: new Date(`${id}-01T00:00:00Z`).toLocaleDateString("en-GB", {
+      month: "long",
+      year: "numeric",
+      timeZone: "UTC",
+    }),
+  }));
 
   const blogSchema = {
     "@context": "https://schema.org",
@@ -85,35 +101,32 @@ export default function BlogIndex() {
           <p className="text-muted">First posts are on their way.</p>
         </Section>
       ) : (
-        /* Grouped by cluster, statically. There are no per-cluster hub pages
-           (removed 2026-09-08 at the owner's request — every post is
-           /blog/{slug}, and this page already lists all of them). Grouping
-           here is presentation only; never turn it into a searchParams filter,
-           which would make the route dynamic. */
-        CLUSTERS.map((cluster) => {
-          const clusterPosts = getPostsByCluster(cluster.id);
-          if (!clusterPosts.length) return null;
-
-          return (
-            <Section
-              key={cluster.id}
-              border="top"
-              size="md"
-              label={cluster.label}
-            >
-              <p className="mb-7 max-w-2xl leading-relaxed text-muted">
-                {cluster.description}
-              </p>
-              <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
-                {clusterPosts.map((post, i) => (
-                  <AnimateIn key={post.slug} delay={i * 0.05}>
-                    <PostCard post={post} />
-                  </AnimateIn>
-                ))}
-              </div>
-            </Section>
-          );
-        })
+        /* Every post, newest first, with Category and Archive filters. The
+           filters are client state only (BlogBrowser) — never a searchParams
+           filter, which would make /blog dynamic — and the prerendered HTML
+           lists every post. There are still no per-cluster hub pages (removed
+           2026-09-08 at the owner's request). */
+        <Section border="top" size="md">
+          <BlogBrowser
+            items={posts.map((post) => ({
+              slug: post.slug,
+              cluster: post.cluster,
+              archive: post.publishedAt.slice(0, 7),
+              card: (
+                <PostCard
+                  post={post}
+                  sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
+                />
+              ),
+            }))}
+            categories={CLUSTERS.map((c) => ({
+              id: c.id,
+              label: c.label,
+              count: posts.filter((p) => p.cluster === c.id).length,
+            })).filter((c) => c.count > 0)}
+            archives={archives}
+          />
+        </Section>
       )}
 
       <CTA context="/blog" />

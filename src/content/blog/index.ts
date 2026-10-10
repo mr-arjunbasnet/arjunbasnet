@@ -121,7 +121,15 @@ export function getAllPostMeta(): BlogPostMeta[] {
       };
     })
     .filter((p) => !p.draft)
-    .sort((a, b) => (a.publishedAt < b.publishedAt ? 1 : -1));
+    // Newest first; same-day posts by slug so the order is stable across
+    // filesystems (readdir order differs between macOS and Vercel's Linux).
+    .sort((a, b) =>
+      a.publishedAt === b.publishedAt
+        ? a.slug.localeCompare(b.slug)
+        : a.publishedAt < b.publishedAt
+          ? 1
+          : -1,
+    );
 }
 
 export function getPost(slug: string): BlogPost | undefined {

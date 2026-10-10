@@ -462,6 +462,13 @@ group the listing, feed `articleSection` in BlogPosting schema, and section
 `llms-full.txt`. They just have no URL. Do not reintroduce hub pages, and do
 not turn the grouping into a `searchParams` filter (that makes `/blog` dynamic).
 
+**Updated 2026-10-10 (owner's request):** `/blog` is now one list of every
+post, newest first (same-day posts by slug), with **Category** (cluster) chips
+and an **Archive** (month) select in `src/components/blog/BlogBrowser.tsx`.
+Filtering is client `useState` only: no `searchParams`, no URL, so `/blog`
+stays `○` static and the prerendered HTML lists every post for crawlers.
+PostCards are server-rendered and passed in as props (they read `fs`).
+
 ## 15. Brand identity — logo and palette, 2026-09-08
 
 The owner supplied a brand sheet (screenshot only, no source files): a mark —
