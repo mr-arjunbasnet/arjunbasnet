@@ -20,6 +20,8 @@ import Card from "@/components/ui/Card";
 import CTA from "@/components/ui/CTA";
 import AnimateIn from "@/components/ui/AnimateIn";
 import FaqAccordion from "@/components/seo/FaqAccordion";
+import PostToc from "@/components/blog/PostToc";
+import PostSidebarCta from "@/components/blog/PostSidebarCta";
 
 export const dynamicParams = false;
 
@@ -64,6 +66,7 @@ export default async function BlogPostPage({
     .filter((s): s is NonNullable<typeof s> => Boolean(s));
 
   const url = absoluteUrl(`/blog/${slug}`);
+  const tocItems = toc.filter((t) => t.level === 2).map(({ id, text }) => ({ id, text }));
 
   // Hero renders only once the file is actually in public/ (build-time
   // check). Until then the post is text-first, never a broken image.
@@ -120,143 +123,157 @@ export default async function BlogPostPage({
       />
 
       <article>
-        <section className="pt-12 pb-8 md:pt-16 md:pb-10">
-          <Container width="reading">
-            <Link
-              href="/blog"
-              className="mb-7 inline-flex items-center gap-1.5 text-sm text-muted transition-colors hover:text-primary"
-            >
-              <ArrowLeft size={14} aria-hidden />
-              All posts
-            </Link>
+        <Container>
+          <div className="lg:grid lg:grid-cols-[minmax(0,44rem)_17rem] lg:justify-between lg:gap-12">
+            <div className="min-w-0">
+            <header className="pt-12 pb-8 md:pt-16 md:pb-10">
+                <Link
+                  href="/blog"
+                  className="mb-7 inline-flex items-center gap-1.5 text-sm text-muted transition-colors hover:text-primary"
+                >
+                  <ArrowLeft size={14} aria-hidden />
+                  All posts
+                </Link>
 
-            {cluster && (
-              <Eyebrow className="mb-4">
-                <span className="hover:text-primary">
-                  {cluster.label}
-                </span>
-              </Eyebrow>
+                {cluster && (
+                  <Eyebrow className="mb-4">
+                    <span className="hover:text-primary">
+                      {cluster.label}
+                    </span>
+                  </Eyebrow>
+                )}
+
+                <Heading level={1} size="xl" className="mb-5">
+                  {meta.title}
+                </Heading>
+
+                <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-muted">
+                  <span>Arjun Basnet</span>
+                  <span aria-hidden>·</span>
+                  <time dateTime={meta.publishedAt}>
+                    {new Date(meta.publishedAt).toLocaleDateString("en-GB", {
+                      day: "numeric",
+                      month: "long",
+                      year: "numeric",
+                    })}
+                  </time>
+                  <span aria-hidden>·</span>
+                  <span className="inline-flex items-center gap-1.5">
+                    <Clock size={13} aria-hidden />
+                    {meta.readingMinutes} min read
+                  </span>
+                </div>
+            </header>
+
+            {/* Hero image — the LCP element on posts that have one, so it is the
+                one image on the page allowed `priority`. Not inside AnimateIn. */}
+            {hero && (
+              <div className="mb-10">
+                <figure className="m-0">
+                  <Image
+                    src={hero.src}
+                    alt={hero.alt}
+                    width={hero.width}
+                    height={hero.height}
+                    priority
+                    sizes="(min-width: 768px) 720px, 100vw"
+                    className="h-auto w-full rounded-card border border-border"
+                    {...(hero.blurDataURL ? { placeholder: "blur", blurDataURL: hero.blurDataURL } : {})}
+                  />
+                </figure>
+              </div>
             )}
 
-            <Heading level={1} size="xl" className="mb-5">
-              {meta.title}
-            </Heading>
-
-            <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-muted">
-              <span>Arjun Basnet</span>
-              <span aria-hidden>·</span>
-              <time dateTime={meta.publishedAt}>
-                {new Date(meta.publishedAt).toLocaleDateString("en-GB", {
-                  day: "numeric",
-                  month: "long",
-                  year: "numeric",
-                })}
-              </time>
-              <span aria-hidden>·</span>
-              <span className="inline-flex items-center gap-1.5">
-                <Clock size={13} aria-hidden />
-                {meta.readingMinutes} min read
-              </span>
-            </div>
-          </Container>
-        </section>
-
-        {/* Hero image — the LCP element on posts that have one, so it is the
-            one image on the page allowed `priority`. Not inside AnimateIn. */}
-        {hero && (
-          <Container width="reading" className="mb-10">
-            <figure className="m-0">
-              <Image
-                src={hero.src}
-                alt={hero.alt}
-                width={hero.width}
-                height={hero.height}
-                priority
-                sizes="(min-width: 768px) 720px, 100vw"
-                className="h-auto w-full rounded-card border border-border"
-                {...(hero.blurDataURL ? { placeholder: "blur", blurDataURL: hero.blurDataURL } : {})}
-              />
-            </figure>
-          </Container>
-        )}
-
-        {/* Key takeaways — the block generative engines lift verbatim, placed
-            before the body so it is the first thing any extractor encounters. */}
-        {meta.keyTakeaways?.length > 0 && (
-          <Container width="reading" className="mb-10">
-            <AnimateIn>
-              <div className="key-takeaways rounded-card border border-border bg-surface p-6">
-                <p className="mb-4 text-xs font-semibold uppercase tracking-label text-primary">
-                  Key takeaways
-                </p>
-                <ul className="space-y-2.5">
-                  {meta.keyTakeaways.map((point) => (
-                    <li key={point} className="flex gap-3 leading-relaxed">
-                      <span
-                        aria-hidden
-                        className="mt-2.5 h-1.5 w-1.5 shrink-0 rounded-full bg-accent"
-                      />
-                      <span className="text-fg/85">{point}</span>
-                    </li>
-                  ))}
-                </ul>
+            {/* Key takeaways — the block generative engines lift verbatim, placed
+                before the body so it is the first thing any extractor encounters. */}
+            {meta.keyTakeaways?.length > 0 && (
+              <div className="mb-10">
+                <AnimateIn>
+                  <div className="key-takeaways rounded-card border border-border bg-surface p-6">
+                    <p className="mb-4 text-xs font-semibold uppercase tracking-label text-primary">
+                      Key takeaways
+                    </p>
+                    <ul className="space-y-2.5">
+                      {meta.keyTakeaways.map((point) => (
+                        <li key={point} className="flex gap-3 leading-relaxed">
+                          <span
+                            aria-hidden
+                            className="mt-2.5 h-1.5 w-1.5 shrink-0 rounded-full bg-accent"
+                          />
+                          <span className="text-fg/85">{point}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </AnimateIn>
               </div>
-            </AnimateIn>
-          </Container>
-        )}
+            )}
 
-        {/* Table of contents */}
-        {toc.filter((t) => t.level === 2).length > 2 && (
-          <Container width="reading" className="mb-10">
-            <nav aria-label="On this page" className="border-l-2 border-border pl-5">
-              <p className="mb-3 text-xs font-semibold uppercase tracking-label text-muted">
-                On this page
-              </p>
-              <ul className="space-y-2">
-                {toc
-                  .filter((t) => t.level === 2)
-                  .map((t) => (
-                    <li key={t.id}>
-                      <a
-                        href={`#${t.id}`}
-                        className="text-sm text-muted transition-colors hover:text-primary"
-                      >
-                        {t.text}
-                      </a>
-                    </li>
-                  ))}
-              </ul>
-            </nav>
-          </Container>
-        )}
+            {/* Table of contents — inline on phones and tablets; on desktop it
+                lives in the sticky sidebar instead. */}
+            {tocItems.length > 2 && (
+              <div className="mb-10 lg:hidden">
+                <nav aria-label="On this page" className="border-l-2 border-border pl-5">
+                  <p className="mb-3 text-xs font-semibold uppercase tracking-label text-muted">
+                    On this page
+                  </p>
+                  <ul className="space-y-2">
+                    {toc
+                      .filter((t) => t.level === 2)
+                      .map((t) => (
+                        <li key={t.id}>
+                          <a
+                            href={`#${t.id}`}
+                            className="text-sm text-muted transition-colors hover:text-primary"
+                          >
+                            {t.text}
+                          </a>
+                        </li>
+                      ))}
+                  </ul>
+                </nav>
+              </div>
+            )}
 
-        <Container width="reading">
-          <div
-            className="prose-site"
-            dangerouslySetInnerHTML={{ __html: html }}
-          />
-        </Container>
-
-        {meta.faqs?.length ? (
-          <Container width="reading" className="mt-14">
-            <Heading level={2} size="lg" className="mb-6">
-              Questions
-            </Heading>
-            <FaqAccordion items={meta.faqs} />
-          </Container>
-        ) : null}
-
-        {meta.tags.length > 0 && (
-          <Container width="reading" className="mt-12">
-            <div className="flex flex-wrap gap-2">
-              {meta.tags.map((tag) => (
-                <Badge key={tag} tone="surface" size="md">
-                  {tag}
-                </Badge>
-              ))}
+            <div>
+              <div
+                className="prose-site"
+                dangerouslySetInnerHTML={{ __html: html }}
+              />
             </div>
-          </Container>
-        )}
+
+            {meta.faqs?.length ? (
+              <div className="mt-14">
+                <Heading level={2} size="lg" className="mb-6">
+                  Questions
+                </Heading>
+                <FaqAccordion items={meta.faqs} />
+              </div>
+            ) : null}
+
+            {meta.tags.length > 0 && (
+              <div className="mt-12">
+                <div className="flex flex-wrap gap-2">
+                  {meta.tags.map((tag) => (
+                    <Badge key={tag} tone="surface" size="md">
+                      {tag}
+                    </Badge>
+                  ))}
+                </div>
+              </div>
+            )}
+            </div>
+
+            {/* Sticky sidebar: contents plus one offer matched to the cluster.
+                Desktop only; the page's closing CTA covers smaller screens. */}
+            <aside className="hidden pt-16 lg:block">
+              <div className="sticky top-24 space-y-8">
+                {tocItems.length > 2 && <PostToc items={tocItems} />}
+                <PostSidebarCta cluster={meta.cluster} path={`/blog/${slug}`} />
+              </div>
+            </aside>
+          </div>
+        </Container>
       </article>
 
       {services.length > 0 && (

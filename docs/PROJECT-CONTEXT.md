@@ -787,3 +787,15 @@ bottom-right, a pattern of the mark's spark alternating with dots fading from
 the top-right, and a 12 px Aurora band. Credits stored in
 `heroImage.credit`, never rendered. Swap any photo by re-running the script
 on a new source; filenames equal the slug.
+
+### Shorter cards, sticky sidebar on posts — 2026-10-10
+
+- `PostCard`: the cluster label sits on the image, the title is clamped to
+  3 lines, and the summary is the first sentence of the description clamped
+  to 2 lines. The tag row was replaced by "Read article →". The full
+  description stays the meta description.
+- Posts on `lg+` use a two-column grid (44rem body, 17rem aside). The aside is
+  sticky (`top-24`). It holds `PostToc` (client; highlights the current h2
+  after hydration, static otherwise) and `PostSidebarCta`, one offer per
+  cluster plus WhatsApp, tracked as `post_sidebar_<cluster>`. Below `lg`, the
+  inline TOC stays and the sidebar is hidden.
