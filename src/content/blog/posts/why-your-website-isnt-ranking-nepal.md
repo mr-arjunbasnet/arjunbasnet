@@ -23,6 +23,16 @@ faqs:
   - id: "faq-rebuild-needed"
     question: "Do we need to rebuild the site?"
     answer: "Usually not. A rebuild only becomes the cheaper option when the platform blocks fundamentals — no control over page titles, unfixable page speed, or URLs that change on every edit. An audit tells you which situation you are in before you spend anything."
+heroImage:
+  src: "/media/blog/why-your-website-isnt-ranking-nepal.jpg"
+  alt: "A tablet showing a website traffic analytics dashboard beside a coffee cup"
+  width: 1600
+  height: 900
+  credit:
+    provider: "Pexels"
+    author: "AS Photography"
+    authorUrl: "https://www.pexels.com/@asphotography"
+    sourceUrl: "https://www.pexels.com/photo/black-samsung-tablet-computer-106344/"
 ---
 
 A site that does not rank is rarely broken in an exotic way. Across audits of Nepali business sites, the same six causes come up repeatedly — and they are usually cheaper to fix than the rebuild people assume they need.

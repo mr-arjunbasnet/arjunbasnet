@@ -23,6 +23,16 @@ faqs:
   - id: "faq-how-often"
     question: "How often should this be repeated?"
     answer: "A full pass twice a year, plus a Search Console check monthly. Most technical problems are introduced by changes — a redesign, a plugin update, a migration — so run it after anything significant rather than only on a calendar."
+heroImage:
+  src: "/media/blog/technical-seo-checklist-nepal.jpg"
+  alt: "Lines of source code on a screen, viewed at an angle"
+  width: 1600
+  height: 900
+  credit:
+    provider: "Pexels"
+    author: "Godfrey  Atima"
+    authorUrl: "https://www.pexels.com/@godiatima"
+    sourceUrl: "https://www.pexels.com/photo/a-black-flat-screen-monitor-4955393/"
 ---
 
 Fourteen checks, ordered so each one makes the next meaningful. Most sites here fail four or five of them, and most of those failures are fixable without touching the design.

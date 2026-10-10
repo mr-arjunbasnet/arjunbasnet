@@ -22,9 +22,14 @@ keyTakeaways:
 serviceSlugs: ["ai-automation", "it-consulting"]
 heroImage:
   src: "/media/blog/ai-prompting-frameworks.jpg"
-  alt: "A notebook page with a prompt drafted in labelled sections beside a laptop showing a chat assistant"
+  alt: "An open notebook of handwritten structured notes with glasses and a pencil beside a laptop"
   width: 1600
   height: 900
+  credit:
+    provider: "Pexels"
+    author: "Mikhail Nilov"
+    authorUrl: "https://www.pexels.com/@mikhail-nilov"
+    sourceUrl: "https://www.pexels.com/photo/an-eyeglasses-on-notebook-with-pen-7594644/"
 faqs:
   - id: "faq-best-framework"
     question: "Which prompting framework is the best one?"

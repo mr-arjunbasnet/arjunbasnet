@@ -24,6 +24,16 @@ faqs:
   - id: "faq-llms-txt-standard"
     question: "Is llms.txt an official standard?"
     answer: "No. It is an emerging convention rather than a ratified specification, and no model vendor guarantees they read it. It costs almost nothing to publish and removes ambiguity about what your business does, which is why it is worth doing anyway."
+heroImage:
+  src: "/media/blog/get-cited-by-chatgpt-perplexity.jpg"
+  alt: "Close-up of hands searching on a smartphone"
+  width: 1600
+  height: 900
+  credit:
+    provider: "Pexels"
+    author: "Theo  Decker"
+    authorUrl: "https://www.pexels.com/@theo-decker"
+    sourceUrl: "https://www.pexels.com/photo/person-wearing-bracelets-holding-black-phone-5448160/"
 ---
 
 Ask ChatGPT for a digital consultant in Kathmandu and it will name a handful of sources. Whether you are among them is not random, and it is not primarily about how big your website is.

@@ -26,6 +26,16 @@ faqs:
   - id: "faq-compare-switching"
     question: "Is it hard to switch between assistants later?"
     answer: "No, and that is worth knowing before you agonise over the choice. The skill that transfers is knowing how to give context, structure a request and check the output. Prompts written for one assistant work substantially the same on another, so a switch costs an afternoon, not a retraining programme."
+heroImage:
+  src: "/media/blog/chatgpt-vs-claude-vs-gemini.jpg"
+  alt: "A businessman in a suit taking notes while comparing information on a laptop"
+  width: 1600
+  height: 900
+  credit:
+    provider: "Pexels"
+    author: "Gustavo Fring"
+    authorUrl: "https://www.pexels.com/@gustavo-fring"
+    sourceUrl: "https://www.pexels.com/photo/serious-businessman-taking-notes-and-working-on-project-4173358/"
 ---
 
 Every few months a new benchmark chart circulates showing one AI assistant

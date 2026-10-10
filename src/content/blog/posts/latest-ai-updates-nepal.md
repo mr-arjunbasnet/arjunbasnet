@@ -22,9 +22,14 @@ keyTakeaways:
 serviceSlugs: ["it-consulting", "ai-automation", "generative-engine-optimization"]
 heroImage:
   src: "/media/blog/latest-ai-updates-nepal.jpg"
-  alt: "A team in a Kathmandu meeting room reviewing a short list of changes on a wall screen"
+  alt: "A presenter briefing colleagues in front of large screens of charts in a meeting room"
   width: 1600
   height: 900
+  credit:
+    provider: "Pexels"
+    author: "Kampus Production"
+    authorUrl: "https://www.pexels.com/@kampus"
+    sourceUrl: "https://www.pexels.com/photo/man-and-woman-presenting-at-work-8353799/"
 faqs:
   - id: "faq-which-assistant"
     question: "After these updates, which AI assistant should a team in Nepal use?"

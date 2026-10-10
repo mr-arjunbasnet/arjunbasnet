@@ -23,6 +23,16 @@ faqs:
   - id: "faq-images"
     question: "What is the single biggest quick win?"
     answer: "Images, almost always. Photos uploaded straight from a camera or phone at full resolution are frequently several megabytes each on a page that needed a few hundred kilobytes. Resizing and converting to WebP or AVIF often halves total page weight without touching anything else."
+heroImage:
+  src: "/media/blog/website-speed-nepal.jpg"
+  alt: "Hands holding a smartphone browsing a website"
+  width: 1600
+  height: 900
+  credit:
+    provider: "Pexels"
+    author: "RDNE Stock project"
+    authorUrl: "https://www.pexels.com/@rdne"
+    sourceUrl: "https://www.pexels.com/photo/close-up-shot-of-a-person-holding-an-iphone-5699374/"
 ---
 
 Speed advice tends to be written by people testing on fast connections. That produces guidance which is technically correct and practically useless for a business whose customers are on mobile data outside Kathmandu.

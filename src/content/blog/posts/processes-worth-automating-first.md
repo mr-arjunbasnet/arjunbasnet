@@ -23,6 +23,16 @@ faqs:
   - id: "faq-all-at-once"
     question: "Can we automate several at once?"
     answer: "You can, and I would advise against it for a first engagement. One workflow delivered end to end, run in parallel with the manual process, gives you evidence about whether the approach fits your business before you commit further budget."
+heroImage:
+  src: "/media/blog/processes-worth-automating-first.jpg"
+  alt: "An office worker sorting through boxes of paper files"
+  width: 1600
+  height: 900
+  credit:
+    provider: "Pexels"
+    author: "cottonbro studio"
+    authorUrl: "https://www.pexels.com/@cottonbro"
+    sourceUrl: "https://www.pexels.com/photo/a-woman-looking-at-the-documents-6538577/"
 ---
 
 Not everything should be automated, and the most enthusiastic candidate is rarely the right one. These seven come up repeatedly because they share three properties: high frequency, rules that can be written down, and a natural point where a person checks the output before it matters.

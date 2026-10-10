@@ -22,9 +22,14 @@ keyTakeaways:
 serviceSlugs: ["ai-automation", "custom-software-development", "it-consulting"]
 heroImage:
   src: "/media/blog/ai-agents-for-business-nepal.jpg"
-  alt: "An operations desk in a Kathmandu office with a monitor showing a task list being worked through step by step"
+  alt: "An operations specialist with a headset working across two monitors of dashboards in an office"
   width: 1600
   height: 900
+  credit:
+    provider: "Pexels"
+    author: "Kampus Production"
+    authorUrl: "https://www.pexels.com/@kampus"
+    sourceUrl: "https://www.pexels.com/photo/man-in-gray-shirt-working-on-a-desktop-computers-8204322/"
 faqs:
   - id: "faq-agent-vs-automation"
     question: "What is the difference between an AI agent and an automation?"

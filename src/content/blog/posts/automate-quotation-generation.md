@@ -23,6 +23,16 @@ faqs:
   - id: "faq-complex-pricing"
     question: "Our pricing is complicated. Can it still work?"
     answer: "Complicated is fine as long as it is expressible as rules, even many of them. What does not automate is pricing that depends on judgement about the client — how much they will tolerate, whether they are likely to be difficult. That part stays with a person, which is why the approval step exists."
+heroImage:
+  src: "/media/blog/automate-quotation-generation.jpg"
+  alt: "Hands working through business documents with a pen and a calculator on a desk"
+  width: 1600
+  height: 900
+  credit:
+    provider: "Pexels"
+    author: "Mikhail Nilov"
+    authorUrl: "https://www.pexels.com/@mikhail-nilov"
+    sourceUrl: "https://www.pexels.com/photo/person-in-long-sleeve-shirt-holding-a-calculator-8297031/"
 ---
 
 Of every process I have automated, quotation generation is the one that most reliably pays for itself. It passes every test worth applying: high frequency, rule-based logic, structured inputs, and a natural human checkpoint before anything reaches a client.

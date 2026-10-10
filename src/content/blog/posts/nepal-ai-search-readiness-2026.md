@@ -21,9 +21,14 @@ keyTakeaways:
 serviceSlugs: ["generative-engine-optimization", "seo-services", "answer-engine-optimization", "web-development"]
 heroImage:
   src: "/media/blog/nepal-ai-search-readiness-2026.jpg"
-  alt: "A phone held against a Kathmandu shopfront, its screen half-loaded with a spinner, illustrating slow mobile page loads"
+  alt: "A laptop and a printout showing data charts on an office desk"
   width: 1600
   height: 900
+  credit:
+    provider: "Pexels"
+    author: "Kampus Production"
+    authorUrl: "https://www.pexels.com/@kampus"
+    sourceUrl: "https://www.pexels.com/photo/photograph-of-a-paper-and-laptop-with-graphs-6248959/"
 faqs:
   - id: "faq-which-sites"
     question: "Which websites did you test, and why are none named?"

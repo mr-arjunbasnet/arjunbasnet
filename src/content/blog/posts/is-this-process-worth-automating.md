@@ -23,6 +23,16 @@ faqs:
   - id: "faq-too-small"
     question: "Is our business too small to automate anything?"
     answer: "Size is the wrong test — frequency is the right one. If nobody on your team spends several hours a week on a repetitive, rule-based task, automation is not your bottleneck and something else deserves the budget."
+heroImage:
+  src: "/media/blog/is-this-process-worth-automating.jpg"
+  alt: "A kanban board of sticky notes on a dark wall with columns from ice box to complete"
+  width: 1600
+  height: 900
+  credit:
+    provider: "Pexels"
+    author: "cottonbro studio"
+    authorUrl: "https://www.pexels.com/@cottonbro"
+    sourceUrl: "https://www.pexels.com/photo/sticky-notes-on-the-task-board-wall-6804093/"
 ---
 
 Most automation projects that fail were not badly built. They automated the wrong thing.

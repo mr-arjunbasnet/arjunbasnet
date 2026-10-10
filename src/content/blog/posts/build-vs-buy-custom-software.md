@@ -23,6 +23,16 @@ faqs:
   - id: "faq-hybrid"
     question: "Can we buy something and customise it?"
     answer: "Often the best answer. The test is how much configuration is needed: light customisation on a mature product beats building from scratch, but once you are rewriting core behaviour you are paying build costs while inheriting someone else's constraints."
+heroImage:
+  src: "/media/blog/build-vs-buy-custom-software.jpg"
+  alt: "A software developer and a colleague discussing work at a desk with monitors"
+  width: 1600
+  height: 900
+  credit:
+    provider: "Pexels"
+    author: "Kampus Production"
+    authorUrl: "https://www.pexels.com/@kampus"
+    sourceUrl: "https://www.pexels.com/photo/office-team-sitting-at-the-table-8636625/"
 ---
 
 The question arrives as a technology decision and is almost always a business one. Here is the framework I use, and the failure modes on both sides.

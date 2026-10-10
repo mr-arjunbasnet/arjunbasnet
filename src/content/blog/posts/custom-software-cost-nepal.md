@@ -19,9 +19,14 @@ keyTakeaways:
 serviceSlugs: ["custom-software-development", "it-consulting"]
 heroImage:
   src: "/media/blog/custom-software-cost-nepal.jpg"
-  alt: "Three software quotations laid side by side on a desk, with the line items highlighted where they differ"
+  alt: "Hands with a pen working through a printed pricing formula sheet with materials, labour and expenses"
   width: 1600
   height: 900
+  credit:
+    provider: "Pexels"
+    author: "Leeloo The First"
+    authorUrl: "https://www.pexels.com/@leeloothefirst"
+    sourceUrl: "https://www.pexels.com/photo/a-person-holding-a-pen-while-touching-the-documents-on-the-table-8962460/"
 faqs:
   - id: "faq-why-quotes-differ"
     question: "Why did I get three quotes that differ by five times for the same brief?"

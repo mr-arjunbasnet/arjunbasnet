@@ -774,3 +774,16 @@ table, 4 FAQs and 5+ internal links; they cross-link each other.
 | The video post's example is real, made by Claude | `public/media/blog/video/`: the HTML canvas animation Claude wrote (noindex), the 15 s 720p H.264 MP4 rendered frame-by-frame with Playwright + ffmpeg (imageio-ffmpeg in a scratch venv; neither is a project dependency), and a poster frame. The post says plainly Claude writes code, not pixels. |
 | `.prose-site video` rule added | Same frame as in-body images; `preload="none"` + poster so the 720 KB file loads only on play. No VideoObject schema: Google only surfaces video results when the video is the page's main content. |
 | Hero images | The video post's hero is a 1600×900 frame of the animation. The other five declare `heroImage` with briefs in `public/media/blog/README.txt` and render text-first until the files land. |
+
+### Branded hero images on every post — 2026-10-10
+
+Owner asked for open-source images on all posts with his branding,
+watermark and a pattern. 25 Pexels photos (free licence, modification
+allowed, picked by eye from six candidates each, professional/editorial
+per his 09-22 feedback) plus the video post's own animation frame, each run
+through `scripts/media/brand-blog-hero.mjs`: white horizontal logo with slogan
+bottom-left (kit: `_white` on photography), the kit's 25% watermark mark
+bottom-right, a pattern of the mark's spark alternating with dots fading from
+the top-right, and a 12 px Aurora band. Credits stored in
+`heroImage.credit`, never rendered. Swap any photo by re-running the script
+on a new source; filenames equal the slug.

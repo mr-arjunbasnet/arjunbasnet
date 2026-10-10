@@ -19,9 +19,14 @@ keyTakeaways:
 serviceSlugs: ["ai-automation", "it-consulting", "digital-marketing"]
 heroImage:
   src: "/media/blog/ai-tools-small-business-nepal.jpg"
-  alt: "A small shop owner in Nepal at a laptop with a chat assistant open beside a handwritten ledger"
+  alt: "A small shop owner at work behind her counter with a laptop and products on the shelves"
   width: 1600
   height: 900
+  credit:
+    provider: "Pexels"
+    author: "🇻🇳🇻🇳Nguyễn Tiến Thịnh 🇻🇳🇻🇳"
+    authorUrl: "https://www.pexels.com/@nguy-n-ti-n-th-nh-2150376175"
+    sourceUrl: "https://www.pexels.com/photo/senior-woman-working-in-cozy-coffee-shop-34654336/"
 faqs:
   - id: "faq-which-assistant"
     question: "ChatGPT, Claude or Gemini — which one for a small business?"

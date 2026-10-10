@@ -23,6 +23,16 @@ faqs:
   - id: "faq-rescue"
     question: "Can a failing project be rescued?"
     answer: "Often, and more cheaply than restarting. The first step is an independent assessment of what exists — code review, architecture, and whether what was delivered matches what was contracted. Sometimes the build is sound and the process broke down, which is a much easier problem than it feels from inside."
+heroImage:
+  src: "/media/blog/why-digital-projects-fail-nepal.jpg"
+  alt: "Three colleagues in a tense discussion over documents at a meeting table"
+  width: 1600
+  height: 900
+  credit:
+    provider: "Pexels"
+    author: "Vlada Karpovich"
+    authorUrl: "https://www.pexels.com/@vlada-karpovich"
+    sourceUrl: "https://www.pexels.com/photo/a-meeting-in-an-office-7433869/"
 ---
 
 Across roughly 100 delivered projects, the ones that went wrong almost never went wrong for technical reasons. The technology was rarely the hard part.

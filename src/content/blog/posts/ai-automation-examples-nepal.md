@@ -19,9 +19,14 @@ keyTakeaways:
 serviceSlugs: ["ai-automation", "custom-software-development"]
 heroImage:
   src: "/media/blog/ai-automation-examples-nepal.jpg"
-  alt: "A whiteboard process map showing an enquiry flowing from WhatsApp into a spreadsheet, an automatic reply, and a CRM"
+  alt: "Two colleagues discussing a process flowchart drawn on an office whiteboard"
   width: 1600
   height: 900
+  credit:
+    provider: "Pexels"
+    author: "Christina Morillo"
+    authorUrl: "https://www.pexels.com/@divinetechygirl"
+    sourceUrl: "https://www.pexels.com/photo/woman-in-black-coat-1181346/"
 faqs:
   - id: "faq-which-first"
     question: "We are a small business. Which of these should we do first?"

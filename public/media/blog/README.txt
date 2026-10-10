@@ -80,3 +80,12 @@ ai-agents-for-business-nepal.jpg
 company-ai-assistant-own-documents.jpg
   A staff member at an office desk typing a question on a laptop, with neatly
   labelled ring binders and folders on the shelf behind. Calm, organised.
+
+Branded heroes — 2026-10-10
+---------------------------
+Every post now has a hero: a Pexels photo branded with
+scripts/media/brand-blog-hero.mjs (logo bottom-left, watermark bottom-right,
+spark pattern top-right, Aurora band). Credits live in each post's
+heroImage.credit and are NOT rendered (owner's rule). The briefs above are
+superseded; for a new post, pick a professional/editorial photo, brand it with
+the script, and add heroImage with alt + credit.

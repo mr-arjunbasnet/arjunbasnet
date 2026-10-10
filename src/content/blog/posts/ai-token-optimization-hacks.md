@@ -23,9 +23,14 @@ keyTakeaways:
 serviceSlugs: ["ai-automation", "it-consulting"]
 heroImage:
   src: "/media/blog/ai-token-optimization-hacks.jpg"
-  alt: "A laptop on a desk showing a chat assistant beside an open notebook with a short checklist written in pen"
+  alt: "A minimal desk from above with a laptop keyboard, binder clips, a blank notepad and a pencil"
   width: 1600
   height: 900
+  credit:
+    provider: "Pexels"
+    author: "Yan Krukau"
+    authorUrl: "https://www.pexels.com/@yankrukov"
+    sourceUrl: "https://www.pexels.com/photo/blank-notepad-on-the-table-7793243/"
 faqs:
   - id: "faq-what-is-token"
     question: "What is a token in ChatGPT or Claude?"

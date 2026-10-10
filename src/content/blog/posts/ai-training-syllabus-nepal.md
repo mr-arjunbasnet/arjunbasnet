@@ -19,9 +19,14 @@ keyTakeaways:
 serviceSlugs: ["ai-automation", "it-consulting"]
 heroImage:
   src: "/media/blog/ai-training-syllabus-nepal.jpg"
-  alt: "A training room in Kathmandu with participants working on laptops in pairs while a facilitator stands at a whiteboard"
+  alt: "A trainer in a suit presenting slides to a workshop with a pointer beside a flipchart"
   width: 1600
   height: 900
+  credit:
+    provider: "Pexels"
+    author: "RDNE Stock project"
+    authorUrl: "https://www.pexels.com/@rdne"
+    sourceUrl: "https://www.pexels.com/photo/man-presenting-in-a-meeting-9034728/"
 faqs:
   - id: "faq-no-technical-staff"
     question: "Our team is not technical. Is this too advanced?"

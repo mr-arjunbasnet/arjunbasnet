@@ -27,6 +27,16 @@ faqs:
   - id: "faq-students-citations"
     question: "Can I cite a source an AI assistant gave me?"
     answer: "Only after you have found and read the actual source yourself. Assistants routinely produce references that look correct — real journal, plausible authors, correct formatting — for papers that do not exist. Verify every citation in the original database before it goes anywhere near your bibliography."
+heroImage:
+  src: "/media/blog/ai-tools-for-students-nepal.jpg"
+  alt: "Two university students studying together with a laptop and books in a library"
+  width: 1600
+  height: 900
+  credit:
+    provider: "Pexels"
+    author: "Yan Krukau"
+    authorUrl: "https://www.pexels.com/@yankrukov"
+    sourceUrl: "https://www.pexels.com/photo/man-and-woman-studying-while-writing-on-a-notebook-8199667/"
 ---
 
 Most advice about AI tools for students is written by people who have never sat

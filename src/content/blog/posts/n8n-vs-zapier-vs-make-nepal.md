@@ -23,6 +23,16 @@ faqs:
   - id: "faq-self-host-hard"
     question: "How hard is self-hosting n8n?"
     answer: "Straightforward to stand up with Docker, ongoing to maintain: updates, backups, monitoring, and someone who knows what to do when it stops. If nobody on your team owns infrastructure, the hosted version removes a real operational burden."
+heroImage:
+  src: "/media/blog/n8n-vs-zapier-vs-make-nepal.jpg"
+  alt: "Hands marking up a printed workflow diagram on a clipboard"
+  width: 1600
+  height: 900
+  credit:
+    provider: "Pexels"
+    author: "RDNE Stock project"
+    authorUrl: "https://www.pexels.com/@rdne"
+    sourceUrl: "https://www.pexels.com/photo/person-holding-white-printer-paper-9034966/"
 ---
 
 The three tools do the same job — connect systems, move data, run logic on a schedule or a trigger. They differ in pricing model, hosting, and who has to maintain them, and those differences matter more than the feature comparisons suggest.

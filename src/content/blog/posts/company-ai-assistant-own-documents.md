@@ -22,9 +22,14 @@ keyTakeaways:
 serviceSlugs: ["ai-automation", "custom-software-development", "it-consulting"]
 heroImage:
   src: "/media/blog/company-ai-assistant-own-documents.jpg"
-  alt: "A staff member at an office desk asking a question on a laptop, with neatly labelled document folders on the shelf behind"
+  alt: "An office employee reaching for a labelled ring binder on a shelf of company files"
   width: 1600
   height: 900
+  credit:
+    provider: "Pexels"
+    author: "Andrea Piacquadio"
+    authorUrl: "https://www.pexels.com/@olly"
+    sourceUrl: "https://www.pexels.com/photo/woman-looking-at-folders-3791159/"
 faqs:
   - id: "faq-train-on-data"
     question: "Do we need to train an AI model on our documents?"

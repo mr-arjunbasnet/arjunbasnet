@@ -23,6 +23,16 @@ faqs:
   - id: "faq-review-existing"
     question: "Can someone review work a vendor has already delivered?"
     answer: "Yes. Technical due diligence on a delivered system covers code review, architecture assessment, and whether what was delivered matches what was contracted. Findings should be reported factually, since the goal is a working outcome rather than assigning blame."
+heroImage:
+  src: "/media/blog/evaluate-software-vendor-proposal.jpg"
+  alt: "Three business people reviewing documents together across a meeting table"
+  width: 1600
+  height: 900
+  credit:
+    provider: "Pexels"
+    author: "https://kaboompics.com/"
+    authorUrl: "https://www.pexels.com/@karola-g"
+    sourceUrl: "https://www.pexels.com/photo/woman-in-beige-blazer-holding-photos-7876092/"
 ---
 
 Three proposals arrive. They are different lengths, quote different numbers, and describe the work in incompatible terms. Nobody on your team writes software.

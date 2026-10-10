@@ -27,6 +27,16 @@ faqs:
   - id: "faq-measure-geo"
     question: "How do you measure whether GEO is working?"
     answer: "There is no rank tracker for ChatGPT citations, and anyone claiming otherwise is guessing. The workable method is testing a fixed set of category questions across the major models monthly, recording which sources get named, and watching branded search volume, which tends to climb as you appear in more answers."
+heroImage:
+  src: "/media/blog/aeo-vs-seo-vs-geo-nepal.jpg"
+  alt: "A professional working on a laptop at a desk in a modern open-plan office"
+  width: 1600
+  height: 900
+  credit:
+    provider: "Pexels"
+    author: "Kampus Production"
+    authorUrl: "https://www.pexels.com/@kampus"
+    sourceUrl: "https://www.pexels.com/photo/woman-in-white-blazer-sitting-at-table-using-laptop-8636622/"
 ---
 
 Three acronyms now describe getting found online, and they are routinely used interchangeably by people selling all three. They are not the same thing. They target different surfaces, reward different content shapes, and pay off on different timelines.

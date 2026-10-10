@@ -26,6 +26,16 @@ faqs:
   - id: "faq-team-resistance"
     question: "What if staff are worried AI will replace their jobs?"
     answer: "Address it directly in the first session rather than letting it sit. In the automation work I have delivered, the pattern has been that people stop doing data entry and start doing review and exceptions. If headcount reduction genuinely is the goal, say so up front, because concealing it guarantees the rollout fails."
+heroImage:
+  src: "/media/blog/introduce-ai-to-your-team.jpg"
+  alt: "A team meeting in a bright office with colleagues discussing work around laptops"
+  width: 1600
+  height: 900
+  credit:
+    provider: "Pexels"
+    author: "Thirdman"
+    authorUrl: "https://www.pexels.com/@thirdman"
+    sourceUrl: "https://www.pexels.com/photo/colleagues-in-a-meeting-7993944/"
 ---
 
 Most AI introductions in businesses follow the same shape. Someone senior sees a
