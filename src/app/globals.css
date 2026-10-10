@@ -243,6 +243,16 @@
     border: 1px solid var(--color-border);
   }
 
+  /* In-body video (raw HTML in the markdown): same frame as images. */
+  & video {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: var(--radius-card);
+    border: 1px solid var(--color-border);
+    background: var(--color-night);
+  }
+
   & figure {
     margin-inline: 0;
   }

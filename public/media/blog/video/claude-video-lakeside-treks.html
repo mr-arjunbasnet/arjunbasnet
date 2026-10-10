@@ -1,0 +1,359 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="robots" content="noindex"><title>Lakeside Treks</title>
+<style>html,body{margin:0;background:#000}canvas{display:block}</style></head>
+<body><canvas id="c" width="1280" height="720"></canvas>
+<script>
+const W = 1920, H = 1080, DURATION = 15;
+const cv = document.getElementById("c");
+const ctx = cv.getContext("2d");
+const S = cv.width / W;
+const FONT = '"Helvetica Neue", Helvetica, Arial, sans-serif';
+
+const clamp = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x));
+const lerp = (a, b, t) => a + (b - a) * t;
+const prog = (t, a, b) => clamp((t - a) / (b - a));
+const easeOut = (x) => 1 - Math.pow(1 - x, 3);
+const easeInOut = (x) => (x < 0.5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2);
+const mix = (c1, c2, t) => {
+  const p = (c) => [1, 3, 5].map((i) => parseInt(c.slice(i, i + 2), 16));
+  const a = p(c1), b = p(c2);
+  return `rgb(${a.map((v, i) => Math.round(lerp(v, b[i], t))).join(",")})`;
+};
+
+// Ridge heights as a sum of sines, deterministic.
+function ridge(x, seed, amp, base) {
+  return base
+    - amp * (0.55 * Math.sin(x * 0.0021 + seed)
+    + 0.3 * Math.sin(x * 0.0057 + seed * 2.1)
+    + 0.15 * Math.sin(x * 0.0131 + seed * 3.7));
+}
+
+function drawRidge(seed, amp, base, color, shift, peak) {
+  ctx.beginPath();
+  ctx.moveTo(-50, H);
+  for (let x = -50; x <= W + 50; x += 12) {
+    let y = ridge(x + shift, seed, amp, base);
+    if (peak) {
+      // Fishtail: two sharp summits close together.
+      const d1 = Math.abs(x - peak.x), d2 = Math.abs(x - (peak.x + 70));
+      y = Math.min(y, peak.y + d1 * 1.25, peak.y + 40 + d2 * 1.35);
+    }
+    ctx.lineTo(x, y);
+  }
+  ctx.lineTo(W + 50, H);
+  ctx.closePath();
+  ctx.fillStyle = color;
+  ctx.fill();
+}
+
+function drawPeakSnow(peak, alpha) {
+  ctx.save();
+  ctx.globalAlpha = alpha;
+  ctx.fillStyle = "#fff4ea";
+  ctx.beginPath();
+  ctx.moveTo(peak.x, peak.y);
+  ctx.lineTo(peak.x - 95, peak.y + 120);
+  ctx.lineTo(peak.x - 40, peak.y + 100);
+  ctx.lineTo(peak.x + 10, peak.y + 130);
+  ctx.lineTo(peak.x + 40, peak.y + 78);
+  ctx.lineTo(peak.x + 70, peak.y + 40);
+  ctx.lineTo(peak.x + 140, peak.y + 135);
+  ctx.lineTo(peak.x + 60, peak.y + 115);
+  ctx.closePath();
+  ctx.fill();
+  ctx.restore();
+}
+
+function landscape(t) {
+  const dawn = easeInOut(prog(t, 0, 4.5));
+  // Sky
+  const sky = ctx.createLinearGradient(0, 0, 0, H * 0.72);
+  sky.addColorStop(0, mix("#1b1f4a", "#3b4f8f", dawn));
+  sky.addColorStop(0.55, mix("#5a3a6e", "#e9a07a", dawn));
+  sky.addColorStop(1, mix("#c0646a", "#ffd9a8", dawn));
+  ctx.fillStyle = sky;
+  ctx.fillRect(0, 0, W, H);
+
+  // Sun
+  const sunY = lerp(780, 360, easeOut(prog(t, 0, 5)));
+  const glow = ctx.createRadialGradient(1580, sunY, 10, 1580, sunY, 520);
+  glow.addColorStop(0, "rgba(255,236,190,0.95)");
+  glow.addColorStop(0.18, "rgba(255,200,140,0.55)");
+  glow.addColorStop(1, "rgba(255,170,120,0)");
+  ctx.fillStyle = glow;
+  ctx.fillRect(0, 0, W, H);
+  ctx.beginPath();
+  ctx.arc(1580, sunY, 62, 0, Math.PI * 2);
+  ctx.fillStyle = "#fff1d0";
+  ctx.fill();
+
+  const drift = t * 14;
+  const peak = { x: 820 - drift * 0.25, y: 250 };
+  drawRidge(1.3, 90, 560, mix("#6b5a8c", "#c99aa6", dawn), drift * 0.25, peak);
+  drawPeakSnow(peak, 0.35 + 0.6 * dawn);
+  drawRidge(4.1, 70, 650, mix("#4a3d6b", "#9a6e86", dawn), drift * 0.5);
+  drawRidge(2.7, 55, 720, mix("#2e2748", "#5e4560", dawn), drift * 0.8);
+  drawRidge(5.9, 35, 790, mix("#1a1730", "#33273d", dawn), drift * 1.2);
+
+  // Lake with reflection and shimmer
+  const lakeTop = 810;
+  ctx.save();
+  ctx.beginPath();
+  ctx.rect(0, lakeTop, W, H - lakeTop);
+  ctx.clip();
+  ctx.translate(0, lakeTop * 2);
+  ctx.scale(1, -1);
+  ctx.globalAlpha = 0.6;
+  ctx.drawImage(cv, 0, (lakeTop - 400) * S, W * S, 400 * S, 0, lakeTop - 400, W, 400);
+  ctx.restore();
+  const water = ctx.createLinearGradient(0, lakeTop, 0, H);
+  water.addColorStop(0, mix("#2b3366", "#7d86b8", dawn) .replace("rgb", "rgba").replace(")", ",0.4)"));
+  water.addColorStop(1, "rgba(15,18,40,0.9)");
+  ctx.fillStyle = water;
+  ctx.fillRect(0, lakeTop, W, H - lakeTop);
+  ctx.strokeStyle = `rgba(255,230,190,${0.18 + 0.3 * dawn})`;
+  ctx.lineWidth = 3;
+  for (let i = 0; i < 14; i++) {
+    const y = lakeTop + 16 + i * 18;
+    const w = 60 + ((i * 53) % 140);
+    const x = 1580 - w / 2 + Math.sin(t * 2 + i) * 30;
+    ctx.beginPath();
+    ctx.moveTo(x, y);
+    ctx.lineTo(x + w, y);
+    ctx.stroke();
+  }
+
+  // Birds
+  ctx.strokeStyle = "rgba(30,25,50,0.75)";
+  ctx.lineWidth = 3;
+  for (let i = 0; i < 4; i++) {
+    const bx = -100 + ((t * 70 + i * 90) % 2200);
+    const by = 300 + i * 26 + Math.sin(t * 1.5 + i) * 8;
+    const flap = Math.sin(t * 9 + i * 1.7) * 7;
+    ctx.beginPath();
+    ctx.moveTo(bx - 14, by - flap);
+    ctx.quadraticCurveTo(bx - 6, by - 4, bx, by);
+    ctx.quadraticCurveTo(bx + 6, by - 4, bx + 14, by - flap);
+    ctx.stroke();
+  }
+}
+
+function text(str, x, y, size, weight, color, alpha = 1, align = "left") {
+  ctx.save();
+  ctx.globalAlpha = alpha;
+  ctx.font = `${weight} ${size}px ${FONT}`;
+  ctx.fillStyle = color;
+  ctx.textAlign = align;
+  ctx.textBaseline = "alphabetic";
+  ctx.fillText(str, x, y);
+  ctx.restore();
+}
+
+function roundRect(x, y, w, h, r) {
+  ctx.beginPath();
+  ctx.roundRect(x, y, w, h, r);
+}
+
+function wrap(str, maxW, size, weight) {
+  ctx.font = `${weight} ${size}px ${FONT}`;
+  const words = str.split(" ");
+  const lines = [];
+  let line = "";
+  for (const w of words) {
+    const test = line ? line + " " + w : w;
+    if (ctx.measureText(test).width > maxW && line) { lines.push(line); line = w; }
+    else line = test;
+  }
+  lines.push(line);
+  return lines;
+}
+
+function scene1(t) {
+  const a = easeOut(prog(t, 0.8, 2.2)) * (1 - prog(t, 3.6, 4.2));
+  const rise = (1 - easeOut(prog(t, 0.8, 2.2))) * 40 + prog(t, 3.6, 4.2) * -30;
+  ctx.save();
+  ctx.shadowColor = "rgba(20,10,40,0.45)";
+  ctx.shadowBlur = 30;
+  text("Lakeside Treks", W / 2, 470 + rise, 132, 800, "#ffffff", a, "center");
+  ctx.restore();
+  const b = easeOut(prog(t, 1.8, 3)) * (1 - prog(t, 3.6, 4.2));
+  text("POKHARA  ·  ANNAPURNA  ·  EVEREST", W / 2, 545 + rise, 34, 600, "#fff3e2", b, "center");
+}
+
+function overlay(alpha) {
+  const g = ctx.createLinearGradient(0, 0, W, 0);
+  g.addColorStop(0, `rgba(20,16,40,${0.82 * alpha})`);
+  g.addColorStop(0.65, `rgba(20,16,40,${0.45 * alpha})`);
+  g.addColorStop(1, `rgba(20,16,40,${0.15 * alpha})`);
+  ctx.fillStyle = g;
+  ctx.fillRect(0, 0, W, H);
+}
+
+function tick(x, y, a) {
+  ctx.save();
+  ctx.globalAlpha = a;
+  ctx.beginPath();
+  ctx.arc(x, y, 30, 0, Math.PI * 2);
+  ctx.fillStyle = "#ffb36b";
+  ctx.fill();
+  ctx.strokeStyle = "#2a1f3d";
+  ctx.lineWidth = 7;
+  ctx.lineCap = "round";
+  ctx.lineJoin = "round";
+  ctx.beginPath();
+  ctx.moveTo(x - 13, y + 1);
+  ctx.lineTo(x - 3, y + 11);
+  ctx.lineTo(x + 14, y - 10);
+  ctx.stroke();
+  ctx.restore();
+}
+
+function scene2(t) {
+  const out = 1 - prog(t, 8.4, 9);
+  text("Why trek with us", 200, 330, 40, 600, "#ffcf9e", easeOut(prog(t, 4.1, 4.7)) * out);
+  const items = ["Licensed local guides", "Permits handled for you", "Small groups, fair prices"];
+  items.forEach((s, i) => {
+    const p = easeOut(prog(t, 4.4 + i * 1, 5.2 + i * 1));
+    const x = 200 + (1 - p) * -80;
+    const y = 470 + i * 130;
+    tick(x + 30, y - 28, p * out);
+    text(s, x + 95, y, 72, 800, "#ffffff", p * out);
+  });
+}
+
+function phone(t) {
+  const inP = easeOut(prog(t, 9, 9.8));
+  const outP = prog(t, 12.9, 13.4);
+  const px = 1200, pw = 500, ph = 780;
+  const py = 150 + (1 - inP) * 900 + outP * 60;
+  const a = inP * (1 - outP);
+  ctx.save();
+  ctx.globalAlpha = a;
+  ctx.shadowColor = "rgba(0,0,0,0.45)";
+  ctx.shadowBlur = 60;
+  roundRect(px, py, pw, ph, 56);
+  ctx.fillStyle = "#14121c";
+  ctx.fill();
+  ctx.shadowBlur = 0;
+  roundRect(px + 16, py + 16, pw - 32, ph - 32, 44);
+  ctx.fillStyle = "#efe7dd";
+  ctx.fill();
+  // Header
+  ctx.save();
+  roundRect(px + 16, py + 16, pw - 32, ph - 32, 44);
+  ctx.clip();
+  ctx.fillStyle = "#1f6f5c";
+  ctx.fillRect(px + 16, py + 16, pw - 32, 130);
+  ctx.restore();
+  ctx.beginPath();
+  ctx.arc(px + 80, py + 96, 30, 0, Math.PI * 2);
+  ctx.fillStyle = "#ffb36b";
+  ctx.fill();
+  ctx.beginPath();
+  ctx.moveTo(px + 62, py + 108); ctx.lineTo(px + 80, py + 80); ctx.lineTo(px + 98, py + 108);
+  ctx.fillStyle = "#2a1f3d";
+  ctx.fill();
+  text("Lakeside Treks", px + 128, py + 92, 28, 700, "#ffffff");
+  text("online", px + 128, py + 124, 22, 400, "#cfe9df");
+
+  const bubbles = [
+    { at: 9.8, me: true, s: "Hi! Is Annapurna Base Camp open in November?" },
+    { at: 11.4, me: false, s: "Yes, November is peak season. Next group departures: 8 Nov and 22 Nov, 7 days from Pokhara. Want the full itinerary?" },
+    { at: 12.3, me: true, s: "Yes please!" },
+  ];
+  let y = py + 180;
+  const maxW = 340;
+  for (const b of bubbles) {
+    const bp = easeOut(prog(t, b.at, b.at + 0.35));
+    if (bp <= 0) continue;
+    const lines = wrap(b.s, maxW, 29, 400);
+    ctx.font = `400 29px ${FONT}`;
+    const bw = Math.max(...lines.map((l) => ctx.measureText(l).width)) + 36;
+    const bh = lines.length * 38 + 26;
+    const bx = b.me ? px + pw - 36 - bw : px + 36;
+    ctx.save();
+    ctx.globalAlpha = a * bp;
+    ctx.translate(0, (1 - bp) * 20);
+    roundRect(bx, y, bw, bh, 18);
+    ctx.fillStyle = b.me ? "#d6f5c4" : "#ffffff";
+    ctx.fill();
+    lines.forEach((l, i) => text(l, bx + 18, y + 44 + i * 38, 29, 400, "#1c1b22"));
+    ctx.restore();
+    y += bh + 18;
+  }
+  // Typing dots before the reply
+  if (t > 10.5 && t < 11.4) {
+    ctx.save();
+    ctx.globalAlpha = a;
+    roundRect(px + 36, y, 96, 52, 18);
+    ctx.fillStyle = "#ffffff";
+    ctx.fill();
+    for (let i = 0; i < 3; i++) {
+      const bounce = Math.max(0, Math.sin(t * 10 - i * 0.9)) * 6;
+      ctx.beginPath();
+      ctx.arc(px + 62 + i * 22, y + 26 - bounce, 6, 0, Math.PI * 2);
+      ctx.fillStyle = "#9a96a6";
+      ctx.fill();
+    }
+    ctx.restore();
+  }
+  ctx.restore();
+}
+
+function scene3(t) {
+  if (t < 8.8 || t > 13.6) return;
+  const a = easeOut(prog(t, 9.3, 10)) * (1 - prog(t, 12.9, 13.4));
+  text("Ask anything.", 200, 470, 88, 800, "#ffffff", a);
+  text("Get an answer", 200, 575, 88, 800, "#ffcf9e", a);
+  text("in seconds.", 200, 680, 88, 800, "#ffcf9e", a);
+  phone(t);
+}
+
+function scene4(t) {
+  if (t < 12.9) return;
+  const a = easeOut(prog(t, 13, 13.7));
+  ctx.fillStyle = `rgba(20,16,40,${0.85 * a})`;
+  ctx.fillRect(0, 0, W, H);
+  const lift = (1 - a) * 30;
+  // Logo mark
+  ctx.save();
+  ctx.globalAlpha = a;
+  ctx.beginPath();
+  ctx.arc(W / 2, 330 + lift, 70, 0, Math.PI * 2);
+  ctx.fillStyle = "#ffb36b";
+  ctx.fill();
+  ctx.beginPath();
+  ctx.moveTo(W / 2 - 46, 362 + lift); ctx.lineTo(W / 2 - 8, 296 + lift); ctx.lineTo(W / 2 + 8, 318 + lift);
+  ctx.lineTo(W / 2 + 18, 304 + lift); ctx.lineTo(W / 2 + 46, 362 + lift);
+  ctx.fillStyle = "#2a1f3d";
+  ctx.fill();
+  ctx.restore();
+  text("Lakeside Treks", W / 2, 520 + lift, 104, 800, "#ffffff", a, "center");
+  const b = easeOut(prog(t, 13.4, 14));
+  ctx.save();
+  ctx.globalAlpha = b;
+  roundRect(W / 2 - 250, 590 + lift, 500, 104, 52);
+  ctx.fillStyle = "#25d366";
+  ctx.fill();
+  ctx.restore();
+  text("Book on WhatsApp", W / 2, 656 + lift, 42, 700, "#0b2a17", b, "center");
+  text("+977 98X-XXXXXXX  ·  lakesidetreks.example", W / 2, 770 + lift, 32, 400, "#e8dccd", b, "center");
+}
+
+window.renderFrame = (t) => {
+  ctx.setTransform(S, 0, 0, S, 0, 0);
+  landscape(t);
+  scene1(t);
+  if (t > 3.8) overlay(easeOut(prog(t, 3.8, 4.6)));
+  if (t > 3.8 && t < 9.2) scene2(t);
+  scene3(t);
+  scene4(t);
+};
+
+// Live preview when opened directly.
+if (!window.__RENDERING__) {
+  const start = performance.now();
+  const loop = () => { window.renderFrame(((performance.now() - start) / 1000) % DURATION); requestAnimationFrame(loop); };
+  loop();
+}
+</script></body></html>

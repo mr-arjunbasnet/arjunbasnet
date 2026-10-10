@@ -750,3 +750,20 @@ positioning ("Project Manager & AI Engineer", "Hire … for PM Engagements").
 Rewriting them is part of the zero-click title pass in
 `docs/content-plan-2026-09.md` §4, not done here because /work and /research
 copy is the owner's.
+
+### Six AI posts — 2026-10-10
+
+Owner asked for "five" posts and listed four; on being asked he chose two
+more (agents, company assistant) for six: `latest-ai-updates-nepal`,
+`ai-token-optimization-hacks`, `ai-prompting-frameworks`,
+`ai-video-generation-evolution` (cluster `ai-training`), and
+`ai-agents-for-business-nepal`, `company-ai-assistant-own-documents`
+(`ai-automation`). Each has an inline-SVG diagram (CSS-variable fills), a
+table, 4 FAQs and 5+ internal links; they cross-link each other.
+
+| Decision | Reasoning |
+|---|---|
+| Facts after mid-2026 come from a web research pass on 2026-10-10 | GPT-6 family, Claude 5.5 models, Sora's shutdown, Gems → Skills, AI Search merge. openai.com returned 403 to fetches, so OpenAI dates rest on press coverage. Re-check the updates post before quoting it in a pitch. |
+| The video post's example is real, made by Claude | `public/media/blog/video/`: the HTML canvas animation Claude wrote (noindex), the 15 s 720p H.264 MP4 rendered frame-by-frame with Playwright + ffmpeg (imageio-ffmpeg in a scratch venv; neither is a project dependency), and a poster frame. The post says plainly Claude writes code, not pixels. |
+| `.prose-site video` rule added | Same frame as in-body images; `preload="none"` + poster so the 720 KB file loads only on play. No VideoObject schema: Google only surfaces video results when the video is the page's main content. |
+| Hero images | The video post's hero is a 1600×900 frame of the animation. The other five declare `heroImage` with briefs in `public/media/blog/README.txt` and render text-first until the files land. |

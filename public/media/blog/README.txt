@@ -54,3 +54,29 @@ Write them as raw HTML in the markdown so they get a caption:
 
 Charts: 1400 × 800 px PNG, transparent or Warm White ground, brand Indigo
 (#221A5C) and Iris (#5B4BDB) for series, muted grey for context bars.
+
+Briefs for the October 2026 posts
+---------------------------------
+ai-video-generation-evolution.jpg
+  DONE — a 1600×900 frame of the Claude-generated animation itself
+  (public/media/blog/video/). Re-render from that HTML if it changes.
+
+latest-ai-updates-nepal.jpg
+  A small team in a Kathmandu meeting room looking at a wall screen with a
+  short, unreadable list; one person pointing, another taking notes. Daylight.
+
+ai-token-optimization-hacks.jpg
+  A laptop on a tidy desk with a chat window open (no readable text), an
+  open notebook beside it with a short handwritten checklist, a cup of chiya.
+
+ai-prompting-frameworks.jpg
+  A notebook page with a prompt drafted in labelled sections (blocks of
+  handwriting, not legible) beside a laptop. Top-down, warm light.
+
+ai-agents-for-business-nepal.jpg
+  An operations desk in a Kathmandu office: a monitor showing a task list
+  with items ticked off (no readable text), a person reviewing it, coffee.
+
+company-ai-assistant-own-documents.jpg
+  A staff member at an office desk typing a question on a laptop, with neatly
+  labelled ring binders and folders on the shelf behind. Calm, organised.
