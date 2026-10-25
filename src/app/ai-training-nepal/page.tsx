@@ -63,7 +63,7 @@ export default function AiTrainingNepal() {
     { name: "Home", path: "/" },
     { name: "AI Training in Nepal", path: TRAINING_HUB_ROUTE },
   ];
-  const posts = ["introduce-ai-to-your-team", "ai-training-syllabus-nepal", "ai-tools-small-business-nepal"]
+  const posts = ["ai-training-pre-assessment-nepal", "choose-ai-trainer-nepal", "ai-training-syllabus-nepal"]
     .map((slug) => getAllPostMeta().find((p) => p.slug === slug))
     .filter((p) => p !== undefined);
 

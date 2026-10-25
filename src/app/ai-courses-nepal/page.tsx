@@ -54,7 +54,7 @@ export default function AiCoursesNepal() {
     { name: "Home", path: "/" },
     { name: "AI Courses in Nepal", path: COURSES_HUB_ROUTE },
   ];
-  const posts = ["chatgpt-vs-claude-vs-gemini", "ai-tools-for-students-nepal", "ai-tools-small-business-nepal"]
+  const posts = ["ai-courses-nepal-compared", "ai-tools-for-students-nepal", "chatgpt-vs-claude-vs-gemini"]
     .map((slug) => getAllPostMeta().find((p) => p.slug === slug))
     .filter((p) => p !== undefined);
 

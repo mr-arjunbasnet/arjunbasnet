@@ -48,7 +48,7 @@ export async function generateMetadata({
   if (!service) return {};
 
   return buildMetadata({
-    title: `${service.heading} | Arjun Basnet`,
+    title: service.heading,
     description: service.metaDescription,
     path: `/services/${service.slug}`,
     keywords: service.keywords,

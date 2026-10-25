@@ -86,42 +86,42 @@ export const SCHOOLS_COMPUTER_CLASS: ImageRef = {
 
 export const FUNDAMENTALS_LEARNER: ImageRef = {
   "src": "/media/ai-training/fundamentals-learner.jpg",
-  "alt": "A learner working through material on a laptop",
+  "alt": "A professional working at a laptop at a meeting table in a modern office",
   "width": 1600,
   "height": 1067,
-  "blurDataURL": "data:image/jpeg;base64,/9j/2wBDABQODxIPDRQSEBIXFRQYHjIhHhwcHj0sLiQySUBMS0dARkVQWnNiUFVtVkVGZIhlbXd7gYKBTmCNl4x9lnN+gXz/2wBDARUXFx4aHjshITt8U0ZTfHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHz/wAARCAALABADASIAAhEBAxEB/8QAFgABAQEAAAAAAAAAAAAAAAAAAgMF/8QAIBAAAgICAQUBAAAAAAAAAAAAAQMCEQAFIQQSMTJhof/EABUBAQEAAAAAAAAAAAAAAAAAAAEC/8QAFREBAQAAAAAAAAAAAAAAAAAAAEH/2gAMAwEAAhEDEQA/ANnfuI1zpQcVGMeZDzV8gfcGtaUaxRbObCQTc/YDH1cItUYzFi7/AHJqQuKzEA1R47jhVR//2Q==",
+  "blurDataURL": "data:image/jpeg;base64,/9j/2wBDABQODxIPDRQSEBIXFRQYHjIhHhwcHj0sLiQySUBMS0dARkVQWnNiUFVtVkVGZIhlbXd7gYKBTmCNl4x9lnN+gXz/2wBDARUXFx4aHjshITt8U0ZTfHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHz/wAARCAALABADASIAAhEBAxEB/8QAFgABAQEAAAAAAAAAAAAAAAAAAwUG/8QAJBAAAgEDAgYDAAAAAAAAAAAAAQIDAAQhERMFBhIiMkFhgZH/xAAVAQEBAAAAAAAAAAAAAAAAAAADBP/EABcRAAMBAAAAAAAAAAAAAAAAAAECEQD/2gAMAwEAAhEDEQA/AHlnmu2F3aTyMFB24/EMff38GjjuuIhGWVXMgOdFyB+aVO5eJLykk9ijpzganNaAKNhD7JNAzQzUKtAO/9k=",
   "credit": {
     "provider": "Pexels",
-    "author": "Mikhail Nilov",
-    "authorUrl": "https://www.pexels.com/@mikhail-nilov",
-    "sourceUrl": "https://www.pexels.com/photo/close-up-shot-of-a-woman-using-a-laptop-9159637/"
+    "author": "ThisIsEngineering",
+    "authorUrl": "https://www.pexels.com/@thisisengineering",
+    "sourceUrl": "https://www.pexels.com/photo/woman-in-white-long-sleeve-shirt-using-black-laptop-3862637/"
   }
 };
 
 export const FUNDAMENTALS_ONLINE: ImageRef = {
   "src": "/media/ai-training/fundamentals-online.jpg",
-  "alt": "A student with a headset joining an online class from home",
+  "alt": "A professional in a blazer taking notes during an online lecture",
   "width": 1600,
-  "height": 1067,
-  "blurDataURL": "data:image/jpeg;base64,/9j/2wBDABQODxIPDRQSEBIXFRQYHjIhHhwcHj0sLiQySUBMS0dARkVQWnNiUFVtVkVGZIhlbXd7gYKBTmCNl4x9lnN+gXz/2wBDARUXFx4aHjshITt8U0ZTfHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHz/wAARCAALABADASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAABAX/xAAfEAABAwUBAQEAAAAAAAAAAAABAgMRAAQFEiExExT/xAAUAQEAAAAAAAAAAAAAAAAAAAAD/8QAGBEAAwEBAAAAAAAAAAAAAAAAAQIRACH/2gAMAwEAAhEDEQA/AEHKrcbU0EoKSTB7NTbu0c/MHmHBDYhz0bGaRwYJDoA+m4G0dpVihL+NSXUhRV7yJjyjVYTMjGju/9k=",
+  "height": 1068,
+  "blurDataURL": "data:image/jpeg;base64,/9j/2wBDABQODxIPDRQSEBIXFRQYHjIhHhwcHj0sLiQySUBMS0dARkVQWnNiUFVtVkVGZIhlbXd7gYKBTmCNl4x9lnN+gXz/2wBDARUXFx4aHjshITt8U0ZTfHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHz/wAARCAALABADASIAAhEBAxEB/8QAFgABAQEAAAAAAAAAAAAAAAAABQQG/8QAIxAAAgIBAwMFAAAAAAAAAAAAAQIDEQQAEiETIlEjMUFhkf/EABQBAQAAAAAAAAAAAAAAAAAAAAL/xAAVEQEBAAAAAAAAAAAAAAAAAAAAEf/aAAwDAQACEQMRAD8ATEuNJBPMJqWzufdVj7H7rLYuaYsuolGyblk8EX7eNIt2POq8KrkqPgcHU2XBGOjkBfVLC2s86NKP/9k=",
   "credit": {
     "provider": "Pexels",
-    "author": "Anil  Sharma",
-    "authorUrl": "https://www.pexels.com/@shootsaga",
-    "sourceUrl": "https://www.pexels.com/photo/cheerful-young-girl-learning-online-at-home-30858451/"
+    "author": "Pavel Danilyuk",
+    "authorUrl": "https://www.pexels.com/@pavel-danilyuk",
+    "sourceUrl": "https://www.pexels.com/photo/a-woman-using-a-laptop-for-work-while-at-home-7120874/"
   }
 };
 
 export const COURSES_DEVELOPERS: ImageRef = {
   "src": "/media/ai-training/courses-developers.jpg",
-  "alt": "A group of young professionals working together around a laptop",
+  "alt": "A software developer working through code on two monitors in a modern office",
   "width": 1600,
-  "height": 1205,
-  "blurDataURL": "data:image/jpeg;base64,/9j/2wBDABQODxIPDRQSEBIXFRQYHjIhHhwcHj0sLiQySUBMS0dARkVQWnNiUFVtVkVGZIhlbXd7gYKBTmCNl4x9lnN+gXz/2wBDARUXFx4aHjshITt8U0ZTfHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHz/wAARCAAMABADASIAAhEBAxEB/8QAFwAAAwEAAAAAAAAAAAAAAAAAAQMEBf/EACEQAAICAgIBBQAAAAAAAAAAAAECAwQRIQASEwUxQlFh/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAH/xAAXEQADAQAAAAAAAAAAAAAAAAAAAREh/9oADAMBAAIRAxEAPwA2PUhVsyqXUIJWCkAHODvfHi9Ba8a9A5Rt4Gs/Z5gVFWSv2lUOfJ8v3GeV2I1qzkQDoo3ge3BEpp//2Q==",
+  "height": 1200,
+  "blurDataURL": "data:image/jpeg;base64,/9j/2wBDABQODxIPDRQSEBIXFRQYHjIhHhwcHj0sLiQySUBMS0dARkVQWnNiUFVtVkVGZIhlbXd7gYKBTmCNl4x9lnN+gXz/2wBDARUXFx4aHjshITt8U0ZTfHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHz/wAARCAAMABADASIAAhEBAxEB/8QAFwAAAwEAAAAAAAAAAAAAAAAAAgQFBv/EACMQAAIBAwQBBQAAAAAAAAAAAAEDAgAEEQUSITFREyJBcbH/xAAUAQEAAAAAAAAAAAAAAAAAAAAB/8QAFhEBAQEAAAAAAAAAAAAAAAAAABEB/9oADAMBAAIRAxEAPwBLT726lJkUs3ziNogIjnns+TQXTL5ls1rWRXES24MSD9io1tduQ+ToS957z81tLA+vpy2z7YvkYyAfIz1+U4JH/9k=",
   "credit": {
     "provider": "Pexels",
-    "author": "Rashed Hossain",
-    "authorUrl": "https://www.pexels.com/@rashed-hossain-1520582336",
-    "sourceUrl": "https://www.pexels.com/photo/team-collaboration-in-modern-office-space-32866728/"
+    "author": "Zayed Hossain",
+    "authorUrl": "https://www.pexels.com/@zayedhossain120",
+    "sourceUrl": "https://www.pexels.com/photo/focused-developer-at-dual-monitor-setup-36706459/"
   }
 };

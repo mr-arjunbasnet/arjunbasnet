@@ -819,3 +819,14 @@ on the owner's review of these.
 | Contact form + `/api/contact` accept `ai-training` / `ai-course` | CTAs link `/contact?service=ai-training` / `ai-course`; the API still validates against a registry (`LEARNING_ENQUIRIES`). |
 | Photos: Pexels, via `scripts/fetch-pexels.mjs <id> <public path>` | Prints the `ImageRef` with blur + credit. Chosen for Nepali/South Asian subjects. Alt text describes the scene only — **no stock photo may be captioned as Arjun's session**; the Meet Program 2022 photo is the only one that is. Credits are shown under each photo. Openverse was tried; its results were ≤1024px. |
 | `validate:content` covers the clusters | Same answer-block spec and uniqueness maps, plus related course/sector/post/service slug integrity. |
+
+## 23. Search recovery for AI training/courses — preview built 2026-10-25
+
+Branch `preview/ai-training-nov`, for owner review on a Vercel preview, NOT on main. Contents:
+
+- The §22 pilot (cherry-picked 9c0f5b1) with the owner's 2026-09-22 feedback partly applied: photo credit links no longer render (`PhotoFigure`; credit data stays in `ImageRef`), and the three casual Pexels shots (`courses-developers`, `fundamentals-online`, `fundamentals-learner`) are replaced with office/editorial ones. The site-wide "less AI-looking" redesign is still open and deliberately separate.
+- Title bug: `/services/[slug]` passed "| Arjun Basnet" and the layout template added it again. Fixed at the source; titles pass through `buildMetadata` bare.
+- Five ai-training posts targeting the commercial "AI courses / training / trainer in Nepal" family: `ai-courses-nepal-compared`, `choose-ai-trainer-nepal`, `ai-training-pre-assessment-nepal`, `ai-training-teachers-nepal`, `nepal-ai-policy-employers`. Facts verified against sources on 2026-10-25 (cited in the posts). Hubs and the schools/fundamentals pages now link to them.
+- The pre-assessment post uses an anonymised client survey (n = 23). **The owner's instruction: never name the client.** Do not add the company name, team names or free-text answers.
+
+The month plan behind this lives in `docs/content-plan-2026-11.md`. It is untracked; do not commit it.

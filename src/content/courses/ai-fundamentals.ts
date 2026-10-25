@@ -168,7 +168,7 @@ export const AI_FUNDAMENTALS: Course = {
   ],
   relatedCourses: ["generative-ai", "prompt-engineering", "ai-productivity"],
   relatedSectors: ["schools"],
-  relatedPosts: ["chatgpt-vs-claude-vs-gemini", "ai-tools-for-students-nepal", "ai-training-syllabus-nepal"],
+  relatedPosts: ["ai-courses-nepal-compared", "chatgpt-vs-claude-vs-gemini", "ai-tools-for-students-nepal"],
   publishedAt: "2026-09-22",
   updatedAt: "2026-09-22",
 };

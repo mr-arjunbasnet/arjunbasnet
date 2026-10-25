@@ -232,7 +232,7 @@ export const SCHOOLS: TrainingSector = {
     { image: SCHOOLS_COMPUTER_CLASS, caption: "Hands-on practice works with shared devices, even on a slow connection." },
   ],
   relatedCourses: ["ai-fundamentals", "generative-ai"],
-  relatedPosts: ["ai-tools-for-students-nepal", "chatgpt-vs-claude-vs-gemini", "introduce-ai-to-your-team"],
+  relatedPosts: ["ai-training-teachers-nepal", "ai-tools-for-students-nepal", "chatgpt-vs-claude-vs-gemini"],
   relatedServices: ["it-consulting"],
   cta: {
     title: "Request AI training for your school",

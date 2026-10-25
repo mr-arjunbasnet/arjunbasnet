@@ -15,12 +15,11 @@ interface PhotoFigureProps {
 }
 
 /**
- * A photograph with its caption and stock credit.
+ * A photograph with an optional caption.
  *
- * Credit is shown even though Pexels does not require it: the guide (§41)
- * asks the site to be transparent about what is its own and what is not, and
- * a visible credit stops a stock classroom being read as one of Arjun's
- * sessions.
+ * Stock credit stays in `ImageRef.credit` but is not rendered (owner's call,
+ * 2026-09-22). Captions on stock photos must therefore never describe them as
+ * one of Arjun's sessions.
  */
 export default function PhotoFigure({
   image,
@@ -46,18 +45,8 @@ export default function PhotoFigure({
           className={cn("h-auto w-full object-cover", aspect && "h-full", imageClassName)}
         />
       </div>
-      {(caption || image.credit) && (
-        <figcaption className="mt-3 flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1 text-sm text-muted">
-          {caption && <span>{caption}</span>}
-          {image.credit && (
-            <span className="text-xs">
-              Photo:{" "}
-              <a href={image.credit.sourceUrl} target="_blank" rel="noopener noreferrer" className="underline decoration-border underline-offset-2 hover:text-fg">
-                {image.credit.author} / Pexels
-              </a>
-            </span>
-          )}
-        </figcaption>
+      {caption && (
+        <figcaption className="mt-3 text-sm text-muted">{caption}</figcaption>
       )}
     </figure>
   );
