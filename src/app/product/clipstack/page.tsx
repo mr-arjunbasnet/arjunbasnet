@@ -4,7 +4,7 @@ import type { ReactNode, CSSProperties } from "react";
 import fs from "node:fs";
 import path from "node:path";
 import {
-  Command, Lock, RefreshCw, Layers, Search, PanelRight, Pin, RemoveFormatting, ShieldCheck,
+  Command, Lock, RefreshCw, Layers, Search, PanelRight, Bookmark, RemoveFormatting, ShieldCheck,
   PauseCircle, Power, Feather, ClipboardList, Code, PenLine, Palette, Headphones, BookOpen,
   Check, X, ArrowRight,
 } from "lucide-react";
@@ -45,7 +45,7 @@ function readFeed() {
 
 /* Icons resolved through an explicit map, never dynamically. */
 const ICONS = {
-  Command, Lock, RefreshCw, Layers, Search, PanelRight, Pin, RemoveFormatting, ShieldCheck,
+  Command, Lock, RefreshCw, Layers, Search, PanelRight, Bookmark, RemoveFormatting, ShieldCheck,
   PauseCircle, Power, Feather, ClipboardList, Code, PenLine, Palette, Headphones, BookOpen,
 } as const;
 type IconName = keyof typeof ICONS;
@@ -219,7 +219,7 @@ export default function ClipStackPage() {
                 </div>
               </div>
               <div className="flex flex-wrap gap-3.5 border-t border-border px-4 py-2 text-[11px] text-muted">
-                <span><kbd>↑↓</kbd> Navigate</span><span><kbd>⏎</kbd> Paste</span><span><kbd>⌘C</kbd> Copy</span><span><kbd>⌘P</kbd> Pin</span><span><kbd>⌘⌫</kbd> Delete</span><span className="ml-auto"><kbd>esc</kbd> Close</span>
+                <span><kbd>↑↓</kbd> Navigate</span><span><kbd>⏎</kbd> Paste</span><span><kbd>⌘C</kbd> Copy</span><span><kbd>⌘D</kbd> Bookmark</span><span><kbd>⌘⌫</kbd> Delete</span><span className="ml-auto"><kbd>esc</kbd> Close</span>
               </div>
             </div>
           </div>

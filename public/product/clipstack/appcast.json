@@ -2,6 +2,20 @@
   "app": "com.makura.clipstack",
   "releases": [
     {
+      "version": "1.2.0",
+      "build": "202611172021",
+      "minimumSystemVersion": "14.0",
+      "publishedAt": "2026-11-17T14:37:45Z",
+      "notes": "ClipStack 1.2.0\n\n• Fixed: copies made with a \"Copy\" button (Copy link, Copy code, click-to-copy in web pages and apps) are now recorded reliably. Previously the two copies right after pasting something from ClipStack were dropped, and copies from apps that fill the clipboard a moment after clearing it could be missed.\n• New: Bookmarks. Press ⌘D on any item, or click its bookmark icon, to keep it for good. Bookmarks have their own tab (press ⇥ to switch), never expire, never count towards your history limit, and can be given a name with ⌘R so \"Office address\" or \"Support email\" is one search away. Your pinned items from 1.1 are now bookmarks.\n• New look for macOS Tahoe: a floating Liquid Glass search bar with a History / Bookmarks switch, a separate glass results card, softer selection, colour-coded item icons, and Bookmark, Copy and Paste buttons in the detail pane.\n• Fixed: the rectangle that could show around the edge of the panel is gone; the shadow now follows the rounded shapes.\n• The menu-bar menu's \"Pinned\" submenu is now \"Bookmarks\".\n• ⌘P still toggles a bookmark for anyone used to it.",
+      "downloadPage": "https://arjun-basnet.com.np/product/clipstack/ClipStack-1.2.0.dmg",
+      "archive": {
+        "url": "https://arjun-basnet.com.np/product/clipstack/ClipStack-1.2.0.zip",
+        "length": 2138455,
+        "sha256": "5caaa6a38bf86c5db904842cfe2f5c77778f469c67005a7f82947eb3e7aba1bd",
+        "signature": "cSg7hmIEyj9QBGI96UP/MRkYK6g+zkA1dTfJbCufb+ffhgwCWA95lynEWGrgzljrczeRwbraBR/ZiNScfjGGAg=="
+      }
+    },
+    {
       "version": "1.1.0",
       "build": "202609092323",
       "minimumSystemVersion": "14.0",

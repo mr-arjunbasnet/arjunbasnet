@@ -121,7 +121,7 @@ export const FEATURES = {
     { title: "Every type, full fidelity", body: "Text, rich text, links, images, files and colours. A copied table pastes back as a table; a styled paragraph keeps its styling." },
     { title: "Instant search", body: "Full-text and fuzzy search over everything, ranked by relevance and recency. Results appear as you type." },
     { title: "Detail pane", body: "See the whole text, the full image, every file in a multi-file copy, or the colour swatch before you paste." },
-    { title: "Pin what matters", body: "Pinned items stay at the top, never expire, and never count against the history limit." },
+    { title: "Bookmarks", body: <>Press <kbd>⌘D</kbd> to keep anything for good — an address, a reply, a command. Bookmarks have their own tab, can be given a name, never expire and never count against the history limit.</> },
     { title: "Paste as plain text", body: <><kbd>⌘⇧⌥V</kbd> strips formatting. Give it its own global shortcut if you use it a lot.</> },
     { title: "Password-manager aware", body: "Copies from 1Password, Bitwarden, KeePassXC, Apple Passwords and others are never recorded. Secrets it detects are badged or discarded." },
     { title: "Exclusions and pauses", body: "Never record from chosen apps. Pause recording for 5 minutes, an hour, or until you say so." },
@@ -194,7 +194,9 @@ export const HOW = {
     ["⏎", "Paste the selected item into the app you were in"],
     ["⌘C", "Copy the item to the clipboard without pasting"],
     ["⌘⇧⌥V", "Paste as plain text"],
-    ["⌘P", "Pin or unpin"],
+    ["⌘D", "Bookmark the item, or remove its bookmark"],
+    ["⌘R", "Name a bookmark"],
+    ["⇥", "Switch between History and Bookmarks"],
     ["⌘⌫", "Delete the item"],
     ["Space", "Quick Look an image"],
     ["esc", "Close"],
@@ -207,9 +209,9 @@ export const USE_CASES = {
   cards: [
     { title: "Filling forms from a document", body: "Copy the name, address, ABN and reference number in one pass, then paste each into its field from the panel. No tabbing back." },
     { title: "Developers", body: "Commands, tokens, snippets, error messages. Search by a fragment you remember; paste as plain text into the terminal." },
-    { title: "Writers and editors", body: "Cut a paragraph, keep working, paste it an hour later — with its formatting. Keep boilerplate pinned." },
+    { title: "Writers and editors", body: "Cut a paragraph, keep working, paste it an hour later — with its formatting. Keep boilerplate bookmarked." },
     { title: "Designers", body: "Colours copied from Figma or Sketch show as swatches with their hex values; images and screenshots are previewed at full size." },
-    { title: "Support and sales", body: "Pin the replies, links and account IDs you send twenty times a day and paste them from anywhere." },
+    { title: "Support and sales", body: "Bookmark the replies, links and account IDs you send twenty times a day and paste them from anywhere." },
     { title: "Research", body: "Collect quotes and links from many tabs, then paste them into your notes in one sitting — each with the app and time it came from." },
   ],
 };
@@ -324,7 +326,7 @@ export const FOOTER = "ClipStack · © 2026 Arjun Basnet · Made in Kathmandu";
 /** lucide icon names, resolved through an explicit map in the page. */
 export const SOLUTION_ICONS = ["Command", "Lock", "RefreshCw"] as const;
 export const FEATURE_ICONS = [
-  "Layers", "Search", "PanelRight", "Pin", "RemoveFormatting",
+  "Layers", "Search", "PanelRight", "Bookmark", "RemoveFormatting",
   "ShieldCheck", "PauseCircle", "Power", "Feather",
 ] as const;
 export const USE_CASE_ICONS = [
