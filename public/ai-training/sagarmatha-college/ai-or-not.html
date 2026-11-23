@@ -1,0 +1,271 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow, noarchive">
+<title>AI or Not? · Sagarmatha College</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anek+Latin:wght@600;700&family=Montserrat:wght@400;500;600;700&family=Geist+Mono:wght@500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/session.css">
+<style>
+.screen{display:none}.screen.on{display:block}
+.title em{font-style:normal;color:var(--ai)}
+.hud{display:flex;justify-content:space-between;align-items:center;font:600 14px var(--mono);margin:18px 0 8px}
+.hud b{font-size:18px}
+.timer{height:8px;border-radius:8px;background:var(--soft);overflow:hidden;margin-bottom:12px}
+.timer i{display:block;height:100%;width:100%;background:var(--primary);transform-origin:left;transition:transform .1s linear}
+.timer.low i{background:var(--red)}
+.frame{position:relative;border-radius:14px;overflow:hidden;background:var(--soft);aspect-ratio:4/3}
+.frame img{width:100%;height:100%;object-fit:cover;display:block;user-select:none;-webkit-user-drag:none}
+.frame .zoomhint{position:absolute;right:10px;bottom:10px;font:600 11px var(--mono);background:rgba(0,0,0,.55);color:#fff;padding:4px 8px;border-radius:6px}
+.choices{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}
+.choice{border:2px solid var(--border);background:var(--card);color:var(--ink);border-radius:14px;padding:14px 10px;font:700 17px var(--sans);cursor:pointer;min-height:76px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px}
+.choice small{font:500 12px var(--sans);color:var(--muted)}
+.choice:active{transform:scale(.98)}
+.choice:disabled{opacity:.6}
+.fb{border-radius:14px;padding:14px 16px;margin-top:12px;display:none}
+.fb.on{display:block}
+.fb.ok{background:var(--green-bg);color:var(--green)}
+.fb.no{background:var(--red-bg);color:var(--red)}
+.fb h3{margin:0 0 4px;font-size:20px}
+.fb p{color:var(--ink);margin:4px 0 12px}
+.fb .credit{font-size:12px;color:var(--muted)}
+.big{font:700 64px/1 var(--display);margin:6px 0}
+.tiles{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:14px 0}
+.tile{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:12px 14px}
+.tile b{display:block;font:700 26px var(--display)}
+.tile span{font-size:13px;color:var(--muted)}
+.bench{display:grid;gap:6px;margin:10px 0}
+.bench div{display:grid;grid-template-columns:110px 1fr 44px;gap:10px;align-items:center;font-size:14px}
+.bench .bar{height:10px;border-radius:6px;background:var(--soft);overflow:hidden}
+.bench .bar i{display:block;height:100%;background:var(--muted)}
+.bench .you i{background:var(--primary)}
+.reveal{display:grid;grid-template-columns:1fr;gap:12px}
+.rv{display:grid;grid-template-columns:120px 1fr;gap:12px;background:var(--card);border:1px solid var(--border);border-radius:12px;padding:10px;align-items:start}
+.rv img{width:120px;aspect-ratio:4/3;object-fit:cover;border-radius:8px}
+.rv .tag{font:700 11px var(--mono);letter-spacing:.06em;text-transform:uppercase;padding:3px 8px;border-radius:6px;display:inline-block}
+.rv .tag.ai{background:#EDE9FE;color:#5B21B6}.rv .tag.real{background:#E0F2FE;color:#075985}
+.rv p{font-size:13.5px;margin:6px 0 0}
+.rv .you{font-size:12px;font-weight:700}
+.rv .you.ok{color:var(--green)}.rv .you.no{color:var(--red)}
+#zoom{position:fixed;inset:0;background:rgba(0,0,0,.92);display:none;align-items:center;justify-content:center;z-index:20}
+#zoom.on{display:flex}
+#zoom img{max-width:100%;max-height:100%}
+.tips li{margin:6px 0}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<!-- Join -->
+<section class="screen on" id="s-join">
+  <p class="kicker" style="margin-top:24px">Sagarmatha College · B.Sc. CSIT</p>
+  <h1 class="title">AI or <em>not?</em></h1>
+  <p class="muted" style="font-size:18px">Ten images, ten seconds each. Real photo or AI-generated?</p>
+  <div class="card">
+    <form id="join" novalidate>
+      <label class="f" for="name">Your name</label>
+      <input class="f" id="name" autocomplete="name" placeholder="e.g. Sita Shrestha" required>
+      <label class="f" for="email">Email</label>
+      <input class="f" id="email" type="email" inputmode="email" autocomplete="email" placeholder="you@example.com" required>
+      <label class="f" for="roll">Roll no. or section <span class="muted">(optional)</span></label>
+      <input class="f" id="roll" placeholder="e.g. 23 · Section A">
+      <p class="err" id="join-err"></p>
+      <button class="btn block" id="play">Play →</button>
+    </form>
+    <p class="small muted" style="margin:12px 0 0">One game per email. Your email is never shown on the board. The trainer can see results after the session.</p>
+  </div>
+  <p class="small"><a href="leaderboard">See the leaderboard</a> · <a href="./">Session home</a></p>
+</section>
+
+<!-- Loading -->
+<section class="screen" id="s-load">
+  <h1 style="font-size:32px">Loading the images…</h1>
+  <p class="muted" id="load-txt">0 of 10</p>
+  <div class="timer"><i id="load-bar" style="transform:scaleX(0)"></i></div>
+  <p class="small muted">Images load first so the timer is fair on slow connections.</p>
+</section>
+
+<!-- Game -->
+<section class="screen" id="s-game">
+  <div class="hud"><span>Image <b id="g-n">1</b> of <b id="g-of">10</b></span><span>🔥 <b id="g-streak">0</b></span><span><b id="g-pts">0</b> pts</span></div>
+  <div class="timer" id="g-timer"><i id="g-bar"></i></div>
+  <div class="frame" id="g-frame"><img id="g-img" alt="Is this a real photo or AI-generated?"><span class="zoomhint">Tap to zoom</span></div>
+  <div class="choices" id="g-choices">
+    <button class="choice" data-g="real">📷 Real<small>taken with a camera</small></button>
+    <button class="choice" data-g="ai">✨ AI<small>made by a model</small></button>
+  </div>
+  <div class="fb" id="g-fb">
+    <h3 id="fb-h"></h3>
+    <p id="fb-tell"></p>
+    <p class="credit" id="fb-credit"></p>
+    <button class="btn block" id="g-next">Next image →</button>
+  </div>
+</section>
+
+<!-- Result -->
+<section class="screen" id="s-result">
+  <p class="kicker" style="margin-top:24px">Your result</p>
+  <div class="big" id="r-score">0 / 10</div>
+  <p class="muted" id="r-points"></p>
+  <div class="bench">
+    <div><span>Coin flip</span><span class="bar"><i style="width:50%"></i></span><span>50%</span></div>
+    <div class="you"><span><b>You</b></span><span class="bar"><i id="r-youbar" style="width:0"></i></span><span id="r-youpct">0%</span></div>
+  </div>
+  <div class="tiles">
+    <div class="tile"><b id="r-pts">0</b><span>points</span></div>
+    <div class="tile"><b id="r-streak">0</b><span>best streak</span></div>
+    <div class="tile"><b id="r-aireal">0</b><span>AI images you called real</span></div>
+    <div class="tile"><b id="r-timeout">0</b><span>ran out of time</span></div>
+  </div>
+  <div style="display:grid;gap:10px">
+    <a class="btn block" href="leaderboard">See the leaderboard</a>
+    <button class="btn ghost block" id="r-copy">Copy my score</button>
+  </div>
+  <h2>What each image really was</h2>
+  <div class="reveal" id="r-reveal"></div>
+  <h2>How to check, now that looking isn't enough</h2>
+  <ul class="tips">
+    <li><b>Read the text in the image.</b> Shop signs, newspapers, number plates. AI still garbles lettering, especially Devanagari.</li>
+    <li><b>Count the small things.</b> Fingers, fork tines, spokes, railings. AI gets the overall shape right and the counts wrong.</li>
+    <li><b>Look for "too perfect".</b> Identical momos, golden light everywhere, a crowd with no one blinking or mid-step.</li>
+    <li><b>Ask where it came from.</b> Who posted it first? Is there an original with a date and a name? A reverse image search takes ten seconds.</li>
+    <li><b>Don't rely on looking.</b> The best fakes have no visible tell. Verify the source, not the pixels.</li>
+  </ul>
+  <p class="small muted">Real photos from Pexels (photographers credited above). AI images generated with Canva AI for this session.</p>
+</section>
+
+</div>
+<div id="zoom"><img alt=""></div>
+<script src="assets/session.js"></script>
+<script>
+(function(){
+  var $ = function(id){ return document.getElementById(id); };
+  var state = { gameId:null, images:[], index:0, seconds:10, pts:0, streak:0, timer:null, t0:0, locked:false };
+  function show(id){ document.querySelectorAll('.screen').forEach(function(s){ s.classList.toggle('on', s.id===id); }); scrollTo(0,0); }
+
+  // Prefill from this phone
+  var me = SAG.me; if (me.name) $('name').value = me.name; if (me.email) $('email').value = me.email; if (me.roll) $('roll').value = me.roll;
+  var last = SAG.store('sag-aion');
+  if (last && last.finished && last.gameId) loadResult(last.gameId);
+
+  $('join').addEventListener('submit', function(e){
+    e.preventDefault();
+    var body = { name:$('name').value.trim(), email:$('email').value.trim(), roll:$('roll').value.trim() };
+    if (body.name.length < 2) return ($('join-err').textContent = SAG.errorText('name_required'));
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(body.email)) return ($('join-err').textContent = SAG.errorText('email_invalid'));
+    $('play').disabled = true; $('join-err').textContent = '';
+    SAG.me = body;
+    SAG.api('aion/start', body).then(function(d){
+      $('play').disabled = false;
+      if (d.error === 'already_played') { SAG.store('sag-aion', { gameId:d.gameId, finished:true }); return loadResult(d.gameId); }
+      if (d.error) return ($('join-err').textContent = SAG.errorText(d.error));
+      state.gameId = d.gameId; state.images = d.images; state.index = d.index; state.seconds = d.seconds || 10;
+      SAG.store('sag-aion', { gameId:d.gameId, finished:false });
+      preload();
+    });
+  });
+
+  function preload(){
+    show('s-load');
+    var n = 0, total = state.images.length;
+    $('load-txt').textContent = '0 of ' + total;
+    state.images.forEach(function(im){
+      var img = new Image();
+      img.onload = img.onerror = function(){ n++; $('load-txt').textContent = n + ' of ' + total; $('load-bar').style.transform = 'scaleX(' + (n/total) + ')'; if (n === total) setTimeout(next, 300); };
+      img.src = im.url;
+    });
+  }
+
+  function next(){
+    if (state.index >= state.images.length) return;
+    show('s-game');
+    state.locked = false;
+    $('g-fb').classList.remove('on','ok','no');
+    $('g-choices').style.display = '';
+    document.querySelectorAll('.choice').forEach(function(b){ b.disabled = true; });
+    $('g-n').textContent = state.index + 1; $('g-of').textContent = state.images.length;
+    $('g-img').src = state.images[state.index].url;
+    $('g-bar').style.transform = 'scaleX(1)'; $('g-timer').classList.remove('low');
+    // Tell the server the image is on screen; its clock starts now.
+    SAG.api('aion/show', { gameId:state.gameId, index:state.index }).then(function(d){
+      if (d._status === 409 && typeof d.index === 'number' && d.index !== state.index) { state.index = d.index; return state.index >= state.images.length ? finishFromServer() : next(); }
+      document.querySelectorAll('.choice').forEach(function(b){ b.disabled = false; });
+      state.t0 = performance.now();
+      clearInterval(state.timer);
+      state.timer = setInterval(tick, 100);
+    });
+  }
+
+  function tick(){
+    var left = Math.max(0, state.seconds*1000 - (performance.now() - state.t0));
+    $('g-bar').style.transform = 'scaleX(' + (left / (state.seconds*1000)) + ')';
+    $('g-timer').classList.toggle('low', left < 3000);
+    if (left <= 0) answer(null);
+  }
+
+  document.querySelectorAll('.choice').forEach(function(b){ b.addEventListener('click', function(){ answer(b.dataset.g); }); });
+
+  function answer(guess){
+    if (state.locked) return; state.locked = true;
+    clearInterval(state.timer);
+    document.querySelectorAll('.choice').forEach(function(b){ b.disabled = true; });
+    SAG.api('aion/answer', { gameId:state.gameId, index:state.index, guess:guess }).then(function(d){
+      if (d.error) {
+        if (d._status === 409 && typeof d.index === 'number') { state.index = d.index; return d.finished ? finishFromServer() : next(); }
+        state.locked = false; document.querySelectorAll('.choice').forEach(function(b){ b.disabled = false; });
+        return alertInline(SAG.errorText(d.error));
+      }
+      state.pts = d.total; state.streak = d.streak;
+      $('g-pts').textContent = d.total; $('g-streak').textContent = d.streak;
+      var kind = d.truth === 'ai' ? 'AI-generated' : 'a real photo';
+      $('fb-h').textContent = d.timedOut ? '⏱ Time’s up. It was ' + kind + '.' : d.correct ? '✓ Correct! +' + d.points : '✗ Not quite. It was ' + kind + '.';
+      $('fb-tell').textContent = d.tell || '';
+      $('fb-credit').textContent = d.credit ? 'Image: ' + d.credit : '';
+      $('g-fb').classList.add('on', d.correct ? 'ok' : 'no');
+      $('g-choices').style.display = 'none';
+      state.index++;
+      if (d.finished) {
+        SAG.store('sag-aion', { gameId:state.gameId, finished:true });
+        $('g-next').textContent = 'See my result →';
+        $('g-next').onclick = function(){ renderResult(d.summary, d.reveal); };
+      } else {
+        $('g-next').textContent = 'Next image →';
+        $('g-next').onclick = next;
+      }
+    });
+  }
+
+  function alertInline(msg){ $('fb-h').textContent = msg; $('fb-tell').textContent = ''; $('g-fb').classList.add('on','no'); }
+
+  function finishFromServer(){ SAG.store('sag-aion', { gameId:state.gameId, finished:true }); loadResult(state.gameId); }
+
+  function loadResult(id){
+    SAG.api('aion/result?id=' + encodeURIComponent(id)).then(function(d){
+      if (d.summary) renderResult(d.summary, d.reveal);
+    });
+  }
+
+  function renderResult(s, rv){
+    show('s-result');
+    var pct = Math.round(100 * s.correct / Math.max(1, s.total));
+    $('r-score').textContent = s.correct + ' / ' + s.total;
+    $('r-points').textContent = s.points + ' points · ' + (s.totalMs/1000).toFixed(1) + ' s thinking time';
+    $('r-youpct').textContent = pct + '%';
+    setTimeout(function(){ $('r-youbar').style.width = pct + '%'; }, 50);
+    $('r-pts').textContent = s.points; $('r-streak').textContent = s.bestStreak; $('r-aireal').textContent = s.aiCalledReal; $('r-timeout').textContent = s.timeouts;
+    $('r-reveal').innerHTML = (rv || []).map(function(r){
+      var you = r.guess === null ? 'Ran out of time' : (r.correct ? '✓ You got it' : '✗ You said ' + (r.guess === 'ai' ? 'AI' : 'real'));
+      return '<div class="rv"><img src="' + SAG.esc(r.url) + '" alt=""><div><span class="tag ' + r.truth + '">' + (r.truth === 'ai' ? 'AI-generated' : 'Real photo') + '</span> <span class="you ' + (r.correct ? 'ok' : 'no') + '">' + you + '</span><p>' + SAG.esc(r.tell) + '</p><p class="muted" style="font-size:11px">' + SAG.esc(r.credit) + '</p></div></div>';
+    }).join('');
+    $('r-copy').onclick = function(){ SAG.copyText('I scored ' + s.correct + '/' + s.total + ' (' + s.points + ' pts) on AI or Not? at Sagarmatha College. Can you tell real from AI?', $('r-copy')); };
+  }
+
+  // Tap to zoom (the timer keeps running)
+  $('g-frame').addEventListener('click', function(){ var z = $('zoom'); z.querySelector('img').src = $('g-img').src; z.classList.add('on'); });
+  $('zoom').addEventListener('click', function(){ this.classList.remove('on'); });
+})();
+</script>
+</body>
+</html>

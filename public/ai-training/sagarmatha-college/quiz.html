@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow, noarchive">
+<title>Lightning quiz · Sagarmatha College</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anek+Latin:wght@600;700&family=Montserrat:wght@400;500;600;700&family=Geist+Mono:wght@500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/session.css">
+<style>
+.screen{display:none}.screen.on{display:block}
+.q{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:16px;margin:12px 0}
+.q h3{font-family:var(--sans);font-size:17px;line-height:1.35;margin:0 0 10px}
+.q .n{font:600 12px var(--mono);color:var(--muted)}
+.opt{display:flex;gap:10px;align-items:flex-start;width:100%;text-align:left;border:1.5px solid var(--border);background:var(--bg);color:var(--ink);border-radius:10px;padding:11px 12px;margin:6px 0;font:500 15px/1.4 var(--sans);cursor:pointer}
+.opt b{font:700 13px var(--mono);flex:none;width:24px;height:24px;border-radius:50%;display:grid;place-items:center;background:var(--soft)}
+.opt.sel{border-color:var(--primary);box-shadow:inset 0 0 0 1px var(--primary)}
+.opt.sel b{background:var(--primary);color:var(--primary-ink)}
+.opt.right{border-color:var(--green);background:var(--green-bg)}
+.opt.wrong{border-color:var(--red);background:var(--red-bg)}
+.why{font-size:14px;margin-top:8px;padding:8px 12px;border-left:3px solid var(--primary);background:var(--soft);border-radius:0 8px 8px 0}
+.big{font:700 60px/1 var(--display);margin:8px 0}
+.sticky{position:sticky;bottom:0;background:linear-gradient(transparent,var(--bg) 30%);padding:20px 0 16px}
+</style>
+</head>
+<body>
+<div class="wrap">
+<section class="screen on" id="s-join">
+  <p class="kicker" style="margin-top:24px">Sagarmatha College · B.Sc. CSIT</p>
+  <h1>Lightning quiz</h1>
+  <p class="muted">Six quick questions on today's session. Your answers show up live on the projector (without names).</p>
+  <div class="card">
+    <form id="join" novalidate>
+      <label class="f" for="name">Your name</label><input class="f" id="name" autocomplete="name" required>
+      <label class="f" for="email">Email</label><input class="f" id="email" type="email" inputmode="email" autocomplete="email" required>
+      <label class="f" for="roll">Roll no. or section <span class="muted">(optional)</span></label><input class="f" id="roll">
+      <p class="err" id="join-err"></p>
+      <button class="btn block">Start the quiz →</button>
+    </form>
+  </div>
+</section>
+
+<section class="screen" id="s-quiz">
+  <p class="kicker" style="margin-top:24px">Lightning quiz</p>
+  <h1 style="font-size:32px">Pick one answer each</h1>
+  <div id="qs"><p class="muted">Loading…</p></div>
+  <div class="sticky"><p class="err" id="q-err"></p><button class="btn block" id="submit">Submit my answers</button></div>
+</section>
+
+<section class="screen" id="s-done">
+  <p class="kicker" style="margin-top:24px">Your score</p>
+  <div class="big" id="d-score"></div>
+  <p class="muted" id="d-note"></p>
+  <div id="d-qs"></div>
+  <p><a class="btn ghost block" href="./">Back to the session page</a></p>
+</section>
+</div>
+<script src="assets/session.js"></script>
+<script>
+(function(){
+  var $ = function(id){ return document.getElementById(id); };
+  var quiz = null, picks = {};
+  function show(id){ document.querySelectorAll('.screen').forEach(function(s){ s.classList.toggle('on', s.id===id); }); scrollTo(0,0); }
+  var me = SAG.me; if (me.name) $('name').value = me.name; if (me.email) $('email').value = me.email; if (me.roll) $('roll').value = me.roll;
+
+  var saved = SAG.store('sag-quiz-final');
+  if (saved && saved.results) return renderDone(saved);
+
+  $('join').addEventListener('submit', function(e){
+    e.preventDefault();
+    var b = { name:$('name').value.trim(), email:$('email').value.trim(), roll:$('roll').value.trim() };
+    if (b.name.length < 2) return ($('join-err').textContent = SAG.errorText('name_required'));
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(b.email)) return ($('join-err').textContent = SAG.errorText('email_invalid'));
+    SAG.me = b; show('s-quiz');
+    SAG.api('quiz/questions?quiz=final').then(function(d){
+      if (d.error) { $('qs').innerHTML = '<p class="err">' + SAG.errorText(d.error) + '</p>'; return; }
+      quiz = d; render();
+    });
+  });
+
+  function render(){
+    $('qs').innerHTML = quiz.questions.map(function(q, i){
+      return '<div class="q" data-q="' + q.id + '"><span class="n">' + (i+1) + ' of ' + quiz.questions.length + '</span><h3>' + SAG.esc(q.q) + '</h3>' +
+        q.options.map(function(o, k){ return '<button type="button" class="opt" data-k="' + k + '"><b>' + 'ABC'[k] + '</b><span>' + SAG.esc(o) + '</span></button>'; }).join('') + '</div>';
+    }).join('');
+    document.querySelectorAll('.q').forEach(function(box){
+      box.querySelectorAll('.opt').forEach(function(o){ o.addEventListener('click', function(){
+        box.querySelectorAll('.opt').forEach(function(x){ x.classList.remove('sel'); });
+        o.classList.add('sel'); picks[box.dataset.q] = +o.dataset.k;
+      }); });
+    });
+  }
+
+  $('submit').addEventListener('click', function(){
+    var missing = quiz.questions.filter(function(q){ return picks[q.id] == null; }).length;
+    if (missing) return ($('q-err').textContent = 'Answer all questions first (' + missing + ' left).');
+    $('submit').disabled = true; $('q-err').textContent = '';
+    var me = SAG.me;
+    SAG.api('quiz/submit', { quiz:'final', name:me.name, email:me.email, roll:me.roll, answers:picks }).then(function(d){
+      $('submit').disabled = false;
+      if (d.error) return ($('q-err').textContent = SAG.errorText(d.error));
+      d.questions = quiz.questions; SAG.store('sag-quiz-final', d); renderDone(d);
+    });
+  });
+
+  function renderDone(d){
+    show('s-done');
+    $('d-score').textContent = d.score + ' / ' + d.total;
+    $('d-note').textContent = d.alreadySubmitted ? 'You had already submitted from this email. Your first answers are the ones saved.' : 'Saved. Thanks!';
+    var qs = d.questions || [];
+    $('d-qs').innerHTML = d.results.map(function(r, i){
+      var q = qs[i] || { q:'', options:[] };
+      return '<div class="q"><span class="n">' + (i+1) + '</span><h3>' + SAG.esc(q.q) + '</h3>' + q.options.map(function(o, k){
+        var c = k === r.answer ? 'right' : (k === r.yours ? 'wrong' : '');
+        return '<div class="opt ' + c + '"><b>' + 'ABC'[k] + '</b><span>' + SAG.esc(o) + '</span></div>';
+      }).join('') + '<div class="why">' + SAG.esc(r.why) + '</div></div>';
+    }).join('');
+  }
+})();
+</script>
+</body>
+</html>

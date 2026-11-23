@@ -1,0 +1,68 @@
+/* Sagarmatha College session — shared styles for the phone pages.
+   Brand used sparingly: warm white, indigo ink, one accent. Colour carries meaning
+   (green/amber/red, the part colours), never decoration. */
+:root{
+  --bg:#FAF8F6; --card:#FFFFFF; --ink:#221A5C; --muted:#6B6790; --border:#E6E1F2; --soft:#F4F1FA;
+  --primary:#5B4BDB; --primary-ink:#FFFFFF;
+  --green:#15803D; --green-bg:#DCFCE7; --amber:#B45309; --amber-bg:#FEF3C7; --red:#B91C1C; --red-bg:#FEE2E2;
+  --git:#2563EB; --ai:#7C3AED; --prompt:#C026D3; --safe:#E11D48; --start:#059669;
+  --aurora:linear-gradient(90deg,#4F7BFF,#8B5CF6 52%,#D946EF);
+  --sans:'Montserrat',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+  --display:'Anek Latin','Montserrat',system-ui,sans-serif;
+  --mono:'Geist Mono',ui-monospace,SFMono-Regular,Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#120F2E; --card:#1B1640; --ink:#F3F0FF; --muted:#B9B1E6; --border:#2C2560; --soft:#211B4A;
+  --primary:#C9BEFF; --primary-ink:#120F2E;
+  --green:#86EFAC; --green-bg:#123D24; --amber:#FCD34D; --amber-bg:#3D2A0B; --red:#FCA5A5; --red-bg:#3F1414;
+}}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 16px/1.6 var(--sans)}
+body::before{content:"";display:block;height:3px;background:var(--aurora)}
+.wrap{max-width:44rem;margin:0 auto;padding:0 16px 64px}
+.wide{max-width:72rem}
+h1,h2,h3{font-family:var(--display);line-height:1.1;letter-spacing:-.01em;margin:0}
+h1{font-size:clamp(34px,8vw,52px);font-weight:700;margin:28px 0 10px}
+h2{font-size:26px;font-weight:700;margin:36px 0 10px;scroll-margin-top:64px}
+h3{font-size:19px;font-weight:700;margin:16px 0 6px}
+p{margin:8px 0}
+a{color:var(--primary)}
+.kicker{font:600 12px var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin:0}
+.muted{color:var(--muted)}
+.small{font-size:14px}
+.card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:16px 18px;margin:12px 0}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:0;border-radius:999px;padding:13px 22px;font:700 16px var(--sans);background:var(--primary);color:var(--primary-ink);cursor:pointer;text-decoration:none;min-height:48px}
+.btn:disabled{opacity:.5;cursor:default}
+.btn.ghost{background:transparent;color:var(--ink);border:1.5px solid var(--border)}
+.btn.block{width:100%}
+label.f{display:block;font-weight:600;font-size:14px;margin:14px 0 6px}
+input.f{width:100%;font:500 16px var(--sans);padding:12px 14px;border-radius:10px;border:1.5px solid var(--border);background:var(--card);color:var(--ink)}
+input.f:focus{outline:2px solid var(--primary);outline-offset:1px;border-color:transparent}
+.err{color:var(--red);font-weight:600;font-size:14px;min-height:20px;margin-top:8px}
+.pill{display:inline-block;font:600 11px var(--mono);letter-spacing:.08em;text-transform:uppercase;padding:4px 10px;border-radius:999px;background:var(--soft);color:var(--muted)}
+code{font:500 14px var(--mono);background:var(--soft);padding:1px 6px;border-radius:5px}
+pre.code{background:#16142A;color:#ECEAF6;border-radius:12px;padding:14px 16px;font:500 13.5px/1.6 var(--mono);overflow-x:auto;margin:10px 0}
+pre.code code{background:none;padding:0;color:inherit}
+nav.toc{position:sticky;top:0;z-index:5;background:var(--bg);border-bottom:1px solid var(--border);padding:10px 0;display:flex;gap:8px;overflow-x:auto;scrollbar-width:none}
+nav.toc a{flex:none;font:600 12px var(--mono);text-decoration:none;color:var(--ink);background:var(--soft);padding:6px 12px;border-radius:999px}
+
+/* Prompts with fill-in fields */
+.prompt{position:relative;background:var(--card);border:1.5px dashed var(--border);border-radius:12px;padding:46px 16px 16px;font:500 14px/1.7 var(--mono);white-space:pre-wrap;word-break:break-word;margin:10px 0}
+.prompt .label{position:absolute;top:12px;left:16px;font:700 11px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.copy{position:absolute;top:8px;right:8px;border:0;border-radius:999px;padding:7px 14px;background:var(--ink);color:var(--bg);font:600 13px var(--mono);cursor:pointer}
+.copy.done{background:var(--green);color:#fff}
+.ph{display:inline;border-radius:6px;padding:1px 4px;background:#FCE7F3;color:#9D174D;font-weight:600;outline:none;cursor:text;border-bottom:2px dashed #DB2777}
+.ph.filled{background:#E0F2FE;color:#075985;border-bottom-color:#0284C7}
+.ph:focus{box-shadow:0 0 0 2px #DB2777}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .ph{background:#4A1435;color:#FBCFE8}:root:not([data-theme="light"]) .ph.filled{background:#0C3550;color:#BAE6FD}}
+.hint-fill{font-size:13px;color:var(--muted);margin:4px 0 0}
+
+/* Traffic light */
+.tl{display:grid;gap:8px}
+.tl div{border-radius:10px;padding:10px 14px}
+.tl .g{background:var(--green-bg);color:var(--green)}.tl .a{background:var(--amber-bg);color:var(--amber)}.tl .r{background:var(--red-bg);color:var(--red)}
+table{border-collapse:collapse;width:100%;font-size:14.5px}
+td,th{padding:9px 10px;border-bottom:1px solid var(--border);text-align:left;vertical-align:top}
+th{font:600 11px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+footer{color:var(--muted);font-size:13px;margin-top:40px}

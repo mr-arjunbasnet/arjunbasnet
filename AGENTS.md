@@ -23,9 +23,12 @@ re-litigate.
 
 ## Invariants
 
-1. **Exactly two dynamic routes: `/api/contact` and `/api/assistant`.** Both
-   are API routes and both are deliberate. Check the build route table after
-   any page change. A third `ƒ`, or a `ƒ` on a page, means something read
+1. **Exactly three dynamic routes: `/api/contact`, `/api/assistant` and
+   `/api/sagarmatha/[...path]`** (the unlisted Sagarmatha College session:
+   AI or Not, quiz, results; pages are static HTML in
+   `public/ai-training/sagarmatha-college/`, noindex). All three are API
+   routes and deliberate. Check the build route table after
+   any page change. A fourth `ƒ`, or a `ƒ` on a page, means something read
    `searchParams`, `cookies()`, or `headers()` in a page tree. `useSearchParams` in a client
    component needs a Suspense boundary or the page drops out of prerendering.
 

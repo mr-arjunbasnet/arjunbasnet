@@ -56,13 +56,34 @@ const nextConfig: NextConfig = {
           { key: "Content-Disposition", value: "attachment" },
         ],
       },
+      /*
+       * Sagarmatha College session (2026-11): unlisted training pages. Kept
+       * out of search with noindex rather than a robots.txt Disallow, so
+       * Google can actually read the noindex. Not in the sitemap or nav.
+       */
+      {
+        source: "/ai-training/sagarmatha-college/:path*",
+        headers: [{ key: "X-Robots-Tag", value: "noindex, nofollow, noarchive" }],
+      },
+      {
+        source: "/ai-training/sagarmatha-college",
+        headers: [{ key: "X-Robots-Tag", value: "noindex, nofollow, noarchive" }],
+      },
     ];
   },
 
   // The brand identity page is a self-contained static HTML from the kit,
-  // served from public/brand/index.html at a clean address.
+  // served from public/brand/index.html at a clean address. The Sagarmatha
+  // College session pages are static HTML in public/ai-training/ too.
   async rewrites() {
-    return [{ source: "/brand", destination: "/brand/index.html" }];
+    return [
+      { source: "/brand", destination: "/brand/index.html" },
+      { source: "/ai-training/sagarmatha-college", destination: "/ai-training/sagarmatha-college/index.html" },
+      {
+        source: "/ai-training/sagarmatha-college/:page(slides|handout|ai-or-not|leaderboard|quiz|results|facilitator)",
+        destination: "/ai-training/sagarmatha-college/:page.html",
+      },
+    ];
   },
 
   async redirects() {
@@ -94,6 +115,8 @@ const nextConfig: NextConfig = {
         destination: "/product/melos",
         permanent: true,
       },
+      // Short link for the projector at the Sagarmatha College session.
+      { source: "/sagarmatha", destination: "/ai-training/sagarmatha-college", permanent: false },
       // The owner himself typed this spelling; visitors will too.
       { source: "/ai-trainer-in-nepal", destination: "/ai-trainer-nepal", permanent: true },
       { source: "/ai-training", destination: "/ai-trainer-nepal", permanent: true },

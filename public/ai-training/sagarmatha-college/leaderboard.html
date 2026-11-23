@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow, noarchive">
+<title>Leaderboard · AI or Not?</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anek+Latin:wght@600;700&family=Montserrat:wght@400;500;600;700&family=Geist+Mono:wght@500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/session.css">
+<style>
+:root{color-scheme:light}
+.lb{display:grid;grid-template-columns:1fr 300px;gap:32px;align-items:start;padding-top:20px}
+@media (max-width:860px){.lb{grid-template-columns:1fr}.join{order:-1}}
+.head{display:flex;justify-content:space-between;align-items:end;gap:16px;flex-wrap:wrap}
+.head h1{margin:6px 0 0}
+.head h1 em{font-style:normal;color:var(--ai)}
+.live{font:600 12px var(--mono);color:var(--green);display:inline-flex;align-items:center;gap:6px}
+.live::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--green);animation:blink 1.6s infinite}
+@keyframes blink{50%{opacity:.25}}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:18px 0}
+.stats div{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:12px 14px}
+.stats b{display:block;font:700 30px var(--display)}
+.stats span{font-size:12px;color:var(--muted)}
+@media (max-width:560px){.stats{grid-template-columns:1fr 1fr}}
+table.board{font-size:18px}
+table.board td{padding:12px 10px}
+table.board td.rank{font:700 20px var(--display);width:56px;color:var(--muted)}
+table.board tr.top td.rank{color:var(--ink)}
+table.board td.pts{font:700 22px var(--display);text-align:right}
+table.board td.num{text-align:right;font-family:var(--mono);font-size:15px;color:var(--muted)}
+.medal{font-size:22px}
+.playing{font:600 11px var(--mono);color:var(--amber);background:var(--amber-bg);padding:2px 8px;border-radius:999px;margin-left:8px;vertical-align:middle}
+.join{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:18px;text-align:center;position:sticky;top:16px}
+.join img{width:100%;max-width:240px;background:#fff;border-radius:10px;padding:6px}
+.join .url{font:600 13px var(--mono);word-break:break-all;margin-top:8px}
+.empty{padding:40px 0;text-align:center;color:var(--muted)}
+.tools{display:flex;gap:8px}
+</style>
+</head>
+<body>
+<div class="wrap wide">
+  <div class="lb">
+    <div>
+      <div class="head">
+        <div><p class="kicker">Sagarmatha College · B.Sc. CSIT</p><h1>AI or <em>not?</em> Leaderboard</h1></div>
+        <div class="tools"><span class="live" id="live">Live</span><button class="btn ghost" id="fs" style="min-height:36px;padding:6px 14px;font-size:13px">Full screen</button></div>
+      </div>
+      <div class="stats">
+        <div><b id="st-players">0</b><span>on the board</span></div>
+        <div><b id="st-finished">0</b><span>finished</span></div>
+        <div><b id="st-top">–</b><span>top score</span></div>
+        <div><b id="st-avg">–</b><span>average correct / 10</span></div>
+      </div>
+      <p class="small muted" id="st-note"></p>
+      <table class="board"><tbody id="rows"><tr><td class="empty" colspan="4">Waiting for the first player…</td></tr></tbody></table>
+      <p class="small muted">One game per player · ranked by points, then speed · 100 per correct answer + up to 50 for speed.</p>
+    </div>
+    <aside class="join">
+      <p class="kicker">Join now</p>
+      <img src="assets/qr-ai-or-not.svg" alt="QR code to play AI or Not">
+      <p class="url">arjun-basnet.com.np/ai-training/sagarmatha-college/ai-or-not</p>
+    </aside>
+  </div>
+</div>
+<script src="assets/session.js"></script>
+<script>
+(function(){
+  var $ = function(id){ return document.getElementById(id); };
+  var medals = ['🥇','🥈','🥉'];
+  function load(){
+    SAG.api('aion/leaderboard').then(function(d){
+      if (d.error) { $('live').textContent = d.error === 'offline' ? 'Offline, retrying' : 'Not connected'; return; }
+      $('live').textContent = 'Live';
+      var s = d.stats;
+      $('st-players').textContent = s.players; $('st-finished').textContent = s.finished;
+      $('st-top').textContent = s.top || '–'; $('st-avg').textContent = s.avgCorrect == null ? '–' : s.avgCorrect;
+      $('st-note').textContent = s.aiCalledRealPct == null ? '' : 'The class called ' + s.aiCalledRealPct + '% of AI images "real".';
+      if (!d.rows.length) return;
+      $('rows').innerHTML = d.rows.slice(0, 30).map(function(r){
+        return '<tr class="' + (r.rank <= 3 ? 'top' : '') + '"><td class="rank">' + (r.rank <= 3 ? '<span class="medal">' + medals[r.rank-1] + '</span>' : r.rank) + '</td>' +
+          '<td><b>' + SAG.esc(r.name) + '</b>' + (r.roll ? ' <span class="muted small">' + SAG.esc(r.roll) + '</span>' : '') + (r.playing ? '<span class="playing">playing ' + r.answered + '/' + r.total + '</span>' : '') + '</td>' +
+          '<td class="num">' + r.correct + '/' + r.total + ' · ' + r.seconds + 's</td><td class="pts">' + r.points + '</td></tr>';
+      }).join('');
+    });
+  }
+  load(); setInterval(load, 3000);
+  $('fs').onclick = function(){ if (!document.fullscreenElement) document.documentElement.requestFullscreen && document.documentElement.requestFullscreen(); else document.exitFullscreen(); };
+})();
+</script>
+</body>
+</html>

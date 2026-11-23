@@ -31,7 +31,10 @@ export default function robots(): MetadataRoute.Robots {
       { userAgent: "*", allow: "/", disallow: ["/api/"] },
       { userAgent: "Googlebot", allow: "/", disallow: ["/api/"] },
       { userAgent: "Bingbot", allow: "/", disallow: ["/api/"] },
-      ...AI_CRAWLERS.map((userAgent) => ({ userAgent, allow: "/" })),
+      // The unlisted Sagarmatha College session pages carry noindex for search
+      // engines; AI crawlers don't reliably honour X-Robots-Tag, so they are
+      // asked not to fetch them at all.
+      ...AI_CRAWLERS.map((userAgent) => ({ userAgent, allow: "/", disallow: ["/ai-training/sagarmatha-college"] })),
     ],
     sitemap: absoluteUrl("/sitemap.xml"),
     host: SITE.url,

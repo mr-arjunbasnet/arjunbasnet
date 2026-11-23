@@ -1,0 +1,269 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow, noarchive">
+<title>Facilitator Plan · AI, Git and You</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Geist+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#faf8f6;--ink:#221a5c;--primary:#5b4bdb;--muted:#6b6790;--border:#e6e1f2;--surface:#f4f1fa;--surface-2:#ede8f7;--night:#120f2e;--accent:#d946ef;
+--grad:linear-gradient(135deg,#4f7bff 0%,#8b5cf6 52%,#d946ef 100%);--sans:'Montserrat',system-ui,sans-serif;--mono:'Geist Mono',ui-monospace,Menlo,monospace}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 16px/1.6 var(--sans)}
+.wrap{max-width:72rem;margin:0 auto;padding:0 16px 80px}
+header{background:var(--bg);color:var(--ink);padding:44px 0 30px;margin-bottom:24px;border-top:4px solid transparent;border-image:var(--grad) 1;border-bottom:1px solid var(--border)}
+header .wrap{padding-bottom:0}
+.kicker{font:600 13px var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--primary);margin:0 0 8px}
+header .kicker{color:var(--muted)}
+h1{font-size:clamp(30px,5vw,48px);line-height:1.08;font-weight:800;margin:0 0 12px;letter-spacing:-.01em}
+h1 em,h2 em{font-style:normal;color:var(--primary)}
+header p{color:var(--muted);max-width:46rem;margin:0}
+.meta{display:flex;flex-wrap:wrap;gap:10px;margin-top:20px}
+.meta span{font:600 13px var(--mono);background:var(--surface-2);color:var(--ink);padding:6px 12px;border-radius:999px}
+h2{font-size:28px;font-weight:800;margin:48px 0 14px;letter-spacing:-.01em}
+h3{font-size:19px;font-weight:700;margin:22px 0 8px}
+p,li{max-width:48rem}
+.card{background:#fff;border:1px solid var(--border);border-radius:12px;padding:18px 22px;margin:12px 0}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px}
+.pill{display:inline-block;font:600 12px var(--mono);letter-spacing:.06em;text-transform:uppercase;background:var(--surface-2);color:var(--primary);padding:3px 10px;border-radius:999px}
+.pill.ai{background:#fae8ff;color:#a21caf}
+.pill.git{background:#dbeafe;color:#1d4ed8}
+.pill.ex{background:#dcfce7;color:#15803d}
+.tablewrap{overflow-x:auto;border:1px solid var(--border);border-radius:12px;background:#fff}
+table{border-collapse:collapse;width:100%;min-width:760px;font-size:15px}
+th{font:600 12px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);text-align:left;padding:12px 14px;background:var(--surface);border-bottom:1px solid var(--border)}
+td{padding:12px 14px;border-bottom:1px solid var(--border);vertical-align:top}
+td.time{font:600 14px var(--mono);white-space:nowrap;color:var(--primary)}
+tr.part td{background:var(--surface-2);font-weight:800}
+.bar{display:flex;height:34px;border-radius:10px;overflow:hidden;margin:14px 0 6px;font:600 12px var(--mono);color:#fff}
+.bar div{display:flex;align-items:center;justify-content:center;white-space:nowrap;overflow:hidden;padding:0 4px}
+.legend{display:flex;gap:18px;flex-wrap:wrap;font-size:14px;color:var(--muted)}
+.legend i{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:6px;vertical-align:-1px}
+ul.check{list-style:none;padding:0}
+ul.check li{padding:6px 0 6px 30px;position:relative}
+ul.check li::before{content:"";position:absolute;left:0;top:10px;width:16px;height:16px;border:2px solid var(--primary);border-radius:4px}
+code{font:500 14px var(--mono);background:var(--surface-2);padding:1px 6px;border-radius:5px}
+.note{border-left:4px solid var(--primary);background:var(--surface);padding:12px 16px;border-radius:0 10px 10px 0;margin:12px 0}
+.warn{border-left-color:#d97706;background:#fef3c7}
+footer{color:var(--muted);font-size:14px;margin-top:48px}
+@media print{header{background:#fff;color:var(--ink)}header p,.meta span{color:var(--ink);background:#eee}.card,.tablewrap{break-inside:avoid}}
+</style>
+</head>
+<body>
+<header><div class="wrap">
+  <p class="kicker">Facilitator plan · run sheet</p>
+  <h1>AI, Git <em>&amp; You</em></h1>
+  <p>A 90-minute interactive session for first-year B.Sc. CSIT students at Sagarmatha College. About an hour of it is adapted from the <b>AI for Productivity</b> course (Modules 1–5), merged with your draft deck (Git install, context window, temperature, TEACH builder, 7-day challenge) and recast for computer science students.</p>
+  <div class="meta"><span>90 min</span><span>61 slides</span><span>3 hands-on exercises</span><span>AI or Not + live leaderboard</span><span>Phone quiz, saved</span><span>Phones required</span></div>
+</div></header>
+
+<div class="wrap">
+
+<h2>At a glance</h2>
+<div class="bar">
+  <div style="flex:5;background:#5B4BDB">Open</div>
+  <div style="flex:17;background:#2563EB">Git &amp; GitHub 17′</div>
+  <div style="flex:14;background:#7C3AED">AI right now 14′</div>
+  <div style="flex:18;background:#C026D3">Using AI well 18′</div>
+  <div style="flex:16;background:#E11D48">Safe + AI or Not 16′</div>
+  <div style="flex:13;background:#059669">Ship it 13′</div>
+  <div style="flex:7;background:#221A5C">Quiz</div>
+</div>
+<div class="legend"><span><i style="background:#3b82f6"></i>Git &amp; GitHub: 18 min</span><span><i style="background:#c026d3"></i>AI content from your course: about 60 min</span><span><i style="background:#5b4bdb"></i>Combined AI + Git exercise: 10 min</span></div>
+
+<div class="grid" style="margin-top:20px">
+  <div class="card"><span class="pill">Goal 1</span><h3>See AI clearly</h3><p>What it is (next-token prediction), what it can do today (agents, reasoning, multimodal), and where it fails.</p></div>
+  <div class="card"><span class="pill">Goal 2</span><h3>Use it well and safely</h3><p>TEACH prompting, four rescue hacks, the traffic light, and "tutor, not ghostwriter".</p></div>
+  <div class="card"><span class="pill">Goal 3</span><h3>Start a habit today</h3><p>A GitHub account, a first commit (an AI-drafted profile README) and a 30-day plan.</p></div>
+</div>
+
+<h2>Minute-by-minute run sheet</h2>
+<div class="tablewrap"><table>
+<tr><th>Time</th><th>Slides</th><th>What happens</th><th>Interaction</th><th>Source</th></tr>
+<tr class="part"><td class="time">0:00</td><td colspan="4">Opening · 5 min</td></tr>
+<tr><td class="time">0:00–0:01</td><td>1</td><td>Title and a quick welcome. "Phones are required today." Put <b>arjun-basnet.com.np/sagarmatha</b> on the board.</td><td></td><td>—</td></tr>
+<tr><td class="time">0:01–0:03</td><td>2</td><td>Hands-up warm-up: 5 rows.</td><td><span class="pill">Poll</span></td><td>—</td></tr>
+<tr><td class="time">0:03–0:05</td><td>3–5</td><td>Guess how fast ChatGPT reached 100M users, the adoption race, today's map.</td><td><span class="pill">Predict</span></td><td><span class="pill ai">M1 · v1</span></td></tr>
+<tr class="part" style="--c:#2563EB"><td class="time">0:05</td><td colspan="4">Part 1 · Git &amp; GitHub · 17 min</td></tr>
+<tr><td class="time">0:05–0:07</td><td>6–7</td><td>The "lab3_final_really.c" folder: who has lost work?</td><td><span class="pill">Discussion</span></td><td><span class="pill git">Draft + new</span></td></tr>
+<tr><td class="time">0:07–0:12</td><td>8–12</td><td>Git = save points (repository, commit) · <b>Is Git installed?</b> (<code>git --version</code>, install per OS; from your draft) · Git ≠ GitHub · the add → commit → push loop · seven commands.</td><td></td><td><span class="pill git">Draft + new</span></td></tr>
+<tr><td class="time">0:12–0:14</td><td>13–14</td><td>Branches and pull requests · "Your GitHub is your CV".</td><td></td><td><span class="pill git">New</span></td></tr>
+<tr><td class="time">0:14–0:16</td><td>15</td><td><b>Live demo</b> in the browser: repo, <code>hello.c</code>, two commits, history and diff.</td><td><span class="pill">Demo</span></td><td><span class="pill git">New</span></td></tr>
+<tr><td class="time">0:16–0:21</td><td>16</td><td><b>Exercise 1, two tracks:</b> 📱 a GitHub account on the phone (everyone) · 💻 a local first-commit checklist on a laptop (from your draft). 5:00 countdown.</td><td><span class="pill ex">Exercise</span></td><td><span class="pill git">Draft + new</span></td></tr>
+<tr><td class="time">0:21–0:22</td><td>17</td><td>Quick check: add → commit → push (fingers).</td><td><span class="pill">Quiz</span></td><td>—</td></tr>
+<tr class="part"><td class="time">0:22</td><td colspan="4">Part 2 · AI right now · 14 min</td></tr>
+<tr><td class="time">0:22–0:24</td><td>18–20</td><td>Every wave moved one layer · what AI is (AI ⊃ ML ⊃ DL ⊃ GenAI).</td><td></td><td><span class="pill ai">M1 · v1</span></td></tr>
+<tr><td class="time">0:24–0:28</td><td>21–23</td><td><b>Next-token game</b> · tokens · <b>context window, temperature, specialist models</b> (from your draft).</td><td><span class="pill">Game</span></td><td><span class="pill ai">M5 · v2</span> + draft</td></tr>
+<tr><td class="time">0:28–0:30</td><td>24–25</td><td>The landscape · from chatbots to agents.</td><td></td><td>New</td></tr>
+<tr><td class="time">0:30–0:34</td><td>26–27</td><td>Good at / fails · <b>Can, can't, careful</b> flip cards.</td><td><span class="pill">Game</span></td><td><span class="pill ai">M1 · v3</span></td></tr>
+<tr><td class="time">0:34–0:36</td><td>28–29</td><td>Three shifts · careers and Nepali-language opportunities.</td><td></td><td><span class="pill ai">M1 · v2</span></td></tr>
+<tr class="part"><td class="time">0:36</td><td colspan="4">Part 3 · Using AI well · 18 min</td></tr>
+<tr><td class="time">0:36–0:40</td><td>30–32</td><td>Person, not tool · <b>live demo</b>: lazy vs TEACH "explain pointers".</td><td><span class="pill">Demo</span></td><td><span class="pill ai">M2 · v1</span></td></tr>
+<tr><td class="time">0:40–0:43</td><td>33–34</td><td>TEACH (say it aloud) · role, AAA, placeholders, "always a draft".</td><td></td><td><span class="pill ai">M2 · v2–v4</span> + draft</td></tr>
+<tr><td class="time">0:43–0:51</td><td>35–36</td><td><b>Exercise 2: Prompt battle</b> in pairs. Partner B builds the prompt with the <b>TEACH builder</b> on the handout (from your draft). 8:00 countdown.</td><td><span class="pill ex">Exercise</span></td><td><span class="pill ai">M2 · p1</span></td></tr>
+<tr><td class="time">0:51–0:54</td><td>37–39</td><td>Four hacks · three rounds · <b>tutor, not ghostwriter</b> (type a topic into the pink field live).</td><td></td><td><span class="pill ai">M3</span></td></tr>
+<tr class="part"><td class="time">0:54</td><td colspan="4">Part 4 · Safe and honest, with AI or Not · 16 min</td></tr>
+<tr><td class="time">0:54–0:58</td><td>40–43</td><td>Confidently wrong (RTI article, slopsquatting) · traffic light · <b>traffic-light game</b>.</td><td><span class="pill">Game</span></td><td><span class="pill ai">M4 · v1–v3</span></td></tr>
+<tr><td class="time">0:58–1:05</td><td>44</td><td><b>AI or Not?</b> Students scan the QR, sign up (name, email, roll), and get 10 images at 10 seconds each. Open the <b>leaderboard</b> on the projector. 6:00 countdown.</td><td><span class="pill ex">Game</span></td><td>New</td></tr>
+<tr><td class="time">1:05–1:07</td><td>45</td><td>Debrief: what gave them away, and the live "% of AI images called real" stat. Ask the top 3.</td><td><span class="pill">Discussion</span></td><td>New</td></tr>
+<tr><td class="time">1:07–1:10</td><td>46–47</td><td>Cloned voices and prompt injection · it prepares, you decide · skill loss.</td><td></td><td><span class="pill ai">M4 · v4–v5</span></td></tr>
+<tr class="part"><td class="time">1:10</td><td colspan="4">Part 5 · Get started, and ship something · 13 min</td></tr>
+<tr><td class="time">1:10–1:12</td><td>48–50</td><td>Which tool? · <b>your 7-day challenge</b> (from your draft) plus free courses.</td><td></td><td><span class="pill ai">M5</span> + draft</td></tr>
+<tr><td class="time">1:12–1:23</td><td>51–52</td><td><b>Exercise 3: Ship it.</b> Fill in the README prompt (pink fields) → AI draft → edit → commit to the <code>username/username</code> repo. 10:00 countdown, then 2–3 volunteers on the projector.</td><td><span class="pill ex">Exercise</span></td><td><span class="pill ai">M2</span> + Git</td></tr>
+<tr class="part"><td class="time">1:23</td><td colspan="4">Wrap-up · 7 min</td></tr>
+<tr><td class="time">1:23–1:25</td><td>53</td><td>Students answer the <b>6-question quiz on their phones</b> (QR). The live "answered" counter climbs. 2:00 countdown.</td><td><span class="pill">Quiz</span></td><td><span class="pill ai">M1, M4 quizzes</span></td></tr>
+<tr><td class="time">1:25–1:28</td><td>54–59</td><td>Step through the six question slides: <b>the class's answers show as live bars</b>, then click the right answer.</td><td><span class="pill">Quiz</span></td><td></td></tr>
+<tr><td class="time">1:28–1:30</td><td>60–61</td><td>Three things to remember · Q&amp;A with the session-page QR on screen.</td><td></td><td>—</td></tr>
+</table></div>
+
+<h2>Before the session: switch on saving (one time, about 10 minutes)</h2>
+<div class="card">
+  <p>AI or Not scores, the leaderboard and quiz answers are saved in <b>Supabase</b>. Until these steps are done, the pages show "Saving isn't switched on yet."</p>
+  <ol>
+    <li>Create a free project at <b>supabase.com</b> (any name, region Mumbai or Singapore for speed from Nepal).</li>
+    <li>Supabase → <b>SQL Editor</b> → paste <code>docs/sagarmatha-session/schema.sql</code> from the website repo → <b>Run</b>.</li>
+    <li>Supabase → <b>Project Settings → API Keys</b>: copy the <b>Project URL</b> and a <b>secret key</b> (<code>sb_secret_…</code>; never the publishable/anon key).</li>
+    <li>Vercel → the website project → <b>Settings → Environment Variables</b> (Production): add <code>SUPABASE_URL</code>, <code>SUPABASE_SECRET_KEY</code>, and <code>SAGARMATHA_ADMIN_KEY</code> (any long password you choose).</li>
+    <li>Vercel → <b>Deployments → Redeploy</b> the latest deployment so it picks up the variables.</li>
+    <li>Check: open <code>/api/sagarmatha/config</code>. It should say <code>"storage":"supabase"</code>. Play one test game, then delete that row in Supabase → Table Editor.</li>
+  </ol>
+  <p><b>Your data afterwards:</b> <code>/ai-training/sagarmatha-college/results</code> (enter your admin key: tables and CSV download), or Supabase → Table Editor → <code>aion_games</code>, <code>quiz_responses</code> and the <code>aion_leaderboard</code> view.</p>
+</div>
+
+<h2>Session links</h2>
+<div class="tablewrap"><table>
+<tr><th>Page</th><th>Address (all under arjun-basnet.com.np)</th><th>Who</th></tr>
+<tr><td>Session home</td><td><code>/ai-training/sagarmatha-college</code> · short: <code>/sagarmatha</code></td><td>Students</td></tr>
+<tr><td>Slides (present from here)</td><td><code>/ai-training/sagarmatha-college/slides</code></td><td>You, on the projector</td></tr>
+<tr><td>AI or Not</td><td><code>/ai-training/sagarmatha-college/ai-or-not</code></td><td>Students' phones</td></tr>
+<tr><td>Leaderboard</td><td><code>/ai-training/sagarmatha-college/leaderboard</code></td><td>Projector</td></tr>
+<tr><td>Quiz</td><td><code>/ai-training/sagarmatha-college/quiz</code></td><td>Students' phones</td></tr>
+<tr><td>Handout</td><td><code>/ai-training/sagarmatha-college/handout</code></td><td>Students</td></tr>
+<tr><td>Results</td><td><code>/ai-training/sagarmatha-college/results</code></td><td>You only (admin key)</td></tr>
+<tr><td>This plan</td><td><code>/ai-training/sagarmatha-college/facilitator</code></td><td>You only (unlinked)</td></tr>
+</table></div>
+<p class="note">Every page sends <code>noindex, nofollow</code>, none is in the sitemap or navigation, and AI crawlers are disallowed in robots.txt. Anyone with a link can still open the pages, which is intended for a class.</p>
+
+<h2>Running the deck</h2>
+<div class="grid">
+  <div class="card"><h3>Keys</h3><p><code>→</code>/<code>Space</code> next (reveals step by step) · <code>←</code> back · <code>N</code> notes drawer · <code>P</code> presenter window · <code>T</code> clock · <code>G</code> jump to slide · <code>F</code> fullscreen · <code>?</code> help.</p></div>
+  <div class="card"><h3>Presenter view</h3><p>Press <code>P</code>: a second window opens with your notes, the next slide, the session clock and the plan. Put it on your laptop and the deck on the projector. Always present from <code>/ai-training/sagarmatha-college/slides</code> on the live site: the AI or Not player count and the live quiz bars only work there.</p></div>
+  <div class="card"><h3>Clicker-friendly</h3><p>Page Down/Up work, so most presentation clickers do too. Interactive widgets (sliders, cards, countdowns) are mouse clicks.</p></div>
+  <div class="card"><h3>Pacing alarm</h3><p>The clock starts when you leave slide 1. The chip turns amber when you're 3+ minutes behind the plan for the current part, and red at 6+.</p></div>
+</div>
+
+<h2>The three exercises in detail</h2>
+
+<div class="card">
+  <span class="pill ex">Exercise 1 · 5 min · individual</span>
+  <h3>Get on GitHub (phone track) · first local commit (laptop track)</h3>
+  <p><b>Laptop track</b> (from your draft): only for students who already have Git. Folder → <code>index.html</code> → <code>git init</code> → <code>git add</code> → <code>git commit</code> → <code>git log</code>. The same checklist is on the handout with tick boxes.</p>
+  <p><b>Phone track steps:</b> github.com → Sign up with an email they'll keep after college → a professional username → verify the email. Those who already have an account help a neighbour, then star a repo.</p>
+  <p><b>Watch for:</b> email verification delays on college Wi-Fi (switch to mobile data), and the "are you human" puzzle on slow phones. Anyone stuck finishes at home. Exercise 3 has a fallback.</p>
+  <p><b>Tip:</b> mention the Student Developer Pack (education.github.com/pack), but <i>don't</i> do verification in class. It takes days and needs an ID photo.</p>
+</div>
+
+<div class="card">
+  <span class="pill ex">Exercise 2 · 8 min · pairs</span>
+  <h3>Prompt battle: lazy vs TEACH</h3>
+  <p><b>Steps:</b> each pair picks a task card. Partner A sends a lazy one-liner, Partner B builds a full TEACH prompt with the <b>TEACH builder</b> on the handout (five boxes become one copyable prompt) and sends it in the same tool, and they compare.</p>
+  <p><b>Task cards:</b> 🅰 Explain a stuck topic (number systems, K-maps, loops, limits) · 🅱 A 2-week study plan for first-semester exams · 🅲 Debug the C program on slide 36 · 🅳 An extension email to a teacher.</p>
+  <p><b>Card C answers:</b> (1) <code>scanf("%d", n)</code> should be <code>scanf("%d", &amp;n)</code>; (2) <code>i &lt; n</code> should be <code>i &lt;= n</code> (n = 5 gives 10 instead of 15). The prompt asks for <i>hints, not fixes</i>, which previews "tutor, not ghostwriter".</p>
+  <p><b>Debrief question:</b> "Which TEACH letter made the biggest difference?" Expect Audience and How. For card D, point out if the AI invented the teacher's name or a reason: that's the placeholder lesson.</p>
+</div>
+
+<div class="card">
+  <span class="pill ex">Exercise 3 · 10 min · individual</span>
+  <h3>Ship it: an AI-drafted profile README, committed live</h3>
+  <p><b>Steps:</b> GitHub → + → New repository named <b>exactly</b> their username, Public, "Add a README file" ticked → fill in the pink fields of the TEACH prompt (slide 52, or the handout) and press Copy → <b>edit</b> the draft and delete anything untrue → paste into README.md → Commit changes with a real message → open github.com/username.</p>
+  <p><b>Common problems:</b> a repo name that doesn't match the username exactly (the profile won't show it), or AI inflating skills ("passionate full-stack developer"). Tell them to delete it. Honesty is the point.</p>
+  <p><b>Privacy:</b> first name and college are their choice. No phone numbers on a public profile.</p>
+  <p><b>Fallback:</b> no account yet → draft with AI, save it in their notes, commit tonight.</p>
+  <p><b>Finish:</b> 2–3 volunteers read out their URL and you open it on the projector. Applause. This is the photo moment.</p>
+</div>
+
+<div class="card">
+  <span class="pill ex">Game · 7 min · individual</span>
+  <h3>AI or Not?</h3>
+  <p><b>Flow:</b> QR → name, email, optional roll or section → images preload (so slow phones aren't penalised) → each image shows for 10 seconds with <b>📷 Real</b> / <b>✨ AI</b> → instant feedback with the tell → results with a per-image reveal. 100 points per correct answer plus up to 50 for speed. One game per email.</p>
+  <p><b>Fair play:</b> answers and timing live on the server. The page never contains which images are AI, file names are random and photo metadata is stripped. Students who open DevTools find nothing.</p>
+  <p><b>Projector:</b> open <code>/leaderboard</code> in a new tab (button on slide 44). It refreshes every 3 seconds and shows the join QR. Emails never appear.</p>
+  <p><b>Image pool:</b> 8 real Nepal photos (Pexels, credited) and AI images generated for the session. A game draws up to 5 of each. To add or swap images, see <code>src/lib/sagarmatha/images.ts</code>.</p>
+</div>
+
+<h2>Where the AI content comes from</h2>
+<p>All from <code>~/Documents/AI course/</code> (<b>AI for Productivity</b>), with persona examples (Sita, Bikash, Pemba) swapped for CSIT-student examples.</p>
+<div class="tablewrap"><table>
+<tr><th>Course module</th><th>Used in this session</th><th>Approx. time</th></tr>
+<tr><td>M1 · What AI changes</td><td>Adoption race, the layers timeline, good at / fails, three shifts, "the real risk", quiz Q1</td><td>14 min</td></tr>
+<tr><td>M2 · Prompting (TEACH)</td><td>Person not tool, TEACH, role, AAA, placeholders, "always a draft", the practice exercise (as Prompt battle)</td><td>17 min</td></tr>
+<tr><td>M3 · Great answers</td><td>Four hacks, three rounds, voice prompts, prompt library</td><td>5 min</td></tr>
+<tr><td>M4 · Safe and responsible</td><td>Confidently wrong, traffic light, redaction, training toggles, cloned voices, prompt injection, skill loss, disclosure, quiz Q4</td><td>14 min</td></tr>
+<tr><td>M5 · Right tool</td><td>Tokens and limits, which tool (where does the work live), free-tier rules</td><td>6 min</td></tr>
+<tr><td colspan="2"><b>Total from the course</b> (plus the combined Ship-it exercise built on M2)</td><td><b>≈ 56–60 min</b></td></tr>
+</table></div>
+<p class="note">Not used: M0 (setup), M6 (NotebookLM, Preeti, which is only mentioned in the tool table), M7 (Projects/Gems), M8 (capstone). These make a good <b>follow-up session</b> if the college invites you back.</p>
+
+<h2>Preparation checklist</h2>
+<div class="grid">
+  <div class="card"><h3>The week before</h3><ul class="check">
+    <li>Ask the coordinator for the room's projector input (HDMI/USB-C) and Wi-Fi details</li>
+    <li>Ask whether students bring phones or laptops, and roughly how many attend</li>
+    <li>Check the facts list below, especially model names and the Student Pack offer</li>
+    <li>Send the coordinator <b>arjun-basnet.com.np/sagarmatha</b> to share in advance (the handout has the Git install steps)</li>
+    <li><b>Switch on saving</b> (the Supabase steps above) and play one test game</li>
+  </ul></div>
+  <div class="card"><h3>The day before</h3><ul class="check">
+    <li>Run the whole deck once, timing each part against the run sheet</li>
+    <li>Test both live demos: the GitHub loop, and lazy vs TEACH in one AI tool</li>
+    <li>Delete any old <code>csit-lab-demo</code> repo so the demo starts clean</li>
+    <li>Download a copy of the slides to a USB stick as a backup</li>
+  </ul></div>
+  <div class="card"><h3>30 minutes before</h3><ul class="check">
+    <li>Open <code>/ai-training/sagarmatha-college/slides</code> in Chrome, press <code>F</code> for fullscreen and <code>P</code> for the presenter view. Open <code>/leaderboard</code> in a second tab</li>
+    <li>Log in to GitHub and one AI tool in separate tabs</li>
+    <li>Test the countdown beep at room volume</li>
+    <li>Write the Wi-Fi details and <b>arjun-basnet.com.np/sagarmatha</b> on the board</li>
+  </ul></div>
+</div>
+
+<h2>If things go wrong</h2>
+<div class="grid">
+  <div class="card"><h3>📶 No Wi-Fi</h3><p>Students use mobile data. If nobody can connect, do Exercise 2 on paper (write both prompts, swap with a neighbour, critique using TEACH) and assign Exercises 1 and 3 as homework.</p></div>
+  <div class="card"><h3>⏱️ Running late</h3><p>Cut in this order: slide 14 (CV), slide 24 (landscape: summarise in one line), slide 37 (four hacks: point to the handout), slide 45 (AI or Not debrief: one sentence), slide 50 (7-day challenge: point to the handout). <b>Protect AI or Not and Exercise 3.</b></p></div>
+  <div class="card"><h3>⏩ Running early</h3><p>Extend the Exercise 2 debrief: 3 pairs read their best prompts aloud and the class names the weakest TEACH letter. Or take more volunteers in Exercise 3.</p></div>
+  <div class="card"><h3>🙊 Quiet room</h3><p>Use fingers and hands for every vote, never cold-calling. Pairs share before individuals. Praise the first volunteer warmly. First-years in Nepal are often shy in the first 20 minutes, so it gets easier.</p></div>
+</div>
+
+<h2>Facts to verify before the session</h2>
+<p>Inherited from your course's "facts to verify" list, plus new claims in this deck.</p>
+<ul class="check">
+  <li>Current flagship model names for ChatGPT, Claude and Gemini, plus any big launch that week (the landscape slide deliberately avoids version numbers)</li>
+  <li>GitHub Student Developer Pack: still includes free GitHub Copilot for verified students?</li>
+  <li>GitHub's developer count (the slide says "more than 100 million", which is safe)</li>
+  <li>Training-toggle menu paths in ChatGPT, Gemini and Claude (speaker notes on slide 42)</li>
+  <li>The adoption-race figures are widely cited approximations (ITU and company reports; ChatGPT's 2 months comes from a UBS estimate)</li>
+  <li>RTI = Constitution of Nepal, Article 27 (flagged in the course)</li>
+  <li>Arup Hong Kong deepfake (2024, about US$25M), mentioned only in the notes as optional</li>
+  <li>MIT Media Lab "Your Brain on ChatGPT" (2025): a small preprint, so present it as early evidence only</li>
+  <li>Free course links on the handout: Elements of AI, Kaggle Learn, CS50 AI, GitHub Skills, DeepLearning.AI short courses</li>
+  <li>Check each AI or Not image yourself: the pool should be hard but fair</li>
+  <li>The final slide promises "I'll follow the first 20 who ship". Keep it only if you will</li>
+</ul>
+<p class="note warn"><b>Attribution:</b> your course notes say the source material is Growcept / BRAIN Foundation's work, and that attribution is still to be agreed. This session is a live talk adapted from your course, not a publication, but if you share the slides afterwards, add the agreed credit line.</p>
+
+<h2>Engagement design: why it's built this way</h2>
+<div class="grid">
+  <div class="card"><h3>Something to do every 5–7 minutes</h3><p>Poll → predict → demo → exercise → quiz → game → exercise → game → exercise → quiz. Nobody sits through more than about 7 minutes of talking.</p></div>
+  <div class="card"><h3>Examples from their week</h3><p>C labs, scanf bugs, TU exams, K-maps, "dal bhat power 24 hour", Messenger zip files. The course's office personas are swapped for student life.</p></div>
+  <div class="card"><h3>Everything connects</h3><p>Git commits → AI agents that open pull requests → API keys leaking on GitHub → an AI-drafted README committed with Git. One story, not two talks.</p></div>
+  <div class="card"><h3>They leave with something real</h3><p>A live GitHub profile they can show friends tonight is far more memorable than any slide.</p></div>
+</div>
+
+<footer>Built from the AI for Productivity course and your draft deck, November 2026. Unlisted page: noindex, not in the sitemap.</footer>
+</div>
+</body>
+</html>

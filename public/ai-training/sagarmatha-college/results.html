@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow, noarchive">
+<title>Results · Sagarmatha College session</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anek+Latin:wght@600;700&family=Montserrat:wght@400;500;600;700&family=Geist+Mono:wght@500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/session.css">
+<style>
+.tabs{display:flex;gap:8px;margin:16px 0}
+.tabs button{border:1.5px solid var(--border);background:var(--card);color:var(--ink);border-radius:999px;padding:8px 16px;font:600 14px var(--sans);cursor:pointer}
+.tabs button.on{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.scroll{overflow-x:auto;background:var(--card);border:1px solid var(--border);border-radius:12px}
+table{min-width:760px;font-size:14px}
+td.n{text-align:right;font-family:var(--mono)}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+</style>
+</head>
+<body>
+<div class="wrap wide">
+  <p class="kicker" style="margin-top:24px">Trainer only</p>
+  <h1>Session results</h1>
+  <div class="card" id="login">
+    <form id="f" class="row">
+      <input class="f" id="key" type="password" placeholder="Admin key (SAGARMATHA_ADMIN_KEY)" style="max-width:360px" autocomplete="current-password">
+      <button class="btn">Show results</button>
+    </form>
+    <p class="err" id="err"></p>
+    <p class="small muted">The key is checked by the server and kept only in this browser tab. All data also lives in Supabase → Table Editor → <code>aion_games</code> and <code>quiz_responses</code>.</p>
+  </div>
+  <div id="data" style="display:none">
+    <div class="row"><div class="tabs"><button data-t="aion" class="on">AI or Not</button><button data-t="quiz">Quiz</button></div>
+      <button class="btn ghost" id="csv">Download CSV</button><button class="btn ghost" id="refresh">Refresh</button><span class="muted small" id="count"></span></div>
+    <div class="scroll"><table><thead id="th"></thead><tbody id="tb"></tbody></table></div>
+  </div>
+</div>
+<script src="assets/session.js"></script>
+<script>
+(function(){
+  var $ = function(id){ return document.getElementById(id); };
+  var tab = 'aion', key = '';
+  try { key = sessionStorage.getItem('sag-admin') || ''; } catch(e){}
+  function get(type, format){
+    return fetch(SAG.url('admin/export?type=' + type + '&format=' + format), { headers:{ 'x-admin-key': key } });
+  }
+  function load(){
+    get(tab, 'json').then(function(r){
+      if (r.status === 401) { $('err').textContent = 'Wrong key.'; $('data').style.display='none'; $('login').style.display=''; return null; }
+      if (!r.ok) { $('err').textContent = 'Server said ' + r.status + '. Is Supabase configured?'; return null; }
+      return r.json();
+    }).then(function(d){
+      if (!d) return;
+      try { sessionStorage.setItem('sag-admin', key); } catch(e){}
+      $('login').style.display='none'; $('data').style.display='';
+      $('count').textContent = d.count + ' rows';
+      var rows = d.rows;
+      if (tab === 'aion') rows = rows.slice().sort(function(a,b){ return b.points - a.points || a.seconds - b.seconds; });
+      var cols = rows.length ? Object.keys(rows[0]).filter(function(c){ return c !== 'answers'; }) : [];
+      $('th').innerHTML = '<tr>' + cols.map(function(c){ return '<th>' + SAG.esc(c) + '</th>'; }).join('') + '</tr>';
+      $('tb').innerHTML = rows.map(function(r){
+        return '<tr>' + cols.map(function(c){ var v = r[c]; var num = typeof v === 'number';
+          if (c.slice(-3) === '_at' && v) v = new Date(v).toLocaleString();
+          return '<td class="' + (num ? 'n' : '') + '">' + SAG.esc(v) + '</td>'; }).join('') + '</tr>';
+      }).join('') || '<tr><td>No rows yet.</td></tr>';
+    });
+  }
+  $('f').addEventListener('submit', function(e){ e.preventDefault(); key = $('key').value.trim(); $('err').textContent=''; load(); });
+  document.querySelectorAll('.tabs button').forEach(function(b){ b.onclick = function(){ document.querySelectorAll('.tabs button').forEach(function(x){ x.classList.toggle('on', x===b); }); tab = b.dataset.t; load(); }; });
+  $('refresh').onclick = load;
+  $('csv').onclick = function(){
+    get(tab, 'csv').then(function(r){ return r.blob(); }).then(function(b){
+      var a = document.createElement('a'); a.href = URL.createObjectURL(b); a.download = 'sagarmatha-' + tab + '.csv'; a.click(); setTimeout(function(){ URL.revokeObjectURL(a.href); }, 2000);
+    });
+  };
+  if (key) load();
+})();
+</script>
+</body>
+</html>
