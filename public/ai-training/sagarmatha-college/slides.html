@@ -234,17 +234,17 @@ table.t td{padding:14px 16px;border-bottom:1px solid var(--border);vertical-alig
 table.t td:first-child{font-weight:700}
 
 /* HUD & UI */
-#hud{position:fixed;left:16px;bottom:14px;display:flex;gap:10px;align-items:center;font:500 13px var(--mono);color:#fff;opacity:0;transition:opacity .2s;z-index:20}
-body.show-hud #hud, #hud:hover{opacity:.95}
+#hud{position:fixed;left:16px;top:12px;display:none;gap:10px;align-items:center;font:500 13px var(--mono);color:#fff;z-index:20}
+body.show-hud #hud{display:flex}
 #hud .chip{background:rgba(34,26,92,.88);padding:6px 10px;border-radius:999px}
 #hud .chip.late{background:#92400e}
 #hud .chip.very-late{background:#7f1d1d}
-#nav{position:fixed;right:14px;bottom:12px;display:flex;gap:6px;align-items:center;z-index:20;opacity:.9;transition:opacity .3s}
+#nav{position:fixed;right:12px;top:12px;display:flex;align-items:center;gap:2px;padding:4px;border-radius:999px;background:rgba(34,26,92,.82);backdrop-filter:blur(6px);z-index:20;transition:opacity .3s}
 body.idle #nav{opacity:0;pointer-events:none}
-#nav:hover{opacity:1}
-#nav button,#nav a{border:0;background:rgba(34,26,92,.88);color:#fff;height:38px;min-width:38px;padding:0 14px;border-radius:999px;font:600 13px var(--sans);display:inline-flex;align-items:center;justify-content:center;text-decoration:none;cursor:pointer}
-#nav .sep{width:8px}
-#nav #b-prev,#nav #b-next{font-size:18px;padding:0}
+#nav button,#nav a{border:0;background:transparent;color:#fff;height:30px;min-width:30px;padding:0 12px;border-radius:999px;font:600 12.5px var(--sans);display:inline-flex;align-items:center;justify-content:center;text-decoration:none;cursor:pointer}
+#nav button:hover,#nav a:hover{background:rgba(255,255,255,.16)}
+#nav .sep{width:1px;height:16px;background:rgba(255,255,255,.25);margin:0 4px}
+#nav #b-prev,#nav #b-next{font-size:17px;padding:0}
 #progress{position:fixed;left:0;top:0;height:3px;background:var(--ink);opacity:.5;z-index:20;transition:width .3s}
 #notes{position:fixed;left:0;right:0;bottom:0;max-height:42vh;overflow:auto;background:#fff;color:var(--ink);padding:18px 28px 26px;font:400 17px/1.55 var(--sans);border-top:3px solid var(--ink);z-index:30;display:none;box-shadow:0 -10px 30px rgba(0,0,0,.12)}
 #notes.open{display:block}
@@ -356,7 +356,7 @@ body.presenter #pv{display:grid;grid-template-columns:1fr 360px;gap:26px;min-hei
   <p class="part">Part 1</p>
   <h1>Git &amp; GitHub:<br><em>the essentials</em></h1>
   <div class="partnum">1</div>
-  <aside class="notes"><p>Transition: "Before we talk about AI, one tool every developer on Earth uses, including the AI coding tools themselves."</p></aside>
+  <aside class="notes"><p>Transition: "AI is moving faster than anything before it. Before we talk about it, one tool every developer uses, including the AI coding tools themselves: Git. It's how you save your work and show it to the world."</p></aside>
 </section>
 
 <section class="slide" data-title="The folder problem">
@@ -396,8 +396,7 @@ body.presenter #pv{display:grid;grid-template-columns:1fr 360px;gap:26px;min-hei
         <li>Like saving in a game: you can always go back to an earlier save.</li>
         <li>A folder Git tracks is a <b>repository</b>. Each save point is a <b>commit</b>: your files, a short message, your name and the time.</li>
         <li>Runs on <b>your laptop</b>. Works offline. Free and open source.</li>
-        <li>Created in 2005 by <b>Linus Torvalds</b>, who also created Linux, to manage the Linux kernel.</li>
-      </ul>
+              </ul>
     </div>
     <div class="code" style="font-size:22px"><span class="c">$ git log --oneline</span>
 <span class="k">a3f9c21</span> Fix scanf bug in sum program
@@ -415,27 +414,6 @@ body.presenter #pv{display:grid;grid-template-columns:1fr 360px;gap:26px;min-hei
   </aside>
 </section>
 
-<section class="slide" data-title="Set up Git">
-  <p class="kicker">Do this at home</p>
-  <h2>Set up Git on <em>your laptop</em></h2>
-  <div class="grid2" style="grid-template-columns:1fr 340px;gap:70px;align-items:center">
-    <div>
-      <ol class="steps">
-        <li>Install Git: Windows, macOS or Linux</li>
-        <li>Check it worked: <code>git --version</code></li>
-        <li>Tell Git your name and email</li>
-        <li>Connect it to your GitHub account</li>
-        <li>Push your first project</li>
-      </ol>
-      <p class="small muted" style="margin-top:24px">Every command is on the <b>Set up Git</b> page, ready to copy. Today's exercises only need your phone.</p>
-    </div>
-    <div class="qr"><img src="assets/qr-hub.svg" alt="QR code for the session page"><div class="u">Session page → Set up Git</div></div>
-  </div>
-  <aside class="notes">
-    <p>Don't install in class: it eats 10 minutes. Ask: "Who has Git on their laptop already?" Most won't. Point them to <b>Set up Git</b> on the session page. It has Windows, macOS and Linux tabs, and commands they copy with one tap.</p>
-    <p>"Not recognized" on Windows almost always means the terminal was open before the install. Close it and open a new one.</p>
-  </aside>
-</section>
 <section class="slide" data-title="Git vs GitHub">
   <p class="kicker">The most common confusion</p>
   <h2>Git ≠ GitHub</h2>
@@ -507,7 +485,7 @@ body.presenter #pv{display:grid;grid-template-columns:1fr 360px;gap:26px;min-hei
   <p class="kicker">Enough for your whole first year</p>
   <h2>Seven commands</h2>
   <div class="grid2" style="grid-template-columns:1.2fr 1fr;align-items:start">
-    <div class="code" style="font-size:21px"><span class="k">git init</span>                <span class="c"># start tracking this folder</span>
+    <div class="code" style="font-size:24px"><span class="k">git init</span>                <span class="c"># start tracking this folder</span>
 <span class="k">git clone</span> <span class="s">&lt;url&gt;</span>         <span class="c"># copy a repo from GitHub</span>
 <span class="k">git status</span>              <span class="c"># what changed?</span>
 <span class="k">git add</span> <span class="s">lab3.c</span>          <span class="c"># put it in the box</span>
@@ -531,6 +509,27 @@ body.presenter #pv{display:grid;grid-template-columns:1fr 360px;gap:26px;min-hei
 </section>
 
 
+
+<section class="slide" data-title="Live demo">
+  <p class="kicker">Live demo · 3 minutes</p>
+  <h2>Watch one full loop, in the browser</h2>
+  <ol class="steps">
+    <li>Create a new repository on github.com: <code>my-first-website</code></li>
+    <li>Add a file: <code>index.html</code>, then <b>Commit changes</b> with a real message</li>
+    <li>Edit one line, then commit again</li>
+    <li>Open <b>History</b>: see both save points</li>
+    <li>Click a commit to see what changed: <span style="color:var(--red);font-weight:700">red = removed</span>, <span style="color:var(--green);font-weight:700">green = added</span></li>
+  </ol>
+  <aside class="notes">
+    <p>Do this live in the browser so it matches what they'll do on their phones. No terminal needed today.</p>
+    <p>Paste this into index.html:</p>
+    <pre>&lt;h1&gt;Namaste, Sagarmatha!&lt;/h1&gt;
+&lt;p&gt;My first page on GitHub.&lt;/p&gt;</pre>
+    <p>Second commit: change the heading to "Namaste, BCA and CSIT 2026!" and commit with "Update greeting". Show the diff.</p>
+    <p><b>Backup if the Wi-Fi fails:</b> describe it using the 'Seven commands' slide and move on.</p>
+  </aside>
+</section>
+
 <section class="slide" data-title="Why GitHub matters for you">
   <p class="kicker">Why this matters in first year</p>
   <h2>Your GitHub is your <em>CV</em></h2>
@@ -543,33 +542,9 @@ body.presenter #pv{display:grid;grid-template-columns:1fr 360px;gap:26px;min-hei
   <aside class="notes">
     <p><b>Key line:</b> "Start pushing every lab program to GitHub from this week. By final year you'll have four years of visible work. Most of your competitors won't."</p>
     <p>Student Pack: education.github.com/pack. Verification needs a college email or a student ID photo. <b>Check the current offer the week before</b>, since it changes.</p>
-    <p>The last card is the bridge into Part 2.</p>
+    <p>Then straight into Exercise 1: "Let's get you on GitHub right now."</p>
   </aside>
 </section>
-
-<section class="slide" data-title="Live demo">
-  <p class="kicker">Live demo · 3 minutes</p>
-  <h2>Watch one full loop, in the browser</h2>
-  <ol class="steps">
-    <li>Create a new repository on github.com: <code>csit-lab-demo</code></li>
-    <li>Add a file: <code>hello.c</code>, then <b>Commit changes</b> with a real message</li>
-    <li>Edit one line, then commit again</li>
-    <li>Open <b>History</b>: see both save points</li>
-    <li>Click a commit to see what changed: <span style="color:var(--red);font-weight:700">red = removed</span>, <span style="color:var(--green);font-weight:700">green = added</span></li>
-  </ol>
-  <aside class="notes">
-    <p>Do this live in the browser so it matches what they'll do on their phones. No terminal needed today.</p>
-    <p>Paste this into hello.c:</p>
-    <pre>#include &lt;stdio.h&gt;
-int main() {
-    printf("Namaste, Sagarmatha!\n");
-    return 0;
-}</pre>
-    <p>Second commit: change the message to "Namaste, Sagarmatha 2026!" and commit with "Update greeting". Show the diff.</p>
-    <p><b>Backup if the Wi-Fi fails:</b> describe it using the 'Seven commands' slide and move on.</p>
-  </aside>
-</section>
-
 <section class="slide" data-title="Exercise 1: two tracks">
   <div class="ex-head"><span class="ex-badge">Exercise 1</span><span class="pill">Pick your track</span></div>
   <h2>Get on GitHub. <em>Right now.</em></h2>
@@ -603,7 +578,28 @@ int main() {
 
 
 <!-- ============ PART 2: AI RIGHT NOW ============ -->
-<section class="slide divider" data-section="AI right now" data-at="22" data-color="#7C3AED" data-title="Part 2 · AI right now">
+<section class="slide" data-title="Set up Git">
+  <p class="kicker">Do this at home</p>
+  <h2>Set up Git on <em>your laptop</em></h2>
+  <div class="grid2" style="grid-template-columns:1fr 340px;gap:70px;align-items:center">
+    <div>
+      <ol class="steps">
+        <li>Install Git: Windows, macOS or Linux</li>
+        <li>Check it worked: <code>git --version</code></li>
+        <li>Tell Git your name and email</li>
+        <li>Connect it to your GitHub account</li>
+        <li>Push your first project</li>
+      </ol>
+      <p class="small muted" style="margin-top:24px">Every command is on the <b>Set up Git</b> page, ready to copy. Today's exercises only need your phone.</p>
+    </div>
+    <div class="qr"><img src="assets/qr-hub.svg" alt="QR code for the session page"><div class="u">Session page → Set up Git</div></div>
+  </div>
+  <aside class="notes">
+    <p>Don't install in class: it eats 10 minutes. Ask: "Who has Git on their laptop already?" Most won't. Point them to <b>Set up Git</b> on the session page. It has Windows, macOS and Linux tabs, and commands they copy with one tap.</p>
+    <p>"Not recognized" on Windows almost always means the terminal was open before the install. Close it and open a new one.</p>
+  </aside>
+</section>
+<section class="slide divider" data-section="AI right now" data-at="25" data-color="#7C3AED" data-title="Part 2 · AI right now">
   <p class="part">Part 2</p>
   <h1>AI right now:<br><em>what it is, what it can do</em></h1>
   <div class="partnum">2</div>
@@ -639,22 +635,6 @@ int main() {
   </aside>
 </section>
 
-<section class="slide" data-title="Who's who">
-  <p class="kicker">The landscape · names change, the kinds of tools don't</p>
-  <h2 style="margin-bottom:24px">Who's who in AI</h2>
-  <div class="grid3" style="gap:20px">
-    <div class="card"><p class="pill">Chat</p><h3 style="margin-top:12px">ChatGPT · Gemini · Claude · Copilot</h3><p>Explain, draft, brainstorm, debug.</p></div>
-    <div class="card"><p class="pill">Answers with links</p><h3 style="margin-top:12px">Perplexity · search mode in any chat app</h3><p>When you need the source, not just the answer.</p></div>
-    <div class="card"><p class="pill">Your own notes</p><h3 style="margin-top:12px">NotebookLM</h3><p>Upload your syllabus and notes. Ask questions about them.</p></div>
-    <div class="card"><p class="pill">Coding</p><h3 style="margin-top:12px">GitHub Copilot · Cursor · Claude Code</h3><p>Help inside your code editor. Copilot is free for students.</p></div>
-    <div class="card"><p class="pill">Images, video, voice</p><h3 style="margin-top:12px">Gemini · ChatGPT · Canva</h3><p>Posters and designs. Also where most fakes come from.</p></div>
-    <div class="card"><p class="pill">Run it yourself</p><h3 style="margin-top:12px">Llama · Qwen · DeepSeek · Gemma</h3><p>Free models you can download and run on your own computer.</p></div>
-  </div>
-  <aside class="notes">
-    <p>Don't read every card. "Most of you only use the first one. Try one more from this slide this week." NotebookLM is the one students thank you for: upload the syllabus and notes before exams.</p>
-    <p><b>Check before the session:</b> any big launch that week, so you can name it.</p>
-  </aside>
-</section>
 <section class="slide" data-title="Next-token game">
   <p class="kicker">How ChatGPT works · the 60-second version</p>
   <h2 style="font-size:46px">Its one job: <em>guess the next word</em>. Your turn.</h2>
@@ -674,28 +654,26 @@ int main() {
   </aside>
 </section>
 
-<section class="slide" data-title="Tokens">
-  <p class="kicker">Why free plans run out</p>
-  <h2>AI reads text in <em>small pieces</em> called tokens</h2>
-  <div class="card" style="font-size:30px">
-    <div><span class="tok">Sag</span><span class="tok">arm</span><span class="tok">atha</span><span class="tok"> College</span><span class="tok"> is</span><span class="tok"> in</span><span class="tok"> Kath</span><span class="tok">mandu</span></div>
-    <div style="margin-top:14px"><span class="tok dev">स</span><span class="tok dev">ग</span><span class="tok dev">र</span><span class="tok dev">मा</span><span class="tok dev">था</span><span class="tok dev"> क</span><span class="tok dev">ले</span><span class="tok dev">ज</span></div>
-    <p class="small muted" style="margin:12px 0 0">An example only: every AI splits text differently. Nepali usually takes <b>more</b> pieces than English.</p>
-  </div>
-  <div class="grid3" style="margin-top:26px">
-    <div class="card"><h3>Your limit counts tokens</h3><p>Not messages. What you type, files you attach and the answer all count.</p></div>
-    <div class="card"><h3>Long chats cost more</h3><p>Each new message makes it re-read the whole chat. Long chats use up your limit fast.</p></div>
-    <div class="card"><h3>One topic, one chat</h3><p>Start a new chat for a new topic. Your free plan lasts much longer.</p></div>
+
+
+
+
+<section class="slide" data-title="Who's who">
+  <p class="kicker">The landscape · names change, the kinds of tools don't</p>
+  <h2 style="margin-bottom:24px">Who's who in AI</h2>
+  <div class="grid3" style="gap:20px">
+    <div class="card"><p class="pill">Chat</p><h3 style="margin-top:12px">ChatGPT · Gemini · Claude · Copilot</h3><p>Explain, draft, brainstorm, debug.</p></div>
+    <div class="card"><p class="pill">Answers with links</p><h3 style="margin-top:12px">Perplexity · search mode in any chat app</h3><p>When you need the source, not just the answer.</p></div>
+    <div class="card"><p class="pill">Your own notes</p><h3 style="margin-top:12px">NotebookLM</h3><p>Upload your syllabus and notes. Ask questions about them.</p></div>
+    <div class="card"><p class="pill">Coding</p><h3 style="margin-top:12px">GitHub Copilot · Cursor · Claude Code</h3><p>Help inside your code editor. Copilot is free for students.</p></div>
+    <div class="card"><p class="pill">Images, video, voice</p><h3 style="margin-top:12px">Gemini · ChatGPT · Canva</h3><p>Posters and designs. Also where most fakes come from.</p></div>
+    <div class="card"><p class="pill">Run it yourself</p><h3 style="margin-top:12px">Llama · Qwen · DeepSeek · Gemma</h3><p>Free models you can download and run on your own computer.</p></div>
   </div>
   <aside class="notes">
-    <p>From Module 5, video 2. "On free plans you hit limits. Now you know why: it's a budget of tokens, and long chats re-send everything every time."</p>
-    <p>CS hook: "Context window = how many tokens the model can hold in its head at once. You'll hear that term a lot."</p>
+    <p>Don't read every card. "Most of you only use the first one. Try one more from this slide this week." NotebookLM is the one students thank you for: upload the syllabus and notes before exams.</p>
+    <p><b>Check before the session:</b> any big launch that week, so you can name it.</p>
   </aside>
 </section>
-
-
-
-
 <section class="slide" data-title="Game: can, can't, careful">
   <p class="kicker">Game · show 1, 2 or 3 fingers</p>
   <h2 style="font-size:46px;margin-bottom:10px">Can AI do this?</h2>
@@ -715,23 +693,6 @@ int main() {
   </aside>
 </section>
 
-<section class="slide" data-title="What changes, what stays">
-  <p class="kicker">Three changes</p>
-  <h2>What changes, and what stays <em>yours</em></h2>
-  <div class="grid3">
-    <div class="card"><p class="pill">Shift 1</p><h3 style="margin-top:14px">Writing → <em>editing</em></h3><p>AI gives the first draft. You make it correct.</p></div>
-    <div class="card"><p class="pill">Shift 2</p><h3 style="margin-top:14px">Searching → <em>asking</em></h3><p>Don't read ten web pages. Ask, then check the source.</p></div>
-    <div class="card"><p class="pill">Shift 3</p><h3 style="margin-top:14px">Typing → <em>checking</em></h3><p>Less time typing code. More time deciding what to build and testing it.</p></div>
-  </div>
-  <div class="card" style="margin-top:26px;background:var(--surface);border:0">
-    <h3>Stays with you, always</h3>
-    <p style="font-size:28px">Your judgement &nbsp;·&nbsp; Your name on the work &nbsp;·&nbsp; Your relationships &nbsp;·&nbsp; Your sense of right and wrong</p>
-  </div>
-  <aside class="notes">
-    <p>"For a programmer, shift 3 is the big one. You'll spend less time typing code and more time deciding <i>what</i> to build, explaining it clearly, and checking that what came back is right."</p>
-    <p>"And you can only check what you understand. That's why your fundamentals matter <b>more</b> now, not less."</p>
-  </aside>
-</section>
 
 <section class="slide" data-title="Will AI take my job?">
   <p class="kicker">"Will AI take my job?"</p>
@@ -741,8 +702,8 @@ int main() {
     <p style="font-size:29px;margin:14px 0 0">AI can write an app for that in an hour. But who <b>talks to the owner</b>, works out what they really need, <b>checks the app works</b>, and <b>fixes it</b> when it breaks?</p>
   </div>
   <div class="grid3" style="margin-top:24px">
-    <div class="card"><h3>AI does</h3><p>The first draft of the code, fast.</p></div>
-    <div class="card"><h3>You do</h3><p>Understand the problem, check the work, explain it to people.</p></div>
+    <div class="card"><h3>AI does</h3><p>The first draft, fast. Writing becomes editing.</p></div>
+    <div class="card"><h3>You do</h3><p>Understand the problem, make the draft correct, explain it to people.</p></div>
     <div class="card"><h3>Your chance</h3><p>Every shop, school and office near you has a problem like this.</p></div>
   </div>
   <p style="font-size:30px;font-weight:800;margin-top:auto">AI won't take your job. Someone who uses AI well <em>might</em>.</p>
@@ -753,7 +714,7 @@ int main() {
 </section>
 
 <!-- ============ PART 3: PROMPTING ============ -->
-<section class="slide divider" data-section="Using AI well" data-at="36" data-color="#C026D3" data-title="Part 3 · Treat AI like a person">
+<section class="slide divider" data-section="Using AI well" data-at="37" data-color="#C026D3" data-title="Part 3 · Treat AI like a person">
   <p class="part">Part 3</p>
   <h1>Treat AI like<br>a <em>person</em></h1>
   <div class="partnum">3</div>
@@ -897,20 +858,6 @@ If anything is unclear, ask me before you start.</div>
   </aside>
 </section>
 
-<section class="slide" data-title="Four hacks">
-  <p class="kicker">When the first answer isn't great</p>
-  <h2>Four tricks for a better answer</h2>
-  <div class="grid2" style="gap:20px">
-    <div class="card"><h3>1 · Make it ask you first</h3><p class="small" style="font-family:var(--mono)">"Before you answer, ask me the three questions that would most change your answer. Wait for my replies."</p></div>
-    <div class="card"><h3>2 · Let it write the prompt</h3><p class="small" style="font-family:var(--mono)">"Don't answer yet. Interview me, then write me one prompt I can paste into a fresh chat."</p></div>
-    <div class="card"><h3>3 · Show an example</h3><p class="small">Paste one or two examples of what you want, instead of saying "make it professional".</p></div>
-    <div class="card"><h3>4 · Make it disagree with you</h3><p class="small" style="font-family:var(--mono)">"Make the strongest case against my approach. Don't balance it."</p><p class="small muted">AI tends to agree with you.</p></div>
-  </div>
-  <p style="font-size:27px;margin-top:22px">Answer almost right? <b>Say what to keep and what to change.</b> <span class="muted">Pressing "regenerate" is just a new guess.</span></p>
-  <aside class="notes">
-    <p>Module 3, videos 1 and 2. Hack 4 for CS students: "Here's my plan for the project database. Make the strongest case against it." Hack 1 is the most useful for assignments: you often don't know what you forgot to say.</p>
-  </aside>
-</section>
 
 
 <section class="slide" data-title="Tutor, not answer machine">
@@ -925,12 +872,12 @@ At the end, give me 3 practice problems slightly harder than this one.</div>
   <p class="lead" style="margin-top:28px">A tutor that's free, patient at 2 a.m., and never judges your "basic" question. <b>But only if you do the thinking.</b></p>
   <aside class="notes">
     <p>This is the single most valuable prompt for first-years. Tell them to save it.</p>
-    <p>Bridge to Part 4: "Why insist on doing the thinking yourself? Because of a cost you don't notice. Let's talk about using AI safely."</p>
+    <p>Why it matters: "If AI always does the thinking, you never learn to do it, and first year is when you learn. Exams and interviews don't come with a chatbot." Then bridge to Part 4: "Using AI well also means using it safely."</p>
   </aside>
 </section>
 
 <!-- ============ PART 4: SAFETY ============ -->
-<section class="slide divider" data-section="Using it safely" data-at="54" data-color="#E11D48" data-title="Part 4 · Use it safely">
+<section class="slide divider" data-section="Using it safely" data-at="55" data-color="#E11D48" data-title="Part 4 · Use it safely">
   <p class="part">Part 4</p>
   <h1>Use it <em>safely</em><br>and honestly</h1>
   <div class="partnum">4</div>
@@ -1015,7 +962,7 @@ At the end, give me 3 practice problems slightly harder than this one.</div>
   <p class="kicker">After the game · AI or Not?</p>
   <h2>What gave them away, and why that <em>won't last</em></h2>
   <div class="grid4">
-    <div class="card"><h3>Writing</h3><p>Signs, newspapers, number plates. AI messes up letters, especially Devanagari.</p></div>
+    <div class="card"><h3>Writing</h3><p>Signs and number plates. AI often garbles letters, especially Devanagari, but newer AI gets it right.</p></div>
     <div class="card"><h3>Counting</h3><p>Fingers, fork prongs, railings. The shape looks right, the number is wrong.</p></div>
     <div class="card"><h3>Too perfect</h3><p>Identical momos, golden light everywhere, a crowd with no one mid-step.</p></div>
     <div class="card"><h3>Voices and calls too</h3><p>A few seconds of audio can copy a voice. Urgent + secret + new number = scam. Call back.</p></div>
@@ -1029,7 +976,7 @@ At the end, give me 3 practice problems slightly harder than this one.</div>
 
 
 <!-- ============ PART 5: GET STARTED ============ -->
-<section class="slide divider" data-section="Get started" data-at="70" data-color="#059669" data-title="Part 5 · Get started">
+<section class="slide divider" data-section="Get started" data-at="68" data-color="#059669" data-title="Part 5 · Get started">
   <p class="part">Part 5</p>
   <h1>Get started,<br><em>and ship something today</em></h1>
   <div class="partnum">5</div>
@@ -1037,24 +984,6 @@ At the end, give me 3 practice problems slightly harder than this one.</div>
 </section>
 
 
-<section class="slide" data-title="Your 7-day challenge">
-  <p class="kicker">Your 7-day challenge</p>
-  <h2 style="margin-bottom:18px">Solve a real problem with AI. <em>Put it online.</em></h2>
-  <div class="grid4 compact" style="gap:14px">
-    <div class="card"><p class="pill">Day 1</p><p style="margin-top:10px">Pick a real problem near you. Write it in two sentences.</p></div>
-    <div class="card"><p class="pill">Day 2</p><p style="margin-top:10px">Use TEACH to plan a simple web page or app with AI.</p></div>
-    <div class="card"><p class="pill">Day 3–4</p><p style="margin-top:10px">Build it with AI's help. Understand every line.</p></div>
-    <div class="card"><p class="pill">Day 5</p><p style="margin-top:10px">Push it to GitHub with good commit messages.</p></div>
-    <div class="card"><p class="pill">Day 6</p><p style="margin-top:10px">Put it online with GitHub Pages: a free public link.</p></div>
-    <div class="card"><p class="pill">Day 7</p><p style="margin-top:10px">Write a README: the problem, your solution, what AI did. Share the link.</p></div>
-    <div class="card" style="grid-column:span 2;background:var(--soft);border:0"><p class="pill">Problem ideas</p><p style="margin-top:10px">An udharo book for a local shop · BS ↔ AD date converter · class attendance tracker · exam countdown and study planner · bus fare calculator</p></div>
-  </div>
-  <div class="callout" style="margin-top:18px"><p style="font-size:26px"><b>The goal:</b> <span class="muted">a link you can show anyone, of something you actually solved. That's worth more than any certificate.</span></p></div>
-  <aside class="notes">
-    <p>Today they already made a GitHub account, learned TEACH and the tutor prompt. This challenge puts it all together into one real project.</p>
-    <p>GitHub Pages steps are on the Set up Git page (step 7). Ask them to post their Day 7 link in the class group.</p>
-  </aside>
-</section>
 
 <section class="slide" data-title="Exercise 3: Ship it">
   <div class="ex-head"><span class="ex-badge">Exercise 3 · Ship it</span><span class="pill">AI and Git together</span></div>
@@ -1069,7 +998,7 @@ At the end, give me 3 practice problems slightly harder than this one.</div>
     </ol>
     <div>
       <div class="card"><h3>No account yet?</h3><p class="small">Draft the README with AI now, save it in your notes, and commit it tonight.</p></div>
-      <div class="card" style="margin-top:16px"><h3>Done early?</h3><p class="small">Add your <code>hello.c</code> as a second file, then commit again.</p></div>
+      <div class="card" style="margin-top:16px"><h3>Done early?</h3><p class="small">Edit your README again, then commit with a new message.</p></div>
       <div style="margin-top:22px"><div class="countdown" data-sec="600"><span class="t">10:00</span><button class="go">Start</button><button class="rs">Reset</button></div></div>
     </div>
   </div>
@@ -1099,7 +1028,25 @@ If anything is unclear, ask me before you start.</div>
 </section>
 
 <!-- ============ WRAP ============ -->
-<section class="slide divider" data-section="Wrap-up" data-at="83" data-color="#5B4BDB" data-title="Wrap-up · quiz on your phone">
+<section class="slide" data-title="Your 7-day challenge">
+  <p class="kicker">Your 7-day challenge</p>
+  <h2 style="margin-bottom:18px">Solve a real problem with AI. <em>Put it online.</em></h2>
+  <div class="grid4 compact" style="gap:14px">
+    <div class="card"><p class="pill">Day 1</p><p style="margin-top:10px">Pick a real problem near you. Write it in two sentences.</p></div>
+    <div class="card"><p class="pill">Day 2</p><p style="margin-top:10px">Use TEACH to plan a simple web page or app with AI.</p></div>
+    <div class="card"><p class="pill">Day 3–4</p><p style="margin-top:10px">Build it with AI's help. Understand every line.</p></div>
+    <div class="card"><p class="pill">Day 5</p><p style="margin-top:10px">Push it to GitHub with good commit messages.</p></div>
+    <div class="card"><p class="pill">Day 6</p><p style="margin-top:10px">Put it online with GitHub Pages: a free public link.</p></div>
+    <div class="card"><p class="pill">Day 7</p><p style="margin-top:10px">Write a README: the problem, your solution, what AI did. Share the link.</p></div>
+    <div class="card" style="grid-column:span 2;background:var(--soft);border:0"><p class="pill">Problem ideas</p><p style="margin-top:10px">An udharo book for a local shop · BS ↔ AD date converter · class attendance tracker · exam countdown and study planner · bus fare calculator</p></div>
+  </div>
+  <div class="callout" style="margin-top:18px"><p style="font-size:26px"><b>The goal:</b> <span class="muted">a link you can show anyone, of something you actually solved. That's worth more than any certificate.</span></p></div>
+  <aside class="notes">
+    <p>Today they already made a GitHub account, learned TEACH and the tutor prompt. This challenge puts it all together into one real project.</p>
+    <p>GitHub Pages steps are on the Set up Git page (step 7). Ask them to post their Day 7 link in the class group.</p>
+  </aside>
+</section>
+<section class="slide divider" data-section="Wrap-up" data-at="80" data-color="#5B4BDB" data-title="Wrap-up · quiz on your phone">
   <p class="part">Wrap-up</p>
   <div class="grid2" style="grid-template-columns:1.3fr 1fr;gap:50px;align-items:center">
     <div>
@@ -1222,21 +1169,21 @@ If anything is unclear, ask me before you start.</div>
 
 </div></div>
 
-<div id="hud"><span class="chip" id="h-clock">0:00</span><span class="chip" id="h-sec">Opening</span><span class="chip" id="h-pos">1 / 1</span></div>
+<div id="hud"><span class="chip" id="h-clock">0:00</span><span class="chip" id="h-sec" hidden></span><span class="chip" id="h-pos" hidden></span></div>
 <div id="nav">
   <a id="b-home" href="/ai-training/sagarmatha-college" title="Back to the session page. The deck remembers this slide.">Session page</a>
   <a id="b-about" href="https://arjun-basnet.com.np/about" target="_blank" rel="noopener" title="Opens in a new tab">About Arjun</a>
   <button id="b-fs" title="Full screen (F)">Full screen</button>
   <span class="sep"></span>
-  <button id="b-notes" title="Speaker notes (N)">Notes</button><button id="b-help" title="Help (?)">?</button>
   <button id="b-prev" title="Previous (←)">‹</button><button id="b-next" title="Next (→)">›</button>
+  <button id="b-notes" hidden></button><button id="b-help" hidden></button>
 </div>
 <div id="notes"></div>
 <div id="help"><div class="box">
   <h3 style="margin-top:0;font-size:22px">Presenting this deck</h3>
   <p><kbd>→</kbd><kbd>Space</kbd><kbd>PgDn</kbd> next (reveals step by step) · <kbd>←</kbd><kbd>PgUp</kbd> previous</p>
   <p><kbd>N</kbd> speaker notes drawer · <kbd>P</kbd> presenter view in a new window (notes + clock, synced)</p>
-  <p><kbd>T</kbd> show the session clock · <kbd>R</kbd> reset the clock · <kbd>G</kbd> jump to a slide · <kbd>F</kbd> full screen</p>
+  <p><kbd>T</kbd> show a small session clock (top left) · <kbd>R</kbd> reset the clock · <kbd>G</kbd> jump to a slide · <kbd>F</kbd> full screen</p>
   <p>The deck remembers your slide. Go to the session page and come back: it opens where you left off.</p>
   <p><kbd>Home</kbd>/<kbd>End</kbd> first and last slide · <kbd>Esc</kbd> close panels</p>
   <p style="color:#c9beff">The clock starts when you leave the title slide. The chip turns amber when you're more than 3 minutes behind the plan for the current part.</p>
@@ -1336,7 +1283,7 @@ If anything is unclear, ask me before you start.</div>
   function tick(){
     const e=elapsed();const s=slides[cur];const sec=secs.find(x=>x.name===s._sec)||{at:0,end:90};
     const late=e/60-sec.end;
-    const c=document.getElementById('h-clock');c.textContent=fmt(e)+' / 90:00';
+    const c=document.getElementById('h-clock');c.textContent=fmt(e);
     c.className='chip'+(late>6?' very-late':late>3?' late':'');
     document.getElementById('h-sec').textContent=s._sec+' · plan '+sec.at+'–'+sec.end+' min';
     document.getElementById('h-pos').textContent=(cur+1)+' / '+slides.length;
