@@ -66,7 +66,7 @@ git push / git pull       # send to / get from GitHub</code></pre>
     <li><label><input type="checkbox"> Install Git (<a href="setup">step 2</a>)</label></li>
     <li><label><input type="checkbox"> <code>git --version</code> shows a version (<a href="setup">step 3</a>)</label></li>
     <li><label><input type="checkbox"> Tell Git your name and email (<a href="setup">step 4</a>)</label></li>
-    <li><label><input type="checkbox"> Connect to GitHub: nothing on Windows, an SSH key on macOS or Linux (<a href="setup">step 5</a>)</label></li>
+    <li><label><input type="checkbox"> Make an SSH key and add it to GitHub (<a href="setup">step 5</a>)</label></li>
   </ul>
 </div>
 <div class="card">
@@ -92,12 +92,12 @@ git push / git pull       # send to / get from GitHub</code></pre>
 
 <div class="card builder" id="builder">
   <h3>Build your TEACH prompt</h3>
-  <label style="--c:#64748B"><i>R</i>Role (optional)</label><textarea data-k="role" rows="1" placeholder="a patient C programming tutor"></textarea>
-  <label style="--c:#2563EB"><i>T</i>Task: what should AI do?</label><textarea data-k="task" rows="1" placeholder="Explain pointers in C"></textarea>
-  <label style="--c:#7C3AED"><i>E</i>Expectation: what's good? What must it never do?</label><textarea data-k="exp" rows="1" placeholder="Under 250 words, one everyday analogy. Never skip the difference between * and &amp;"></textarea>
-  <label style="--c:#C026D3"><i>A</i>Audience: who is it for?</label><textarea data-k="aud" rows="1" placeholder="A first-year BCA student who knows variables and arrays"></textarea>
-  <label style="--c:#E11D48"><i>C</i>Context: what can't it guess?</label><textarea data-k="ctx" rows="2" placeholder="My exam is in 3 days and I keep mixing up *p and &amp;x"></textarea>
-  <label style="--c:#059669"><i>H</i>How: what format?</label><textarea data-k="how" rows="2" placeholder="Analogy first, then a 10-line commented example, then 3 quick questions with answers at the end"></textarea>
+  <label style="--c:#64748B"><i>R</i>Role (optional)</label><textarea data-k="role" rows="1" placeholder="Enter a role for AI (optional)"></textarea>
+  <label style="--c:#2563EB"><i>T</i>Task: what should AI do?</label><textarea data-k="task" rows="1" placeholder="Enter what AI should do"></textarea>
+  <label style="--c:#7C3AED"><i>E</i>Expectation: what's good? What must it never do?</label><textarea data-k="exp" rows="1" placeholder="Enter what a good answer looks like, and what it must never do"></textarea>
+  <label style="--c:#C026D3"><i>A</i>Audience: who is it for?</label><textarea data-k="aud" rows="1" placeholder="Enter who it is for and what they already know"></textarea>
+  <label style="--c:#E11D48"><i>C</i>Context: what can't it guess?</label><textarea data-k="ctx" rows="2" placeholder="Enter anything AI can't guess about your situation"></textarea>
+  <label style="--c:#059669"><i>H</i>How: what format?</label><textarea data-k="how" rows="2" placeholder="Enter the format you want back"></textarea>
   <div class="prompt" id="built" style="margin-top:16px"><span class="label">Your prompt</span><button class="copy">Copy</button><span id="built-txt">Fill in the boxes above. Your prompt appears here.</span></div>
   <p class="hint-fill" id="built-miss"></p>
 </div>

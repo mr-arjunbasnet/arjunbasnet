@@ -48,12 +48,12 @@ ol.plain{padding-left:20px;margin:6px 0}ol.plain li{margin:4px 0}
 
   <div class="card me">
     <label class="f" for="f-name">Your full name</label>
-    <input class="f" id="f-name" data-v="name" autocomplete="name" placeholder="Sita Shrestha">
+    <input class="f" id="f-name" data-v="name" autocomplete="name" placeholder="Enter your full name">
     <label class="f" for="f-email">Your email</label>
-    <input class="f" id="f-email" data-v="email" type="email" autocomplete="email" placeholder="you@example.com">
+    <input class="f" id="f-email" data-v="email" type="email" autocomplete="email" placeholder="Enter your email">
     <p class="hint">Use the same email as your GitHub account.</p>
     <label class="f" for="f-user">Your GitHub username</label>
-    <input class="f" id="f-user" data-v="user" autocomplete="username" placeholder="sitashrestha" autocapitalize="off" spellcheck="false">
+    <input class="f" id="f-user" data-v="user" autocomplete="username" placeholder="Enter your GitHub username" autocapitalize="off" spellcheck="false">
     <p class="hint">Fill these in after step 1. The commands below update as you type.</p>
   </div>
 
@@ -78,6 +78,8 @@ ol.plain{padding-left:20px;margin:6px 0}ol.plain li{margin:4px 0}
         <li>When it finishes, open <b>Git Bash</b> from the Start menu. Type every command on this page into Git Bash.</li>
       </ol>
       <p class="small muted">Only download Git from git-scm.com. If Windows says "Windows protected your PC", click <b>More info</b>, then <b>Run anyway</b>.</p>
+      <p><b>Or one command:</b> on Windows 11 or an updated Windows 10, open <b>PowerShell</b> and run this instead, then open Git Bash:</p>
+      <div class="cmd"><pre class="code">winget install --id Git.Git -e --source winget</pre></div>
     </div>
     <div data-for="mac">
       <p>Open <b>Terminal</b>: press <b>Cmd + Space</b>, type <b>Terminal</b>, press Enter. Then run:</p>
@@ -119,24 +121,19 @@ git config --global core.editor nano</pre></div>
 
   <!-- 4 -->
   <section class="step"><span class="n">5</span><div>
-    <h2>Connect to GitHub</h2>
-    <p>GitHub doesn't accept your account password from the terminal, so your computer needs another way to prove it's you.</p>
-    <div data-for="win">
-      <p class="ok"><b>Nothing to do on Windows.</b> Git came with a sign-in helper. The first time you push in step 6, a browser window opens. Sign in to GitHub and click <b>Authorize</b>. That's it.</p>
-    </div>
-    <div data-for="mac linux">
-      <p>You'll make an <b>SSH key</b>: a pair of files on your computer. GitHub gets the public half and recognises your computer from then on.</p>
-      <p><b>a.</b> Make the key. Press <b>Enter</b> for every question it asks.</p>
-      <div class="cmd"><pre class="code">ssh-keygen -t ed25519 -C "<span class="v" data-v="email">you@example.com</span>"</pre></div>
-      <p><b>b.</b> Copy the public key.</p>
-      <div data-for="mac"><div class="cmd"><pre class="code">pbcopy &lt; ~/.ssh/id_ed25519.pub</pre></div><p class="small muted">Nothing prints. The key is now on your clipboard.</p></div>
-      <div data-for="linux"><div class="cmd"><pre class="code">cat ~/.ssh/id_ed25519.pub</pre></div><p class="small muted">Select the whole line it prints (it starts with <code>ssh-ed25519</code>) and copy it.</p></div>
-      <p><b>c.</b> Open <a href="https://github.com/settings/ssh/new">github.com/settings/ssh/new</a>, give it a title like "My laptop", paste the key and click <b>Add SSH key</b>.</p>
-      <p><b>d.</b> Test it. Type <code>yes</code> if it asks "Are you sure you want to continue connecting?"</p>
-      <div class="cmd"><pre class="code">ssh -T git@github.com</pre></div>
-      <p class="ok">You should see <code>Hi <span data-v="user">your-username</span>! You've successfully authenticated</code>.</p>
-      <p class="warn">Only ever share the file ending in <code>.pub</code>. The other file is your private key: never paste it anywhere.</p>
-    </div>
+    <h2>Connect to GitHub with an SSH key</h2>
+    <p>GitHub doesn't accept your account password from the terminal. Instead you make an <b>SSH key</b>: a pair of files on your computer. GitHub gets the public half and recognises your computer from then on. Do this once per computer<span data-for="win">, in <b>Git Bash</b></span>.</p>
+    <p><b>a.</b> Make the key. Press <b>Enter</b> for every question it asks.</p>
+    <div class="cmd"><pre class="code">ssh-keygen -t ed25519 -C "<span class="v" data-v="email">you@example.com</span>"</pre></div>
+    <p><b>b.</b> Copy the public key.</p>
+    <div data-for="win"><div class="cmd"><pre class="code">cat ~/.ssh/id_ed25519.pub | clip</pre></div><p class="small muted">Nothing prints. The key is now on your clipboard.</p></div>
+    <div data-for="mac"><div class="cmd"><pre class="code">pbcopy &lt; ~/.ssh/id_ed25519.pub</pre></div><p class="small muted">Nothing prints. The key is now on your clipboard.</p></div>
+    <div data-for="linux"><div class="cmd"><pre class="code">cat ~/.ssh/id_ed25519.pub</pre></div><p class="small muted">Select the whole line it prints (it starts with <code>ssh-ed25519</code>) and copy it.</p></div>
+    <p><b>c.</b> Open <a href="https://github.com/settings/ssh/new">github.com/settings/ssh/new</a>, give it a title like "My laptop", paste the key and click <b>Add SSH key</b>.</p>
+    <p><b>d.</b> Test it. Type <code>yes</code> if it asks "Are you sure you want to continue connecting?"</p>
+    <div class="cmd"><pre class="code">ssh -T git@github.com</pre></div>
+    <p class="ok">You should see <code>Hi <span data-v="user">your-username</span>! You've successfully authenticated</code>.</p>
+    <p class="warn">Only ever share the file ending in <code>.pub</code>. The other file is your private key: never paste it anywhere.</p>
   </div></section>
 
   <!-- 5 -->
@@ -150,7 +147,7 @@ echo "&lt;h1&gt;Namaste, I'm <span class="v" data-v="name">Your Name</span>&lt;/
 git init
 git add index.html
 git commit -m "Add my first webpage"
-<span data-for="win">git remote add origin https://github.com/<span class="v" data-v="user">your-username</span>/my-first-website.git</span><span data-for="mac linux">git remote add origin git@github.com:<span class="v" data-v="user">your-username</span>/my-first-website.git</span>
+git remote add origin git@github.com:<span class="v" data-v="user">your-username</span>/my-first-website.git
 git push -u origin main</pre></div>
     <p><b>c.</b> Refresh the GitHub page. Your <code>index.html</code> is there. You've pushed your first project.</p>
   </div></section>
@@ -196,8 +193,7 @@ git push</pre></div>
   </details>
   <details class="card"><summary>Support for password authentication was removed</summary>
     <p>GitHub won't take your password in the terminal.</p>
-    <p data-for="win">Run <code>git push</code> again and sign in through the browser window. If no window opens, reinstall Git and keep the default choices.</p>
-    <div data-for="mac linux"><p>Do step 5, then point your project at the SSH address:</p>
+    <div><p>Do step 5, then point your project at the SSH address:</p>
     <div class="cmd"><pre class="code">git remote set-url origin git@github.com:<span class="v" data-v="user">your-username</span>/my-first-website.git</pre></div></div>
   </details>
   <details class="card"><summary>Permission denied (publickey)</summary>
@@ -208,7 +204,7 @@ git push</pre></div>
     <p>If your branch is called <code>master</code>, rename it first:</p>
     <div class="cmd"><pre class="code">git branch -M main</pre></div>
   </details>
-  <details class="card"><summary>Could not get lock /var/lib/dpkg/lock</summary>
+  <details class="card" data-for="linux"><summary>Could not get lock /var/lib/dpkg/lock</summary>
     <p>Another program is installing updates. Wait 5 to 10 minutes and try again, or restart the computer.</p>
   </details>
 

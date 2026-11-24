@@ -90,7 +90,7 @@ footer{color:var(--muted);font-size:14px;margin-top:48px}
 <tr><td class="time">0:03–0:05</td><td>3–4</td><td>Guess how fast ChatGPT reached 100 million users, then the adoption race.</td><td><span class="pill">Predict</span></td></tr>
 <tr class="part" style="--c:#2563EB"><td class="time">0:05</td><td colspan="3">Part 1 · Git &amp; GitHub, hands-on · 30 min</td></tr>
 <tr><td class="time">0:05–0:10</td><td>5–9</td><td>The "lab3_final_really.c" folder · Git = save points · Git ≠ GitHub · your GitHub is your CV.</td><td><span class="pill">Discussion</span></td></tr>
-<tr><td class="time">0:10–0:20</td><td>10</td><td><b>Exercise 1A, get set up:</b> GitHub account, install Git, <code>git --version</code>, name and email, connect (SSH on macOS/Linux). Setup page QR on screen. 10:00 countdown.</td><td><span class="pill ex">Exercise</span></td></tr>
+<tr><td class="time">0:10–0:20</td><td>10</td><td><b>Exercise 1A, get set up:</b> GitHub account, install Git, <code>git --version</code>, name and email, SSH key added to GitHub. Setup page QR on screen. 10:00 countdown.</td><td><span class="pill ex">Exercise</span></td></tr>
 <tr><td class="time">0:20–0:24</td><td>11–12</td><td>The add → commit → push loop · the seven commands.</td><td></td></tr>
 <tr><td class="time">0:24–0:27</td><td>13</td><td><b>Live demo in the terminal:</b> empty repo, <code>index.html</code>, init, add, commit, push, a second commit, the red/green history.</td><td><span class="pill">Demo</span></td></tr>
 <tr><td class="time">0:27–0:35</td><td>14</td><td><b>Exercise 1B, first repo and commit:</b> <code>my-first-website</code> on GitHub, step 6 of the setup page, refresh, then commit again. 8:00 countdown. One student shows their repo.</td><td><span class="pill ex">Exercise</span></td></tr>
@@ -153,9 +153,9 @@ footer{color:var(--muted);font-size:14px;margin-top:48px}
   <span class="pill ex">Exercise 1 · 18 min · laptops</span>
   <h3>Part A: get set up (10 min) · Part B: first repo and commit (8 min)</h3>
   <p><b>The day before:</b> post <code>arjun-basnet.com.np/ai-training/sagarmatha-college/setup</code> in the class group and ask everyone to install Git at home. This is the single biggest time saver.</p>
-  <p><b>Part A</b> (slide 10, setup-page QR on screen): GitHub account → install Git → <code>git --version</code> → name and email → connect (Windows: nothing; macOS/Linux: SSH key, step 5). macOS users start <code>xcode-select --install</code> first; it downloads for 5–15 minutes, so they make the GitHub account meanwhile.</p>
+  <p><b>Part A</b> (slide 10, setup-page QR on screen): GitHub account → install Git → <code>git --version</code> → name and email → SSH key added to GitHub (step 5, same on every OS; Windows runs it in Git Bash). macOS users start <code>xcode-select --install</code> first; it downloads for 5–15 minutes, so they make the GitHub account meanwhile.</p>
   <p><b>Part B</b> (slide 14, after your terminal demo): empty repo <code>my-first-website</code> on GitHub → step 6 of the setup page (commands already personalised with their username) → refresh GitHub → commit and push a second time → find both commits in History.</p>
-  <p><b>Watch for:</b> lab PCs without admin rights (pair them with a laptop owner) · "git is not recognized" (open a new terminal / Git Bash) · "Please tell me who you are" (step 4 skipped) · "src refspec main" (no commit yet) · "password authentication was removed" (macOS/Linux without the SSH key). All fixes are at the bottom of the setup page.</p>
+  <p><b>Watch for:</b> lab PCs without admin rights (pair them with a laptop owner) · "git is not recognized" (open a new terminal / Git Bash) · "Please tell me who you are" (step 4 skipped) · "src refspec main" (no commit yet) · "password authentication was removed" or "Permission denied (publickey)" (SSH key not added, step 5). All fixes are at the bottom of the setup page.</p>
   <p><b>Fallback:</b> anyone whose Git won't install creates <code>index.html</code> in the browser (Add file → Create new file → Commit changes) and finishes the install at home.</p>
 </div>
 

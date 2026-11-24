@@ -472,7 +472,7 @@ body.presenter #pv{display:grid;grid-template-columns:1fr 360px;gap:26px;min-hei
         <li><b>Install Git:</b> open the Set up Git page and pick Windows, macOS or Linux</li>
         <li><b>Check it worked:</b> <code>git --version</code></li>
         <li><b>Tell Git who you are:</b> your name and email (copy from step 4)</li>
-        <li><b>Connect to GitHub:</b> Windows, nothing to do. macOS or Linux, step 5</li>
+        <li><b>Connect to GitHub:</b> make an SSH key and add it to GitHub (step 5)</li>
       </ol>
       <div style="margin-top:22px;display:flex;gap:22px;align-items:center"><div class="countdown" data-sec="600"><span class="t">10:00</span><button class="go">Start</button><button class="rs">Reset</button></div><span class="small muted">No laptop? Pair with a neighbour.</span></div>
     </div>
@@ -590,7 +590,7 @@ body.presenter #pv{display:grid;grid-template-columns:1fr 360px;gap:26px;min-hei
         <li>Open <b>step 6</b> of the Set up Git page. The commands already have your username in them. Copy, paste, run.</li>
         <li>Refresh your repository on GitHub. Your file is there.</li>
       </ol>
-      <div class="card" style="margin-top:18px;padding:18px 22px"><p class="small" style="margin:0"><b>First push on Windows:</b> a browser window opens. Sign in to GitHub and click <b>Authorize</b>.</p></div>
+      <div class="card" style="margin-top:18px;padding:18px 22px"><p class="small" style="margin:0"><b>First push:</b> if it asks "Are you sure you want to continue connecting?", type <code>yes</code>.</p></div>
       <div style="margin-top:20px"><div class="countdown" data-sec="480"><span class="t">8:00</span><button class="go">Start</button><button class="rs">Reset</button></div></div>
     </div>
     <div>
@@ -606,7 +606,7 @@ body.presenter #pv{display:grid;grid-template-columns:1fr 360px;gap:26px;min-hei
     </div>
   </div>
   <aside class="notes">
-    <p>Press Start. Walk the room. The usual problems, all with fixes at the bottom of the setup page: "Please tell me who you are" (Part A step 4 skipped), "src refspec main does not match any" (no commit yet), "password authentication was removed" (macOS/Linux without the SSH key).</p>
+    <p>Press Start. Walk the room. The usual problems, all with fixes at the bottom of the setup page: "Please tell me who you are" (Part A step 4 skipped), "src refspec main does not match any" (no commit yet), "password authentication was removed" or "Permission denied (publickey)" (SSH key not added on GitHub, step 5).</p>
     <p>When most are done, ask one student to show their repository on the projector. Applause: they just did what every developer does every day.</p>
   </aside>
 </section>
@@ -1054,7 +1054,7 @@ If anything is unclear, ask me before you start.</div>
   <div class="callout" style="margin-top:18px"><p style="font-size:26px"><b>The goal:</b> <span class="muted">a link you can show anyone, of something you actually solved. That's worth more than any certificate.</span></p></div>
   <aside class="notes">
     <p>Today they already made a GitHub account, learned TEACH and the tutor prompt. This challenge puts it all together into one real project.</p>
-    <p>GitHub Pages steps are on the Set up Git page (step 7). Ask them to post their Day 7 link in the class group.</p>
+    <p>GitHub Pages steps are on the Set up Git page (step 8). Ask them to post their Day 7 link in the class group.</p>
   </aside>
 </section>
 <section class="slide divider" data-section="Wrap-up" data-at="81" data-color="#5B4BDB" data-title="Wrap-up · quiz on your phone">
