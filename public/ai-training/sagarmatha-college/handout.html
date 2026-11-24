@@ -57,28 +57,27 @@ git push / git pull       # send to / get from GitHub</code></pre>
   <p><b>Never commit passwords or API keys.</b> Automated programs search GitHub for them within minutes.</p>
 </div>
 
-<h2 id="ex1">Exercise 1 · Two tracks</h2>
+<h2 id="ex1">Exercise 1 · Set up and first commit</h2>
+<p>Do it on your laptop with the <a href="setup">Set up Git</a> page open. It has every command ready to copy, for Windows, macOS and Linux. Tick as you go. <span class="muted small" id="chk-n"></span></p>
 <div class="card">
-  <span class="badge" style="background:var(--git)">Phone · 5 min</span>
-  <h3>Get on GitHub</h3>
-  <ol class="steps">
-    <li><a href="https://github.com/signup">github.com/signup</a>, using an email you'll keep <b>after</b> college.</li>
-    <li>A professional username: <code>sitashrestha</code>, not <code>xXdarkLord99Xx</code>. It goes on your CV.</li>
-    <li>Verify your email. Later, apply for the free <a href="https://education.github.com/pack">Student Developer Pack</a>.</li>
-  </ol>
+  <span class="badge" style="background:var(--git)">Part A · get set up</span>
+  <ul class="check" id="chk">
+    <li><label><input type="checkbox"> Create your GitHub account and verify your email (<a href="setup">step 1</a>)</label></li>
+    <li><label><input type="checkbox"> Install Git (<a href="setup">step 2</a>)</label></li>
+    <li><label><input type="checkbox"> <code>git --version</code> shows a version (<a href="setup">step 3</a>)</label></li>
+    <li><label><input type="checkbox"> Tell Git your name and email (<a href="setup">step 4</a>)</label></li>
+    <li><label><input type="checkbox"> Connect to GitHub: nothing on Windows, an SSH key on macOS or Linux (<a href="setup">step 5</a>)</label></li>
+  </ul>
 </div>
 <div class="card">
-  <span class="badge" style="background:var(--git)">Laptop with Git · 5 min</span>
-  <h3>Your first local commit <span class="muted small" id="chk-n"></span></h3>
-  <ul class="check" id="chk">
-    <li><label><input type="checkbox"> <code>git --version</code> shows a version</label></li>
-    <li><label><input type="checkbox"> Create a folder <code>my-first-website</code></label></li>
-    <li><label><input type="checkbox"> Create <code>index.html</code> with your name and college</label></li>
-    <li><label><input type="checkbox"> <code>git init</code></label></li>
-    <li><label><input type="checkbox"> <code>git add index.html</code></label></li>
-    <li><label><input type="checkbox"> <code>git commit -m "Add my first webpage"</code></label></li>
-    <li><label><input type="checkbox"> <code>git log</code> shows your commit</label></li>
+  <span class="badge" style="background:var(--git)">Part B · your first commit</span>
+  <ul class="check" id="chk2">
+    <li><label><input type="checkbox"> On GitHub: <b>+ → New repository</b> called <code>my-first-website</code> (no README)</label></li>
+    <li><label><input type="checkbox"> Run the commands in <a href="setup">step 6</a>: <code>git init</code> → <code>git add</code> → <code>git commit</code> → <code>git push</code></label></li>
+    <li><label><input type="checkbox"> Refresh GitHub: your <code>index.html</code> is there</label></li>
+    <li><label><input type="checkbox"> Change it, then <code>git add</code>, <code>git commit</code>, <code>git push</code> again, and find both save points in <b>History</b></label></li>
   </ul>
+  <p class="small muted">Later, apply for the free <a href="https://education.github.com/pack">Student Developer Pack</a>.</p>
 </div>
 
 <h2 id="teach">TEACH: five things to tell AI</h2>
@@ -103,7 +102,7 @@ git push / git pull       # send to / get from GitHub</code></pre>
   <p class="hint-fill" id="built-miss"></p>
 </div>
 <div class="card">
-  <p><b>In a hurry? AAA: Ask AI to Act.</b> Start with who it should be: "Act as a patient tutor…", "Act as a strict examiner…", "Act as a senior developer…".</p>
+  <p><b>In a hurry? AAA: Ask AI to Ask.</b> Let AI ask you questions first: "Before you answer, ask me 3 questions about what I need." It stops guessing, and you answer.</p>
   <p><b>Leave gaps on purpose:</b> write <code>[DATE]</code> or <code>[TEACHER NAME]</code> so AI doesn't make up a fact. Fill them in yourself.</p>
   <p><b>It's always a first draft:</b> read it, check every number, name and date, then make it yours.</p>
 </div>
@@ -240,11 +239,11 @@ If anything is unclear, ask me before you start.</div>
 <script>
 (function(){
   // Checklists remember their ticks on this phone
-  ['chk','week-list'].forEach(function(id){
+  ['chk','chk2','week-list'].forEach(function(id){
     var boxes = document.querySelectorAll('#' + id + ' input'), key = 'sag-chk-' + id, s = SAG.store(key) || [];
     boxes.forEach(function(b, i){ b.checked = !!s[i]; b.addEventListener('change', function(){ SAG.store(key, [].map.call(boxes, function(x){ return x.checked; })); count(); }); });
   });
-  function count(){ var b = document.querySelectorAll('#chk input'), n = [].filter.call(b, function(x){ return x.checked; }).length; document.getElementById('chk-n').textContent = n + ' / ' + b.length + (n === b.length ? ' · done' : ''); }
+  function count(){ var b = document.querySelectorAll('#chk input, #chk2 input'), n = [].filter.call(b, function(x){ return x.checked; }).length; document.getElementById('chk-n').textContent = n + ' / ' + b.length + (n === b.length ? ' · done' : ''); }
   count();
 
   // TEACH builder (merged from the draft deck): five boxes → one prompt

@@ -54,11 +54,22 @@ ol.plain{padding-left:20px;margin:6px 0}ol.plain li{margin:4px 0}
     <p class="hint">Use the same email as your GitHub account.</p>
     <label class="f" for="f-user">Your GitHub username</label>
     <input class="f" id="f-user" data-v="user" autocomplete="username" placeholder="sitashrestha" autocapitalize="off" spellcheck="false">
-    <p class="hint">No account yet? Make one first at <a href="https://github.com/signup">github.com/signup</a>. The commands below update as you type.</p>
+    <p class="hint">Fill these in after step 1. The commands below update as you type.</p>
   </div>
 
-  <!-- 1 -->
+  <!-- 0 -->
   <section class="step"><span class="n">1</span><div>
+    <h2>Create your GitHub account</h2>
+    <ol class="plain">
+      <li>Go to <a href="https://github.com/signup">github.com/signup</a>.</li>
+      <li>Use an email you'll keep after college (not your college email if it expires).</li>
+      <li>Pick a professional username: <code>sitashrestha</code>, not <code>xXdarkLord99Xx</code>. It goes on your CV.</li>
+      <li>Verify your email, then type your username in the box above.</li>
+    </ol>
+  </div></section>
+
+  <!-- 1 -->
+  <section class="step"><span class="n">2</span><div>
     <h2>Install Git</h2>
     <div data-for="win">
       <ol class="plain">
@@ -86,7 +97,7 @@ ol.plain{padding-left:20px;margin:6px 0}ol.plain li{margin:4px 0}
   </div></section>
 
   <!-- 2 -->
-  <section class="step"><span class="n">2</span><div>
+  <section class="step"><span class="n">3</span><div>
     <h2>Check it worked</h2>
     <p>Close the <span data-for="win">Git Bash</span><span data-for="mac linux">terminal</span> window, open a new one, and run:</p>
     <div class="cmd"><pre class="code">git --version</pre></div>
@@ -94,7 +105,7 @@ ol.plain{padding-left:20px;margin:6px 0}ol.plain li{margin:4px 0}
   </div></section>
 
   <!-- 3 -->
-  <section class="step"><span class="n">3</span><div>
+  <section class="step"><span class="n">4</span><div>
     <h2>Tell Git who you are</h2>
     <p>Do this once on each computer. Copy all four lines and paste them together.</p>
     <div class="cmd"><pre class="code">git config --global user.name "<span class="v" data-v="name">Your Name</span>"
@@ -107,11 +118,11 @@ git config --global core.editor nano</pre></div>
   </div></section>
 
   <!-- 4 -->
-  <section class="step"><span class="n">4</span><div>
+  <section class="step"><span class="n">5</span><div>
     <h2>Connect to GitHub</h2>
     <p>GitHub doesn't accept your account password from the terminal, so your computer needs another way to prove it's you.</p>
     <div data-for="win">
-      <p class="ok"><b>Nothing to do on Windows.</b> Git came with a sign-in helper. The first time you push in step 5, a browser window opens. Sign in to GitHub and click <b>Authorize</b>. That's it.</p>
+      <p class="ok"><b>Nothing to do on Windows.</b> Git came with a sign-in helper. The first time you push in step 6, a browser window opens. Sign in to GitHub and click <b>Authorize</b>. That's it.</p>
     </div>
     <div data-for="mac linux">
       <p>You'll make an <b>SSH key</b>: a pair of files on your computer. GitHub gets the public half and recognises your computer from then on.</p>
@@ -129,23 +140,23 @@ git config --global core.editor nano</pre></div>
   </div></section>
 
   <!-- 5 -->
-  <section class="step"><span class="n">5</span><div>
+  <section class="step"><span class="n">6</span><div>
     <h2>Push your first project</h2>
-    <p><b>a.</b> On GitHub, click <b>+</b> then <b>New repository</b>. Name it <code>my-first-repo</code>. Leave "Add a README file" <b>unticked</b>. Click <b>Create repository</b>.</p>
+    <p><b>a.</b> On GitHub, click <b>+</b> then <b>New repository</b>. Name it <code>my-first-website</code>. Leave "Add a README file" <b>unticked</b>. Click <b>Create repository</b>.</p>
     <p><b>b.</b> In your <span data-for="win">Git Bash</span><span data-for="mac linux">terminal</span>, run these lines:</p>
-    <div class="cmd"><pre class="code">mkdir my-first-repo
-cd my-first-repo
-echo "# My first repo" &gt; README.md
+    <div class="cmd"><pre class="code">mkdir my-first-website
+cd my-first-website
+echo "&lt;h1&gt;Namaste, I'm <span class="v" data-v="name">Your Name</span>&lt;/h1&gt;" &gt; index.html
 git init
-git add README.md
-git commit -m "Add README"
-<span data-for="win">git remote add origin https://github.com/<span class="v" data-v="user">your-username</span>/my-first-repo.git</span><span data-for="mac linux">git remote add origin git@github.com:<span class="v" data-v="user">your-username</span>/my-first-repo.git</span>
+git add index.html
+git commit -m "Add my first webpage"
+<span data-for="win">git remote add origin https://github.com/<span class="v" data-v="user">your-username</span>/my-first-website.git</span><span data-for="mac linux">git remote add origin git@github.com:<span class="v" data-v="user">your-username</span>/my-first-website.git</span>
 git push -u origin main</pre></div>
-    <p><b>c.</b> Refresh the GitHub page. Your README is there. You've pushed your first project.</p>
+    <p><b>c.</b> Refresh the GitHub page. Your <code>index.html</code> is there. You've pushed your first project.</p>
   </div></section>
 
   <!-- 6 -->
-  <section class="step"><span class="n">6</span><div>
+  <section class="step"><span class="n">7</span><div>
     <h2>Every day after that</h2>
     <p>Inside your project folder, after you change something:</p>
     <div class="cmd"><pre class="code">git status
@@ -156,7 +167,7 @@ git push</pre></div>
   </div></section>
 
   <!-- 7 -->
-  <section class="step" id="pages"><span class="n">7</span><div>
+  <section class="step" id="pages"><span class="n">8</span><div>
     <h2>Put it online (GitHub Pages)</h2>
     <p>Any repository with an <code>index.html</code> can become a free public website.</p>
     <ol class="plain">
@@ -164,7 +175,7 @@ git push</pre></div>
       <li>Under "Branch", choose <b>main</b> and <b>/ (root)</b>, then <b>Save</b>.</li>
       <li>Wait a minute and refresh. Your site is live at:</li>
     </ol>
-    <div class="cmd"><pre class="code">https://<span class="v" data-v="user">your-username</span>.github.io/my-first-repo/</pre></div>
+    <div class="cmd"><pre class="code">https://<span class="v" data-v="user">your-username</span>.github.io/my-first-website/</pre></div>
     <p class="small muted">Every <code>git push</code> updates the site within a minute or two. The repository must be public on a free account.</p>
   </div></section>
 
@@ -174,23 +185,23 @@ git push</pre></div>
   <details class="card"><summary>'git' is not recognized, or git: command not found</summary>
     <p>Close every terminal window and open a new one. Old windows don't see newly installed programs.</p>
     <p data-for="win">Still failing? Use <b>Git Bash</b>, not Command Prompt. If it fails there too, run the installer again and keep the default choices.</p>
-    <p data-for="mac linux">Still failing? Git isn't installed yet. Go back to step 1.</p>
+    <p data-for="mac linux">Still failing? Git isn't installed yet. Go back to step 2.</p>
   </details>
   <details class="card"><summary>Please tell me who you are / Author identity unknown</summary>
-    <p>Git doesn't know your name and email yet. Do step 3, then run your <code>git commit</code> again.</p>
+    <p>Git doesn't know your name and email yet. Do step 4, then run your <code>git commit</code> again.</p>
   </details>
   <details class="card"><summary>A strange screen opened after git commit and I can't get out</summary>
     <p>That's an editor called Vim. Press <b>Esc</b>, type <code>:wq</code> and press <b>Enter</b>.</p>
-    <p>Next time, add the message in the command itself: <code>git commit -m "your message"</code>. Step 3's last line also switches you to an easier editor.</p>
+    <p>Next time, add the message in the command itself: <code>git commit -m "your message"</code>. Step 4's last line also switches you to an easier editor.</p>
   </details>
   <details class="card"><summary>Support for password authentication was removed</summary>
     <p>GitHub won't take your password in the terminal.</p>
     <p data-for="win">Run <code>git push</code> again and sign in through the browser window. If no window opens, reinstall Git and keep the default choices.</p>
-    <div data-for="mac linux"><p>Do step 4, then point your project at the SSH address:</p>
-    <div class="cmd"><pre class="code">git remote set-url origin git@github.com:<span class="v" data-v="user">your-username</span>/my-first-repo.git</pre></div></div>
+    <div data-for="mac linux"><p>Do step 5, then point your project at the SSH address:</p>
+    <div class="cmd"><pre class="code">git remote set-url origin git@github.com:<span class="v" data-v="user">your-username</span>/my-first-website.git</pre></div></div>
   </details>
   <details class="card"><summary>Permission denied (publickey)</summary>
-    <p>GitHub doesn't have your key yet. Redo step 4, parts b and c, then test again with <code>ssh -T git@github.com</code>.</p>
+    <p>GitHub doesn't have your key yet. Redo step 5, parts b and c, then test again with <code>ssh -T git@github.com</code>.</p>
   </details>
   <details class="card"><summary>error: src refspec main does not match any</summary>
     <p>You haven't saved anything yet. Run <code>git add .</code> and <code>git commit -m "First commit"</code>, then push again.</p>
