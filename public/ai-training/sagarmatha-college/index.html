@@ -9,45 +9,110 @@
 <link href="https://fonts.googleapis.com/css2?family=Anek+Latin:wght@600;700&family=Montserrat:wght@400;500;600;700&family=Geist+Mono:wght@500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/ai-training/sagarmatha-college/assets/session.css">
 <style>
-.group{margin-top:30px}
-.group h2{font-size:15px;font-family:var(--mono);font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:0 0 8px}
-.links{border-top:1px solid var(--border)}
-.link{display:grid;grid-template-columns:1fr auto;gap:14px;align-items:center;padding:16px 4px;border-bottom:1px solid var(--border);text-decoration:none;color:var(--ink)}
-.link:hover h3{color:var(--primary)}
-.link h3{margin:0;font-family:var(--sans);font-size:18px}
-.link p{margin:2px 0 0;font-size:14.5px;color:var(--muted)}
-.link .go{font:600 18px var(--mono);color:var(--muted)}
+.hub{max-width:62rem;margin:0 auto;padding:0 20px 56px}
+.top{padding:36px 0 8px}
+.top h1{margin:10px 0 8px;font-size:clamp(36px,7vw,56px)}
+.top p:not(.kicker){margin:0;font-size:17px;color:var(--muted);max-width:40rem}
+
+.label{display:flex;align-items:baseline;gap:12px;margin:40px 0 14px}
+.label h2{margin:0;font-size:22px}
+.label span{font:600 12px var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+
+/* In class: two big cards */
+.now{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.big{display:flex;flex-direction:column;gap:10px;padding:26px;border-radius:18px;text-decoration:none;color:#fff;min-height:210px;transition:transform .15s}
+.big:hover{transform:translateY(-2px)}
+.big.game{background:#BE123C}
+.big.quiz{background:#5B4BDB}
+.big .tag{font:600 12px var(--mono);letter-spacing:.1em;text-transform:uppercase;opacity:.85}
+.big h3{margin:0;font-family:var(--display);font-size:34px;line-height:1.05;color:#fff}
+.big p{margin:0;font-size:16px;line-height:1.5;opacity:.92}
+.big .go{margin-top:auto;align-self:flex-start;background:#fff;border-radius:999px;padding:11px 20px;font:700 15px var(--sans)}
+.big.game .go{color:#BE123C}.big.quiz .go{color:#5B4BDB}
+.aside{margin:12px 2px 0;font-size:14px;color:var(--muted)}
+.aside a{font-weight:600}
+
+/* After class: three numbered steps */
+.steps3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;counter-reset:st}
+.step{display:flex;flex-direction:column;gap:8px;padding:22px;border-radius:16px;background:var(--card);border:1.5px solid var(--border);text-decoration:none;color:var(--ink);transition:border-color .15s}
+.step:hover{border-color:var(--primary)}
+.step .n{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;font:700 16px var(--mono);color:#fff;background:var(--c)}
+.step h3{margin:6px 0 0;font-family:var(--sans);font-size:19px}
+.step p{margin:0;font-size:15px;line-height:1.5;color:var(--muted)}
+.step .go{margin-top:auto;padding-top:8px;font:700 14px var(--sans);color:var(--c)}
+
+/* Also here */
+.more{display:flex;flex-wrap:wrap;gap:10px;margin-top:40px;padding-top:22px;border-top:1px solid var(--border)}
+.more a{display:inline-flex;align-items:center;gap:8px;padding:10px 16px;border-radius:999px;border:1.5px solid var(--border);background:var(--card);text-decoration:none;color:var(--ink);font:600 14px var(--sans)}
+.more a:hover{border-color:var(--primary)}
+.more small{color:var(--muted);font-weight:500}
+footer{margin-top:28px}
+
+@media (max-width:760px){
+  .now,.steps3{grid-template-columns:1fr}
+  .big{min-height:0}
+  .big h3{font-size:30px}
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .big.quiz{background:#4C3FC0}}
 </style>
 </head>
 <body>
-<div class="wrap">
-  <p class="kicker" style="margin-top:28px">Sagarmatha College · BSc CSIT / BCA · First year</p>
-  <h1>AI, Git &amp; You</h1>
-  <p class="muted" style="font-size:18px">Everything from today's session with Arjun Basnet. Save this page.</p>
+<main class="hub">
+  <header class="top">
+    <p class="kicker">Sagarmatha College · BSc CSIT / BCA · First year</p>
+    <h1>AI, Git &amp; You</h1>
+    <p>Everything from today's session with Arjun Basnet, in one place. Save this page.</p>
+  </header>
 
-  <div class="group">
-    <h2>During the session</h2>
-    <div class="links">
-      <a class="link" href="/ai-training/sagarmatha-college/ai-or-not"><div><h3>AI or Not?</h3><p>Ten photos, ten seconds each. Is it a real photo or made by AI?</p></div><span class="go">→</span></a>
-      <a class="link" href="/ai-training/sagarmatha-college/quiz"><div><h3>Quiz</h3><p>Six quick questions at the end.</p></div><span class="go">→</span></a>
-      <a class="link" href="/ai-training/sagarmatha-college/leaderboard"><div><h3>Leaderboard</h3><p>Live scores from AI or Not.</p></div><span class="go">→</span></a>
-    </div>
+  <div class="label"><h2>In class today</h2><span>When the trainer asks</span></div>
+  <div class="now">
+    <a class="big game" href="/ai-training/sagarmatha-college/ai-or-not">
+      <span class="tag">Game</span>
+      <h3>AI or Not?</h3>
+      <p>Ten photos, ten seconds each. Is it a real photo, or made by AI?</p>
+      <span class="go">Play now →</span>
+    </a>
+    <a class="big quiz" href="/ai-training/sagarmatha-college/quiz">
+      <span class="tag">End of session</span>
+      <h3>Quick quiz</h3>
+      <p>Six short questions on what we covered. Your answers show live on the screen, without names.</p>
+      <span class="go">Start the quiz →</span>
+    </a>
+  </div>
+  <p class="aside">Want to see the scores? <a href="/ai-training/sagarmatha-college/leaderboard">Open the leaderboard</a></p>
+
+  <div class="label"><h2>After class</h2><span>Do these in order</span></div>
+  <div class="steps3">
+    <a class="step" href="/ai-training/sagarmatha-college/setup" style="--c:#2563EB">
+      <span class="n">1</span>
+      <h3>Set up Git</h3>
+      <p>Install Git on Windows, macOS or Linux, connect it to GitHub and push your first project. Every command is ready to copy.</p>
+      <span class="go">Open the setup guide →</span>
+    </a>
+    <a class="step" href="/ai-training/sagarmatha-college/handout" style="--c:#C026D3">
+      <span class="n">2</span>
+      <h3>Prompts to copy</h3>
+      <p>The TEACH prompt builder, the tutor prompt, the README prompt and the green, amber, red safety rule.</p>
+      <span class="go">Open the prompts →</span>
+    </a>
+    <a class="step" href="/ai-training/sagarmatha-college/handout#week" style="--c:#059669">
+      <span class="n">3</span>
+      <h3>Your 7-day challenge</h3>
+      <p>Solve a real problem with AI, push it to GitHub and put it online with a link you can share.</p>
+      <span class="go">See the 7 days →</span>
+    </a>
   </div>
 
-  <div class="group">
-    <h2>After the session</h2>
-    <div class="links">
-      <a class="link" href="/ai-training/sagarmatha-college/setup"><div><h3>Set up Git</h3><p>Install Git, connect it to GitHub and push your first project. Windows, macOS and Linux.</p></div><span class="go">→</span></a>
-      <a class="link" href="/ai-training/sagarmatha-college/handout"><div><h3>Prompts and your 7-day plan</h3><p>Ready-made prompts to fill in and copy, Git commands, and what to do this week.</p></div><span class="go">→</span></a>
-      <a class="link" href="/ai-training/sagarmatha-college/slides"><div><h3>Slides</h3><p>The full deck. Best on a laptop: use the arrow keys.</p></div><span class="go">→</span></a>
-    </div>
-  </div>
+  <nav class="more" aria-label="Also here">
+    <a href="/ai-training/sagarmatha-college/slides" id="slides-link">Today's slides <small id="slides-note">best on a laptop</small></a>
+    <a href="https://arjun-basnet.com.np/about" target="_blank" rel="noopener">About Arjun Basnet <small>↗</small></a>
+  </nav>
 
-  <script>
-  // "Slides" resumes where this browser left off.
-  try{var n=+localStorage.getItem('sag-deck-pos');if(n>1){var a=document.querySelector('a[href$="/slides"]');a.href+='#'+n;a.querySelector('p').textContent='Continue from slide '+n+'. Best on a laptop: use the arrow keys.';}}catch(e){}
-  </script>
   <footer>Arjun Basnet · AI trainer · <a href="https://arjun-basnet.com.np">arjun-basnet.com.np</a></footer>
-</div>
+</main>
+<script>
+// "Today's slides" reopens at the slide this browser left off on.
+try{var n=+localStorage.getItem('sag-deck-pos');if(n>1){var a=document.getElementById('slides-link');a.href+='#'+n;document.getElementById('slides-note').textContent='continue from slide '+n;}}catch(e){}
+</script>
 </body>
 </html>
