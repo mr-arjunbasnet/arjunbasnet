@@ -66,3 +66,11 @@ table{border-collapse:collapse;width:100%;font-size:14.5px}
 td,th{padding:9px 10px;border-bottom:1px solid var(--border);text-align:left;vertical-align:top}
 th{font:600 11px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
 footer{color:var(--muted);font-size:13px;margin-top:40px}
+
+/* Top bar with the way back to the session page (added by session.js) */
+.sbar{border-bottom:1px solid var(--border);background:var(--bg)}
+.sbar .in{max-width:44rem;margin:0 auto;padding:10px 16px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.sbar .back{display:inline-flex;align-items:center;min-height:36px;padding:0 14px;border-radius:999px;border:1.5px solid var(--border);background:var(--card);color:var(--ink);text-decoration:none;font:600 14px var(--sans)}
+.sbar .back:hover{border-color:var(--primary)}
+.sbar .name{font:600 11px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);text-align:right}
+@media (max-width:420px){.sbar .name{display:none}}

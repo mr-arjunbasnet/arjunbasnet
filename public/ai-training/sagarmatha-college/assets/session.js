@@ -91,7 +91,24 @@
     });
   }
   SAG.copyText = copyText;
+
+  /* ---------- top bar: a way back to the session page from every page ----------
+     A page can set SAG.leaveGuard = function(){ return 'message' } to ask
+     before leaving (the game does this while a photo is on screen). */
+  SAG.leaveGuard = null;
+  function topbar() {
+    if (document.querySelector('.sbar')) return;
+    var nav = document.createElement('nav');
+    nav.className = 'sbar';
+    nav.setAttribute('aria-label', 'Session');
+    nav.innerHTML = '<div class="in"><a class="back" href="/ai-training/sagarmatha-college">\u2190 Session page</a><span class="name">Getting started with Git and AI</span></div>';
+    nav.querySelector('.back').addEventListener('click', function (e) {
+      var msg = typeof SAG.leaveGuard === 'function' ? SAG.leaveGuard() : '';
+      if (msg && !window.confirm(msg)) e.preventDefault();
+    });
+    document.body.insertBefore(nav, document.body.firstChild);
+  }
   SAG.setup = function (root) { setupPlaceholders(root); setupCopy(root); };
   window.SAG = SAG;
-  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', function () { SAG.setup(); }); else SAG.setup();
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', function () { topbar(); SAG.setup(); }); else { topbar(); SAG.setup(); }
 })();

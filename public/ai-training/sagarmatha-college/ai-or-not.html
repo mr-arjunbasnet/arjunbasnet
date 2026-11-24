@@ -58,6 +58,7 @@
 .rv .you.ok{color:var(--green)}.rv .you.no{color:var(--red)}
 #zoom{position:fixed;inset:0;background:rgba(0,0,0,.92);display:none;align-items:center;justify-content:center;z-index:20}
 #zoom.on{display:flex}
+#zoom .zclose{position:absolute;bottom:18px;left:50%;transform:translateX(-50%);font:600 13px var(--mono);color:#fff;background:rgba(255,255,255,.14);padding:6px 12px;border-radius:999px}
 #zoom img{max-width:100%;max-height:100%}
 .tips li{margin:6px 0}
 </style>
@@ -83,15 +84,7 @@
     </form>
     <p class="small muted" style="margin:12px 0 0">One game per email. Your email is never shown on the board. The trainer can see results after the session.</p>
   </div>
-  <p class="small"><a href="leaderboard">See the leaderboard</a> · <a href="./">Session home</a></p>
-</section>
-
-<!-- Loading -->
-<section class="screen" id="s-load">
-  <h1 style="font-size:32px">Loading the images…</h1>
-  <p class="muted" id="load-txt">0 of 10</p>
-  <div class="timer"><i id="load-bar" style="transform:scaleX(0)"></i></div>
-  <p class="small muted">Images load first so the timer is fair on slow connections.</p>
+  <p class="small"><a href="leaderboard">See the leaderboard</a></p>
 </section>
 
 <!-- Game -->
@@ -129,28 +122,35 @@
   <div style="display:grid;gap:10px">
     <a class="btn block" href="leaderboard">See the leaderboard</a>
     <button class="btn ghost block" id="r-copy">Copy my score</button>
+    <a class="btn ghost block" href="/ai-training/sagarmatha-college">Back to the session page</a>
   </div>
   <h2>What each image really was</h2>
   <div class="reveal" id="r-reveal"></div>
   <h2>How to check, now that looking isn't enough</h2>
   <ul class="tips">
-    <li><b>Read the text in the image.</b> Shop signs, newspapers, number plates. AI still garbles lettering, especially Devanagari.</li>
-    <li><b>Count the small things.</b> Fingers, fork tines, spokes, railings. AI gets the overall shape right and the counts wrong.</li>
+    <li><b>Read the text in the image.</b> Shop signs, newspapers, number plates. AI often garbles lettering, especially Devanagari, though newer AI gets it right.</li>
+    <li><b>Count the small things.</b> Fingers, fork prongs, spokes, railings. AI gets the overall shape right and the counts wrong.</li>
     <li><b>Look for "too perfect".</b> Identical momos, golden light everywhere, a crowd with no one blinking or mid-step.</li>
     <li><b>Ask where it came from.</b> Who posted it first? Is there an original with a date and a name? A reverse image search takes ten seconds.</li>
     <li><b>Don't rely on looking.</b> The best fakes have no visible tell. Verify the source, not the pixels.</li>
   </ul>
-  <p class="small muted">Real photos from Pexels (photographers credited above). AI images generated with Canva AI for this session.</p>
+  <p class="small muted">Real photos from Pexels; AI images from Wikimedia Commons. Each one is credited above.</p>
+  <p><a class="btn ghost block" href="/ai-training/sagarmatha-college">Back to the session page</a></p>
 </section>
 
 </div>
-<div id="zoom"><img alt=""></div>
+<div id="zoom"><img alt=""><span class="zclose">Tap anywhere to close</span></div>
 <script src="assets/session.js"></script>
 <script>
 (function(){
   var $ = function(id){ return document.getElementById(id); };
   var state = { gameId:null, total:10, index:0, seconds:10, pts:0, streak:0, timer:null, t0:0, locked:false };
   function show(id){ document.querySelectorAll('.screen').forEach(function(s){ s.classList.toggle('on', s.id===id); }); scrollTo(0,0); }
+  SAG.leaveGuard = function(){
+    return document.getElementById('s-game').classList.contains('on')
+      ? 'Leave the game? It is saved: open AI or Not again on this phone to carry on. The photo on screen now will count as out of time.'
+      : '';
+  };
 
   // Prefill from this phone
   var me = SAG.me; if (me.name) $('name').value = me.name; if (me.email) $('email').value = me.email; if (me.roll) $('roll').value = me.roll;
