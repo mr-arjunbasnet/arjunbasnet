@@ -1,17 +1,22 @@
 /*
  * AI or Not: the image pool for the Sagarmatha College session.
  *
- * SERVER-ONLY. The browser receives only `file`. Whether an image is real or
- * AI, its tell and its credit are sent back one image at a time, after the
- * player has answered. CSIT students will open DevTools, so the answers must
- * never be in the page.
+ * SERVER-ONLY. The repo is public, so the answer key (which image is AI, its
+ * tell, its credit) is NOT in plaintext here: it lives encrypted in
+ * pool.enc.ts and is decrypted at runtime with SAGARMATHA_POOL_KEY (an env
+ * var in Vercel and .env.local). Without the key the game simply stays off.
  *
- * File names are random hex on purpose (no "real-01.jpg"), and every file is
- * re-encoded without EXIF, so camera metadata can't give real photos away.
+ * The browser receives only an image URL, one image at a time, and learns the
+ * truth for an image only after answering it. File names are random hex and
+ * every file is re-encoded without EXIF.
  *
- * To add images: run scripts/sagarmatha-images.py on a folder of new files,
- * then add one entry per file below. A game draws up to five of each kind.
+ * To change the pool: process new files with scripts/sagarmatha-images.py,
+ * edit src/lib/sagarmatha/pool.local.json (gitignored), then run
+ * `node scripts/sagarmatha-pool-encrypt.mjs`. A game draws up to five of each kind.
  */
+import { createDecipheriv } from "node:crypto";
+import { POOL_ENC } from "./pool.enc";
+
 export type Truth = "ai" | "real";
 
 export type PoolImage = {
@@ -25,25 +30,33 @@ export type PoolImage = {
 
 const DIR = "/ai-training/sagarmatha-college/aion/";
 
-export const POOL: PoolImage[] = [
-  // ---- Real photographs (Pexels licence) ----
-  { id: "r1", file: "420657a5f05d.jpg", truth: "real", tell: "Real. The Nepali newspaper masthead is crisp and correctly spelled, and every tea glass has its own reflection and fill level.", credit: "Suraj Shakya · Pexels" },
-  { id: "r2", file: "34aff4e2a93c.jpg", truth: "real", tell: "Real. Hundreds of tiny people, each different, with shadows all falling the same way. AI crowds usually blur or repeat.", credit: "Mehmet Turgut Kirkgoz · Pexels" },
-  { id: "r3", file: "e590b1bc20d9.jpg", truth: "real", tell: "Real. The Devanagari painted on the gate and the 'Sports Week 2070' notice are readable and correct. AI still struggles with lettering.", credit: "Mehmet Turgut Kirkgoz · Pexels" },
-  { id: "r4", file: "e3dafa8922a6.jpg", truth: "real", tell: "Real. The printed scripture on the flags is consistent block text, and the blur follows the lens's focus plane.", credit: "Ujen Singh · Pexels" },
-  { id: "r5", file: "da3c8bcd3b38.jpg", truth: "real", tell: "Real. Hands, feet and sandals are all anatomically right, and the scene is untidy in ordinary ways nobody would prompt for.", credit: "Mehmet Turgut Kirkgoz · Pexels" },
-  { id: "r6", file: "f7112c4b610f.jpg", truth: "real", tell: "Real. Every momo is folded slightly differently, and the fork has the right number of tines.", credit: "bishop tamrakar · Pexels" },
-  { id: "r7", file: "9bba74223f98.jpg", truth: "real", tell: "Real. The shop signs and number plates are legible, and every helmet and face is distinct.", credit: "ZHANQUN CAI · Pexels" },
-  { id: "r8", file: "5497f17687dd.jpg", truth: "real", tell: "Real. Lens flare, a cropped head in the foreground and dozens of mismatched shop signs: the clutter of an actual moment.", credit: "Roman Saienko · Pexels" },
+let cache: PoolImage[] | null = null;
 
-  // ---- AI-generated (Canva AI, prompted for photorealism) ----
-  // Added once the full-resolution files are in public/…/aion/.
-];
+/** The decrypted pool, or [] when SAGARMATHA_POOL_KEY is missing or wrong. */
+export function pool(): PoolImage[] {
+  if (cache) return cache;
+  const raw = process.env.SAGARMATHA_POOL_KEY?.trim();
+  if (!raw) return [];
+  try {
+    const key = Buffer.from(raw, "base64");
+    const buf = Buffer.from(POOL_ENC, "base64");
+    const d = createDecipheriv("aes-256-gcm", key, buf.subarray(0, 12));
+    d.setAuthTag(buf.subarray(12, 28));
+    const text = Buffer.concat([d.update(buf.subarray(28)), d.final()]).toString("utf8");
+    cache = JSON.parse(text) as PoolImage[];
+    return cache;
+  } catch (e) {
+    console.error("[sagarmatha] SAGARMATHA_POOL_KEY does not decrypt the pool", e instanceof Error ? e.message : e);
+    return [];
+  }
+}
+
+export const poolStatus = () => (!process.env.SAGARMATHA_POOL_KEY ? "key_missing" : pool().length ? "ok" : "key_wrong");
 
 export const imageUrl = (img: PoolImage) => DIR + img.file;
 
 export function byId(id: string): PoolImage | undefined {
-  return POOL.find((p) => p.id === id);
+  return pool().find((p) => p.id === id);
 }
 
 /** Up to five of each kind, shuffled. Ten images when the pool allows. */
@@ -56,8 +69,9 @@ export function drawGame(size = 10): PoolImage[] {
     }
     return r;
   };
-  const ai = shuffle(POOL.filter((p) => p.truth === "ai"));
-  const real = shuffle(POOL.filter((p) => p.truth === "real"));
+  const all = pool();
+  const ai = shuffle(all.filter((p) => p.truth === "ai"));
+  const real = shuffle(all.filter((p) => p.truth === "real"));
   const half = Math.floor(size / 2);
   let pick = [...ai.slice(0, half), ...real.slice(0, half)];
   // Short on one kind: top up from the other so the game is still `size` long.

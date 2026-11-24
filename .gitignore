@@ -52,3 +52,6 @@ next-env.d.ts
 # script stays open; bring your own sites.json (see sites.example.json).
 docs/research/ai-search-readiness-2026/
 scripts/research/sites.json
+
+# Sagarmatha AI-or-Not answer key (plaintext). Only the encrypted pool.enc.ts is committed.
+src/lib/sagarmatha/pool.local.json

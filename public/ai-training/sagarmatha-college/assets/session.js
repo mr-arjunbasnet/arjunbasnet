@@ -25,6 +25,7 @@
         name_required: 'Please enter your name.',
         email_invalid: 'That email doesn’t look right.',
         already_played: 'This email has already played. One game per person.',
+        already_started: 'This email already started a game on another phone or browser. Ask the trainer.',
         storage_not_configured: 'Saving isn’t switched on yet. Tell the trainer.',
         offline: 'No connection. Check your Wi-Fi or mobile data and try again.',
         slow_down: 'Too many tries. Wait a minute and try again.',

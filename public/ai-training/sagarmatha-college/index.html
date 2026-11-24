@@ -9,27 +9,44 @@
 <link href="https://fonts.googleapis.com/css2?family=Anek+Latin:wght@600;700&family=Montserrat:wght@400;500;600;700&family=Geist+Mono:wght@500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/ai-training/sagarmatha-college/assets/session.css">
 <style>
-.links{display:grid;gap:12px;margin:20px 0}
-.link{display:grid;grid-template-columns:44px 1fr auto;gap:14px;align-items:center;background:var(--card);border:1px solid var(--border);border-radius:14px;padding:16px;text-decoration:none;color:var(--ink)}
-.link:hover{border-color:var(--primary)}
-.link .ico{width:44px;height:44px;border-radius:12px;display:grid;place-items:center;font-size:22px}
-.link h3{margin:0;font-family:var(--sans);font-size:17px}
-.link p{margin:2px 0 0;font-size:14px;color:var(--muted)}
+.group{margin-top:30px}
+.group h2{font-size:15px;font-family:var(--mono);font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:0 0 8px}
+.links{border-top:1px solid var(--border)}
+.link{display:grid;grid-template-columns:1fr auto;gap:14px;align-items:center;padding:16px 4px;border-bottom:1px solid var(--border);text-decoration:none;color:var(--ink)}
+.link:hover h3{color:var(--primary)}
+.link h3{margin:0;font-family:var(--sans);font-size:18px}
+.link p{margin:2px 0 0;font-size:14.5px;color:var(--muted)}
 .link .go{font:600 18px var(--mono);color:var(--muted)}
 </style>
 </head>
 <body>
 <div class="wrap">
-  <p class="kicker" style="margin-top:28px">Sagarmatha College · B.Sc. CSIT · First year</p>
+  <p class="kicker" style="margin-top:28px">Sagarmatha College · BSc CSIT / BCA · First year</p>
   <h1>AI, Git &amp; You</h1>
-  <p class="muted" style="font-size:18px">Everything from today's session with Arjun Basnet. Keep this page.</p>
-  <div class="links">
-    <a class="link" href="/ai-training/sagarmatha-college/ai-or-not"><span class="ico" style="background:#EDE9FE">🕵️</span><div><h3>AI or Not?</h3><p>Ten images, ten seconds each. Real photo or AI?</p></div><span class="go">→</span></a>
-    <a class="link" href="/ai-training/sagarmatha-college/quiz"><span class="ico" style="background:#FCE7F3">⚡</span><div><h3>Lightning quiz</h3><p>Six questions to close the session.</p></div><span class="go">→</span></a>
-    <a class="link" href="/ai-training/sagarmatha-college/handout"><span class="ico" style="background:#DCFCE7">📄</span><div><h3>Handout and prompts</h3><p>Fill-in prompts to copy, Git cheat sheet, your 7-day challenge.</p></div><span class="go">→</span></a>
-    <a class="link" href="/ai-training/sagarmatha-college/leaderboard"><span class="ico" style="background:#FEF3C7">🏆</span><div><h3>Leaderboard</h3><p>Who can still tell real from AI?</p></div><span class="go">→</span></a>
-    <a class="link" href="/ai-training/sagarmatha-college/slides"><span class="ico" style="background:#DBEAFE">🖥️</span><div><h3>Slides</h3><p>The full deck. Best on a laptop: use the arrow keys.</p></div><span class="go">→</span></a>
+  <p class="muted" style="font-size:18px">Everything from today's session with Arjun Basnet. Save this page.</p>
+
+  <div class="group">
+    <h2>During the session</h2>
+    <div class="links">
+      <a class="link" href="/ai-training/sagarmatha-college/ai-or-not"><div><h3>AI or Not?</h3><p>Ten photos, ten seconds each. Is it a real photo or made by AI?</p></div><span class="go">→</span></a>
+      <a class="link" href="/ai-training/sagarmatha-college/quiz"><div><h3>Quiz</h3><p>Six quick questions at the end.</p></div><span class="go">→</span></a>
+      <a class="link" href="/ai-training/sagarmatha-college/leaderboard"><div><h3>Leaderboard</h3><p>Live scores from AI or Not.</p></div><span class="go">→</span></a>
+    </div>
   </div>
+
+  <div class="group">
+    <h2>After the session</h2>
+    <div class="links">
+      <a class="link" href="/ai-training/sagarmatha-college/setup"><div><h3>Set up Git</h3><p>Install Git, connect it to GitHub and push your first project. Windows, macOS and Linux.</p></div><span class="go">→</span></a>
+      <a class="link" href="/ai-training/sagarmatha-college/handout"><div><h3>Prompts and your 7-day plan</h3><p>Ready-made prompts to fill in and copy, Git commands, and what to do this week.</p></div><span class="go">→</span></a>
+      <a class="link" href="/ai-training/sagarmatha-college/slides"><div><h3>Slides</h3><p>The full deck. Best on a laptop: use the arrow keys.</p></div><span class="go">→</span></a>
+    </div>
+  </div>
+
+  <script>
+  // "Slides" resumes where this browser left off.
+  try{var n=+localStorage.getItem('sag-deck-pos');if(n>1){var a=document.querySelector('a[href$="/slides"]');a.href+='#'+n;a.querySelector('p').textContent='Continue from slide '+n+'. Best on a laptop: use the arrow keys.';}}catch(e){}
+  </script>
   <footer>Arjun Basnet · AI trainer · <a href="https://arjun-basnet.com.np">arjun-basnet.com.np</a></footer>
 </div>
 </body>

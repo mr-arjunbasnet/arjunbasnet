@@ -60,7 +60,7 @@
 
 <!-- Join -->
 <section class="screen on" id="s-join">
-  <p class="kicker" style="margin-top:24px">Sagarmatha College · B.Sc. CSIT</p>
+  <p class="kicker" style="margin-top:24px">Sagarmatha College · BSc CSIT / BCA</p>
   <h1 class="title">AI or <em>not?</em></h1>
   <p class="muted" style="font-size:18px">Ten images, ten seconds each. Real photo or AI-generated?</p>
   <div class="card">
@@ -142,7 +142,7 @@
 <script>
 (function(){
   var $ = function(id){ return document.getElementById(id); };
-  var state = { gameId:null, images:[], index:0, seconds:10, pts:0, streak:0, timer:null, t0:0, locked:false };
+  var state = { gameId:null, total:10, index:0, seconds:10, pts:0, streak:0, timer:null, t0:0, locked:false };
   function show(id){ document.querySelectorAll('.screen').forEach(function(s){ s.classList.toggle('on', s.id===id); }); scrollTo(0,0); }
 
   // Prefill from this phone
@@ -157,44 +157,43 @@
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(body.email)) return ($('join-err').textContent = SAG.errorText('email_invalid'));
     $('play').disabled = true; $('join-err').textContent = '';
     SAG.me = body;
+    var mine = SAG.store('sag-aion'); if (mine && mine.gameId) body.gameId = mine.gameId;
     SAG.api('aion/start', body).then(function(d){
       $('play').disabled = false;
-      if (d.error === 'already_played') { SAG.store('sag-aion', { gameId:d.gameId, finished:true }); return loadResult(d.gameId); }
+      if (d.error === 'already_played' && d.gameId) { SAG.store('sag-aion', { gameId:d.gameId, finished:true }); return loadResult(d.gameId); }
       if (d.error) return ($('join-err').textContent = SAG.errorText(d.error));
-      state.gameId = d.gameId; state.images = d.images; state.index = d.index; state.seconds = d.seconds || 10;
+      state.gameId = d.gameId; state.total = d.total || 10; state.index = d.index; state.seconds = d.seconds || 10;
       SAG.store('sag-aion', { gameId:d.gameId, finished:false });
-      preload();
+      next();
     });
   });
 
-  function preload(){
-    show('s-load');
-    var n = 0, total = state.images.length;
-    $('load-txt').textContent = '0 of ' + total;
-    state.images.forEach(function(im){
-      var img = new Image();
-      img.onload = img.onerror = function(){ n++; $('load-txt').textContent = n + ' of ' + total; $('load-bar').style.transform = 'scaleX(' + (n/total) + ')'; if (n === total) setTimeout(next, 300); };
-      img.src = im.url;
-    });
-  }
-
+  // The server hands out one image at a time and starts its clock as it does.
   function next(){
-    if (state.index >= state.images.length) return;
+    if (state.index >= state.total) return finishFromServer();
     show('s-game');
     state.locked = false;
     $('g-fb').classList.remove('on','ok','no');
     $('g-choices').style.display = '';
     document.querySelectorAll('.choice').forEach(function(b){ b.disabled = true; });
-    $('g-n').textContent = state.index + 1; $('g-of').textContent = state.images.length;
-    $('g-img').src = state.images[state.index].url;
+    $('g-n').textContent = state.index + 1; $('g-of').textContent = state.total;
+    $('g-img').removeAttribute('src');
     $('g-bar').style.transform = 'scaleX(1)'; $('g-timer').classList.remove('low');
-    // Tell the server the image is on screen; its clock starts now.
     SAG.api('aion/show', { gameId:state.gameId, index:state.index }).then(function(d){
-      if (d._status === 409 && typeof d.index === 'number' && d.index !== state.index) { state.index = d.index; return state.index >= state.images.length ? finishFromServer() : next(); }
-      document.querySelectorAll('.choice').forEach(function(b){ b.disabled = false; });
-      state.t0 = performance.now();
-      clearInterval(state.timer);
-      state.timer = setInterval(tick, 100);
+      if (d._status === 409 && typeof d.index === 'number' && d.index !== state.index) { state.index = d.index; return next(); }
+      if (d._status === 409 && d.finished) return finishFromServer();
+      if (!d.url) return alertInline(SAG.errorText(d.error));
+      var started = false, mine = state.index;
+      function go(){
+        if (started || mine !== state.index || state.locked) return; started = true;
+        document.querySelectorAll('.choice').forEach(function(b){ b.disabled = false; });
+        state.t0 = performance.now() - (state.seconds*1000 - d.remainingMs);
+        clearInterval(state.timer);
+        state.timer = setInterval(tick, 100);
+      }
+      $('g-img').onload = go; $('g-img').onerror = go;
+      $('g-img').src = d.url;
+      setTimeout(go, 2500); // slow Wi-Fi: start anyway, the server allows a little extra
     });
   }
 

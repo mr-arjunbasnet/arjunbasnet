@@ -27,31 +27,23 @@ ol.steps{padding-left:22px}ol.steps li{margin:6px 0}
 </head>
 <body>
 <div class="wrap">
-<p class="kicker" style="margin-top:28px">Sagarmatha College · B.Sc. CSIT · Handout</p>
+<p class="kicker" style="margin-top:28px">Sagarmatha College · BSc CSIT / BCA · Handout</p>
 <h1>AI, Git &amp; You</h1>
-<p class="muted">Exercises, prompts you can fill in and copy, a Git cheat sheet and your 7-day challenge.</p>
+<p class="muted">Prompts you can fill in and copy, the Git commands from class, and your plan for the next 7 days.</p>
 <p class="legend">Tip: <span style="background:#FCE7F3;color:#9D174D;border-bottom:2px dashed #DB2777;padding:1px 4px;border-radius:6px;font-weight:600">pink [BRACKETS]</span> are fill-in fields. Tap one, type, then press <b>Copy</b>. Your answers are remembered on this phone.</p>
 
 <nav class="toc">
-  <a href="#git">Git</a><a href="#ex1">Ex 1</a><a href="#teach">TEACH</a><a href="#ex2">Ex 2</a><a href="#hacks">Power prompts</a><a href="#safe">Stay safe</a><a href="#tools">Which tool</a><a href="#ex3">Ex 3 · Ship it</a><a href="#week">7-day challenge</a>
+  <a href="#git">Git</a><a href="#ex1">Ex 1</a><a href="#teach">TEACH</a><a href="#ex2">Ex 2</a><a href="#hacks">More prompts</a><a href="#safe">Stay safe</a><a href="#tools">Which tool</a><a href="#ex3">Ex 3</a><a href="#week">7 days</a>
 </nav>
 
 <h2 id="git">Git in one page</h2>
-<p><b>Git</b> is the tool on your laptop that keeps save points (commits). <b>GitHub</b> is the website that hosts them online. Git is the engine, GitHub is the online home.</p>
-<div class="card">
-  <h3>1 · Is Git installed?</h3>
-  <pre class="code"><code>git --version</code></pre>
-  <p>A version number (e.g. <code>git version 2.47.1</code>) means you're ready. "git is not recognized" means it isn't installed.</p>
-  <h3>2 · Install it (5–10 min, best done before class)</h3>
-  <p><b>Windows:</b> download from <a href="https://git-scm.com/download/win">git-scm.com/download/win</a>, accept the defaults, then open <b>Git Bash</b>.<br>
-  <b>macOS:</b> <code>xcode-select --install</code>, or <code>brew install git</code>.<br>
-  <b>Linux:</b> <code>sudo apt update &amp;&amp; sudo apt install git</code></p>
-  <h3>3 · Tell Git who you are (once)</h3>
-  <pre class="code"><code>git config --global user.name "Your Name"
-git config --global user.email "you@example.com"</code></pre>
-</div>
+<p><b>Git</b> is a program on your laptop that keeps save points of your project, called <b>commits</b>. <b>GitHub</b> is the website where you put them online, so they're backed up and others can see them.</p>
+<a class="card" href="setup" style="display:block;text-decoration:none;color:inherit;border-color:var(--git)">
+  <h3 style="margin-top:0">Install Git and connect it to GitHub →</h3>
+  <p class="muted" style="margin:0">Step by step for Windows, macOS and Linux, with commands you can copy.</p>
+</a>
 <pre class="code"><code>git init                  # start tracking this folder
-git status                # what changed? (run it whenever you're confused)
+git status                # what changed? (run it whenever you're unsure)
 git add index.html        # put a file "in the box"
 git commit -m "Add my first webpage"   # seal it with a message
 git log --oneline         # see your save points
@@ -59,9 +51,9 @@ git clone &lt;url&gt;           # copy a repo from GitHub
 git push / git pull       # send to / get from GitHub</code></pre>
 <div class="card">
   <h3>Words you'll hear</h3>
-  <p><b>Repository</b>: a folder Git tracks · <b>Commit</b>: a saved snapshot with a message · <b>Branch</b>: a safe space to try changes · <b>Merge</b>: combine changes · <b>Push / Pull</b>: upload to / download from GitHub · <b>Pull request</b>: "please review my change and merge it".</p>
-  <p><b>Good commit messages</b> finish the sentence "This commit will…": ✅ <code>Add input validation to calculator</code> · ❌ <code>update</code>, <code>final final</code></p>
-  <p><b>Never commit secrets.</b> Passwords and API keys go in a <code>.env</code> file listed in <code>.gitignore</code>. Bots scan GitHub for leaked keys within minutes.</p>
+  <p><b>Repository</b> (repo): a folder Git is tracking · <b>Commit</b>: one save point, with a message · <b>Push</b>: send your commits to GitHub · <b>Pull</b>: get the latest from GitHub · <b>Clone</b>: download a whole repo.</p>
+  <p><b>Good commit messages</b> finish the sentence "This commit will…". Good: <code>Add input check to calculator</code>. Bad: <code>update</code>, <code>final final</code>.</p>
+  <p><b>Never commit passwords or API keys.</b> Automated programs search GitHub for them within minutes.</p>
 </div>
 
 <h2 id="ex1">Exercise 1 · Two tracks</h2>
@@ -84,12 +76,12 @@ git push / git pull       # send to / get from GitHub</code></pre>
     <li><label><input type="checkbox"> <code>git init</code></label></li>
     <li><label><input type="checkbox"> <code>git add index.html</code></label></li>
     <li><label><input type="checkbox"> <code>git commit -m "Add my first webpage"</code></label></li>
-    <li><label><input type="checkbox"> <code>git log</code> shows your commit 🎉</label></li>
+    <li><label><input type="checkbox"> <code>git log</code> shows your commit</label></li>
   </ul>
 </div>
 
-<h2 id="teach">TEACH: five questions every prompt answers</h2>
-<p>Treat AI like a brilliant new colleague on their first day: very capable, but knows <b>nothing</b> about you. Whatever you don't say, it guesses.</p>
+<h2 id="teach">TEACH: five things to tell AI</h2>
+<p>Treat AI like a <b>person</b>: a smart new classmate on their first day, very capable, but knows <b>nothing</b> about you. Whatever you don't tell it, it guesses.</p>
 <div class="teach">
   <div style="--c:#2563EB"><b>T</b>Task<br><span>What exactly should it do?</span></div>
   <div style="--c:#7C3AED"><b>E</b>Expectation<br><span>What does good look like? What must it never do?</span></div>
@@ -103,61 +95,63 @@ git push / git pull       # send to / get from GitHub</code></pre>
   <label style="--c:#64748B"><i>R</i>Role (optional)</label><textarea data-k="role" rows="1" placeholder="a patient C programming tutor"></textarea>
   <label style="--c:#2563EB"><i>T</i>Task: what should AI do?</label><textarea data-k="task" rows="1" placeholder="Explain pointers in C"></textarea>
   <label style="--c:#7C3AED"><i>E</i>Expectation: what's good? What must it never do?</label><textarea data-k="exp" rows="1" placeholder="Under 250 words, one everyday analogy. Never skip the difference between * and &amp;"></textarea>
-  <label style="--c:#C026D3"><i>A</i>Audience: who is it for?</label><textarea data-k="aud" rows="1" placeholder="A first-year B.Sc. CSIT student who knows variables and arrays"></textarea>
+  <label style="--c:#C026D3"><i>A</i>Audience: who is it for?</label><textarea data-k="aud" rows="1" placeholder="A first-year BCA student who knows variables and arrays"></textarea>
   <label style="--c:#E11D48"><i>C</i>Context: what can't it guess?</label><textarea data-k="ctx" rows="2" placeholder="My exam is in 3 days and I keep mixing up *p and &amp;x"></textarea>
   <label style="--c:#059669"><i>H</i>How: what format?</label><textarea data-k="how" rows="2" placeholder="Analogy first, then a 10-line commented example, then 3 quick questions with answers at the end"></textarea>
   <div class="prompt" id="built" style="margin-top:16px"><span class="label">Your prompt</span><button class="copy">Copy</button><span id="built-txt">Fill in the boxes above. Your prompt appears here.</span></div>
   <p class="hint-fill" id="built-miss"></p>
 </div>
 <div class="card">
-  <p><b>In a hurry? AAA:</b> <b>A</b>ssign a role · <b>A</b>dd context · <b>A</b>sk for the shape.</p>
-  <p><b>Placeholders:</b> write <code>[DATE]</code>, <code>[TEACHER NAME]</code> so it never invents a fact.</p>
-  <p><b>It's always a draft:</b> read it, check every number, name and date, and own it.</p>
+  <p><b>In a hurry? AAA: Ask AI to Act.</b> Start with who it should be: "Act as a patient tutor…", "Act as a strict examiner…", "Act as a senior developer…".</p>
+  <p><b>Leave gaps on purpose:</b> write <code>[DATE]</code> or <code>[TEACHER NAME]</code> so AI doesn't make up a fact. Fill them in yourself.</p>
+  <p><b>It's always a first draft:</b> read it, check every number, name and date, then make it yours.</p>
 </div>
 
 <h2 id="ex2">Exercise 2 · Prompt battle</h2>
 <div class="card">
   <span class="badge" style="background:var(--prompt)">8 min · pairs</span>
   <ol class="steps">
-    <li>Pick a task card: <b>🅰 Explain</b> a topic you're stuck on · <b>🅱 Plan</b> 2 weeks of study for first-semester exams · <b>🅲 Debug</b> the code below · <b>🅳 Write</b> an email asking your teacher for a 2-day extension.</li>
+    <li>Pick a task card: <b>A · Explain</b> a topic you're stuck on · <b>B · Plan</b> 2 weeks of study for first-semester exams · <b>C · Debug</b> the web page below · <b>D · Write</b> an email asking your teacher for a 2-day extension.</li>
     <li><b>Partner A</b> sends a lazy one-line prompt.</li>
     <li><b>Partner B</b> sends a full TEACH prompt (use the builder above) in the same tool.</li>
     <li>Compare. Which letter made the biggest difference?</li>
   </ol>
 </div>
 <h3>Card C · find the 2 bugs</h3>
-<pre class="code"><code>#include &lt;stdio.h&gt;
-
-int main() {
-    int n, sum = 0;
-    printf("Enter n: ");
-    scanf("%d", n);
-    for (int i = 1; i &lt; n; i++)
-        sum += i;
-    printf("Sum of 1 to %d = %d\n", n, sum);
-    return 0;
-}</code></pre>
-<div class="prompt"><span class="label">Card C: hints, not answers</span><button class="copy">Copy</button>Act as a patient C tutor.
-Task: Help me find the bugs in this program.
+<p class="small muted">Save it as <code>index.html</code> and open it in your browser first. The line "I study BCA..." disappears, and the GitHub link shows "page not found".</p>
+<pre class="code"><code>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+  &lt;title&gt;My Profile&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;h1&gt;Namaste, I'm Sita&lt;/h1&gt;
+  &lt;img src="photo.jpg" alt="My photo&gt;
+  &lt;p&gt;I study BCA at Sagarmatha College.&lt;/p&gt;
+  &lt;a href="github.com/sita"&gt;My GitHub&lt;/a&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+<div class="prompt"><span class="label">Card C: hints, not answers</span><button class="copy">Copy</button>Act as a patient web development tutor.
+Task: Help me find the bugs in this HTML page.
 Expectation: Don't give me the fixed code. Give me one hint per bug, and let me try first.
-Audience: A first-year student learning C.
-Context: It should print the sum of 1 to n. For n = 5 it should print 15.
+Audience: A first-year student learning HTML.
+Context: In the browser, the line "I study BCA..." disappears, and clicking "My GitHub" shows "page not found".
 How: Numbered hints, under 80 words in total.
 
 [PASTE THE CODE]</div>
 <details class="card"><summary><b>Answers (try first!)</b></summary>
-<p>1. <code>scanf("%d", n)</code> should be <code>scanf("%d", &amp;n)</code>: scanf needs the <i>address</i> of n.<br>2. <code>i &lt; n</code> should be <code>i &lt;= n</code>. Otherwise n = 5 gives 10, not 15.</p>
+<p>1. <code>alt="My photo</code> is missing its closing <code>"</code>, so the browser swallows the next lines into the alt text.<br>2. <code>href="github.com/sita"</code> needs <code>https://</code> in front. Without it, the browser looks for a page on your own site.</p>
 </details>
 
-<h2 id="hacks">Power prompts</h2>
-<div class="prompt"><span class="label">Hack 1 · Make it ask you first</span><button class="copy">Copy</button>Before you answer, ask me the three questions whose answers would most change what you write. Wait for my replies.</div>
-<div class="prompt"><span class="label">Hack 2 · Let it write the prompt</span><button class="copy">Copy</button>Don't answer yet. Interview me one question at a time about <span class="ph">[WHAT I NEED]</span>, then write me a single prompt I can paste into a fresh chat.</div>
-<div class="prompt"><span class="label">Hack 4 · Make it argue with you</span><button class="copy">Copy</button>Here is my plan: <span class="ph">[MY PLAN]</span>
+<h2 id="hacks">More prompts that help</h2>
+<div class="prompt"><span class="label">Make it ask you first</span><button class="copy">Copy</button>Before you answer, ask me the three questions whose answers would most change what you write. Wait for my replies.</div>
+<div class="prompt"><span class="label">Let it write the prompt for you</span><button class="copy">Copy</button>Don't answer yet. Interview me one question at a time about <span class="ph">[WHAT I NEED]</span>, then write me a single prompt I can paste into a fresh chat.</div>
+<div class="prompt"><span class="label">Make it disagree with you</span><button class="copy">Copy</button>Here is my plan: <span class="ph">[MY PLAN]</span>
 Make the strongest case against it. Don't balance it. Then tell me which of your points I should take most seriously.</div>
-<p><b>Hack 3 · Show, don't describe:</b> paste two or three examples of what you want instead of "make it professional". Remove names and numbers first.</p>
-<p><b>Three rounds:</b> draft → name exactly what's wrong ("keep the analogy, the code is too advanced") → bank what worked ("write the prompt that would have produced this first time"). <b>Correct, don't regenerate.</b></p>
-<div class="prompt"><span class="label">⭐ Tutor, not ghostwriter: save this one</span><button class="copy">Copy</button>I'm a first-year CSIT student learning <span class="ph">[TOPIC]</span>.
-Don't give me the answer. Teach me with the Socratic method:
+<p><b>Show an example:</b> paste one or two examples of what you want instead of saying "make it professional". Remove names and numbers first.</p>
+<p><b>Fix, don't restart:</b> if the answer is close, say exactly what to keep and what to change ("keep the example, but the code is too advanced"). Pressing "regenerate" is just a new guess.</p>
+<div class="prompt"><span class="label">Tutor, not answer machine: save this one</span><button class="copy">Copy</button>I'm a first-year <span class="ph">[BSc CSIT / BCA]</span> student learning <span class="ph">[TOPIC]</span>.
+Don't give me the answer. Teach me by asking me questions:
 ask me one question at a time, wait for my reply, give a hint if I'm stuck,
 and only confirm the answer once I've reasoned it out myself.
 At the end, give me 3 practice problems slightly harder than this one.</div>
@@ -165,82 +159,79 @@ At the end, give me 3 practice problems slightly harder than this one.</div>
 <h2 id="safe">Stay safe and honest</h2>
 <p>Before you paste anything, ask: <b>"If this leaked, who gets hurt?"</b></p>
 <div class="tl">
-  <div class="g"><b>🟢 Green: use freely.</b> Your own practice code, public information, lecture topics.</div>
-  <div class="a"><b>🟠 Amber: redact first.</b> Replace real details with <code>[NAME]</code>, <code>[PHONE]</code>, <code>[CITIZENSHIP NO.]</code>. Put them back yourself, outside the chat.</div>
-  <div class="r"><b>🔴 Red: never, in a personal account.</b> Passwords, API keys, OTPs, other people's private data. If removing the sensitive part kills the task, it's red.</div>
+  <div class="g"><b>Green: use freely.</b> Your own practice code, public information, lecture topics.</div>
+  <div class="a"><b>Amber: hide the details first.</b> Replace real details with <code>[NAME]</code>, <code>[PHONE]</code>, <code>[CITIZENSHIP NO.]</code>. Put them back yourself, outside the chat.</div>
+  <div class="r"><b>Red: never paste it.</b> Passwords, API keys, OTPs, other people's private data. If removing the sensitive part kills the task, it's red.</div>
 </div>
 <div class="card">
-  <p>🔕 Turn <b>off</b> "use my chats for training" in every AI account. Paying for a personal plan buys speed, not privacy.</p>
-  <p>🔑 Leaked a password or API key? <b>Change it or revoke it now</b>, then delete the chat. Asking the AI to "forget" does nothing.</p>
-  <p>📦 AI suggested a package? Check it exists on <a href="https://pypi.org">pypi.org</a> or <a href="https://www.npmjs.com">npmjs.com</a> first. AI sometimes invents package names, and attackers register them.</p>
-  <p>🕵️ Photos, voices and videos can be faked convincingly. Verify the source, not the pixels. A relative asking for money urgently and secretly? <b>Call back on the number you already have.</b></p>
-  <p>✋ <b>Attempt first, then AI.</b> First year is when you build your skills. Disclose AI use when a reader would feel misled not knowing, and follow your teacher's rules.</p>
+  <p>Turn <b>off</b> "use my chats for training" in every AI app's settings.</p>
+  <p>Pasted a password or API key by mistake? <b>Change it right away</b>, then delete the chat. Asking the AI to "forget" does nothing.</p>
+  <p>AI told you to install a package? Check it really exists on <a href="https://pypi.org">pypi.org</a> or <a href="https://www.npmjs.com">npmjs.com</a> first. AI sometimes makes up package names, and attackers create fake packages with those names.</p>
+  <p>Photos, voices and videos can be faked. Check who posted it first. A relative asks for money, urgently and secretly? <b>Hang up and call back on the number you already have.</b></p>
+  <p><b>Try it yourself first, then ask AI.</b> First year is when you build your skills. Tell your teacher when you used AI, and follow their rules.</p>
 </div>
 
-<h2 id="tools">Which tool, and a few terms</h2>
-<p>Learn the questions, not the names: <b>Where does the work live? Where does it need to go?</b></p>
+<h2 id="tools">Which tool?</h2>
+<p>App names change every few months. Ask instead: <b>what do I need, and where is my work?</b></p>
 <div style="overflow-x:auto"><table>
 <tr><th>If you need…</th><th>Try</th></tr>
 <tr><td>To understand, draft or debug</td><td>ChatGPT, Gemini, Claude</td></tr>
-<tr><td>Long documents or careful analysis</td><td>Claude, or any assistant with a large context window</td></tr>
 <tr><td>Sources you can check</td><td>Perplexity, or your assistant's search mode</td></tr>
 <tr><td>Answers from <i>your</i> notes</td><td><a href="https://notebooklm.google.com">NotebookLM</a>: upload PDFs, get cited answers</td></tr>
 <tr><td>Work in Gmail, Docs, Sheets</td><td>Gemini</td></tr>
 <tr><td>Help while coding in VS Code</td><td>GitHub Copilot (free with the Student Pack)</td></tr>
 </table></div>
 <div class="card">
-  <p><b>Token:</b> a piece of a word. Your limit is counted in tokens, and the whole chat is re-sent every message, so: one task, one chat.</p>
-  <p><b>Context window:</b> how much text the model can consider at once: your prompt, the chat so far, attached files and its answer. Its working memory, not everything it was trained on.</p>
-  <p><b>Temperature:</b> how random the output is. Low = focused and repeatable (code, facts, summaries). High = varied (names, ideas, stories).</p>
-  <p><b>Specialist models:</b> general chat, coding, image, speech and "reasoning" models that think longer before answering. Match the model to the job.</p>
+  <p><b>Why free plans run out:</b> AI reads text in small pieces called <b>tokens</b>, and every new message makes it re-read the whole chat. Long chats use up your limit fast. <b>One topic, one chat.</b></p>
 </div>
 
 <h2 id="ex3">Exercise 3 · Ship it</h2>
 <div class="card">
-  <span class="badge" style="background:var(--start)">10 min · AI + Git together</span>
+  <span class="badge" style="background:var(--start)">10 min · AI and Git together</span>
   <ol class="steps">
     <li>On GitHub: <b>+ → New repository</b>. Name it <b>exactly</b> your username. Public. Tick <b>Add a README file</b>.</li>
     <li>Fill in the prompt below, press <b>Copy</b>, and paste it into any AI tool.</li>
     <li><b>Edit the draft.</b> Delete anything untrue. Make it sound like you. No phone numbers.</li>
-    <li>Open <code>README.md</code> → ✏️ edit → paste → <b>Commit changes</b> with a real message, e.g. <code>Add profile README</code>.</li>
-    <li>Open <b>github.com/your-username</b>. You're live 🎉</li>
+    <li>Open <code>README.md</code>, click the pencil to edit, paste, then <b>Commit changes</b> with a real message, e.g. <code>Add profile README</code>.</li>
+    <li>Open <b>github.com/your-username</b>. Your profile is live.</li>
   </ol>
 </div>
 <div class="prompt"><span class="label">Profile README prompt</span><button class="copy">Copy</button>Act as a friendly tech mentor.
 Task: Write a GitHub profile README.md for me.
 Expectation: Honest and modest. Use ONLY the facts I give you: never invent skills, projects or awards. Under 150 words. At most 4 emojis.
 Audience: Classmates, seniors and future internship recruiters visiting my GitHub.
-Context: I'm <span class="ph">[FIRST NAME]</span>, a first-year B.Sc. CSIT student at Sagarmatha College, Nepal. I'm learning <span class="ph">[C, HTML, ...]</span>. I'm curious about <span class="ph">[AI / web / games / security]</span>. This year I want to <span class="ph">[ONE GOAL]</span>. Fun fact: <span class="ph">[SOMETHING TRUE]</span>.
-How: Markdown with these sections: 👋 About me · 🌱 Currently learning · 🎯 This year's goal · 📫 Reach me at <span class="ph">[LINKEDIN OR EMAIL]</span>.
+Context: I'm <span class="ph">[FIRST NAME]</span>, a first-year <span class="ph">[BSc CSIT / BCA]</span> student at Sagarmatha College, Nepal. I'm learning <span class="ph">[C, HTML, ...]</span>. I'm curious about <span class="ph">[AI / web / games / security]</span>. This year I want to <span class="ph">[ONE GOAL]</span>. Fun fact: <span class="ph">[SOMETHING TRUE]</span>.
+How: Markdown with these sections: About me · Currently learning · This year's goal · Reach me at <span class="ph">[LINKEDIN OR EMAIL]</span>.
 If anything is unclear, ask me before you start.</div>
 
 <h2 id="week">Your 7-day challenge</h2>
+<p><b>Solve a real problem with AI, and put it online.</b> At the end you'll have a public link to something you actually built.</p>
 <div class="card">
   <ul class="check" id="week-list">
-    <li><label><input type="checkbox"> <b>Day 1</b> · Create your GitHub account (done in class? tick it!)</label></li>
-    <li><label><input type="checkbox"> <b>Day 2</b> · Install Git and make your first local commit</label></li>
-    <li><label><input type="checkbox"> <b>Day 3</b> · Build a simple HTML page about yourself</label></li>
-    <li><label><input type="checkbox"> <b>Day 4</b> · Push it to GitHub</label></li>
-    <li><label><input type="checkbox"> <b>Day 5</b> · Use the tutor prompt to learn one concept you find hard</label></li>
-    <li><label><input type="checkbox"> <b>Day 6</b> · Write one TEACH prompt, then improve it in three rounds</label></li>
-    <li><label><input type="checkbox"> <b>Day 7</b> · Publish a small project with a README</label></li>
+    <li><label><input type="checkbox"> <b>Day 1</b> · Pick a real problem near you: your college, your family, a local shop. Write it in two sentences.</label></li>
+    <li><label><input type="checkbox"> <b>Day 2</b> · Use a TEACH prompt to plan a simple web page or app with AI: what it does, what the screens are.</label></li>
+    <li><label><input type="checkbox"> <b>Day 3</b> · Build the first version with AI's help (HTML, CSS, JavaScript). Ask AI to explain anything you don't understand.</label></li>
+    <li><label><input type="checkbox"> <b>Day 4</b> · Make it work properly. Test it, fix it, and understand every line.</label></li>
+    <li><label><input type="checkbox"> <b>Day 5</b> · Push it to GitHub with good commit messages (<a href="setup">setup steps</a>).</label></li>
+    <li><label><input type="checkbox"> <b>Day 6</b> · Put it online with GitHub Pages: a free public link (<a href="setup#pages">how</a>).</label></li>
+    <li><label><input type="checkbox"> <b>Day 7</b> · Write a README: the problem, your solution, what AI helped with. Share the link in the class group.</label></li>
   </ul>
 </div>
+<p><b>Problem ideas:</b> an udharo (credit) book for a local shop · a BS ↔ AD date converter · a class attendance tracker · an exam countdown and study planner · a bus fare calculator for your route.</p>
 <h3>Then keep going: free courses</h3>
 <ul>
   <li><a href="https://skills.github.com">GitHub Skills</a>: short interactive Git and GitHub courses</li>
   <li><a href="https://www.elementsofai.com">Elements of AI</a>: University of Helsinki, no coding needed</li>
   <li><a href="https://www.kaggle.com/learn">Kaggle Learn</a>: short hands-on Python, ML and data courses</li>
   <li><a href="https://cs50.harvard.edu/ai/">CS50's Introduction to AI with Python</a>: Harvard, free, once you're comfortable with Python</li>
-  <li><a href="https://www.deeplearning.ai/short-courses/">DeepLearning.AI short courses</a>: 1-hour courses on prompting and building with AI</li>
-</ul>
+  </ul>
 <p><b>Fundamentals still win:</b> maths, C, data structures, clear writing. AI makes strong fundamentals stronger. It can't replace missing ones.</p>
 
 <h2>If you remember three things</h2>
 <div class="three">
-  <div>🐙 Git saves it. GitHub shows it. Push every lab: your GitHub is your CV.</div>
-  <div>🧠 Brief AI like a new colleague (TEACH). It's always a draft.</div>
-  <div>🚦 If it leaked, who gets hurt? And attempt first, then AI.</div>
+  <div>1. Git saves it. GitHub shows it. Push every lab: your GitHub is your CV.</div>
+  <div>2. Tell AI what you need (TEACH). Its answer is always a first draft.</div>
+  <div>3. If this leaked, who gets hurt? And try it yourself first, then ask AI.</div>
 </div>
 <footer>Arjun Basnet · AI trainer · <a href="https://arjun-basnet.com.np">arjun-basnet.com.np</a> · <a href="./">Session home</a><br>Tool names and free-plan features change often. Checked November 2026.</footer>
 </div>
@@ -252,7 +243,7 @@ If anything is unclear, ask me before you start.</div>
     var boxes = document.querySelectorAll('#' + id + ' input'), key = 'sag-chk-' + id, s = SAG.store(key) || [];
     boxes.forEach(function(b, i){ b.checked = !!s[i]; b.addEventListener('change', function(){ SAG.store(key, [].map.call(boxes, function(x){ return x.checked; })); count(); }); });
   });
-  function count(){ var b = document.querySelectorAll('#chk input'), n = [].filter.call(b, function(x){ return x.checked; }).length; document.getElementById('chk-n').textContent = n + ' / ' + b.length + (n === b.length ? ' · your history is saved 🎉' : ''); }
+  function count(){ var b = document.querySelectorAll('#chk input'), n = [].filter.call(b, function(x){ return x.checked; }).length; document.getElementById('chk-n').textContent = n + ' / ' + b.length + (n === b.length ? ' · done' : ''); }
   count();
 
   // TEACH builder (merged from the draft deck): five boxes → one prompt

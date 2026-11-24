@@ -18,7 +18,7 @@ export const QUIZZES: Record<string, { title: string; questions: Question[] }> =
           "AI edits your writing, so you don't need to check it",
         ],
         answer: 1,
-        why: "AI gives a competent first draft. Making it correct is still your job, and your name is on it.",
+        why: "AI gives a good first draft. Making it correct is still your job, and your name is on it.",
       },
       {
         id: "q2",
@@ -36,7 +36,7 @@ export const QUIZZES: Record<string, { title: string; questions: Question[] }> =
           "Ask the AI if it's sure, and trust its answer",
         ],
         answer: 1,
-        why: "Confidently wrong, plus slopsquatting. Check the official package page. Asking AI to check itself is not checking.",
+        why: "AI sometimes makes up package names, and attackers publish fake packages with those names. Check the official package page. Asking AI if it's sure is not checking.",
       },
       {
         id: "q4",

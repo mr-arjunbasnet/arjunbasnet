@@ -1,0 +1,255 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow, noarchive">
+<title>Set up Git · Sagarmatha College</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anek+Latin:wght@600;700&family=Montserrat:wght@400;500;600;700&family=Geist+Mono:wght@500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/ai-training/sagarmatha-college/assets/session.css">
+<style>
+.os{position:sticky;top:0;z-index:5;background:var(--bg);padding:12px 0;border-bottom:1px solid var(--border);display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+.os button{border:1.5px solid var(--border);background:var(--card);color:var(--ink);border-radius:999px;padding:10px 8px;font:600 15px var(--sans);cursor:pointer;min-height:44px}
+.os button[aria-pressed=true]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+[data-for]{display:none}
+body[data-os=win] [data-for~=win],body[data-os=mac] [data-for~=mac],body[data-os=linux] [data-for~=linux]{display:block}
+span[data-for]{display:none}
+body[data-os=win] span[data-for~=win],body[data-os=mac] span[data-for~=mac],body[data-os=linux] span[data-for~=linux]{display:inline}
+.step{display:grid;grid-template-columns:34px 1fr;gap:12px;margin-top:30px}
+.step>.n{width:34px;height:34px;border-radius:50%;background:var(--ink);color:var(--bg);display:grid;place-items:center;font:700 16px var(--mono)}
+.step>div{min-width:0}
+.step h2{margin:4px 0 6px;font-size:24px}
+.cmd{position:relative}
+.cmd pre.code{padding-right:76px;white-space:pre}
+.cmd .cp{position:absolute;top:8px;right:8px;border:0;border-radius:999px;padding:6px 12px;background:#ECEAF6;color:#16142A;font:600 12px var(--mono);cursor:pointer}
+.cmd .cp.done{background:var(--green);color:#fff}
+.v{color:#F9A8D4}
+.ok{border-left:4px solid var(--green);background:var(--green-bg);color:var(--ink);border-radius:0 10px 10px 0;padding:8px 12px;margin:10px 0;font-size:15px}
+.warn{border-left:4px solid var(--amber);background:var(--amber-bg);color:var(--ink);border-radius:0 10px 10px 0;padding:8px 12px;margin:10px 0;font-size:15px}
+.me label.f:first-child{margin-top:4px}
+.me .hint{font-size:13px;color:var(--muted);margin:4px 0 0}
+details.card summary{cursor:pointer;font-weight:700}
+details.card[open] summary{margin-bottom:6px}
+ol.plain{padding-left:20px;margin:6px 0}ol.plain li{margin:4px 0}
+</style>
+</head>
+<body data-os="win">
+<div class="wrap">
+  <p class="kicker" style="margin-top:28px">Sagarmatha College · BSc CSIT / BCA</p>
+  <h1>Set up Git</h1>
+  <p class="muted" style="font-size:17px">About 10 minutes. Pick your computer, fill in your details once, then copy each command into your terminal.</p>
+
+  <div class="os" role="group" aria-label="Your computer">
+    <button type="button" data-os="win">Windows</button>
+    <button type="button" data-os="mac">macOS</button>
+    <button type="button" data-os="linux">Linux</button>
+  </div>
+
+  <div class="card me">
+    <label class="f" for="f-name">Your full name</label>
+    <input class="f" id="f-name" data-v="name" autocomplete="name" placeholder="Sita Shrestha">
+    <label class="f" for="f-email">Your email</label>
+    <input class="f" id="f-email" data-v="email" type="email" autocomplete="email" placeholder="you@example.com">
+    <p class="hint">Use the same email as your GitHub account.</p>
+    <label class="f" for="f-user">Your GitHub username</label>
+    <input class="f" id="f-user" data-v="user" autocomplete="username" placeholder="sitashrestha" autocapitalize="off" spellcheck="false">
+    <p class="hint">No account yet? Make one first at <a href="https://github.com/signup">github.com/signup</a>. The commands below update as you type.</p>
+  </div>
+
+  <!-- 1 -->
+  <section class="step"><span class="n">1</span><div>
+    <h2>Install Git</h2>
+    <div data-for="win">
+      <ol class="plain">
+        <li>Download <b>Git for Windows</b> from <a href="https://git-scm.com/install/windows">git-scm.com/install/windows</a>. Most laptops need the <b>x64</b> version.</li>
+        <li>Open the file and click <b>Next</b> on every screen. The default choices are fine.</li>
+        <li>When it finishes, open <b>Git Bash</b> from the Start menu. Type every command on this page into Git Bash.</li>
+      </ol>
+      <p class="small muted">Only download Git from git-scm.com. If Windows says "Windows protected your PC", click <b>More info</b>, then <b>Run anyway</b>.</p>
+    </div>
+    <div data-for="mac">
+      <p>Open <b>Terminal</b>: press <b>Cmd + Space</b>, type <b>Terminal</b>, press Enter. Then run:</p>
+      <div class="cmd"><pre class="code">xcode-select --install</pre></div>
+      <p>A window pops up. Click <b>Install</b> (not "Get Xcode") and wait 5 to 15 minutes.</p>
+      <p class="small muted">Already use Homebrew? <code>brew install git</code> works too.</p>
+    </div>
+    <div data-for="linux">
+      <p>Open a terminal (usually <b>Ctrl + Alt + T</b>) and run the line for your system. It asks for your computer password. Nothing shows while you type it; that's normal.</p>
+      <p class="small"><b>Ubuntu, Debian, Linux Mint</b></p>
+      <div class="cmd"><pre class="code">sudo apt update &amp;&amp; sudo apt install -y git</pre></div>
+      <p class="small"><b>Fedora</b></p>
+      <div class="cmd"><pre class="code">sudo dnf install -y git</pre></div>
+      <p class="small"><b>Arch, Manjaro</b></p>
+      <div class="cmd"><pre class="code">sudo pacman -S git</pre></div>
+    </div>
+  </div></section>
+
+  <!-- 2 -->
+  <section class="step"><span class="n">2</span><div>
+    <h2>Check it worked</h2>
+    <p>Close the <span data-for="win">Git Bash</span><span data-for="mac linux">terminal</span> window, open a new one, and run:</p>
+    <div class="cmd"><pre class="code">git --version</pre></div>
+    <p class="ok">You should see something like <code>git version 2.47.1</code>.</p>
+  </div></section>
+
+  <!-- 3 -->
+  <section class="step"><span class="n">3</span><div>
+    <h2>Tell Git who you are</h2>
+    <p>Do this once on each computer. Copy all four lines and paste them together.</p>
+    <div class="cmd"><pre class="code">git config --global user.name "<span class="v" data-v="name">Your Name</span>"
+git config --global user.email "<span class="v" data-v="email">you@example.com</span>"
+git config --global init.defaultBranch main
+git config --global core.editor nano</pre></div>
+    <p class="small muted">Your name and email go on every save (commit) you make. The last two lines name your main branch <code>main</code> and pick an editor that's easy to use.</p>
+    <p>Check your settings:</p>
+    <div class="cmd"><pre class="code">git config --global --list</pre></div>
+  </div></section>
+
+  <!-- 4 -->
+  <section class="step"><span class="n">4</span><div>
+    <h2>Connect to GitHub</h2>
+    <p>GitHub doesn't accept your account password from the terminal, so your computer needs another way to prove it's you.</p>
+    <div data-for="win">
+      <p class="ok"><b>Nothing to do on Windows.</b> Git came with a sign-in helper. The first time you push in step 5, a browser window opens. Sign in to GitHub and click <b>Authorize</b>. That's it.</p>
+    </div>
+    <div data-for="mac linux">
+      <p>You'll make an <b>SSH key</b>: a pair of files on your computer. GitHub gets the public half and recognises your computer from then on.</p>
+      <p><b>a.</b> Make the key. Press <b>Enter</b> for every question it asks.</p>
+      <div class="cmd"><pre class="code">ssh-keygen -t ed25519 -C "<span class="v" data-v="email">you@example.com</span>"</pre></div>
+      <p><b>b.</b> Copy the public key.</p>
+      <div data-for="mac"><div class="cmd"><pre class="code">pbcopy &lt; ~/.ssh/id_ed25519.pub</pre></div><p class="small muted">Nothing prints. The key is now on your clipboard.</p></div>
+      <div data-for="linux"><div class="cmd"><pre class="code">cat ~/.ssh/id_ed25519.pub</pre></div><p class="small muted">Select the whole line it prints (it starts with <code>ssh-ed25519</code>) and copy it.</p></div>
+      <p><b>c.</b> Open <a href="https://github.com/settings/ssh/new">github.com/settings/ssh/new</a>, give it a title like "My laptop", paste the key and click <b>Add SSH key</b>.</p>
+      <p><b>d.</b> Test it. Type <code>yes</code> if it asks "Are you sure you want to continue connecting?"</p>
+      <div class="cmd"><pre class="code">ssh -T git@github.com</pre></div>
+      <p class="ok">You should see <code>Hi <span data-v="user">your-username</span>! You've successfully authenticated</code>.</p>
+      <p class="warn">Only ever share the file ending in <code>.pub</code>. The other file is your private key: never paste it anywhere.</p>
+    </div>
+  </div></section>
+
+  <!-- 5 -->
+  <section class="step"><span class="n">5</span><div>
+    <h2>Push your first project</h2>
+    <p><b>a.</b> On GitHub, click <b>+</b> then <b>New repository</b>. Name it <code>my-first-repo</code>. Leave "Add a README file" <b>unticked</b>. Click <b>Create repository</b>.</p>
+    <p><b>b.</b> In your <span data-for="win">Git Bash</span><span data-for="mac linux">terminal</span>, run these lines:</p>
+    <div class="cmd"><pre class="code">mkdir my-first-repo
+cd my-first-repo
+echo "# My first repo" &gt; README.md
+git init
+git add README.md
+git commit -m "Add README"
+<span data-for="win">git remote add origin https://github.com/<span class="v" data-v="user">your-username</span>/my-first-repo.git</span><span data-for="mac linux">git remote add origin git@github.com:<span class="v" data-v="user">your-username</span>/my-first-repo.git</span>
+git push -u origin main</pre></div>
+    <p><b>c.</b> Refresh the GitHub page. Your README is there. You've pushed your first project.</p>
+  </div></section>
+
+  <!-- 6 -->
+  <section class="step"><span class="n">6</span><div>
+    <h2>Every day after that</h2>
+    <p>Inside your project folder, after you change something:</p>
+    <div class="cmd"><pre class="code">git status
+git add .
+git commit -m "<span class="v" data-v="msg">Say what you changed</span>"
+git push</pre></div>
+    <p class="small muted"><b>status</b> shows what changed. <b>add</b> picks the changes to save. <b>commit</b> saves them with a message. <b>push</b> sends them to GitHub.</p>
+  </div></section>
+
+  <!-- 7 -->
+  <section class="step" id="pages"><span class="n">7</span><div>
+    <h2>Put it online (GitHub Pages)</h2>
+    <p>Any repository with an <code>index.html</code> can become a free public website.</p>
+    <ol class="plain">
+      <li>On GitHub, open your repository, then <b>Settings</b> → <b>Pages</b>.</li>
+      <li>Under "Branch", choose <b>main</b> and <b>/ (root)</b>, then <b>Save</b>.</li>
+      <li>Wait a minute and refresh. Your site is live at:</li>
+    </ol>
+    <div class="cmd"><pre class="code">https://<span class="v" data-v="user">your-username</span>.github.io/my-first-repo/</pre></div>
+    <p class="small muted">Every <code>git push</code> updates the site within a minute or two. The repository must be public on a free account.</p>
+  </div></section>
+
+  <h2 style="margin-top:44px">Stuck?</h2>
+  <p class="muted">Find your error message below. Still stuck? Show the trainer a photo of the full error.</p>
+
+  <details class="card"><summary>'git' is not recognized, or git: command not found</summary>
+    <p>Close every terminal window and open a new one. Old windows don't see newly installed programs.</p>
+    <p data-for="win">Still failing? Use <b>Git Bash</b>, not Command Prompt. If it fails there too, run the installer again and keep the default choices.</p>
+    <p data-for="mac linux">Still failing? Git isn't installed yet. Go back to step 1.</p>
+  </details>
+  <details class="card"><summary>Please tell me who you are / Author identity unknown</summary>
+    <p>Git doesn't know your name and email yet. Do step 3, then run your <code>git commit</code> again.</p>
+  </details>
+  <details class="card"><summary>A strange screen opened after git commit and I can't get out</summary>
+    <p>That's an editor called Vim. Press <b>Esc</b>, type <code>:wq</code> and press <b>Enter</b>.</p>
+    <p>Next time, add the message in the command itself: <code>git commit -m "your message"</code>. Step 3's last line also switches you to an easier editor.</p>
+  </details>
+  <details class="card"><summary>Support for password authentication was removed</summary>
+    <p>GitHub won't take your password in the terminal.</p>
+    <p data-for="win">Run <code>git push</code> again and sign in through the browser window. If no window opens, reinstall Git and keep the default choices.</p>
+    <div data-for="mac linux"><p>Do step 4, then point your project at the SSH address:</p>
+    <div class="cmd"><pre class="code">git remote set-url origin git@github.com:<span class="v" data-v="user">your-username</span>/my-first-repo.git</pre></div></div>
+  </details>
+  <details class="card"><summary>Permission denied (publickey)</summary>
+    <p>GitHub doesn't have your key yet. Redo step 4, parts b and c, then test again with <code>ssh -T git@github.com</code>.</p>
+  </details>
+  <details class="card"><summary>error: src refspec main does not match any</summary>
+    <p>You haven't saved anything yet. Run <code>git add .</code> and <code>git commit -m "First commit"</code>, then push again.</p>
+    <p>If your branch is called <code>master</code>, rename it first:</p>
+    <div class="cmd"><pre class="code">git branch -M main</pre></div>
+  </details>
+  <details class="card"><summary>Could not get lock /var/lib/dpkg/lock</summary>
+    <p>Another program is installing updates. Wait 5 to 10 minutes and try again, or restart the computer.</p>
+  </details>
+
+  <footer>Arjun Basnet · AI trainer · <a href="https://arjun-basnet.com.np">arjun-basnet.com.np</a> · <a href="/ai-training/sagarmatha-college">Session home</a></footer>
+</div>
+<script src="/ai-training/sagarmatha-college/assets/session.js"></script>
+<script>
+(function(){
+  // Which computer: remembered, else guessed from the browser.
+  var saved = SAG.store('sag-os');
+  var ua = navigator.userAgent;
+  var guess = /Mac/.test(ua) && !/iPhone|iPad/.test(ua) ? 'mac' : /Linux/.test(ua) && !/Android/.test(ua) ? 'linux' : 'win';
+  function setOS(os){
+    document.body.dataset.os = os;
+    document.querySelectorAll('.os button').forEach(function(b){ b.setAttribute('aria-pressed', b.dataset.os === os); });
+    SAG.store('sag-os', os);
+  }
+  document.querySelectorAll('.os button').forEach(function(b){ b.addEventListener('click', function(){ setOS(b.dataset.os); }); });
+  setOS(saved || guess);
+
+  // Your details fill every command.
+  var defaults = { name: 'Your Name', email: 'you@example.com', user: 'your-username', msg: 'Say what you changed' };
+  var me = SAG.store('sag-setup') || {};
+  function paint(){
+    Object.keys(defaults).forEach(function(k){
+      var v = (me[k] || '').trim();
+      document.querySelectorAll('[data-v="' + k + '"]:not(input)').forEach(function(el){ el.textContent = v || defaults[k]; });
+    });
+  }
+  document.querySelectorAll('input[data-v]').forEach(function(i){
+    i.value = me[i.dataset.v] || '';
+    i.addEventListener('input', function(){
+      var v = i.value;
+      if (i.dataset.v === 'user') v = v.replace(/^@/, '').replace(/\s+/g, '');
+      if (i.dataset.v === 'name') v = v.replace(/"/g, '');
+      me[i.dataset.v] = v; SAG.store('sag-setup', me); paint();
+    });
+  });
+  paint();
+
+  // Copy buttons on every command block. Copies only what's visible for your computer.
+  document.querySelectorAll('.cmd').forEach(function(box){
+    var b = document.createElement('button'); b.className = 'cp'; b.type = 'button'; b.textContent = 'Copy';
+    b.addEventListener('click', function(){
+      var pre = box.querySelector('pre').cloneNode(true);
+      var os = document.body.dataset.os;
+      pre.querySelectorAll('[data-for]').forEach(function(el){ if ((' ' + el.dataset.for + ' ').indexOf(' ' + os + ' ') < 0) el.remove(); });
+      SAG.copyText(pre.textContent.trim(), b);
+    });
+    box.appendChild(b);
+  });
+})();
+</script>
+</body>
+</html>

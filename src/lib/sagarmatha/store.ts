@@ -84,9 +84,33 @@ async function rest<T>(path: string, init: RequestInit & { prefer?: string } = {
   let data: unknown = null;
   try { data = text ? JSON.parse(text) : null; } catch { data = text; }
   if (!res.ok && res.status !== 409) {
-    throw new Error(`supabase ${res.status}: ${typeof data === "string" ? data : JSON.stringify(data)}`);
+    throw new Error(`supabase ${res.status}: ${typeof data === "string" ? data.slice(0, 200) : JSON.stringify(data)}`);
+  }
+  // A 200 that isn't JSON means SUPABASE_URL points at a web page (e.g. the
+  // dashboard) instead of https://<project-ref>.supabase.co. Fail loudly:
+  // otherwise an HTML string's .length reads as "66,704 responses".
+  if (res.ok && text && typeof data === "string") {
+    throw new Error("supabase_url_not_api: SUPABASE_URL must be https://<project-ref>.supabase.co");
   }
   return { status: res.status, data: data as T };
+}
+
+/** For /api/sagarmatha/config: can we actually read the tables? No secrets in the answer. */
+export async function checkDb(): Promise<string> {
+  if (storageMode !== "supabase") return storageMode;
+  try {
+    const host = new URL(URL_!).hostname;
+    if (!host.endsWith(".supabase.co")) return "bad_url: SUPABASE_URL should look like https://<project-ref>.supabase.co";
+    await rest("aion_games?select=id&limit=1");
+    await rest("quiz_responses?select=id&limit=1");
+    return "ok";
+  } catch (e) {
+    const m = e instanceof Error ? e.message : String(e);
+    if (m.startsWith("supabase_url_not_api")) return "bad_url: SUPABASE_URL should look like https://<project-ref>.supabase.co";
+    if (/supabase 401|supabase 403/.test(m)) return "bad_key: use the secret (service role) key, not the publishable/anon key";
+    if (/supabase 404|PGRST205|does not exist/.test(m)) return "tables_missing: run docs/sagarmatha-session/schema.sql";
+    return "error: " + m.slice(0, 120);
+  }
 }
 
 /* ------------------------------------------------------------------ */
@@ -148,6 +172,30 @@ export async function updateGame(id: string, expectIndex: number, patch: Partial
   return data?.[0] ?? null;
 }
 
+/** Starts an image's clock once. A reload or a second call can't restart it. */
+export async function startClock(id: string, index: number): Promise<Game | null> {
+  const now = new Date().toISOString();
+  if (storageMode === "memory") {
+    const g = db().games.find((x) => x.id === id);
+    if (!g || g.current_index !== index) return null;
+    if (!g.shown_at) g.shown_at = now;
+    return g;
+  }
+  await rest(`aion_games?id=eq.${id}&current_index=eq.${index}&shown_at=is.null`, {
+    method: "PATCH", body: JSON.stringify({ shown_at: now }), prefer: "return=minimal",
+  });
+  return getGame(id);
+}
+
+/** For the public leaderboard: never loads emails. */
+const PUBLIC_COLS = "id,name,roll,points,correct,answers,image_ids,total_ms,finished,created_at,ai_called_real";
+export async function listGamesPublic(): Promise<Omit<Game, "email">[]> {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  if (storageMode === "memory") return db().games.filter((g) => g.session === SESSION).map(({ email: _e, ...g }) => g);
+  const { data } = await rest<Omit<Game, "email">[]>(`aion_games?select=${PUBLIC_COLS}&session=eq.${SESSION}&order=created_at.asc&limit=2000`);
+  return data ?? [];
+}
+
 export async function listGames(): Promise<Game[]> {
   if (storageMode === "memory") return db().games.filter((g) => g.session === SESSION);
   const { data } = await rest<Game[]>(`aion_games?session=eq.${SESSION}&order=created_at.asc&limit=2000`);
@@ -166,6 +214,13 @@ export async function saveQuiz(r: QuizResponse): Promise<"saved" | "exists"> {
   }
   const { status } = await rest("quiz_responses", { method: "POST", body: JSON.stringify(r), prefer: "return=minimal" });
   return status === 409 ? "exists" : "saved";
+}
+
+/** For the live quiz bars: answers only, no names or emails. */
+export async function listQuizAnswers(quiz: string): Promise<Pick<QuizResponse, "answers">[]> {
+  if (storageMode === "memory") return db().quiz.filter((q) => q.session === SESSION && q.quiz === quiz).map((q) => ({ answers: q.answers }));
+  const { data } = await rest<Pick<QuizResponse, "answers">[]>(`quiz_responses?select=answers&session=eq.${SESSION}&quiz=eq.${encodeURIComponent(quiz)}&limit=5000`);
+  return data ?? [];
 }
 
 export async function listQuiz(quiz?: string): Promise<QuizResponse[]> {

@@ -80,7 +80,7 @@ const nextConfig: NextConfig = {
       { source: "/brand", destination: "/brand/index.html" },
       { source: "/ai-training/sagarmatha-college", destination: "/ai-training/sagarmatha-college/index.html" },
       {
-        source: "/ai-training/sagarmatha-college/:page(slides|handout|ai-or-not|leaderboard|quiz|results|facilitator)",
+        source: "/ai-training/sagarmatha-college/:page(slides|handout|setup|ai-or-not|leaderboard|quiz|results|facilitator)",
         destination: "/ai-training/sagarmatha-college/:page.html",
       },
     ];
