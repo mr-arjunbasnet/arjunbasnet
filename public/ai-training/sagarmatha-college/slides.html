@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex, nofollow, noarchive">
-<title>AI, Git and You</title>
+<title>Getting started with Git and AI</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Anek+Latin:wght@600;700&family=Montserrat:wght@400;500;600;700;800&family=Geist+Mono:wght@400;600&family=Noto+Sans+Devanagari:wght@400;600&display=swap" rel="stylesheet">
@@ -285,8 +285,9 @@ body.presenter #pv{display:grid;grid-template-columns:1fr 360px;gap:26px;min-hei
   <div class="title-wrap" style="grid-template-columns:1fr;max-width:1250px">
     <div>
       <p class="kicker">Sagarmatha College · BSc CSIT / BCA · First year</p>
-      <h1 style="font-size:100px">AI, Git <em class="aurora">&amp; You</em></h1>
-      <p class="lead" style="font-size:36px">Your first toolkit as a computing student: what AI can and can't do, how to get good answers from it, and how to put your code online.</p>
+      <p style="font:600 36px var(--sans);color:var(--muted);margin:6px 0 4px">Getting started with</p>
+      <h1 style="font-size:110px">Git <em class="aurora">and AI</em></h1>
+      <p class="lead" style="font-size:36px">Your first toolkit as a computing student: how to save and share your code with Git, and how to use AI well and safely.</p>
       <p style="margin-top:44px;font-size:28px"><b>Arjun Basnet</b> <span class="muted">· AI trainer · arjun-basnet.com.np</span></p>
     </div>
   </div>
@@ -1221,7 +1222,7 @@ If anything is unclear, ask me before you start.</div>
     s.style.setProperty('--pc',secColor);
     s._sec=secName; s._at=secAt;
     const n=document.createElement('span');n.className='num';n.textContent=(i+1)+' / '+slides.length;s.appendChild(n);
-    if(!s.dataset.foot) s.dataset.foot='AI, Git & You · '+secName;
+    if(!s.dataset.foot) s.dataset.foot='Git and AI · '+secName;
   });
   secs.forEach((s,k)=>s.end=k<secs.length-1?secs[k+1].at:90);
 
@@ -1401,7 +1402,7 @@ If anything is unclear, ask me before you start.</div>
   // Open at the slide in the link, else where this browser left off.
   const h=parseInt((location.hash||('#'+(store.get('sag-deck-pos')||'1'))).slice(1),10);
   slides[0].classList.add('active');cur=0;show(isNaN(h)?0:h-1,0,true);
-  if(isPresenter){document.title='Presenter · AI, Git and You';}
+  if(isPresenter){document.title='Presenter · Git and AI';}
 })();
 </script>
 </body>
