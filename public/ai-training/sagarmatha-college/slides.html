@@ -121,20 +121,11 @@ ul.clean li::before{content:"";position:absolute;left:6px;top:25px;width:12px;he
 .flip.revealed[data-tone=red]{background:var(--red-bg);border-color:#fca5a5;color:#7f1d1d}
 .verdict{display:inline-block;font:700 16px var(--mono);letter-spacing:.08em;text-transform:uppercase;padding:4px 10px;border-radius:6px;background:rgba(0,0,0,.08);margin-bottom:6px}
 
-/* quiz + live bars */
-.quiz .q{font-size:38px;font-weight:700;line-height:1.25;margin:0 0 26px}
-.quiz .opts{display:grid;gap:16px}
-.quiz .opt{position:relative;overflow:hidden;isolation:isolate;border:2px solid var(--border);background:var(--card);border-radius:16px;padding:20px 26px;text-align:left;font-size:28px;font-weight:600;display:flex;gap:18px;align-items:center}
-.quiz .opt > *{position:relative}
-.quiz .opt b{font:700 22px var(--mono);width:40px;height:40px;border-radius:50%;display:grid;place-items:center;background:var(--soft);color:var(--ink);flex:none}
-.quiz .opt .lv{position:absolute!important;z-index:-1;inset:0 auto 0 0;width:0;background:var(--soft);transition:width .6s ease}
-.quiz .opt .cnt{margin-left:auto;font:600 22px var(--mono);color:var(--muted)}
-.quiz .opt.right{background:var(--green-bg);border-color:#4ade80}
-.quiz .opt.right .lv{background:#BBF7D0}
-.quiz .opt.wrong{background:var(--red-bg);border-color:#f87171;opacity:.8}
-.quiz .why{display:none;margin-top:22px;font-size:26px;padding:18px 24px;border-left:6px solid var(--pc);background:var(--soft);border-radius:0 12px 12px 0}
-.quiz.done .why{display:block}
-.livecount{font:600 18px var(--mono);color:var(--muted);margin-top:14px}
+/* live quiz top 10 */
+table.board td{font-size:30px;padding:12px 16px}
+table.board td.rk{width:70px;font:700 30px var(--display);color:var(--muted)}
+table.board td.sc{text-align:right;font:700 34px var(--display);color:var(--pc)}
+table.board td.tm{text-align:right;font:600 22px var(--mono);color:var(--muted);width:140px}
 
 /* poll tally */
 .poll{display:grid;gap:16px}
@@ -565,7 +556,7 @@ body.presenter #pv{display:grid;grid-template-columns:1fr 360px;gap:26px;min-hei
     <div>
       <p class="pill">Steps 1–5 · Set up</p>
       <ol class="steps" style="margin-top:12px">
-        <li><b>Install Git</b> for Windows, macOS or Linux</li>
+        <li><b>Install Git</b> with one terminal command</li>
         <li><b>Check it:</b> <code>git --version</code></li>
         <li><b>Tell Git who you are:</b> name and email</li>
         <li><b>Create your GitHub account</b> with a professional username</li>
@@ -586,7 +577,7 @@ body.presenter #pv{display:grid;grid-template-columns:1fr 360px;gap:26px;min-hei
   <aside class="notes">
     <p><b>Before the session:</b> post the setup link in the class group a day early and ask everyone to do steps 1–3 at home. That turns 16 minutes into 8.</p>
     <p><b>Order matters:</b> install Git first (macOS <code>xcode-select --install</code> downloads for 5–15 minutes, so Mac users start it first and create their GitHub account while it downloads), then the GitHub account, then the SSH key that connects the two.</p>
-    <p><b>Windows:</b> installer defaults are fine; everything after runs in <b>Git Bash</b>. "git is not recognized" means open a new terminal. <b>Lab PCs</b> often block installs: pair them with a laptop owner.</p>
+    <p><b>Windows:</b> one command in PowerShell (<code>winget install --id Git.Git -e --source winget</code>); the git-scm.com installer only if winget is missing. Everything after runs in <b>Git Bash</b>. "git is not recognized" means open a new terminal. <b>Lab PCs</b> often block installs: pair them with a laptop owner.</p>
     <p><b>Usual errors</b> (fixes at the bottom of the setup page): "Please tell me who you are" (step 3 skipped) · "src refspec main does not match any" (no commit yet) · "Permission denied (publickey)" or "password authentication was removed" (SSH key not added, step 5).</p>
     <p><b>Fallback:</b> if Git won't install, create <code>index.html</code> in the browser (Add file → Create new file → Commit changes) and finish at home.</p>
     <p>When most are done, show one student's repository on the projector. Applause.</p>
@@ -932,7 +923,7 @@ At the end, give me 3 practice problems slightly harder than this one.</div>
         <li>Scan the code, or open the link</li>
         <li>Your name and email: <b>one game per email</b>. Emails never show on the board</li>
         <li>Ten photos. Tap <b>Real</b> or <b>AI</b> before the timer runs out</li>
-        <li>100 points per correct answer, plus up to 50 for speed</li>
+        <li>One point per correct answer. Ties go to the fastest</li>
       </ol>
       <div class="row" style="margin-top:26px;align-items:center;gap:20px">
         <div class="countdown" data-sec="360"><span class="t">6:00</span><button class="go">Start</button><button class="rs">Reset</button></div>
@@ -1043,98 +1034,23 @@ If anything is unclear, ask me before you start.</div>
   <div class="grid2" style="grid-template-columns:1.3fr 1fr;gap:50px;align-items:center">
     <div>
       <h1 style="font-size:96px">Lightning <em>quiz</em></h1>
-      <p class="lead">Six questions on your phone. Answers appear live on the next slides, without names.</p>
+      <p class="lead">Ten questions on your phone, 30 seconds each. One point per correct answer. Ties go to the fastest.</p>
       <div class="row" style="margin-top:26px;align-items:center;gap:26px">
-        <div class="countdown" data-sec="120"><span class="t">2:00</span><button class="go">Start</button><button class="rs">Reset</button></div>
-        <div><span class="livebig" data-live="responses" style="font-size:72px">–</span> <span class="small muted">answered</span></div>
+        <div class="countdown" data-sec="360"><span class="t">6:00</span><button class="go">Start</button><button class="rs">Reset</button></div>
+        <a class="btn ghost" href="leaderboard#quiz" target="_blank" rel="noopener">Open leaderboard ↗</a>
       </div>
     </div>
     <div class="qr" style="max-width:360px"><img src="assets/qr-quiz.svg" alt="QR code for the quiz"><div class="u">…/sagarmatha-college/quiz</div></div>
   </div>
-  <aside class="notes"><p>Give them 2 minutes to answer on their phones, then step through the six question slides. Each one shows the class's live answer split; click the right answer to reveal it. Responses are saved for you (see the results page).</p></aside>
+  <aside class="notes"><p>Press Start: 6 minutes covers scanning the code plus the quiz (5 minutes at most; most finish in 3). Each phone gets the questions in its own order, so neighbours can't share "it's B". Answers stay hidden until each student submits. Then go to the next slide for the top 10.</p></aside>
 </section>
 
-<section class="slide" data-title="Quiz 1">
-  <p class="kicker">Question 1 of 6</p>
-  <div class="quiz" data-qid="q1">
-    <p class="q">"Writing becomes editing" means…</p>
-    <div class="opts">
-      <button class="opt"><b>A</b>You should never write anything yourself again</button>
-      <button class="opt" data-right><b>B</b>AI gives a first draft; your job is to make it correct and right for the situation</button>
-      <button class="opt"><b>C</b>AI edits your writing, so you don't need to check it</button>
-    </div>
-    <p class="why">AI gives a good first draft. Making it correct is still your job, and your name is on it.</p>
-    <p class="livecount"></p>
-  </div>
-</section>
-
-<section class="slide" data-title="Quiz 2">
-  <p class="kicker">Question 2 of 6</p>
-  <div class="quiz" data-qid="q2">
-    <p class="q">In TEACH, "a first-year student who has never used pointers" is which letter?</p>
-    <div class="opts">
-      <button class="opt"><b>A</b>T · Task</button>
-      <button class="opt" data-right><b>B</b>A · Audience</button>
-      <button class="opt"><b>C</b>H · How</button>
-    </div>
-    <p class="why"><b>Audience</b>: who reads it and what they already know. It's the letter that fixes the level of the answer.</p>
-    <p class="livecount"></p>
-  </div>
-</section>
-
-<section class="slide" data-title="Quiz 3">
-  <p class="kicker">Question 3 of 6</p>
-  <div class="quiz" data-qid="q3">
-    <p class="q">AI tells you to <code>pip install</code> a package. You can't find it anywhere online. What's most likely?</p>
-    <div class="opts">
-      <button class="opt"><b>A</b>It's very new. Install it anyway</button>
-      <button class="opt" data-right><b>B</b>The AI invented it, and installing a lookalike could be an attack</button>
-      <button class="opt"><b>C</b>Ask the AI if it's sure, and trust its answer</button>
-    </div>
-    <p class="why">AI sometimes makes up package names, and attackers publish fake packages with those names. Check the official package page. Asking AI if it's sure is not checking.</p>
-    <p class="livecount"></p>
-  </div>
-</section>
-
-<section class="slide" data-title="Quiz 4">
-  <p class="kicker">Question 4 of 6</p>
-  <div class="quiz" data-qid="q4">
-    <p class="q">You realise you pasted code with your API key into a chatbot. What first?</p>
-    <div class="opts">
-      <button class="opt"><b>A</b>Ask the chatbot to forget it</button>
-      <button class="opt" data-right><b>B</b>Revoke the key, make a new one, and delete the chat</button>
-      <button class="opt"><b>C</b>Nothing: chats are encrypted</button>
-    </div>
-    <p class="why">Asking AI to forget doesn't remove anything, and encryption doesn't hide it from the company holding the keys. Revoke it right away.</p>
-    <p class="livecount"></p>
-  </div>
-</section>
-
-<section class="slide" data-title="Quiz 5">
-  <p class="kicker">Question 5 of 6</p>
-  <div class="quiz" data-qid="q5">
-    <p class="q">Which statement is true?</p>
-    <div class="opts">
-      <button class="opt"><b>A</b>Git and GitHub are the same thing</button>
-      <button class="opt"><b>B</b>GitHub works offline; Git needs the internet</button>
-      <button class="opt" data-right><b>C</b>Git tracks changes on your laptop; GitHub hosts them online for sharing</button>
-    </div>
-    <p class="why">The camera and the online photo album.</p>
-    <p class="livecount"></p>
-  </div>
-</section>
-<section class="slide" data-title="Quiz 6">
-  <p class="kicker">Question 6 of 6</p>
-  <div class="quiz" data-qid="q6">
-    <p class="q">You changed three files and want them on GitHub. What's the right order?</p>
-    <div class="opts">
-      <button class="opt"><b>A</b>commit → add → push</button>
-      <button class="opt" data-right><b>B</b>add → commit → push</button>
-      <button class="opt"><b>C</b>push → add → commit</button>
-    </div>
-    <p class="why">Pack the box (<b>add</b>), seal and label it (<b>commit</b>), ship it (<b>push</b>).</p>
-    <p class="livecount"></p>
-  </div>
+<section class="slide" data-title="Quiz leaderboard">
+  <p class="kicker">Lightning quiz · live</p>
+  <h2>Top 10 <em>right now</em></h2>
+  <table class="t board" data-live="quizboard"><tbody><tr><td colspan="4" class="muted">Waiting for the first finished quiz…</td></tr></tbody></table>
+  <p class="small muted" style="margin-top:auto" data-live="quizcount"></p>
+  <aside class="notes"><p>Updates every 3 seconds. Read out the top 3 and give them a clap. The full board, with everyone, is on the leaderboard page (Quiz tab).</p></aside>
 </section>
 
 <section class="slide" data-title="Three things to remember">
@@ -1179,7 +1095,7 @@ If anything is unclear, ask me before you start.</div>
   <p>The deck remembers your slide. Go to the session page and come back: it opens where you left off.</p>
   <p><kbd>Home</kbd>/<kbd>End</kbd> first and last slide · <kbd>Esc</kbd> close panels</p>
   <p style="color:#c9beff">The clock starts when you leave the title slide. The chip turns amber when you're more than 3 minutes behind the plan for the current part.</p>
-  <p style="color:#c9beff">Present from <b>arjun-basnet.com.np/ai-training/sagarmatha-college/slides</b> so the live quiz bars and AI or Not counts work. Pink <b>[FIELDS]</b> in prompts are typeable.</p>
+  <p style="color:#c9beff">Present from <b>arjun-basnet.com.np/ai-training/sagarmatha-college/slides</b> so the live leaderboard and AI or Not counts work. Pink <b>[FIELDS]</b> in prompts are typeable.</p>
 </div></div>
 <div id="jump"><div class="box"><h3 style="margin-top:0;font-size:22px">Jump to slide</h3><ol id="jump-list"></ol></div></div>
 
@@ -1329,11 +1245,6 @@ If anything is unclear, ask me before you start.</div>
   document.querySelectorAll('.predict').forEach(p=>{const r=p.querySelector('input'),v=p.querySelector('.pv');r.addEventListener('input',()=>v.textContent=r.value);p.querySelector('.lock').onclick=()=>p.classList.add('done');});
   // flip cards
   document.querySelectorAll('.flip').forEach(b=>b.addEventListener('click',()=>b.classList.toggle('revealed')));
-  // quiz
-  document.querySelectorAll('.quiz').forEach(q=>q.querySelectorAll('.opt').forEach(o=>o.addEventListener('click',()=>{
-    q.querySelectorAll('.opt').forEach(x=>{if(x.hasAttribute('data-right'))x.classList.add('right');});
-    if(!o.hasAttribute('data-right'))o.classList.add('wrong');q.classList.add('done');
-  })));
   // next-token
   document.querySelectorAll('.reveal-probs').forEach(b=>b.onclick=()=>{const s=b.closest('.slide');s.querySelector('.probs').classList.add('on');s.querySelector('.nt-blank').textContent='hour';});
   // bugs
@@ -1365,19 +1276,18 @@ If anything is unclear, ask me before you start.</div>
 
   // live data from the session API (works when the deck is served from the website)
   const API=(location.protocol.startsWith('http')?'':'https://arjun-basnet.com.np')+'/api/sagarmatha/';
-  document.querySelectorAll('.quiz[data-qid] .opt').forEach(o=>{const lv=document.createElement('i');lv.className='lv';o.prepend(lv);const c=document.createElement('span');c.className='cnt';o.appendChild(c);});
   let liveBusy=false;
   function live(){
     if(liveBusy||isPresenter)return;const s=slides[cur];
-    const q=s.querySelector('.quiz[data-qid]');const needQuiz=q||s.querySelector('[data-live="responses"]');
+    const qb=s.querySelector('[data-live="quizboard"]');
     const needBoard=s.querySelector('[data-live="players"],[data-live="aireal"]');
-    if(!needQuiz&&!needBoard)return;liveBusy=true;
+    if(!qb&&!needBoard)return;liveBusy=true;
     const jobs=[];
-    if(needQuiz)jobs.push(fetch(API+'quiz/stats?quiz=final').then(r=>r.json()).then(d=>{
-      s.querySelectorAll('[data-live="responses"]').forEach(x=>x.textContent=d.responses??'–');
-      if(q){const st=(d.questions||[]).find(x=>x.id===q.dataset.qid);if(!st)return;const tot=st.counts.reduce((a,b)=>a+b,0);
-        q.querySelectorAll('.opt').forEach((o,k)=>{const n=st.counts[k]||0;o.querySelector('.lv').style.width=(tot?100*n/tot:0)+'%';o.querySelector('.cnt').textContent=tot?n+' · '+Math.round(100*n/tot)+'%':'';});
-        q.querySelector('.livecount').textContent=tot?tot+' answers from the class':'';}
+    const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+    if(qb)jobs.push(fetch(API+'quiz/leaderboard').then(r=>r.json()).then(d=>{
+      const rows=(d.rows||[]).slice(0,10);
+      if(rows.length)qb.tBodies[0].innerHTML=rows.map(r=>'<tr><td class="rk">'+(['🥇','🥈','🥉'][r.rank-1]||r.rank)+'</td><td><b>'+esc(r.name)+'</b>'+(r.roll?' <span class="small muted">'+esc(r.roll)+'</span>':'')+'</td><td class="tm">'+(r.seconds!=null?r.seconds+'s':'')+'</td><td class="sc">'+r.score+'/'+r.total+'</td></tr>').join('');
+      const st=d.stats||{};s.querySelectorAll('[data-live="quizcount"]').forEach(x=>x.textContent=st.players?st.finished+' finished · '+(st.players-st.finished)+' still answering':'');
     }).catch(()=>{}));
     if(needBoard)jobs.push(fetch(API+'aion/leaderboard').then(r=>r.json()).then(d=>{
       const st=d.stats||{};s.querySelectorAll('[data-live="players"]').forEach(x=>x.textContent=st.players??'–');

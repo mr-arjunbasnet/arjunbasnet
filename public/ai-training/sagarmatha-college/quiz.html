@@ -10,18 +10,26 @@
 <link rel="stylesheet" href="assets/session.css">
 <style>
 .screen{display:none}.screen.on{display:block}
+.hud{display:flex;justify-content:space-between;align-items:center;font:600 14px var(--mono);margin:22px 0 8px}
+.hud b{font-size:18px}
+.timer{height:8px;border-radius:8px;background:var(--soft);overflow:hidden;margin-bottom:16px}
+.timer i{display:block;height:100%;width:100%;background:var(--primary);transform-origin:left}
+.timer.low i{background:var(--red)}
+.qq{font:700 22px/1.35 var(--sans);margin:6px 0 14px}
 .q{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:16px;margin:12px 0}
 .q h3{font-family:var(--sans);font-size:17px;line-height:1.35;margin:0 0 10px}
 .q .n{font:600 12px var(--mono);color:var(--muted)}
-.opt{display:flex;gap:10px;align-items:flex-start;width:100%;text-align:left;border:1.5px solid var(--border);background:var(--bg);color:var(--ink);border-radius:10px;padding:11px 12px;margin:6px 0;font:500 15px/1.4 var(--sans);cursor:pointer}
-.opt b{font:700 13px var(--mono);flex:none;width:24px;height:24px;border-radius:50%;display:grid;place-items:center;background:var(--soft)}
+.opt{display:flex;gap:10px;align-items:flex-start;width:100%;text-align:left;border:1.5px solid var(--border);background:var(--card);color:var(--ink);border-radius:12px;padding:14px;margin:8px 0;font:500 16px/1.4 var(--sans);cursor:pointer;min-height:56px}
+.opt b{font:700 13px var(--mono);flex:none;width:26px;height:26px;border-radius:50%;display:grid;place-items:center;background:var(--soft)}
 .opt.sel{border-color:var(--primary);box-shadow:inset 0 0 0 1px var(--primary)}
 .opt.sel b{background:var(--primary);color:var(--primary-ink)}
+.opt:disabled{cursor:default}
+.q .opt{background:var(--bg);font-size:15px;padding:11px 12px;min-height:0;margin:6px 0}
 .opt.right{border-color:var(--green);background:var(--green-bg)}
 .opt.wrong{border-color:var(--red);background:var(--red-bg)}
 .why{font-size:14px;margin-top:8px;padding:8px 12px;border-left:3px solid var(--primary);background:var(--soft);border-radius:0 8px 8px 0}
-.big{font:700 60px/1 var(--display);margin:8px 0}
-.sticky{position:sticky;bottom:0;background:linear-gradient(transparent,var(--bg) 30%);padding:20px 0 16px}
+.big{font:700 64px/1 var(--display);margin:8px 0}
+.rules{margin:10px 0 0;padding-left:20px;color:var(--muted);font-size:15px}.rules li{margin:4px 0}
 </style>
 </head>
 <body>
@@ -29,93 +37,161 @@
 <section class="screen on" id="s-join">
   <p class="kicker" style="margin-top:24px">Sagarmatha College · BSc CSIT / BCA</p>
   <h1>Lightning quiz</h1>
-  <p class="muted">Six quick questions on today's session. Your answers show up live on the projector (without names).</p>
+  <ul class="rules">
+    <li>10 questions on today's session</li>
+    <li>30 seconds for each one. Tap an answer to lock it in</li>
+    <li>Your score goes on the leaderboard. Ties go to the fastest</li>
+  </ul>
   <div class="card">
     <form id="join" novalidate>
       <label class="f" for="name">Your name</label><input class="f" id="name" autocomplete="name" placeholder="Enter your full name" required>
       <label class="f" for="email">Email</label><input class="f" id="email" type="email" inputmode="email" autocomplete="email" placeholder="Enter your email" required>
       <label class="f" for="roll">Roll no. or section <span class="muted">(optional)</span></label><input class="f" id="roll" placeholder="Enter your roll number or section">
       <p class="err" id="join-err"></p>
-      <button class="btn block">Start the quiz →</button>
+      <button class="btn block" id="go">Start the quiz →</button>
     </form>
+    <p class="small muted" style="margin:12px 0 0">One try per email. The clock starts when you press Start. Your email is never shown on the board.</p>
   </div>
+  <p class="small"><a href="leaderboard#quiz">See the leaderboard</a></p>
 </section>
 
 <section class="screen" id="s-quiz">
-  <p class="kicker" style="margin-top:24px">Lightning quiz</p>
-  <h1 style="font-size:32px">Pick one answer each</h1>
-  <div id="qs"><p class="muted">Loading…</p></div>
-  <div class="sticky"><p class="err" id="q-err"></p><button class="btn block" id="submit">Submit my answers</button></div>
+  <div class="hud"><span>Question <b id="q-n">1</b> of <b id="q-of">10</b></span><span><b id="q-left">30</b> s</span></div>
+  <div class="timer" id="q-timer"><i id="q-bar"></i></div>
+  <p class="qq" id="q-text"></p>
+  <div id="q-opts"></div>
+  <p class="err" id="q-err"></p>
+  <button class="btn block" id="retry" style="display:none">Try sending again</button>
 </section>
 
 <section class="screen" id="s-done">
   <p class="kicker" style="margin-top:24px">Your score</p>
   <div class="big" id="d-score"></div>
   <p class="muted" id="d-note"></p>
+  <div style="display:grid;gap:10px;margin:14px 0">
+    <a class="btn block" href="leaderboard#quiz">See the leaderboard</a>
+    <a class="btn ghost block" href="/ai-training/sagarmatha-college">Back to the session page</a>
+  </div>
+  <h2>The answers</h2>
   <div id="d-qs"></div>
-  <p><a class="btn ghost block" href="./">Back to the session page</a></p>
+  <p><a class="btn ghost block" href="/ai-training/sagarmatha-college">Back to the session page</a></p>
 </section>
 </div>
 <script src="assets/session.js"></script>
 <script>
 (function(){
   var $ = function(id){ return document.getElementById(id); };
-  var quiz = null, picks = {};
+  var KEY = 'sag-quiz2', cur = '', st = null, quiz = null, deadline = 0, qEnd = 0, timer = null, busy = false;
   function show(id){ document.querySelectorAll('.screen').forEach(function(s){ s.classList.toggle('on', s.id===id); }); scrollTo(0,0); }
-  SAG.leaveGuard = function(){ return document.getElementById('s-quiz').classList.contains('on') ? 'Leave the quiz? Your answers have not been submitted yet.' : ''; };
+  function save(){ SAG.store(KEY, st); }
+  function shuffle(a){ a = a.slice(); for (var i = a.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)); var t = a[i]; a[i] = a[j]; a[j] = t; } return a; }
+  SAG.leaveGuard = function(){ return $('s-quiz').classList.contains('on') ? 'Leave the quiz? The clock keeps running while you are away.' : ''; };
   var me = SAG.me; if (me.name) $('name').value = me.name; if (me.email) $('email').value = me.email; if (me.roll) $('roll').value = me.roll;
 
-  var saved = SAG.store('sag-quiz-final');
-  if (saved && saved.results) return renderDone(saved);
+  // An attempt saved on this phone counts only for today's class session.
+  SAG.current().then(function(s){
+    cur = s;
+    var saved = SAG.store(KEY);
+    if (!saved || saved.session !== cur) return;
+    st = saved;
+    if (st.done) loadResult(st.attemptId, '');
+    else $('go').textContent = 'Continue the quiz →';
+  });
 
   $('join').addEventListener('submit', function(e){
     e.preventDefault();
-    var b = { name:$('name').value.trim(), email:$('email').value.trim(), roll:$('roll').value.trim() };
-    if (b.name.length < 2) return ($('join-err').textContent = SAG.errorText('name_required'));
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(b.email)) return ($('join-err').textContent = SAG.errorText('email_invalid'));
-    SAG.me = b; show('s-quiz');
-    SAG.api('quiz/questions?quiz=final').then(function(d){
-      if (d.error) { $('qs').innerHTML = '<p class="err">' + SAG.errorText(d.error) + '</p>'; return; }
-      quiz = d; render();
+    var b = { quiz:'final', name:$('name').value.trim(), email:$('email').value.trim(), roll:$('roll').value.trim() };
+    var bad = SAG.checkPlayer(b);
+    if (bad) return ($('join-err').textContent = SAG.errorText(bad));
+    $('go').disabled = true; $('join-err').textContent = '';
+    SAG.me = { name:b.name, email:b.email, roll:b.roll };
+    SAG.current().then(function(s){
+      cur = s;
+      if (st && st.session === cur && st.attemptId) b.attemptId = st.attemptId;
+      return SAG.api('quiz/start', b);
+    }).then(function(d){
+      $('go').disabled = false;
+      if (d.error === 'quiz_done' && d.attemptId) { st = { session:cur, attemptId:d.attemptId, done:true }; save(); return loadResult(d.attemptId, 'You already took the quiz from this email. These are your saved answers.'); }
+      if (d.error) return ($('join-err').textContent = SAG.errorText(d.error));
+      quiz = d;
+      // Resume keeps this phone's order and answers; a new attempt shuffles.
+      if (!(st && st.attemptId === d.attemptId && st.order)) {
+        var opt = {};
+        d.questions.forEach(function(q){ opt[q.id] = shuffle(q.options.map(function(_, k){ return k; })); });
+        st = { session:cur, attemptId:d.attemptId, order:shuffle(d.questions.map(function(q){ return q.id; })), opt:opt, picks:{}, qi:0, done:false };
+        save();
+      }
+      deadline = performance.now() + d.remainingMs;
+      show('s-quiz');
+      if (d.remainingMs <= 0 || st.qi >= st.order.length) return submit();
+      ask();
     });
   });
 
-  function render(){
-    $('qs').innerHTML = quiz.questions.map(function(q, i){
-      return '<div class="q" data-q="' + q.id + '"><span class="n">' + (i+1) + ' of ' + quiz.questions.length + '</span><h3>' + SAG.esc(q.q) + '</h3>' +
-        q.options.map(function(o, k){ return '<button type="button" class="opt" data-k="' + k + '"><b>' + 'ABC'[k] + '</b><span>' + SAG.esc(o) + '</span></button>'; }).join('') + '</div>';
+  function byId(id){ for (var i = 0; i < quiz.questions.length; i++) if (quiz.questions[i].id === id) return quiz.questions[i]; }
+
+  function ask(){
+    busy = false;
+    var q = byId(st.order[st.qi]);
+    $('q-n').textContent = st.qi + 1; $('q-of').textContent = st.order.length;
+    $('q-text').textContent = q.q;
+    $('q-opts').innerHTML = st.opt[q.id].map(function(k, i){
+      return '<button type="button" class="opt" data-k="' + k + '"><b>' + 'ABC'[i] + '</b><span>' + SAG.esc(q.options[k]) + '</span></button>';
     }).join('');
-    document.querySelectorAll('.q').forEach(function(box){
-      box.querySelectorAll('.opt').forEach(function(o){ o.addEventListener('click', function(){
-        box.querySelectorAll('.opt').forEach(function(x){ x.classList.remove('sel'); });
-        o.classList.add('sel'); picks[box.dataset.q] = +o.dataset.k;
-      }); });
-    });
+    $('q-opts').querySelectorAll('.opt').forEach(function(o){ o.addEventListener('click', function(){ pick(q.id, +o.dataset.k, o); }); });
+    qEnd = Math.min(performance.now() + quiz.secondsPerQuestion * 1000, deadline);
+    clearInterval(timer); tick(); timer = setInterval(tick, 100);
   }
 
-  $('submit').addEventListener('click', function(){
-    var missing = quiz.questions.filter(function(q){ return picks[q.id] == null; }).length;
-    if (missing) return ($('q-err').textContent = 'Answer all questions first (' + missing + ' left).');
-    $('submit').disabled = true; $('q-err').textContent = '';
-    var me = SAG.me;
-    SAG.api('quiz/submit', { quiz:'final', name:me.name, email:me.email, roll:me.roll, answers:picks }).then(function(d){
-      $('submit').disabled = false;
-      if (d.error) return ($('q-err').textContent = SAG.errorText(d.error));
-      d.questions = quiz.questions; SAG.store('sag-quiz-final', d); renderDone(d);
-    });
-  });
+  function tick(){
+    var left = Math.max(0, qEnd - performance.now());
+    $('q-bar').style.transform = 'scaleX(' + (left / (quiz.secondsPerQuestion * 1000)) + ')';
+    $('q-left').textContent = Math.ceil(left / 1000);
+    $('q-timer').classList.toggle('low', left < 5000);
+    if (left <= 0) advance();
+  }
 
-  function renderDone(d){
+  function pick(id, k, el){
+    if (busy) return; busy = true;
+    st.picks[id] = k; save();
+    el.classList.add('sel');
+    $('q-opts').querySelectorAll('.opt').forEach(function(o){ o.disabled = true; });
+    clearInterval(timer);
+    setTimeout(advance, 350);
+  }
+
+  function advance(){
+    clearInterval(timer);
+    st.qi++; save();
+    if (st.qi >= st.order.length || performance.now() >= deadline) return submit();
+    ask();
+  }
+
+  function submit(){
+    clearInterval(timer);
+    $('q-text').textContent = 'Sending your answers…'; $('q-opts').innerHTML = ''; $('q-err').textContent = ''; $('retry').style.display = 'none';
+    $('q-bar').style.transform = 'scaleX(0)'; $('q-left').textContent = '0';
+    SAG.api('quiz/submit', { attemptId:st.attemptId, answers:st.picks }).then(function(d){
+      if (d.error) { $('q-err').textContent = SAG.errorText(d.error); $('retry').style.display = ''; return; }
+      st.done = true; save();
+      renderDone(d, d.late ? 'Time ran out before your answers reached us, so they didn\u2019t count.' : '');
+    });
+  }
+  $('retry').onclick = submit;
+
+  function loadResult(id, note){
+    SAG.api('quiz/result?id=' + encodeURIComponent(id)).then(function(d){ if (!d.error) renderDone(d, note); });
+  }
+
+  function renderDone(d, note){
     show('s-done');
     $('d-score').textContent = d.score + ' / ' + d.total;
-    $('d-note').textContent = d.alreadySubmitted ? 'You had already submitted from this email. Your first answers are the ones saved.' : 'Saved. Thanks!';
-    var qs = d.questions || [];
-    $('d-qs').innerHTML = d.results.map(function(r, i){
-      var q = qs[i] || { q:'', options:[] };
+    $('d-note').textContent = note || ((d.seconds != null ? 'In ' + d.seconds + ' seconds. ' : '') + 'Saved. Find yourself on the leaderboard.');
+    $('d-qs').innerHTML = d.questions.map(function(q, i){
       return '<div class="q"><span class="n">' + (i+1) + '</span><h3>' + SAG.esc(q.q) + '</h3>' + q.options.map(function(o, k){
-        var c = k === r.answer ? 'right' : (k === r.yours ? 'wrong' : '');
+        var c = k === q.answer ? 'right' : (k === q.yours ? 'wrong' : '');
         return '<div class="opt ' + c + '"><b>' + 'ABC'[k] + '</b><span>' + SAG.esc(o) + '</span></div>';
-      }).join('') + '<div class="why">' + SAG.esc(r.why) + '</div></div>';
+      }).join('') + (q.yours == null ? '<p class="small muted" style="margin:6px 0 0">No answer in time.</p>' : '') + '<div class="why">' + SAG.esc(q.why) + '</div></div>';
     }).join('');
   }
 })();

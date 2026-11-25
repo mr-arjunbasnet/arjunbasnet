@@ -31,7 +31,7 @@ td.n{text-align:right;font-family:var(--mono)}
     <p class="small muted">The key is checked by the server and kept only in this browser tab. All data also lives in Supabase → Table Editor → <code>aion_games</code> and <code>quiz_responses</code>.</p>
   </div>
   <div id="data" style="display:none">
-    <div class="row"><div class="tabs"><button data-t="aion" class="on">AI or Not</button><button data-t="quiz">Quiz</button></div>
+    <div class="row"><select class="f" id="sess" aria-label="Class session" style="max-width:220px;margin:0"></select><div class="tabs"><button data-t="aion" class="on">AI or Not</button><button data-t="quiz">Quiz</button></div>
       <button class="btn ghost" id="csv">Download CSV</button><button class="btn ghost" id="refresh">Refresh</button><span class="muted small" id="count"></span></div>
     <div class="scroll"><table><thead id="th"></thead><tbody id="tb"></tbody></table></div>
   </div>
@@ -40,10 +40,16 @@ td.n{text-align:right;font-family:var(--mono)}
 <script>
 (function(){
   var $ = function(id){ return document.getElementById(id); };
-  var tab = 'aion', key = '';
+  var tab = 'aion', key = '', sess = '';
+  SAG.api('config').then(function(c){
+    var sel = $('sess');
+    sel.innerHTML = (c.sessions || []).slice().reverse().map(function(x){ return '<option value="' + SAG.esc(x.key) + '"' + (x.current ? ' selected' : '') + '>' + SAG.esc(x.label) + (x.current ? ' (now)' : '') + '</option>'; }).join('');
+    sess = sel.value;
+    sel.onchange = function(){ sess = sel.value; load(); };
+  });
   try { key = sessionStorage.getItem('sag-admin') || ''; } catch(e){}
   function get(type, format){
-    return fetch(SAG.url('admin/export?type=' + type + '&format=' + format), { headers:{ 'x-admin-key': key } });
+    return fetch(SAG.url('admin/export?type=' + type + '&format=' + format + (sess ? '&s=' + encodeURIComponent(sess) : '')), { headers:{ 'x-admin-key': key } });
   }
   function load(){
     get(tab, 'json').then(function(r){
@@ -56,7 +62,9 @@ td.n{text-align:right;font-family:var(--mono)}
       $('login').style.display='none'; $('data').style.display='';
       $('count').textContent = d.count + ' rows';
       var rows = d.rows;
-      if (tab === 'aion') rows = rows.slice().sort(function(a,b){ return b.points - a.points || a.seconds - b.seconds; });
+      rows = rows.slice().sort(tab === 'aion'
+        ? function(a,b){ return b.correct - a.correct || a.seconds - b.seconds; }
+        : function(a,b){ return (b.submitted - a.submitted) || b.score - a.score || (a.seconds == null ? 1e9 : a.seconds) - (b.seconds == null ? 1e9 : b.seconds); });
       var cols = rows.length ? Object.keys(rows[0]).filter(function(c){ return c !== 'answers'; }) : [];
       $('th').innerHTML = '<tr>' + cols.map(function(c){ return '<th>' + SAG.esc(c) + '</th>'; }).join('') + '</tr>';
       $('tb').innerHTML = rows.map(function(r){
@@ -71,7 +79,7 @@ td.n{text-align:right;font-family:var(--mono)}
   $('refresh').onclick = load;
   $('csv').onclick = function(){
     get(tab, 'csv').then(function(r){ return r.blob(); }).then(function(b){
-      var a = document.createElement('a'); a.href = URL.createObjectURL(b); a.download = 'sagarmatha-' + tab + '.csv'; a.click(); setTimeout(function(){ URL.revokeObjectURL(a.href); }, 2000);
+      var a = document.createElement('a'); a.href = URL.createObjectURL(b); a.download = 'sagarmatha-session' + (sess || '') + '-' + tab + '.csv'; a.click(); setTimeout(function(){ URL.revokeObjectURL(a.href); }, 2000);
     });
   };
   if (key) load();

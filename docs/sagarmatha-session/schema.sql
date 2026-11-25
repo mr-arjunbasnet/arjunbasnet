@@ -38,8 +38,10 @@ create table if not exists public.quiz_responses (
   roll       text,
   answers    jsonb not null default '{}'::jsonb,
   score      int  not null default 0,
-  total      int  not null default 0,
-  created_at timestamptz not null default now(),
+  total      int  not null default 0,   -- 0 = started, not submitted yet
+  ms         int,                       -- start to submit, measured by the server
+  finished_at timestamptz,
+  created_at timestamptz not null default now(),  -- = when the quiz started
   unique (session, quiz, email)        -- one submission per email per quiz
 );
 
@@ -47,17 +49,23 @@ alter table public.aion_games     enable row level security;
 alter table public.quiz_responses enable row level security;
 -- Deliberately no policies. Service/secret key bypasses RLS; anon gets nothing.
 
--- Handy views for browsing in the Supabase Table Editor.
-create or replace view public.aion_leaderboard as
-  select rank() over (order by points desc, total_ms asc) as rank,
-         name, roll, email, points, correct, best_streak, timeouts, ai_called_real,
-         round(total_ms / 1000.0, 1) as seconds, finished, created_at
-  from public.aion_games where session = 'sagarmatha-2026';
+-- Added 2026-11-25 for the timed quiz (safe to re-run):
+alter table public.quiz_responses add column if not exists ms int, add column if not exists finished_at timestamptz;
 
-create or replace view public.quiz_results as
-  select name, roll, email, quiz, score, total, answers, created_at
-  from public.quiz_responses where session = 'sagarmatha-2026'
-  order by score desc, created_at asc;
+-- Handy views for browsing in the Supabase Table Editor. Every class session
+-- (sagarmatha-2026 = Session 1, sagarmatha-2026-s2 = Session 2, ...) is kept.
+drop view if exists public.aion_leaderboard;
+drop view if exists public.quiz_results;
+create view public.aion_leaderboard as
+  select session, rank() over (partition by session order by correct desc, total_ms asc) as rank,
+         name, roll, email, correct, points, best_streak, timeouts, ai_called_real,
+         round(total_ms / 1000.0, 1) as seconds, finished, created_at
+  from public.aion_games;
+
+create view public.quiz_results as
+  select session, name, roll, email, quiz, score, total, round(ms / 1000.0, 1) as seconds, answers, created_at, finished_at
+  from public.quiz_responses
+  order by session, score desc, ms asc nulls last;
 
 -- Views run with the caller's rights, so they stay hidden from anon too.
 alter view public.aion_leaderboard set (security_invoker = on);

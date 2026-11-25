@@ -1,18 +1,20 @@
 import { NextResponse, type NextRequest } from "next/server";
 import { timingSafeEqual } from "node:crypto";
 import { pool, poolStatus, byId, drawGame, imageUrl } from "@/lib/sagarmatha/images";
-import { QUIZZES, publicQuiz } from "@/lib/sagarmatha/quiz";
+import { QUIZZES, QUIZ_SECONDS_PER_QUESTION, publicQuiz } from "@/lib/sagarmatha/quiz";
+import { badName } from "@/lib/sagarmatha/names";
 import {
-  SESSION, storageMode, checkDb, createGame, findGameByEmail, getGame, updateGame, startClock, listGames, listGamesPublic, saveQuiz, listQuiz, listQuizAnswers,
-  type Answer, type Game,
+  SESSION, SESSIONS, sessionFor, storageMode, checkDb, createGame, findGameByEmail, getGame, updateGame, startClock, listGames, listGamesPublic,
+  findQuizByEmail, getQuiz, startQuiz, finishQuiz, listQuiz, listQuizPublic,
+  type Answer, type Game, type QuizResponse,
 } from "@/lib/sagarmatha/store";
 
 /*
  * /api/sagarmatha/* — the third deliberate dynamic route (with /api/contact
  * and /api/assistant). Backs the unlisted Sagarmatha College session pages in
- * public/ai-training/sagarmatha-college/: the AI or Not game, its live
- * leaderboard, the phone quiz, live quiz stats for the slides, and a
- * key-protected export for the owner.
+ * public/ai-training/sagarmatha-college/: the AI or Not game, the timed phone
+ * quiz, a live leaderboard for each (per class session, `?s=1` for an earlier
+ * one), and a key-protected export for the owner.
  *
  * Scoring is server-side and answers never reach the browser before a guess.
  */
@@ -21,6 +23,9 @@ const SECONDS = 10;
 // The clock starts when the server hands out the image URL, so allow for the
 // image download plus network and tap latency before an answer counts as late.
 const GRACE_MS = 3000;
+// Quiz: the phone moves on after 30 s a question; the server allows the
+// total plus a minute for a slow connection, then ignores late answers.
+const QUIZ_GRACE_MS = 60_000;
 
 // A whole class shares one college IP, so the limit is per IP but generous.
 const hits = new Map<string, number[]>();
@@ -39,6 +44,16 @@ const json = (data: unknown, status = 200) =>
 const clean = (v: unknown, max: number) => (typeof v === "string" ? v.replace(/\s+/g, " ").trim().slice(0, max) : "");
 const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 
+/** Shared by the game and the quiz: the same three fields, the same rules. */
+function player(body: Record<string, unknown>) {
+  const name = clean(body.name, 60);
+  const email = clean(body.email, 120).toLowerCase();
+  const roll = clean(body.roll, 30) || null;
+  if (name.length < 2) return { error: "name_required" as const };
+  if (badName(name)) return { error: "name_invalid" as const };
+  if (!EMAIL.test(email)) return { error: "email_invalid" as const };
+  return { name, email, roll };
+}
 function isAdmin(req: NextRequest) {
   const want = process.env.SAGARMATHA_ADMIN_KEY;
   const got = req.headers.get("x-admin-key") ?? "";
@@ -50,11 +65,13 @@ function isAdmin(req: NextRequest) {
 const quizById = (id: string) => (Object.hasOwn(QUIZZES, id) ? QUIZZES[id] : undefined);
 const ipOf = (req: NextRequest) => (req.headers.get("x-forwarded-for") ?? "local").split(",")[0].trim();
 
-let boardCache: { at: number; data: Awaited<ReturnType<typeof buildLeaderboard>> } | null = null;
-async function leaderboard() {
-  if (boardCache && Date.now() - boardCache.at < 2000) return boardCache.data;
-  const data = await buildLeaderboard();
-  boardCache = { at: Date.now(), data };
+// A projector and 100 phones poll every 3 s: answer from a 2 s cache.
+const boardCache = new Map<string, { at: number; data: unknown }>();
+async function cached<T>(key: string, build: () => Promise<T>): Promise<T> {
+  const hit = boardCache.get(key);
+  if (hit && Date.now() - hit.at < 2000) return hit.data as T;
+  const data = await build();
+  boardCache.set(key, { at: Date.now(), data });
   return data;
 }
 
@@ -76,15 +93,16 @@ function reveal(g: Game) {
   });
 }
 
-async function buildLeaderboard() {
-  const games = (await listGamesPublic()).filter((g) => g.answers.length > 0);
-  games.sort((a, b) => b.points - a.points || a.total_ms - b.total_ms || a.created_at.localeCompare(b.created_at));
+/* Score is the number right out of 10; speed only breaks ties. */
+async function buildLeaderboard(session: string) {
+  const games = (await listGamesPublic(session)).filter((g) => g.answers.length > 0 && !badName(g.name));
+  games.sort((a, b) => b.correct - a.correct || a.total_ms - b.total_ms || a.created_at.localeCompare(b.created_at));
   const finished = games.filter((g) => g.finished);
   return {
     stats: {
       players: games.length,
       finished: finished.length,
-      top: games[0]?.points ?? 0,
+      top: games[0]?.correct ?? 0,
       avgCorrect: finished.length ? +(finished.reduce((s, g) => s + g.correct, 0) / finished.length).toFixed(1) : null,
       aiCalledRealPct: finished.length
         ? Math.round((100 * finished.reduce((s, g) => s + g.ai_called_real, 0)) /
@@ -93,9 +111,37 @@ async function buildLeaderboard() {
     },
     // Never the email.
     rows: games.slice(0, 100).map((g, i) => ({
-      rank: i + 1, name: g.name, roll: g.roll, points: g.points, correct: g.correct,
+      rank: i + 1, name: g.name, roll: g.roll, correct: g.correct,
       answered: g.answers.length, total: g.image_ids.length, seconds: +(g.total_ms / 1000).toFixed(1), playing: !g.finished,
     })),
+  };
+}
+
+async function buildQuizBoard(session: string) {
+  const all = (await listQuizPublic(session)).filter((r) => !badName(r.name));
+  const done = all.filter((r) => r.total > 0);
+  done.sort((a, b) => b.score - a.score || (a.ms ?? Infinity) - (b.ms ?? Infinity) || (a.created_at ?? "").localeCompare(b.created_at ?? ""));
+  return {
+    stats: {
+      players: all.length,
+      finished: done.length,
+      top: done[0]?.score ?? 0,
+      total: done[0]?.total ?? QUIZZES.final.questions.length,
+      avgScore: done.length ? +(done.reduce((s, r) => s + r.score, 0) / done.length).toFixed(1) : null,
+    },
+    rows: done.slice(0, 100).map((r, i) => ({
+      rank: i + 1, name: r.name, roll: r.roll, score: r.score, total: r.total,
+      seconds: r.ms == null ? null : +(r.ms / 1000).toFixed(1),
+    })),
+  };
+}
+
+function quizResult(r: QuizResponse, alreadySubmitted = false) {
+  const qz = quizById(r.quiz);
+  if (!qz) return { error: "not_found" };
+  return {
+    alreadySubmitted, score: r.score, total: r.total, seconds: r.ms == null ? null : +(r.ms / 1000).toFixed(1),
+    questions: qz.questions.map((q) => ({ id: q.id, q: q.q, options: q.options, yours: r.answers?.[q.id] ?? null, answer: q.answer, why: q.why })),
   };
 }
 
@@ -118,17 +164,18 @@ type Ctx = { params: Promise<{ path: string[] }> };
 export async function GET(req: NextRequest, ctx: Ctx) {
   const route = (await ctx.params).path.join("/");
   if (limited(ipOf(req), 1500)) return json({ error: "slow_down" }, 429);
-  if (route === "config") return json({ storage: storageMode, db: await checkDb(), pool: poolStatus(), poolSize: pool().length, session: SESSION });
-
-  // Questions are static: they load even if storage is down.
-  if (route === "quiz/questions") {
-    const q = publicQuiz(req.nextUrl.searchParams.get("quiz") ?? "final");
-    return q ? json(q) : json({ error: "not_found" }, 404);
+  if (route === "config") {
+    return json({
+      storage: storageMode, db: await checkDb(), pool: poolStatus(), poolSize: pool().length, session: SESSION,
+      sessions: SESSIONS.map((s) => ({ key: s.key, label: s.label, current: s.id === SESSION })),
+    });
   }
   if (storageMode === "none") return json({ error: "storage_not_configured" }, 503);
+  const session = sessionFor(req.nextUrl.searchParams.get("s"));
 
   try {
-    if (route === "aion/leaderboard") return json(await leaderboard());
+    if (route === "aion/leaderboard") return json(await cached("aion:" + session, () => buildLeaderboard(session)));
+    if (route === "quiz/leaderboard") return json(await cached("quiz:" + session, () => buildQuizBoard(session)));
 
     if (route === "aion/result") {
       const g = await getGame(req.nextUrl.searchParams.get("id") ?? "");
@@ -137,19 +184,12 @@ export async function GET(req: NextRequest, ctx: Ctx) {
       return json({ summary: summary(g), reveal: reveal(g) });
     }
 
-    if (route === "quiz/stats") {
-      const id = req.nextUrl.searchParams.get("quiz") ?? "final";
-      const qz = quizById(id);
-      if (!qz) return json({ error: "not_found" }, 404);
-      const rows = await listQuizAnswers(id);
-      return json({
-        responses: rows.length,
-        questions: qz.questions.map((q) => {
-          const counts = q.options.map(() => 0);
-          for (const r of rows) { const v = r.answers?.[q.id]; if (typeof v === "number" && counts[v] != null) counts[v]++; }
-          return { id: q.id, counts };
-        }),
-      });
+    // The attempt id is the phone's proof: only the phone that took the quiz has it.
+    if (route === "quiz/result") {
+      const r = await getQuiz(req.nextUrl.searchParams.get("id") ?? "");
+      if (!r) return json({ error: "not_found" }, 404);
+      if (!r.total) return json({ error: "not_finished" }, 409);
+      return json(quizResult(r, true));
     }
 
     if (route === "admin/export") {
@@ -161,14 +201,15 @@ export async function GET(req: NextRequest, ctx: Ctx) {
       const format = req.nextUrl.searchParams.get("format") ?? "json";
       let rows: Record<string, unknown>[];
       if (type === "quiz") {
-        rows = (await listQuiz()).map((r) => ({
-          created_at: r.created_at, quiz: r.quiz, name: r.name, email: r.email, roll: r.roll, score: r.score, total: r.total,
+        rows = (await listQuiz(session)).map((r) => ({
+          created_at: r.created_at, quiz: r.quiz, name: r.name, email: r.email, roll: r.roll,
+          submitted: r.total > 0, score: r.score, total: r.total, seconds: r.ms == null ? null : +(r.ms / 1000).toFixed(1),
           ...Object.fromEntries(Object.entries(r.answers ?? {}).map(([k, v]) => [k, v])),
         }));
       } else {
-        rows = (await listGames()).map((g) => ({
+        rows = (await listGames(session)).map((g) => ({
           created_at: g.created_at, finished_at: g.finished_at, name: g.name, email: g.email, roll: g.roll,
-          points: g.points, correct: g.correct, answered: g.answers.length, best_streak: g.best_streak,
+          correct: g.correct, total: g.image_ids.length, answered: g.answers.length, best_streak: g.best_streak,
           timeouts: g.timeouts, ai_called_real: g.ai_called_real, seconds: +(g.total_ms / 1000).toFixed(1),
           finished: g.finished, answers: g.answers,
         }));
@@ -177,12 +218,12 @@ export async function GET(req: NextRequest, ctx: Ctx) {
         return new NextResponse(csv(rows), {
           headers: {
             "Content-Type": "text/csv; charset=utf-8",
-            "Content-Disposition": `attachment; filename="sagarmatha-${type}.csv"`,
+            "Content-Disposition": `attachment; filename="${session}-${type === "quiz" ? "quiz" : "aion"}.csv"`,
             "Cache-Control": "no-store",
           },
         });
       }
-      return json({ type, count: rows.length, rows });
+      return json({ type, session, count: rows.length, rows });
     }
   } catch (e) {
     console.error("[sagarmatha]", e);
@@ -202,11 +243,9 @@ export async function POST(req: NextRequest, ctx: Ctx) {
   try {
     /* -------- AI or Not: join (or resume an unfinished game) -------- */
     if (route === "aion/start") {
-      const name = clean(body.name, 60);
-      const email = clean(body.email, 120).toLowerCase();
-      const roll = clean(body.roll, 30) || null;
-      if (name.length < 2) return json({ error: "name_required" }, 400);
-      if (!EMAIL.test(email)) return json({ error: "email_invalid" }, 400);
+      const p = player(body);
+      if ("error" in p) return json({ error: p.error }, 400);
+      const { name, email, roll } = p;
 
       // Only the phone that started a game can resume it or see its result, so
       // knowing a classmate's email isn't enough to take over their game.
@@ -279,38 +318,64 @@ export async function POST(req: NextRequest, ctx: Ctx) {
       if (!next) return json({ error: "bad_state" }, 409); // double tap: the first one counted
 
       return json({
-        correct, timedOut, truth: img.truth, tell: img.tell, credit: img.credit, points,
-        total: next.points, streak, finished,
+        correct, timedOut, truth: img.truth, tell: img.tell, credit: img.credit,
+        score: next.correct, streak, finished,
         ...(finished ? { summary: summary(next), reveal: reveal(next) } : {}),
       });
     }
 
-    /* -------- Quiz: submit all answers at once -------- */
-    if (route === "quiz/submit") {
+    /* -------- Quiz: start (or resume) — the server's clock starts here -------- */
+    if (route === "quiz/start") {
       const quizId = clean(body.quiz, 20) || "final";
-      const qz = quizById(quizId);
-      if (!qz) return json({ error: "not_found" }, 404);
-      const name = clean(body.name, 60);
-      const email = clean(body.email, 120).toLowerCase();
-      const roll = clean(body.roll, 30) || null;
-      if (name.length < 2) return json({ error: "name_required" }, 400);
-      if (!EMAIL.test(email)) return json({ error: "email_invalid" }, 400);
+      const pub = publicQuiz(quizId);
+      if (!pub) return json({ error: "not_found" }, 404);
+      const p = player(body);
+      if ("error" in p) return json({ error: p.error }, 400);
+      const limitMs = pub.questions.length * QUIZ_SECONDS_PER_QUESTION * 1000;
+      const mine = clean(body.attemptId, 40);
+      const existing = await findQuizByEmail(quizId, p.email);
+      if (existing) {
+        const owner = mine === existing.id;
+        if (existing.total > 0) return json({ error: "quiz_done", ...(owner ? { attemptId: existing.id } : {}) }, 409);
+        if (!owner) return json({ error: "quiz_started" }, 409);
+        const used = Date.now() - new Date(existing.created_at!).getTime();
+        return json({ attemptId: existing.id, session: SESSION, ...pub, limitMs, remainingMs: Math.max(0, limitMs - used), resumed: true });
+      }
+      const r = await startQuiz({ quiz: quizId, name: p.name, email: p.email, roll: p.roll });
+      if (r === "exists") return json({ error: "quiz_started" }, 409); // two taps at once
+      return json({ attemptId: r.id, session: SESSION, ...pub, limitMs, remainingMs: limitMs, resumed: false });
+    }
 
-      const raw = (body.answers ?? {}) as Record<string, unknown>;
+    /* -------- Quiz: submit all answers once, scored and timed here -------- */
+    if (route === "quiz/submit") {
+      const r = await getQuiz(clean(body.attemptId, 40));
+      if (!r) return json({ error: "not_found" }, 404);
+      if (r.total > 0) return json(quizResult(r, true));
+      const qz = quizById(r.quiz);
+      if (!qz) return json({ error: "not_found" }, 404);
+      const limitMs = qz.questions.length * QUIZ_SECONDS_PER_QUESTION * 1000;
+      const elapsed = Date.now() - new Date(r.created_at!).getTime();
+      const late = elapsed > limitMs + QUIZ_GRACE_MS;
+
+      const raw = (late ? {} : body.answers ?? {}) as Record<string, unknown>;
       const answers: Record<string, number> = {};
       let score = 0;
       for (const q of qz.questions) {
+        if (!Object.hasOwn(raw, q.id) || raw[q.id] === null) continue;
         const v = Number(raw[q.id]);
         if (Number.isInteger(v) && v >= 0 && v < q.options.length) {
           answers[q.id] = v;
           if (v === q.answer) score++;
         }
       }
-      const saved = await saveQuiz({ session: SESSION, quiz: quizId, name, email, roll, answers, score, total: qz.questions.length });
-      return json({
-        saved: saved === "saved", alreadySubmitted: saved === "exists", score, total: qz.questions.length,
-        results: qz.questions.map((q) => ({ id: q.id, yours: answers[q.id] ?? null, answer: q.answer, why: q.why })),
+      const done = await finishQuiz(r.id!, {
+        answers, score, total: qz.questions.length, ms: Math.min(elapsed, limitMs), finished_at: new Date().toISOString(),
       });
+      if (!done) { // double tap: the first submit counted
+        const again = await getQuiz(r.id!);
+        return again ? json(quizResult(again, true)) : json({ error: "server_error" }, 500);
+      }
+      return json({ ...quizResult(done), late });
     }
   } catch (e) {
     console.error("[sagarmatha]", e);

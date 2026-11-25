@@ -58,7 +58,7 @@ footer{color:var(--muted);font-size:14px;margin-top:48px}
   <p style="margin:10px 0 0;opacity:.8;font-weight:600">Getting started with</p>
   <h1>Git <em>and AI</em></h1>
   <p>A 90-minute interactive session for first-year BSc CSIT and BCA students at Sagarmatha College. About an hour of it is adapted from the <b>AI for Productivity</b> course (Modules 1–5), merged with your draft deck (Git install, context window, temperature, TEACH builder, 7-day challenge) and recast for computer science students.</p>
-  <div class="meta"><span>90 min</span><span>45 slides</span><span>3 hands-on exercises</span><span>AI or Not + live leaderboard</span><span>Phone quiz, saved</span><span>Phones required</span></div>
+  <div class="meta"><span>90 min</span><span>40 slides</span><span>3 hands-on exercises</span><span>AI or Not + live leaderboard</span><span>Timed phone quiz + leaderboard</span><span>Phones required</span></div>
 </div></header>
 
 <div class="wrap">
@@ -111,15 +111,16 @@ footer{color:var(--muted);font-size:14px;margin-top:48px}
 <tr><td class="time">1:11–1:19</td><td>33–35</td><td><b>Exercise 3: Ship it.</b> README prompt → AI draft → edit → commit to the <code>username/username</code> repo. 8:00 countdown, then 1–2 profiles on the projector.</td><td><span class="pill ex">Exercise</span></td></tr>
 <tr><td class="time">1:19–1:21</td><td>36</td><td><b>7-day challenge:</b> solve a real problem with AI, put it online with GitHub Pages, share the link.</td><td></td></tr>
 <tr class="part"><td class="time">1:21</td><td colspan="3">Wrap-up · 9 min</td></tr>
-<tr><td class="time">1:21–1:23</td><td>37</td><td>The <b>6-question quiz on their phones</b> (QR). 2:00 countdown.</td><td><span class="pill">Quiz</span></td></tr>
-<tr><td class="time">1:23–1:27</td><td>38–43</td><td>Step through the questions: the class's answers show as live bars, then click the right one.</td><td><span class="pill">Quiz</span></td></tr>
-<tr><td class="time">1:27–1:30</td><td>44–45</td><td>Three things to remember · Q&amp;A with the session-page QR on screen.</td><td></td></tr>
+<tr><td class="time">1:21–1:27</td><td>37</td><td>The <b>10-question quiz on their phones</b> (QR), 30 seconds a question, each phone in its own order. 6:00 countdown. No answers on the projector.</td><td><span class="pill">Quiz</span></td></tr>
+<tr><td class="time">1:27–1:28</td><td>38</td><td><b>Quiz top 10</b>, live: score out of 10, ties by time. Clap for the top 3.</td><td><span class="pill">Quiz</span></td></tr>
+<tr><td class="time">1:28–1:30</td><td>39–40</td><td>Three things to remember · Q&amp;A with the session-page QR on screen.</td><td></td></tr>
 </table></div>
 
 <h2>Saving and results</h2>
 <div class="card">
   <p>Saving is <b>on</b> (Supabase, checked 24 Nov 2026). Quick health check any time: <code>/api/sagarmatha/config</code> should show <code>"db":"ok"</code> and <code>"pool":"ok"</code>.</p>
-  <p><b>Clear test plays before the session:</b> Supabase → Table Editor → <code>aion_games</code> and <code>quiz_responses</code> → delete your test rows.</p>
+  <p><b>A fresh board for each class:</b> every class has its own session (Session 1 · 25 Nov, Session 2 · 26 Nov). Both leaderboards start empty for the new class; earlier classes stay saved and viewable from "Earlier sessions" on the leaderboard page. A new class needs one line in <code>SESSIONS</code> in <code>src/lib/sagarmatha/store.ts</code>.</p>
+  <p><b>Names:</b> "test", keyboard mashes and placeholder names are refused with "Type your correct name", and never shown on a board.</p>
   <p><b>Your data afterwards:</b> <code>/ai-training/sagarmatha-college/results</code> (enter your admin key: tables and CSV download), or Supabase → Table Editor.</p>
   <p><b>After changing a Vercel setting:</b> redeploy the <i>newest</i> deployment. Redeploying an older one puts the old version back live.</p>
 </div>
@@ -179,7 +180,7 @@ footer{color:var(--muted);font-size:14px;margin-top:48px}
 <div class="card">
   <span class="pill ex">Game · 7 min · individual</span>
   <h3>AI or Not?</h3>
-  <p><b>Flow:</b> QR → name, email, optional roll or section → one image at a time, 10 seconds each, <b>Real</b> or <b>AI</b> → instant feedback with the clue → results with a per-image reveal. 100 points per correct answer plus up to 50 for speed. One game per email; a game can only be resumed on the phone that started it.</p>
+  <p><b>Flow:</b> QR → name, email, optional roll or section → one image at a time, 10 seconds each, <b>Real</b> or <b>AI</b> → instant feedback with the clue → results with a per-image reveal. Score is the number right out of 10; ties go to the fastest. One game per email; a game can only be resumed on the phone that started it.</p>
   <p><b>Fair play:</b> the server hands out each image only when its clock starts, and the answer key is encrypted in the public repo. DevTools shows nothing useful.</p>
   <p><b>Projector:</b> open <code>/leaderboard</code> in a new tab (button on slide 31). It refreshes every 3 seconds and shows the join QR. Emails never appear.</p>
   <p><b>Image pool:</b> 8 real photos from Nepal (Pexels) and 8 AI images (Wikimedia Commons), all credited after each answer. A game draws 5 of each. To change it: <code>src/lib/sagarmatha/images.ts</code> explains the steps.</p>
@@ -224,7 +225,7 @@ footer{color:var(--muted);font-size:14px;margin-top:48px}
 <h2>If things go wrong</h2>
 <div class="grid">
   <div class="card"><h3>No Wi-Fi</h3><p>Students use mobile data. If nobody can connect, do Exercise 2 on paper (write both prompts, swap with a neighbour, critique using TEACH) and assign Exercises 1 and 3 as homework.</p></div>
-  <div class="card"><h3>Running late</h3><p>Cut in this order: slide 17 (who's who: one line), slide 9 (CV: one line), slide 32 (AI or Not debrief: one sentence), the quiz walk-through (show 2 of the 6), slide 36 (7-day challenge: point to the handout). <b>Protect AI or Not and Exercise 3.</b></p></div>
+  <div class="card"><h3>Running late</h3><p>Cut in this order: slide 17 (who's who: one line), slide 9 (CV: one line), slide 32 (AI or Not debrief: one sentence), the quiz top 10 (read the top 3 only), slide 36 (7-day challenge: point to the handout). <b>Protect AI or Not and Exercise 3.</b></p></div>
   <div class="card"><h3>Running early</h3><p>Extend the Exercise 2 debrief: 3 pairs read their best prompts aloud and the class names the weakest TEACH letter. Or take more volunteers in Exercise 3.</p></div>
   <div class="card"><h3>Quiet room</h3><p>Use fingers and hands for every vote, never cold-calling. Pairs share before individuals. Praise the first volunteer warmly. First-years in Nepal are often shy in the first 20 minutes, so it gets easier.</p></div>
 </div>

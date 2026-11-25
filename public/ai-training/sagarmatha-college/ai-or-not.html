@@ -89,7 +89,7 @@
 
 <!-- Game -->
 <section class="screen" id="s-game">
-  <div class="hud"><span>Image <b id="g-n">1</b> of <b id="g-of">10</b></span><span>🔥 <b id="g-streak">0</b></span><span><b id="g-pts">0</b> pts</span></div>
+  <div class="hud"><span>Image <b id="g-n">1</b> of <b id="g-of">10</b></span><span>🔥 <b id="g-streak">0</b></span><span>Score <b id="g-score">0</b></span></div>
   <div class="timer" id="g-timer"><i id="g-bar"></i></div>
   <div class="frame" id="g-frame"><img id="g-img" alt=""><div class="loading" aria-live="polite"><span class="spinner"></span><span id="g-loadtxt">Loading photo…</span></div><span class="zoomhint">Tap to zoom</span></div>
   <div class="choices" id="g-choices">
@@ -108,13 +108,13 @@
 <section class="screen" id="s-result">
   <p class="kicker" style="margin-top:24px">Your result</p>
   <div class="big" id="r-score">0 / 10</div>
-  <p class="muted" id="r-points"></p>
+  <p class="muted" id="r-time"></p>
   <div class="bench">
     <div><span>Coin flip</span><span class="bar"><i style="width:50%"></i></span><span>50%</span></div>
     <div class="you"><span><b>You</b></span><span class="bar"><i id="r-youbar" style="width:0"></i></span><span id="r-youpct">0%</span></div>
   </div>
   <div class="tiles">
-    <div class="tile"><b id="r-pts">0</b><span>points</span></div>
+    <div class="tile"><b id="r-secs">0</b><span>seconds thinking</span></div>
     <div class="tile"><b id="r-streak">0</b><span>best streak</span></div>
     <div class="tile"><b id="r-aireal">0</b><span>AI images you called real</span></div>
     <div class="tile"><b id="r-timeout">0</b><span>ran out of time</span></div>
@@ -144,7 +144,7 @@
 <script>
 (function(){
   var $ = function(id){ return document.getElementById(id); };
-  var state = { gameId:null, total:10, index:0, seconds:10, pts:0, streak:0, timer:null, t0:0, locked:false };
+  var state = { gameId:null, total:10, index:0, seconds:10, streak:0, timer:null, t0:0, locked:false };
   function show(id){ document.querySelectorAll('.screen').forEach(function(s){ s.classList.toggle('on', s.id===id); }); scrollTo(0,0); }
   SAG.leaveGuard = function(){
     return document.getElementById('s-game').classList.contains('on')
@@ -154,23 +154,28 @@
 
   // Prefill from this phone
   var me = SAG.me; if (me.name) $('name').value = me.name; if (me.email) $('email').value = me.email; if (me.roll) $('roll').value = me.roll;
-  var last = SAG.store('sag-aion');
-  if (last && last.finished && last.gameId) loadResult(last.gameId);
+  // A game saved on this phone counts only for today's class session.
+  var cur = '';
+  function mine(){ var m = SAG.store('sag-aion'); return m && m.session === cur ? m : null; }
+  function save(o){ o.session = cur; SAG.store('sag-aion', o); }
+  SAG.current().then(function(s){ cur = s; var last = mine(); if (last && last.finished && last.gameId) loadResult(last.gameId); });
 
   $('join').addEventListener('submit', function(e){
     e.preventDefault();
     var body = { name:$('name').value.trim(), email:$('email').value.trim(), roll:$('roll').value.trim() };
-    if (body.name.length < 2) return ($('join-err').textContent = SAG.errorText('name_required'));
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(body.email)) return ($('join-err').textContent = SAG.errorText('email_invalid'));
+    var bad = SAG.checkPlayer(body);
+    if (bad) return ($('join-err').textContent = SAG.errorText(bad));
     $('play').disabled = true; $('join-err').textContent = '';
     SAG.me = body;
-    var mine = SAG.store('sag-aion'); if (mine && mine.gameId) body.gameId = mine.gameId;
-    SAG.api('aion/start', body).then(function(d){
+    SAG.current().then(function(s){
+    cur = s;
+    var m = mine(); if (m && m.gameId) body.gameId = m.gameId;
+    return SAG.api('aion/start', body); }).then(function(d){
       $('play').disabled = false;
-      if (d.error === 'already_played' && d.gameId) { SAG.store('sag-aion', { gameId:d.gameId, finished:true }); return loadResult(d.gameId); }
+      if (d.error === 'already_played' && d.gameId) { save({ gameId:d.gameId, finished:true }); return loadResult(d.gameId); }
       if (d.error) return ($('join-err').textContent = SAG.errorText(d.error));
       state.gameId = d.gameId; state.total = d.total || 10; state.index = d.index; state.seconds = d.seconds || 10;
-      SAG.store('sag-aion', { gameId:d.gameId, finished:false });
+      save({ gameId:d.gameId, finished:false });
       next();
     });
   });
@@ -230,17 +235,17 @@
         state.locked = false; document.querySelectorAll('.choice').forEach(function(b){ b.disabled = false; });
         return alertInline(SAG.errorText(d.error));
       }
-      state.pts = d.total; state.streak = d.streak;
-      $('g-pts').textContent = d.total; $('g-streak').textContent = d.streak;
+      state.streak = d.streak;
+      $('g-score').textContent = d.score; $('g-streak').textContent = d.streak;
       var kind = d.truth === 'ai' ? 'AI-generated' : 'a real photo';
-      $('fb-h').textContent = d.timedOut ? '⏱ Time’s up. It was ' + kind + '.' : d.correct ? '✓ Correct! +' + d.points : '✗ Not quite. It was ' + kind + '.';
+      $('fb-h').textContent = d.timedOut ? '⏱ Time’s up. It was ' + kind + '.' : d.correct ? '✓ Correct!' : '✗ Not quite. It was ' + kind + '.';
       $('fb-tell').textContent = d.tell || '';
       $('fb-credit').textContent = d.credit ? 'Image: ' + d.credit : '';
       $('g-fb').classList.add('on', d.correct ? 'ok' : 'no');
       $('g-choices').style.display = 'none';
       state.index++;
       if (d.finished) {
-        SAG.store('sag-aion', { gameId:state.gameId, finished:true });
+        save({ gameId:state.gameId, finished:true });
         $('g-next').textContent = 'See my result →';
         $('g-next').onclick = function(){ renderResult(d.summary, d.reveal); };
       } else {
@@ -252,7 +257,7 @@
 
   function alertInline(msg){ $('fb-h').textContent = msg; $('fb-tell').textContent = ''; $('g-fb').classList.add('on','no'); }
 
-  function finishFromServer(){ SAG.store('sag-aion', { gameId:state.gameId, finished:true }); loadResult(state.gameId); }
+  function finishFromServer(){ save({ gameId:state.gameId, finished:true }); loadResult(state.gameId); }
 
   function loadResult(id){
     SAG.api('aion/result?id=' + encodeURIComponent(id)).then(function(d){
@@ -264,15 +269,15 @@
     show('s-result');
     var pct = Math.round(100 * s.correct / Math.max(1, s.total));
     $('r-score').textContent = s.correct + ' / ' + s.total;
-    $('r-points').textContent = s.points + ' points · ' + (s.totalMs/1000).toFixed(1) + ' s thinking time';
+    $('r-time').textContent = 'One point per correct answer. Ties on the leaderboard go to the fastest.';
     $('r-youpct').textContent = pct + '%';
     setTimeout(function(){ $('r-youbar').style.width = pct + '%'; }, 50);
-    $('r-pts').textContent = s.points; $('r-streak').textContent = s.bestStreak; $('r-aireal').textContent = s.aiCalledReal; $('r-timeout').textContent = s.timeouts;
+    $('r-secs').textContent = (s.totalMs/1000).toFixed(1); $('r-streak').textContent = s.bestStreak; $('r-aireal').textContent = s.aiCalledReal; $('r-timeout').textContent = s.timeouts;
     $('r-reveal').innerHTML = (rv || []).map(function(r){
       var you = r.guess === null ? 'Ran out of time' : (r.correct ? '✓ You got it' : '✗ You said ' + (r.guess === 'ai' ? 'AI' : 'real'));
       return '<div class="rv"><img src="' + SAG.esc(r.url) + '" alt=""><div><span class="tag ' + r.truth + '">' + (r.truth === 'ai' ? 'AI-generated' : 'Real photo') + '</span> <span class="you ' + (r.correct ? 'ok' : 'no') + '">' + you + '</span><p>' + SAG.esc(r.tell) + '</p><p class="muted" style="font-size:11px">' + SAG.esc(r.credit) + '</p></div></div>';
     }).join('');
-    $('r-copy').onclick = function(){ SAG.copyText('I scored ' + s.correct + '/' + s.total + ' (' + s.points + ' pts) on AI or Not? at Sagarmatha College. Can you tell real from AI?', $('r-copy')); };
+    $('r-copy').onclick = function(){ SAG.copyText('I scored ' + s.correct + '/' + s.total + ' on AI or Not? at Sagarmatha College. Can you tell real from AI?', $('r-copy')); };
   }
 
   // Tap to zoom (the timer keeps running)

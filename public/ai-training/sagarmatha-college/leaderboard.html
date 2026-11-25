@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex, nofollow, noarchive">
-<title>Leaderboard · AI or Not?</title>
+<title>Leaderboard · Sagarmatha College</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Anek+Latin:wght@600;700&family=Montserrat:wght@400;500;600;700&family=Geist+Mono:wght@500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/session.css">
@@ -35,7 +35,16 @@ table.board td.num{text-align:right;font-family:var(--mono);font-size:15px;color
 .join img{width:100%;max-width:240px;background:#fff;border-radius:10px;padding:6px}
 .join .url{font:600 13px var(--mono);word-break:break-all;margin-top:8px}
 .empty{padding:40px 0;text-align:center;color:var(--muted)}
-.tools{display:flex;gap:8px}
+.tools{display:flex;gap:8px;align-items:center}
+.tabs{display:flex;gap:8px;flex-wrap:wrap;margin:16px 0 0}
+.tabs a{border:1.5px solid var(--border);background:var(--card);color:var(--ink);border-radius:999px;padding:8px 18px;font:600 15px var(--sans);text-decoration:none}
+.tabs a.on{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+table.board td.pts small{font-size:14px;color:var(--muted);font-weight:600}
+.past{font-size:14px;margin:14px 0 0;color:var(--muted)}
+.past a{font-weight:600;margin-left:6px}
+.archive{background:var(--amber-bg);color:var(--ink);border-radius:10px;padding:8px 12px;font-size:14px;margin-top:12px}
+body.old .join{display:none}
+body.old .lb{grid-template-columns:1fr}
 </style>
 </head>
 <body>
@@ -43,23 +52,26 @@ table.board td.num{text-align:right;font-family:var(--mono);font-size:15px;color
   <div class="lb">
     <div>
       <div class="head">
-        <div><p class="kicker">Sagarmatha College · BSc CSIT / BCA</p><h1>AI or <em>not?</em> Leaderboard</h1></div>
+        <div><p class="kicker" id="kicker">Sagarmatha College · BSc CSIT / BCA</p><h1 id="title">AI or <em>not?</em> Leaderboard</h1></div>
         <div class="tools"><span class="live" id="live">Live</span><button class="btn ghost" id="fs" style="min-height:36px;padding:6px 14px;font-size:13px">Full screen</button></div>
       </div>
+      <nav class="tabs" aria-label="Game"><a href="#aion" data-g="aion">AI or Not?</a><a href="#quiz" data-g="quiz">Quiz</a></nav>
+      <p class="archive" id="archive" hidden></p>
       <div class="stats">
-        <div><b id="st-players">0</b><span>on the board</span></div>
+        <div><b id="st-players">0</b><span id="st-players-l">on the board</span></div>
         <div><b id="st-finished">0</b><span>finished</span></div>
         <div><b id="st-top">–</b><span>top score</span></div>
-        <div><b id="st-avg">–</b><span>average correct / 10</span></div>
+        <div><b id="st-avg">–</b><span id="st-avg-l">average score</span></div>
       </div>
       <p class="small muted" id="st-note"></p>
       <table class="board"><tbody id="rows"><tr><td class="empty" colspan="4">Waiting for the first player…</td></tr></tbody></table>
-      <p class="small muted">One game per player · ranked by points, then speed · 100 per correct answer + up to 50 for speed.</p>
+      <p class="small muted" id="foot"></p>
+      <p class="past" id="past"></p>
     </div>
     <aside class="join">
       <p class="kicker">Join now</p>
-      <img src="assets/qr-ai-or-not.svg" alt="QR code to play AI or Not">
-      <p class="url">arjun-basnet.com.np/ai-training/sagarmatha-college/ai-or-not</p>
+      <img id="qr" src="assets/qr-ai-or-not.svg" alt="QR code to play">
+      <p class="url" id="qr-url">arjun-basnet.com.np/ai-training/sagarmatha-college/ai-or-not</p>
     </aside>
   </div>
 </div>
@@ -68,23 +80,67 @@ table.board td.num{text-align:right;font-family:var(--mono);font-size:15px;color
 (function(){
   var $ = function(id){ return document.getElementById(id); };
   var medals = ['🥇','🥈','🥉'];
+  // ?s=1 shows an earlier class session; no ?s is today's.
+  var sKey = new URLSearchParams(location.search).get('s') || '';
+  var game = 'aion', seq = 0;
+  var GAMES = {
+    aion: { title:'AI or <em>not?</em> Leaderboard', qr:'assets/qr-ai-or-not.svg', url:'arjun-basnet.com.np/ai-training/sagarmatha-college/ai-or-not',
+            foot:'One game per player · one point per correct answer · ties go to the fastest.' },
+    quiz: { title:'Quiz <em>leaderboard</em>', qr:'assets/qr-quiz.svg', url:'arjun-basnet.com.np/ai-training/sagarmatha-college/quiz',
+            foot:'One try per player · one point per correct answer · ties go to the fastest.' }
+  };
+
+  SAG.api('config').then(function(c){
+    var list = c.sessions || [], now = list.filter(function(x){ return x.current; })[0];
+    var here = list.filter(function(x){ return x.key === sKey; })[0];
+    if (here && !here.current) {
+      document.body.classList.add('old');
+      $('kicker').textContent = 'Sagarmatha College · ' + here.label;
+      $('archive').hidden = false; $('archive').textContent = 'An earlier session, kept for the record. Today\u2019s board is a fresh one.';
+    } else if (now) { $('kicker').textContent = 'Sagarmatha College · ' + now.label; }
+    var links = list.filter(function(x){ return x !== here && !(x.current && !here); }).map(function(x){
+      return '<a href="' + (x.current ? 'leaderboard' : 'leaderboard?s=' + x.key) + '#' + game + '">' + SAG.esc(x.current ? 'Today' : x.label) + '</a>';
+    });
+    $('past').innerHTML = links.length ? (here && !here.current ? 'Back to' : 'Earlier sessions:') + links.join('') : '';
+  });
+
+  function pick(){
+    game = location.hash === '#quiz' ? 'quiz' : 'aion';
+    var g = GAMES[game];
+    document.querySelectorAll('.tabs a').forEach(function(a){ a.classList.toggle('on', a.dataset.g === game); });
+    $('title').innerHTML = g.title; $('foot').textContent = g.foot; $('qr').src = g.qr; $('qr-url').textContent = g.url;
+    $('st-note').textContent = '';
+    $('past').querySelectorAll('a').forEach(function(a){ a.hash = game; });
+    $('rows').innerHTML = '<tr><td class="empty" colspan="4">Waiting for the first player…</td></tr>';
+    ['st-players','st-finished','st-top','st-avg'].forEach(function(id){ $(id).textContent = '–'; });
+    load();
+  }
+
   function load(){
-    SAG.api('aion/leaderboard').then(function(d){
+    var mine = ++seq, g = game;
+    SAG.api(g + '/leaderboard' + (sKey ? '?s=' + encodeURIComponent(sKey) : '')).then(function(d){
+      if (mine !== seq) return;
       if (d.error) { $('live').textContent = d.error === 'offline' ? 'Offline, retrying' : 'Not connected'; return; }
       $('live').textContent = 'Live';
-      var s = d.stats;
+      var s = d.stats, total = g === 'quiz' ? s.total : 10;
       $('st-players').textContent = s.players; $('st-finished').textContent = s.finished;
-      $('st-top').textContent = s.top || '–'; $('st-avg').textContent = s.avgCorrect == null ? '–' : s.avgCorrect;
-      $('st-note').textContent = s.aiCalledRealPct == null ? '' : 'The class called ' + s.aiCalledRealPct + '% of AI images "real".';
+      $('st-top').textContent = s.finished || s.top ? s.top + '/' + total : '–';
+      $('st-avg').textContent = s.avgScore != null ? s.avgScore : s.avgCorrect != null ? s.avgCorrect : '–';
+      $('st-avg-l').textContent = 'average score / ' + total;
+      $('st-players-l').textContent = g === 'quiz' ? 'started' : 'on the board';
+      $('st-note').textContent = g === 'aion' && s.aiCalledRealPct != null ? 'The class called ' + s.aiCalledRealPct + '% of AI images "real".' : '';
       if (!d.rows.length) return;
       $('rows').innerHTML = d.rows.slice(0, 30).map(function(r){
+        var score = g === 'quiz' ? r.score : r.correct, of = r.total;
+        var playing = g === 'aion' && r.playing ? '<span class="playing">playing ' + r.answered + '/' + r.total + '</span>' : '';
         return '<tr class="' + (r.rank <= 3 ? 'top' : '') + '"><td class="rank">' + (r.rank <= 3 ? '<span class="medal">' + medals[r.rank-1] + '</span>' : r.rank) + '</td>' +
-          '<td><b>' + SAG.esc(r.name) + '</b>' + (r.roll ? ' <span class="muted small">' + SAG.esc(r.roll) + '</span>' : '') + (r.playing ? '<span class="playing">playing ' + r.answered + '/' + r.total + '</span>' : '') + '</td>' +
-          '<td class="num">' + r.correct + '/' + r.total + ' · ' + r.seconds + 's</td><td class="pts">' + r.points + '</td></tr>';
+          '<td><b>' + SAG.esc(r.name) + '</b>' + (r.roll ? ' <span class="muted small">' + SAG.esc(r.roll) + '</span>' : '') + playing + '</td>' +
+          '<td class="num">' + (r.seconds != null ? r.seconds + 's' : '') + '</td><td class="pts">' + score + '<small>/' + of + '</small></td></tr>';
       }).join('');
     });
   }
-  load(); setInterval(load, 3000);
+  window.addEventListener('hashchange', pick);
+  pick(); setInterval(load, 3000);
   $('fs').onclick = function(){ if (!document.fullscreenElement) document.documentElement.requestFullscreen && document.documentElement.requestFullscreen(); else document.exitFullscreen(); };
 })();
 </script>

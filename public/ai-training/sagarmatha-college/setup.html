@@ -61,14 +61,10 @@ ol.plain{padding-left:20px;margin:6px 0}ol.plain li{margin:4px 0}
   <section class="step"><span class="n">1</span><div>
     <h2>Install Git</h2>
     <div data-for="win">
-      <ol class="plain">
-        <li>Download <b>Git for Windows</b> from <a href="https://git-scm.com/install/windows">git-scm.com/install/windows</a>. Most laptops need the <b>x64</b> version.</li>
-        <li>Open the file and click <b>Next</b> on every screen. The default choices are fine.</li>
-        <li>When it finishes, open <b>Git Bash</b> from the Start menu. Type every command on this page into Git Bash.</li>
-      </ol>
-      <p class="small muted">Only download Git from git-scm.com. If Windows says "Windows protected your PC", click <b>More info</b>, then <b>Run anyway</b>.</p>
-      <p><b>Or one command:</b> on Windows 11 or an updated Windows 10, open <b>PowerShell</b> and run this instead, then open Git Bash:</p>
+      <p>Open <b>PowerShell</b>: press the <b>Windows</b> key, type <b>PowerShell</b>, press Enter. Then run:</p>
       <div class="cmd"><pre class="code">winget install --id Git.Git -e --source winget</pre></div>
+      <p>Type <code>Y</code> if it asks you to agree. When it finishes, close PowerShell and open <b>Git Bash</b> from the Start menu. Type every command on this page into Git Bash.</p>
+      <p class="small muted">"winget is not recognized"? Your Windows is older: download the installer from <a href="https://git-scm.com/install/windows">git-scm.com</a> instead and click Next on every screen.</p>
     </div>
     <div data-for="mac">
       <p>Open <b>Terminal</b>: press <b>Cmd + Space</b>, type <b>Terminal</b>, press Enter. Then run:</p>

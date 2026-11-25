@@ -16,6 +16,25 @@
         return r.json().catch(function () { return {}; }).then(function (d) { d._status = r.status; return d; });
       }).catch(function () { return { error: 'offline', _status: 0 }; });
     },
+    /* Same rule as the server (src/lib/sagarmatha/names.ts): no "test",
+       keyboard mashes or placeholders on a public leaderboard. */
+    badName: function (raw) {
+      var l = String(raw || '').toLowerCase().normalize('NFKD').replace(/[^a-z\u0900-\u097f]/g, '');
+      if (l.length < 2 || /^(.)\1+$/.test(l) || /test|asdf|qwert|zxcv|dummy/.test(l)) return true;
+      return ['abc','abcd','abcde','xyz','xxx','name','myname','yourname','fullname','user','username','admin','demo','fake','anonymous','anon','unknown','guest','student','player','hello','hi','noname','nobody','none','null','undefined','sample','trial','check','na'].indexOf(l) >= 0;
+    },
+    /* Checks name and email the way the server will. Returns an error code or ''. */
+    checkPlayer: function (b) {
+      if (b.name.length < 2) return 'name_required';
+      if (SAG.badName(b.name)) return 'name_invalid';
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(b.email)) return 'email_invalid';
+      return '';
+    },
+    /* The class session being played now. Saved games and quiz attempts from
+       an earlier class are ignored, so a returning phone can play again. */
+    current: function () {
+      return SAG._cur || (SAG._cur = SAG.api('config').then(function (d) { return d.session || ''; }));
+    },
     get me() { return store('sag-me') || {}; },
     set me(v) { store('sag-me', v); },
     store: store,
@@ -23,6 +42,9 @@
     errorText: function (e) {
       return ({
         name_required: 'Please enter your name.',
+        name_invalid: 'Type your correct name.',
+        quiz_done: 'This email has already taken the quiz. One try per person.',
+        quiz_started: 'This email already started the quiz on another phone or browser. Ask the trainer.',
         email_invalid: 'That email doesn’t look right.',
         already_played: 'This email has already played. One game per person.',
         already_started: 'This email already started a game on another phone or browser. Ask the trainer.',

@@ -11,7 +11,19 @@
  * answers 503 until the env vars exist.
  */
 
-export const SESSION = "sagarmatha-2026";
+/*
+ * One id per class. Every game and quiz row carries it, so each class gets a
+ * fresh leaderboard while earlier ones stay in the same tables, untouched and
+ * still viewable as "Session 1" etc. To open a new class: add a line here.
+ * The last line is the one being played now.
+ */
+export const SESSIONS = [
+  { key: "1", id: "sagarmatha-2026", label: "Session 1 · 25 Nov" },
+  { key: "2", id: "sagarmatha-2026-s2", label: "Session 2 · 26 Nov" },
+] as const;
+export const SESSION: string = SESSIONS[SESSIONS.length - 1].id;
+/** `?s=1` → that session's id; anything else → the current one. */
+export const sessionFor = (key: string | null | undefined): string => SESSIONS.find((s) => s.key === key)?.id ?? SESSION;
 
 export type Answer = {
   imageId: string;
@@ -52,7 +64,9 @@ export type QuizResponse = {
   roll: string | null;
   answers: Record<string, number>;
   score: number;
-  total: number;
+  total: number; // 0 = started, not submitted yet
+  ms: number | null; // start to submit, measured by the server
+  finished_at: string | null;
   created_at?: string;
 };
 
@@ -189,16 +203,16 @@ export async function startClock(id: string, index: number): Promise<Game | null
 
 /** For the public leaderboard: never loads emails. */
 const PUBLIC_COLS = "id,name,roll,points,correct,answers,image_ids,total_ms,finished,created_at,ai_called_real";
-export async function listGamesPublic(): Promise<Omit<Game, "email">[]> {
+export async function listGamesPublic(session = SESSION): Promise<Omit<Game, "email">[]> {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  if (storageMode === "memory") return db().games.filter((g) => g.session === SESSION).map(({ email: _e, ...g }) => g);
-  const { data } = await rest<Omit<Game, "email">[]>(`aion_games?select=${PUBLIC_COLS}&session=eq.${SESSION}&order=created_at.asc&limit=2000`);
+  if (storageMode === "memory") return db().games.filter((g) => g.session === session).map(({ email: _e, ...g }) => g);
+  const { data } = await rest<Omit<Game, "email">[]>(`aion_games?select=${PUBLIC_COLS}&session=eq.${encodeURIComponent(session)}&order=created_at.asc&limit=2000`);
   return data ?? [];
 }
 
-export async function listGames(): Promise<Game[]> {
-  if (storageMode === "memory") return db().games.filter((g) => g.session === SESSION);
-  const { data } = await rest<Game[]>(`aion_games?session=eq.${SESSION}&order=created_at.asc&limit=2000`);
+export async function listGames(session = SESSION): Promise<Game[]> {
+  if (storageMode === "memory") return db().games.filter((g) => g.session === session);
+  const { data } = await rest<Game[]>(`aion_games?session=eq.${encodeURIComponent(session)}&order=created_at.asc&limit=2000`);
   return data ?? [];
 }
 
@@ -206,26 +220,62 @@ export async function listGames(): Promise<Game[]> {
 /* Quiz                                                                */
 /* ------------------------------------------------------------------ */
 
-export async function saveQuiz(r: QuizResponse): Promise<"saved" | "exists"> {
-  if (storageMode === "memory") {
-    if (db().quiz.some((x) => x.session === r.session && x.quiz === r.quiz && x.email === r.email)) return "exists";
-    db().quiz.push({ ...r, id: crypto.randomUUID(), created_at: new Date().toISOString() });
-    return "saved";
-  }
-  const { status } = await rest("quiz_responses", { method: "POST", body: JSON.stringify(r), prefer: "return=minimal" });
-  return status === 409 ? "exists" : "saved";
+/*
+ * A quiz row is created when the student starts, so the server owns the
+ * clock: created_at is the start, and submit measures from it. total = 0
+ * until they submit.
+ */
+export async function findQuizByEmail(quiz: string, email: string): Promise<QuizResponse | null> {
+  if (storageMode === "memory") return db().quiz.find((q) => q.session === SESSION && q.quiz === quiz && q.email === email) ?? null;
+  const { data } = await rest<QuizResponse[]>(`quiz_responses?session=eq.${SESSION}&quiz=eq.${encodeURIComponent(quiz)}&email=eq.${encodeURIComponent(email)}&limit=1`);
+  return data?.[0] ?? null;
 }
 
-/** For the live quiz bars: answers only, no names or emails. */
-export async function listQuizAnswers(quiz: string): Promise<Pick<QuizResponse, "answers">[]> {
-  if (storageMode === "memory") return db().quiz.filter((q) => q.session === SESSION && q.quiz === quiz).map((q) => ({ answers: q.answers }));
-  const { data } = await rest<Pick<QuizResponse, "answers">[]>(`quiz_responses?select=answers&session=eq.${SESSION}&quiz=eq.${encodeURIComponent(quiz)}&limit=5000`);
+export async function getQuiz(id: string): Promise<QuizResponse | null> {
+  if (storageMode === "memory") return db().quiz.find((q) => q.id === id) ?? null;
+  if (!/^[0-9a-f-]{36}$/i.test(id)) return null;
+  const { data } = await rest<QuizResponse[]>(`quiz_responses?id=eq.${id}&limit=1`);
+  return data?.[0] ?? null;
+}
+
+export async function startQuiz(r: Pick<QuizResponse, "quiz" | "name" | "email" | "roll">): Promise<QuizResponse | "exists"> {
+  const row = { session: SESSION, ...r, answers: {}, score: 0, total: 0, ms: null, finished_at: null };
+  if (storageMode === "memory") {
+    if (db().quiz.some((x) => x.session === SESSION && x.quiz === r.quiz && x.email === r.email)) return "exists";
+    const q: QuizResponse = { ...row, id: crypto.randomUUID(), created_at: new Date().toISOString() };
+    db().quiz.push(q);
+    return q;
+  }
+  const { status, data } = await rest<QuizResponse[]>("quiz_responses", { method: "POST", body: JSON.stringify(row), prefer: "return=representation" });
+  if (status === 409) return "exists"; // unique (session, quiz, email)
+  return data[0];
+}
+
+/** Saves the answers once. A second submit (double tap) returns null. */
+export async function finishQuiz(id: string, patch: Pick<QuizResponse, "answers" | "score" | "total" | "ms" | "finished_at">): Promise<QuizResponse | null> {
+  if (storageMode === "memory") {
+    const q = db().quiz.find((x) => x.id === id);
+    if (!q || q.total > 0) return null;
+    Object.assign(q, patch);
+    return q;
+  }
+  const { data } = await rest<QuizResponse[]>(`quiz_responses?id=eq.${id}&total=eq.0`, {
+    method: "PATCH", body: JSON.stringify(patch), prefer: "return=representation",
+  });
+  return data?.[0] ?? null;
+}
+
+/** For the public quiz leaderboard: never loads emails or answers. */
+export async function listQuizPublic(session = SESSION): Promise<Pick<QuizResponse, "name" | "roll" | "score" | "total" | "ms" | "created_at">[]> {
+  if (storageMode === "memory") {
+    return db().quiz.filter((q) => q.session === session).map(({ name, roll, score, total, ms, created_at }) => ({ name, roll, score, total, ms, created_at }));
+  }
+  const { data } = await rest<QuizResponse[]>(`quiz_responses?select=name,roll,score,total,ms,created_at&session=eq.${encodeURIComponent(session)}&order=created_at.asc&limit=5000`);
   return data ?? [];
 }
 
-export async function listQuiz(quiz?: string): Promise<QuizResponse[]> {
-  if (storageMode === "memory") return db().quiz.filter((q) => q.session === SESSION && (!quiz || q.quiz === quiz));
-  const q = quiz ? `&quiz=eq.${encodeURIComponent(quiz)}` : "";
-  const { data } = await rest<QuizResponse[]>(`quiz_responses?session=eq.${SESSION}${q}&order=created_at.asc&limit=5000`);
+export async function listQuiz(session = SESSION): Promise<QuizResponse[]> {
+  if (storageMode === "memory") return db().quiz.filter((q) => q.session === session);
+  const { data } = await rest<QuizResponse[]>(`quiz_responses?session=eq.${encodeURIComponent(session)}&order=created_at.asc&limit=5000`);
   return data ?? [];
 }
