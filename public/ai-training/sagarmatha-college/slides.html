@@ -78,6 +78,9 @@ ul.clean li::before{content:"";position:absolute;left:6px;top:25px;width:12px;he
 .frag{opacity:0;transform:translateY(10px);transition:opacity .35s,transform .35s}
 .frag.on{opacity:1;transform:none}
 
+.logos{display:flex;flex-wrap:wrap;gap:10px 18px;margin:14px 0 4px}
+.lg{display:inline-flex;align-items:center;gap:8px;font:700 22px/1.2 var(--sans);color:var(--ink)}
+.lg img{width:26px;height:26px;object-fit:contain;flex:none}
 /* section divider */
 .divider{justify-content:center}
 .divider::before{width:220px;height:10px}
@@ -302,15 +305,14 @@ body.presenter #pv{display:grid;grid-template-columns:1fr 360px;gap:26px;min-hei
   <p class="kicker">Warm-up · hands up</p>
   <h2>Raise your hand if you…</h2>
   <div class="poll">
-    <button class="item frag">used ChatGPT, Gemini or Claude this week<span class="n">0</span></button>
-    <button class="item frag">used AI for an assignment or lab report<span class="n">0</span></button>
-    <button class="item frag">got an AI answer that turned out to be <i>wrong</i><span class="n">0</span></button>
-    <button class="item frag">already have a GitHub account<span class="n">0</span></button>
-    <button class="item frag">have pushed code with <code>git push</code><span class="n">0</span></button>
+    <div class="item frag">used ChatGPT, Gemini or Claude this week</div>
+    <div class="item frag">used AI for an assignment or lab report</div>
+    <div class="item frag">got an AI answer that turned out to be <i>wrong</i></div>
+    <div class="item frag">already have a GitHub account</div>
+    <div class="item frag">have pushed code with <code>git push</code></div>
   </div>
-  <p class="small muted" style="margin-top:18px">Click a row to add to its count · Shift-click to subtract</p>
   <aside class="notes">
-    <p>Reveal one row at a time (→). Estimate the hands roughly: click a row once for every 5 hands, or just say "about half".</p>
+    <p>Reveal one row at a time (→). Read it out, count hands roughly and say it: "about half", "nearly everyone".</p>
     <p><b>Expect:</b> most hands up for row 1, quite a few for row 2, very few for rows 4 and 5. That's the point: "You already use AI. Very few of you use Git yet. By the end of today both of those change."</p>
     <p>Row 3 is the hook for later: "Keep that wrong answer in mind. We'll find out why it happens."</p>
   </aside>
@@ -459,31 +461,7 @@ body.presenter #pv{display:grid;grid-template-columns:1fr 360px;gap:26px;min-hei
   <aside class="notes">
     <p><b>Key line:</b> "Start pushing every lab program to GitHub from this week. By final year you'll have four years of visible work. Most of your competitors won't."</p>
     <p>Student Pack: education.github.com/pack. Verification needs a college email or a student ID photo. <b>Check the current offer the week before</b>, since it changes.</p>
-    <p>Then straight into Exercise 1: "Laptops open. Let's get you set up right now."</p>
-  </aside>
-</section>
-<section class="slide" data-title="Exercise 1A: Get set up">
-  <div class="ex-head"><span class="ex-badge">Exercise 1 · Part A</span><span class="pill">On your laptop</span></div>
-  <h2>Get set up. <em>Right now.</em></h2>
-  <div class="grid2" style="grid-template-columns:1fr 330px;gap:60px;align-items:start">
-    <div>
-      <ol class="steps">
-        <li><b>Create your GitHub account</b> at github.com. Use an email you'll keep after college, and a professional username: <code>sitashrestha</code>, not <code>xXdarkLord99Xx</code></li>
-        <li><b>Install Git:</b> open the Set up Git page and pick Windows, macOS or Linux</li>
-        <li><b>Check it worked:</b> <code>git --version</code></li>
-        <li><b>Tell Git who you are:</b> your name and email (copy from step 4)</li>
-        <li><b>Connect to GitHub:</b> make an SSH key and add it to GitHub (step 5)</li>
-      </ol>
-      <div style="margin-top:22px;display:flex;gap:22px;align-items:center"><div class="countdown" data-sec="600"><span class="t">10:00</span><button class="go">Start</button><button class="rs">Reset</button></div><span class="small muted">No laptop? Pair with a neighbour.</span></div>
-    </div>
-    <div class="qr"><img src="assets/qr-setup.svg" alt="QR code for the Set up Git page"><div class="u">…/sagarmatha-college/setup</div></div>
-  </div>
-  <aside class="notes">
-    <p><b>Before the session:</b> post the setup link in the class group a day early and ask them to install Git at home. Most of this slide then takes 3 minutes, not 10.</p>
-    <p><b>macOS:</b> <code>xcode-select --install</code> downloads for 5–15 minutes. Tell Mac users to start it first and create their GitHub account while it downloads.</p>
-    <p><b>Windows:</b> the installer's defaults are fine. If <code>git</code> is "not recognized", they must close the terminal and open a new one (or use Git Bash).</p>
-    <p><b>College lab PCs</b> often block installs. Pair those students with a laptop owner.</p>
-    <p>Email verification can be slow on college Wi-Fi: mobile data helps. Walk around; every common error and its fix is at the bottom of the setup page.</p>
+    <p>Then: "Let's see how it works, then you'll do it yourselves."</p>
   </aside>
 </section>
 <section class="slide" data-title="The core loop">
@@ -575,39 +553,43 @@ body.presenter #pv{display:grid;grid-template-columns:1fr 360px;gap:26px;min-hei
 <span class="c">$</span> <span class="k">git push</span> -u origin main</div>
   </div>
   <aside class="notes">
-    <p>Do this live in a terminal on the projector, slowly, saying each command's job out loud. It's exactly what they do in Part B.</p>
+    <p>Do this live in a terminal on the projector, slowly, saying each command's job out loud. It's exactly what they do in Exercise 1.</p>
     <p>Second commit: change the heading to "Namaste, BCA and CSIT 2026!", then <code>git add</code>, <code>git commit -m "Update greeting"</code>, <code>git push</code>. Open the commit on GitHub and show the red and green lines.</p>
     <p><b>Backup if the Wi-Fi fails:</b> do steps 2–3 (they work offline) and explain that push needs the internet. That's the Git vs GitHub point again.</p>
   </aside>
 </section>
-<section class="slide" data-title="Exercise 1B: First repo and commit">
-  <div class="ex-head"><span class="ex-badge">Exercise 1 · Part B</span><span class="pill">Your first commit</span></div>
-  <h2>Your first commit, <em>live on GitHub</em></h2>
-  <div class="grid2" style="grid-template-columns:1fr 1fr;gap:40px;align-items:start">
+<section class="slide" data-title="Exercise 1: Set up and first commit">
+  <div class="ex-head"><span class="ex-badge">Exercise 1</span><span class="pill">On your laptop · open the Set up Git page</span></div>
+  <h2 style="margin-bottom:22px">Set up Git, then <em>make your first commit</em></h2>
+  <div class="grid2" style="grid-template-columns:1fr 1fr 250px;gap:34px;align-items:start">
     <div>
-      <ol class="steps">
-        <li>On GitHub: <b>+ → New repository</b>. Name it <code>my-first-website</code>. Leave "Add a README" unticked. <b>Create</b>.</li>
-        <li>Open <b>step 6</b> of the Set up Git page. The commands already have your username in them. Copy, paste, run.</li>
-        <li>Refresh your repository on GitHub. Your file is there.</li>
+      <p class="pill">Steps 1–5 · Set up</p>
+      <ol class="steps" style="margin-top:12px">
+        <li><b>Install Git</b> for Windows, macOS or Linux</li>
+        <li><b>Check it:</b> <code>git --version</code></li>
+        <li><b>Tell Git who you are:</b> name and email</li>
+        <li><b>Create your GitHub account</b> with a professional username</li>
+        <li><b>Connect them:</b> make an SSH key, add it to GitHub</li>
       </ol>
-      <div class="card" style="margin-top:18px;padding:18px 22px"><p class="small" style="margin:0"><b>First push:</b> if it asks "Are you sure you want to continue connecting?", type <code>yes</code>.</p></div>
-      <div style="margin-top:20px"><div class="countdown" data-sec="480"><span class="t">8:00</span><button class="go">Start</button><button class="rs">Reset</button></div></div>
     </div>
     <div>
-      <div class="card" style="background:var(--soft);border:0">
-        <h3>Done? Do it once more</h3>
-        <p>Change your heading, then:</p>
-        <div class="code" style="font-size:20px;margin-top:12px"><span class="k">git add</span> index.html
-<span class="k">git commit</span> -m <span class="s">"Update heading"</span>
-<span class="k">git push</span></div>
-        <p class="small muted" style="margin-top:12px">Then open <b>History</b> on GitHub and find your two save points.</p>
-      </div>
-      <p class="small muted" style="margin-top:16px">Git not working yet? Do it in the browser for now: <b>Add file → Create new file</b> → <code>index.html</code> → <b>Commit changes</b>.</p>
+      <p class="pill">Step 6 · First commit</p>
+      <ul class="clean" style="margin-top:8px">
+        <li style="font-size:26px">On GitHub: <b>+ → New repository</b> called <code>my-first-website</code></li>
+        <li style="font-size:26px">Copy the commands from <b>step 6</b> of the setup page: <code>init → add → commit → push</code></li>
+        <li style="font-size:26px">Refresh GitHub: your file is there. Change it, commit and push again.</li>
+      </ul>
     </div>
+    <div class="qr"><img src="assets/qr-setup.svg" alt="QR code for the Set up Git page"><div class="u">…/sagarmatha-college/setup</div></div>
   </div>
+  <div style="margin-top:auto;display:flex;gap:22px;align-items:center"><div class="countdown" data-sec="960"><span class="t">16:00</span><button class="go">Start</button><button class="rs">Reset</button></div><span class="small muted">Step numbers match the Set up Git page. No laptop? Pair with a neighbour.</span></div>
   <aside class="notes">
-    <p>Press Start. Walk the room. The usual problems, all with fixes at the bottom of the setup page: "Please tell me who you are" (Part A step 4 skipped), "src refspec main does not match any" (no commit yet), "password authentication was removed" or "Permission denied (publickey)" (SSH key not added on GitHub, step 5).</p>
-    <p>When most are done, ask one student to show their repository on the projector. Applause: they just did what every developer does every day.</p>
+    <p><b>Before the session:</b> post the setup link in the class group a day early and ask everyone to do steps 1–3 at home. That turns 16 minutes into 8.</p>
+    <p><b>Order matters:</b> install Git first (macOS <code>xcode-select --install</code> downloads for 5–15 minutes, so Mac users start it first and create their GitHub account while it downloads), then the GitHub account, then the SSH key that connects the two.</p>
+    <p><b>Windows:</b> installer defaults are fine; everything after runs in <b>Git Bash</b>. "git is not recognized" means open a new terminal. <b>Lab PCs</b> often block installs: pair them with a laptop owner.</p>
+    <p><b>Usual errors</b> (fixes at the bottom of the setup page): "Please tell me who you are" (step 3 skipped) · "src refspec main does not match any" (no commit yet) · "Permission denied (publickey)" or "password authentication was removed" (SSH key not added, step 5).</p>
+    <p><b>Fallback:</b> if Git won't install, create <code>index.html</code> in the browser (Add file → Create new file → Commit changes) and finish at home.</p>
+    <p>When most are done, show one student's repository on the projector. Applause.</p>
   </aside>
 </section>
 <section class="slide divider" data-section="AI right now" data-at="35" data-color="#7C3AED" data-title="Part 2 · AI right now">
@@ -672,29 +654,29 @@ body.presenter #pv{display:grid;grid-template-columns:1fr 360px;gap:26px;min-hei
   <p class="kicker">The landscape · names change, the kinds of tools don't</p>
   <h2 style="margin-bottom:24px">Who's who in AI</h2>
   <div class="grid3" style="gap:20px">
-    <div class="card"><p class="pill">Chat</p><h3 style="margin-top:12px">ChatGPT · Gemini · Claude · Copilot</h3><p>Explain, draft, brainstorm, debug.</p></div>
-    <div class="card"><p class="pill">Answers with links</p><h3 style="margin-top:12px">Perplexity · search mode in any chat app</h3><p>When you need the source, not just the answer.</p></div>
-    <div class="card"><p class="pill">Your own notes</p><h3 style="margin-top:12px">NotebookLM</h3><p>Upload your syllabus and notes. Ask questions about them.</p></div>
-    <div class="card"><p class="pill">Coding</p><h3 style="margin-top:12px">GitHub Copilot · Codex · Cursor · Claude Code</h3><p>Help inside your code editor. Copilot is free for students.</p></div>
-    <div class="card"><p class="pill">Images, video, voice</p><h3 style="margin-top:12px">Gemini · ChatGPT · Canva</h3><p>Posters and designs. Also where most fakes come from.</p></div>
-    <div class="card"><p class="pill">Run it yourself</p><h3 style="margin-top:12px">Llama · Qwen · DeepSeek · Gemma</h3><p>Free models you can download and run on your own computer.</p></div>
+    <div class="card"><p class="pill">Chat</p><div class="logos"><span class="lg"><img src="assets/logos/openai.svg" alt="">ChatGPT</span><span class="lg"><img src="assets/logos/gemini.svg" alt="">Gemini</span><span class="lg"><img src="assets/logos/claude.svg" alt="">Claude</span><span class="lg"><img src="assets/logos/mscopilot.svg" alt="">Copilot</span></div><p>Explain, draft, brainstorm, debug.</p></div>
+    <div class="card"><p class="pill">Answers with links</p><div class="logos"><span class="lg"><img src="assets/logos/perplexity.svg" alt="">Perplexity</span></div><p>When you need the source, not just the answer. Most chat apps have a search mode too.</p></div>
+    <div class="card"><p class="pill">Your own notes</p><div class="logos"><span class="lg"><img src="assets/logos/notebooklm.svg" alt="">NotebookLM</span></div><p>Upload your syllabus and notes. Ask questions about them.</p></div>
+    <div class="card"><p class="pill">Coding</p><div class="logos"><span class="lg"><img src="assets/logos/githubcopilot.svg" alt="">GitHub Copilot</span><span class="lg"><img src="assets/logos/openai.svg" alt="">Codex</span><span class="lg"><img src="assets/logos/cursor.svg" alt="">Cursor</span><span class="lg"><img src="assets/logos/claude.svg" alt="">Claude Code</span></div><p>Help inside your code editor. Copilot is free for students.</p></div>
+    <div class="card"><p class="pill">Images, video, voice</p><div class="logos"><span class="lg"><img src="assets/logos/gemini.svg" alt="">Gemini</span><span class="lg"><img src="assets/logos/openai.svg" alt="">ChatGPT</span><span class="lg"><img src="assets/logos/meta.svg" alt="">Meta AI</span></div><p>Posters and designs. Also where most fakes come from.</p></div>
+    <div class="card"><p class="pill">Run it yourself</p><div class="logos"><span class="lg"><img src="assets/logos/meta.svg" alt="">Llama</span><span class="lg"><img src="assets/logos/qwen.svg" alt="">Qwen</span><span class="lg"><img src="assets/logos/deepseek.svg" alt="">DeepSeek</span><span class="lg"><img src="assets/logos/mistral.svg" alt="">Mistral</span></div><p>Free models you can download and run on your own computer.</p></div>
   </div>
   <aside class="notes">
     <p>Don't read every card. "Most of you only use the first one. Try one more from this slide this week." NotebookLM is the one students thank you for: upload the syllabus and notes before exams.</p>
     <p><b>Check before the session:</b> any big launch that week, so you can name it.</p>
   </aside>
 </section>
-<section class="slide" data-title="Game: can, can't, careful">
+<section class="slide" data-title="Game: can, can't, check it">
   <p class="kicker">Game · show 1, 2 or 3 fingers</p>
   <h2 style="font-size:46px;margin-bottom:10px">Can AI do this?</h2>
-  <p class="small muted" style="margin:0 0 22px">1 finger: can do &nbsp;·&nbsp; 2 fingers: can't &nbsp;·&nbsp; 3 fingers: can, but check it</p>
+  <p class="small muted" style="margin:0 0 22px">1 finger: <b>Can do</b> &nbsp;·&nbsp; 2 fingers: <b>Can't do</b> &nbsp;·&nbsp; 3 fingers: <b>Can, but check it</b></p>
   <div class="grid3">
-    <button class="flip" data-tone="green"><span>Explain recursion using a momo-folding example</span><span class="hint">Tap to reveal</span><span class="back"><span class="verdict">Can do</span><br>Analogies are a real strength. Ask for three different ones.</span></button>
-    <button class="flip" data-tone="red"><span>Tell you the questions on this year's TU exam</span><span class="hint">Tap to reveal</span><span class="back"><span class="verdict">Can't</span><br>It doesn't know the future. It will happily <i>guess</i>, and sound sure.</span></button>
-    <button class="flip" data-tone="amber"><span>Write a working C program for bubble sort</span><span class="hint">Tap to reveal</span><span class="back"><span class="verdict">Can, check it</span><br>Usually right. Compile it, test an edge case, and make sure you understand every line.</span></button>
-    <button class="flip" data-tone="amber"><span>Give the exact page number in your textbook for a formula</span><span class="hint">Tap to reveal</span><span class="back"><span class="verdict">Careful</span><br>Classic invention. Unless it has the book itself (e.g. in NotebookLM), it will make one up.</span></button>
-    <button class="flip" data-tone="red"><span>Remember what you told it in a different chat</span><span class="hint">Tap to reveal</span><span class="back"><span class="verdict">Usually not</span><br>Every new chat starts at zero, unless you use memory or Projects. Give context every time.</span></button>
-    <button class="flip" data-tone="amber"><span>Translate your English notes into perfect Nepali</span><span class="hint">Tap to reveal</span><span class="back"><span class="verdict">Careful</span><br>It's weaker in Nepali: respectful forms like tapai and timi get mixed up, and so do Bikram Sambat dates. A fluent person must check it.</span></button>
+    <button class="flip" data-tone="green"><span>Explain recursion using a momo-folding example</span><span class="back"><span class="verdict">Can do</span><br>Analogies are a real strength. Ask for three different ones.</span></button>
+    <button class="flip" data-tone="red"><span>Tell you the questions on this year's TU exam</span><span class="back"><span class="verdict">Can't do</span><br>It doesn't know the future. It will happily <i>guess</i>, and sound sure.</span></button>
+    <button class="flip" data-tone="amber"><span>Write a working C program for bubble sort</span><span class="back"><span class="verdict">Can, but check it</span><br>Usually right. Compile it, test an edge case, and make sure you understand every line.</span></button>
+    <button class="flip" data-tone="red"><span>Give the exact page number in your textbook for a formula</span><span class="back"><span class="verdict">Can't do</span><br>Unless it has your book (for example in NotebookLM), it makes a page number up.</span></button>
+    <button class="flip" data-tone="red"><span>Remember what you told it in a different chat</span><span class="back"><span class="verdict">Can't do</span><br>Every new chat starts from zero, unless you turn on memory. Give context every time.</span></button>
+    <button class="flip" data-tone="amber"><span>Translate your English notes into perfect Nepali</span><span class="back"><span class="verdict">Can, but check it</span><br>Weaker in Nepali: respectful forms like tapai and timi get mixed up, and so do Bikram Sambat dates. A fluent person must check it.</span></button>
   </div>
   <p style="font-size:30px;font-weight:800;margin-top:auto">The real risk isn't AI. It's using its answer <em>without checking it</em>.</p>
   <aside class="notes">
@@ -733,15 +715,16 @@ body.presenter #pv{display:grid;grid-template-columns:1fr 360px;gap:26px;min-hei
 
 <section class="slide" data-title="Person, not tool">
   <p class="kicker">The mindset</p>
-  <h2>Treat AI like a <em>person</em>: a smart new classmate on their first day</h2>
+  <h2>Treat AI like a <em>person</em> who knows nothing about you</h2>
   <div class="grid3">
-    <div class="card"><h3>Very capable</h3><p>Fast, has read more than any human, and never gets tired.</p></div>
-    <div class="card"><h3>Knows nothing about you</h3><p>Not your course, your level, your deadline or what your teacher wants.</p></div>
-    <div class="card"><h3>Guesses the rest</h3><p>Whatever you don't say, it guesses: how long, how simple, what to focus on.</p></div>
+    <div class="card"><span class="big" style="font-size:48px;color:var(--pc)">1</span><h3 style="margin-top:12px">It starts at zero</h3><p>It doesn't know your course, your level, your deadline or what your teacher wants.</p></div>
+    <div class="card"><span class="big" style="font-size:48px;color:var(--pc)">2</span><h3 style="margin-top:12px">You tell it</h3><p>Who to be: <i>"Act as my C tutor."</i> Who you are, and what you need.</p></div>
+    <div class="card"><span class="big" style="font-size:48px;color:var(--pc)">3</span><h3 style="margin-top:12px">It holds it, and plays the part</h3><p>For the rest of this chat it remembers what you said and answers as that person. A new chat starts at zero again.</p></div>
   </div>
-  <p style="font-size:36px;font-weight:800;margin-top:auto">A short prompt lets AI guess. A clear prompt tells it. <em>That's the whole skill.</em></p>
+  <p style="font-size:34px;font-weight:800;margin-top:auto">Whatever you don't tell it, it guesses. Whatever you tell it, <em>it uses</em>.</p>
   <aside class="notes">
-    <p>"Imagine a genius joins your group project. If you say 'do the report', you get <i>a</i> report. If you tell them the topic, the marking scheme, the length and who reads it, you get <i>your</i> report."</p>
+    <p>"Imagine a very smart person joins your group project today. They know nothing about you. Tell them the topic, the marking scheme and who reads it, and they'll work as your teammate for the rest of the project. Say nothing, and they'll guess."</p>
+    <p>Giving AI a role is the same idea: "Act as my C tutor" tells it who to be, and it holds that role, plus everything you told it, until the chat ends. That's why the next slide, TEACH, is a checklist of what to tell it.</p>
   </aside>
 </section>
 
@@ -879,7 +862,6 @@ Don't give me the answer. Teach me by asking me questions:
 ask me one question at a time, wait for my reply, give a hint if I'm stuck,
 and only confirm the answer once I've reasoned it out myself.
 At the end, give me 3 practice problems slightly harder than this one.</div>
-  <p class="fillhint">Tap a pink field, type, then Copy.</p>
   <p class="lead" style="margin-top:28px">A tutor that's free, patient at 2 a.m., and never judges your "basic" question. <b>But only if you do the thinking.</b></p>
   <aside class="notes">
     <p>This is the single most valuable prompt for first-years. Tell them to save it.</p>
@@ -927,12 +909,12 @@ At the end, give me 3 practice problems slightly harder than this one.</div>
     <div class="lamp r" style="padding:14px 22px"><p style="font-size:24px"><b>Red · can't hide it.</b> Never paste it.</p></div>
   </div>
   <div class="grid3">
-    <button class="flip" data-tone="green"><span>Your C lab code for a practice question</span><span class="hint">Tap to reveal</span><span class="back"><span class="verdict">Green</span><br>Your own practice code. Go ahead.</span></button>
-    <button class="flip" data-tone="amber"><span>A friend's CV, with their phone number and citizenship number, to "make it better"</span><span class="hint">Tap to reveal</span><span class="back"><span class="verdict">Amber</span><br>The task works without the IDs. Use [PHONE] and [CITIZENSHIP NO.], and ask your friend first.</span></button>
-    <button class="flip" data-tone="red"><span>A screenshot of an error, with your college portal password visible</span><span class="hint">Tap to reveal</span><span class="back"><span class="verdict">Red</span><br>Crop it out. If it already went in: delete the chat and change the password now.</span></button>
-    <button class="flip" data-tone="red"><span>Your project code, with your API key (a password an app uses) in line 3</span><span class="hint">Tap to reveal</span><span class="back"><span class="verdict">Red</span><br>Remove it. Already pasted it? <b>Cancel (revoke) the key and make a new one</b>. Same on GitHub: automated programs find leaked keys within minutes.</span></button>
-    <button class="flip" data-tone="amber"><span>Group-chat screenshots with classmates' names, to summarise "who's doing what"</span><span class="hint">Tap to reveal</span><span class="back"><span class="verdict">Amber</span><br>Replace the names with Person A, B, C. It works just as well.</span></button>
-    <button class="flip" data-tone="green"><span>Your own essay draft, for feedback on structure</span><span class="hint">Tap to reveal</span><span class="back"><span class="verdict">Green</span><br>Fine for feedback. Follow your college's rules, and say when you used AI.</span></button>
+    <button class="flip" data-tone="green"><span>Your C lab code for a practice question</span><span class="back"><span class="verdict">Green</span><br>Your own practice code. Go ahead.</span></button>
+    <button class="flip" data-tone="amber"><span>A friend's CV, with their phone number and citizenship number, to "make it better"</span><span class="back"><span class="verdict">Amber</span><br>The task works without the IDs. Use [PHONE] and [CITIZENSHIP NO.], and ask your friend first.</span></button>
+    <button class="flip" data-tone="red"><span>A screenshot of an error, with your college portal password visible</span><span class="back"><span class="verdict">Red</span><br>Crop it out. If it already went in: delete the chat and change the password now.</span></button>
+    <button class="flip" data-tone="red"><span>Your project code, with your API key (a password an app uses) in line 3</span><span class="back"><span class="verdict">Red</span><br>Remove it. Already pasted it? <b>Cancel (revoke) the key and make a new one</b>. Same on GitHub: automated programs find leaked keys within minutes.</span></button>
+    <button class="flip" data-tone="amber"><span>Group-chat screenshots with classmates' names, to summarise "who's doing what"</span><span class="back"><span class="verdict">Amber</span><br>Replace the names with Person A, B, C. It works just as well.</span></button>
+    <button class="flip" data-tone="green"><span>Your own essay draft, for feedback on structure</span><span class="back"><span class="verdict">Green</span><br>Fine for feedback. Follow your college's rules, and say when you used AI.</span></button>
   </div>
   <aside class="notes">
     <p>Explain the three colours in 30 seconds, then play: students show 1, 2 or 3 fingers for each card, then tap to reveal.</p>
@@ -1031,7 +1013,6 @@ At the end, give me 3 practice problems slightly harder than this one.</div>
 <b>Context:</b> I'm <span class="ph">[FIRST NAME]</span>, a first-year <span class="ph">[BSc CSIT / BCA]</span> student at Sagarmatha College, Nepal. I'm learning <span class="ph">[C, HTML, ...]</span>. I'm curious about <span class="ph">[AI / web / games / security]</span>. This year I want to <span class="ph">[ONE GOAL]</span>. Fun fact: <span class="ph">[SOMETHING TRUE]</span>.
 <b>How:</b> Markdown with these sections: About me · Currently learning · This year's goal · Reach me at <span class="ph">[LINKEDIN OR EMAIL]</span>.
 If anything is unclear, ask me before you start.</div>
-  <p class="fillhint">Tap any pink field to type into it. Copy takes what you typed.</p>
   <p class="small muted" style="margin-top:10px">Notice: a role, all five TEACH parts, a "never" rule, gaps for your own facts, and "ask me first". Then <b>you</b> edit what comes back.</p>
   <aside class="notes">
     <p>Leave this up while they work. Walk around. Common issues: the repo name doesn't exactly match the username (the README won't show on the profile), or AI adding "passionate full-stack developer" when they've been coding for 3 months. Tell them to delete it. Honesty is the point.</p>
@@ -1344,7 +1325,6 @@ If anything is unclear, ask me before you start.</div>
     const li=document.createElement('li');li.value=i+1;li.textContent=s.dataset.title||('Slide '+(i+1));li.onclick=()=>{show(i,0);document.getElementById('jump').classList.remove('open')};jl.appendChild(li);});
 
   // widgets: poll tally
-  document.querySelectorAll('.poll .item').forEach(b=>b.addEventListener('click',e=>{const n=b.querySelector('.n');let v=+n.textContent;v=e.shiftKey?Math.max(0,v-1):v+1;n.textContent=v;b.classList.add('on');}));
   // predict
   document.querySelectorAll('.predict').forEach(p=>{const r=p.querySelector('input'),v=p.querySelector('.pv');r.addEventListener('input',()=>v.textContent=r.value);p.querySelector('.lock').onclick=()=>p.classList.add('done');});
   // flip cards

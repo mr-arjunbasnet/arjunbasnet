@@ -54,22 +54,11 @@ ol.plain{padding-left:20px;margin:6px 0}ol.plain li{margin:4px 0}
     <p class="hint">Use the same email as your GitHub account.</p>
     <label class="f" for="f-user">Your GitHub username</label>
     <input class="f" id="f-user" data-v="user" autocomplete="username" placeholder="Enter your GitHub username" autocapitalize="off" spellcheck="false">
-    <p class="hint">Fill these in after step 1. The commands below update as you type.</p>
+    <p class="hint">Your GitHub username comes from step 4. The commands below update as you type.</p>
   </div>
 
-  <!-- 0 -->
-  <section class="step"><span class="n">1</span><div>
-    <h2>Create your GitHub account</h2>
-    <ol class="plain">
-      <li>Go to <a href="https://github.com/signup">github.com/signup</a>.</li>
-      <li>Use an email you'll keep after college (not your college email if it expires).</li>
-      <li>Pick a professional username: <code>sitashrestha</code>, not <code>xXdarkLord99Xx</code>. It goes on your CV.</li>
-      <li>Verify your email, then type your username in the box above.</li>
-    </ol>
-  </div></section>
-
   <!-- 1 -->
-  <section class="step"><span class="n">2</span><div>
+  <section class="step"><span class="n">1</span><div>
     <h2>Install Git</h2>
     <div data-for="win">
       <ol class="plain">
@@ -99,7 +88,7 @@ ol.plain{padding-left:20px;margin:6px 0}ol.plain li{margin:4px 0}
   </div></section>
 
   <!-- 2 -->
-  <section class="step"><span class="n">3</span><div>
+  <section class="step"><span class="n">2</span><div>
     <h2>Check it worked</h2>
     <p>Close the <span data-for="win">Git Bash</span><span data-for="mac linux">terminal</span> window, open a new one, and run:</p>
     <div class="cmd"><pre class="code">git --version</pre></div>
@@ -107,7 +96,7 @@ ol.plain{padding-left:20px;margin:6px 0}ol.plain li{margin:4px 0}
   </div></section>
 
   <!-- 3 -->
-  <section class="step"><span class="n">4</span><div>
+  <section class="step"><span class="n">3</span><div>
     <h2>Tell Git who you are</h2>
     <p>Do this once on each computer. Copy all four lines and paste them together.</p>
     <div class="cmd"><pre class="code">git config --global user.name "<span class="v" data-v="name">Your Name</span>"
@@ -120,6 +109,17 @@ git config --global core.editor nano</pre></div>
   </div></section>
 
   <!-- 4 -->
+  <section class="step"><span class="n">4</span><div>
+    <h2>Create your GitHub account</h2>
+    <ol class="plain">
+      <li>Go to <a href="https://github.com/signup">github.com/signup</a>.</li>
+      <li>Use an email you'll keep after college (not your college email if it expires).</li>
+      <li>Pick a professional username: <code>sitashrestha</code>, not <code>xXdarkLord99Xx</code>. It goes on your CV.</li>
+      <li>Use the same email as in step 3. Verify it, then type your username in the box at the top.</li>
+    </ol>
+  </div></section>
+
+  <!-- 5 -->
   <section class="step"><span class="n">5</span><div>
     <h2>Connect to GitHub with an SSH key</h2>
     <p>GitHub doesn't accept your account password from the terminal. Instead you make an <b>SSH key</b>: a pair of files on your computer. GitHub gets the public half and recognises your computer from then on. Do this once per computer<span data-for="win">, in <b>Git Bash</b></span>.</p>
@@ -136,7 +136,7 @@ git config --global core.editor nano</pre></div>
     <p class="warn">Only ever share the file ending in <code>.pub</code>. The other file is your private key: never paste it anywhere.</p>
   </div></section>
 
-  <!-- 5 -->
+  <!-- 6 -->
   <section class="step"><span class="n">6</span><div>
     <h2>Push your first project</h2>
     <p><b>a.</b> On GitHub, click <b>+</b> then <b>New repository</b>. Name it <code>my-first-website</code>. Leave "Add a README file" <b>unticked</b>. Click <b>Create repository</b>.</p>
@@ -152,7 +152,7 @@ git push -u origin main</pre></div>
     <p><b>c.</b> Refresh the GitHub page. Your <code>index.html</code> is there. You've pushed your first project.</p>
   </div></section>
 
-  <!-- 6 -->
+  <!-- 7 -->
   <section class="step"><span class="n">7</span><div>
     <h2>Every day after that</h2>
     <p>Inside your project folder, after you change something:</p>
@@ -163,7 +163,7 @@ git push</pre></div>
     <p class="small muted"><b>status</b> shows what changed. <b>add</b> picks the changes to save. <b>commit</b> saves them with a message. <b>push</b> sends them to GitHub.</p>
   </div></section>
 
-  <!-- 7 -->
+  <!-- 8 -->
   <section class="step" id="pages"><span class="n">8</span><div>
     <h2>Put it online (GitHub Pages)</h2>
     <p>Any repository with an <code>index.html</code> can become a free public website.</p>
@@ -182,14 +182,14 @@ git push</pre></div>
   <details class="card"><summary>'git' is not recognized, or git: command not found</summary>
     <p>Close every terminal window and open a new one. Old windows don't see newly installed programs.</p>
     <p data-for="win">Still failing? Use <b>Git Bash</b>, not Command Prompt. If it fails there too, run the installer again and keep the default choices.</p>
-    <p data-for="mac linux">Still failing? Git isn't installed yet. Go back to step 2.</p>
+    <p data-for="mac linux">Still failing? Git isn't installed yet. Go back to step 1.</p>
   </details>
   <details class="card"><summary>Please tell me who you are / Author identity unknown</summary>
-    <p>Git doesn't know your name and email yet. Do step 4, then run your <code>git commit</code> again.</p>
+    <p>Git doesn't know your name and email yet. Do step 3, then run your <code>git commit</code> again.</p>
   </details>
   <details class="card"><summary>A strange screen opened after git commit and I can't get out</summary>
     <p>That's an editor called Vim. Press <b>Esc</b>, type <code>:wq</code> and press <b>Enter</b>.</p>
-    <p>Next time, add the message in the command itself: <code>git commit -m "your message"</code>. Step 4's last line also switches you to an easier editor.</p>
+    <p>Next time, add the message in the command itself: <code>git commit -m "your message"</code>. Step 3's last line also switches you to an easier editor.</p>
   </details>
   <details class="card"><summary>Support for password authentication was removed</summary>
     <p>GitHub won't take your password in the terminal.</p>
